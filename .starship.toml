@@ -1,0 +1,193 @@
+# The newline at the start of the prompt
+add_newline = true
+
+# Overwrite a default_prompt_order and use custom prompt_order
+prompt_order=[
+  "time",
+  "jobs",
+  "hostname",
+  "directory",
+  "git_branch",
+  "git_commit",
+  "git_state",
+  "git_status",
+  #
+  "line_break",
+  "battery",
+  "memory_usage",
+  "package",
+  "nodejs",
+  "cmd_duration",
+  #
+  "line_break",
+  "username",
+  "character",
+]
+
+# Wait 10 milliseconds for starship to check files under the current directory.
+scan_timeout = 10
+
+# Prompt
+[time]
+  format = "🕰️[%T]"
+  style = "fg:black bg:white"
+  utc_time_offset="local"
+  disabled = false
+
+[jobs]
+  symbol = "⚠️⚠️"
+  threshold = 1
+  style="fg:white bg:red"
+  disabled="true"
+
+[hostname]
+  ssh_only = true
+  prefix = "🖥️"
+  suffix = ""
+  trim_at = ".companyname.com"
+  style = "fg:white bg:purple"
+  disabled = false
+
+[directory]
+  truncation_length = 3
+  truncate_to_repo = true
+  prefix = "in 📂: "
+  style = "bold purple"
+  fish_style_pwd_dir_length	= 5
+  use_logical_path = true
+  disabled = false
+
+[git_branch]
+  symbol = " "
+  truncation_length = 0
+  truncation_symbol = ""
+  style = "bold blue"
+  disable = false
+
+[git_commit]
+  commit_hash_length = 5
+  prefix = "🚨DETACHED: "
+  suffix = ""
+  style = "red"
+  only_detached = true
+  disabled = false
+
+[git_state]
+  rebase = "REBASING"
+  merge = "MERGING"
+  revert = "REVERTING"
+  cherry_pick = "🍒 PICKING"
+  bisect = "BISECTING"
+  am = "AM"
+  am_or_rebase = "AM/REBASE"
+  progress_divider = " of "
+  style = "bold red"
+  disable = false
+
+[git_status]
+  show_sync_count = true
+  prefix = "📎"
+  suffix = ""
+  style = "bold blue"
+  disabled = false
+  # Conflicted
+  conflicted.value = "|🚩C:"
+  conflicted.style = "bold red"
+  conflicted_count.enabled = true
+  conflicted_count.style = "bold red"
+  # Ahead
+  ahead.value = "|A:"
+  ahead.style = "bold blue"
+  # Behind
+  behind = "|B:" 
+  # Diverged
+  diverged = "|D:"
+  # Untracked
+  untracked.value = "|?U:"
+  untracked.style = "bold yellow"
+  untracked_count.enabled = true
+  untracked_count.style = "bold yellow"
+  # Stashed
+  stashed.value = "|S:"
+  stashed.style = ""
+  stashed_count.enabled = true
+  stashed_count.style = ""
+  # Modified
+  modified.value = "|M:"
+  modified.style ="bold yellow"
+  modified_count.enabled = true
+  modified_count.style = "bold yellow"
+  # Staged
+  staged.value = "|+S:"
+  staged.style = "bold yellow"
+  staged_count.enabled = true
+  staged_count.style = "bold yellow"
+  # Renamed
+  renamed.value = "|R:"
+  renamed.style = "bold yellow"
+  renamed_count.enabled = true
+  renamed_count.style = "bold yellow"
+  # Deleted
+  deleted.value = "|D:"
+  deleted.style = "bold yellow"
+  deleted_count.enabled = true
+  deleted_count.style = "bold yellow"
+
+# line_break
+[battery]
+  full_symbol = ""
+  charging_symbol = ""
+  discharging_symbol = ""
+  disabled = "false"
+  [[battery.display]]
+    threshold = 50
+    style = "red"
+  [[battery.display]]
+    threshold = 75
+    style = "yellow"
+  [[battery.display]]
+    threshold = 85 
+    style = "green"
+
+[memory_usage]
+  show_percentage = true
+  show_swap = true
+  threshold = -1
+  symbol = ""
+  separator = "|"
+  style = "blue"
+  disabled = false
+
+[nodejs]
+  symbol = " "
+  style = "bold green"
+  disabled = false
+
+[package]
+  symbol = " "
+  style = "bold red"
+  display_private = "true"
+  disabled = false
+
+[cmd_duration]
+  min_time = 100
+  show_milliseconds = true
+  style = ""
+  prefix = ":"
+  disabled = false
+
+# Line_break
+[username]
+  style_root = "bold red"
+  style_user = "fg:white bg:purple"
+  show_always = false
+  disabled = false
+
+[character]
+  symbol = " [i]" 
+  error_symbol = "✗[i]"
+  use_symbol_for_status = true
+  vicmd_symbol = " []"
+  style_success = "bold green"
+  style_failure = "bold red"
+  disabled = "false"
