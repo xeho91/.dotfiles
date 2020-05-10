@@ -1,3 +1,6 @@
+# NOTE: You need to have Nerd fonts attached to your font
+# https://www.nerdfonts.com/#home
+
 # The newline at the start of the prompt
 add_newline = true
 
@@ -58,7 +61,7 @@ scan_timeout = 10
   disabled = false
 
 [git_branch]
-  symbol = " "
+  symbol = "\ue725 " # 
   truncation_length = 0
   truncation_symbol = ""
   style = "bold blue"
@@ -104,34 +107,34 @@ scan_timeout = 10
   diverged = "|D:"
   # Untracked
   untracked.value = "|?U:"
-  untracked.style = "bold yellow"
+  untracked.style = "cyan"
   untracked_count.enabled = true
-  untracked_count.style = "bold yellow"
+  untracked_count.style = "cyan"
   # Stashed
-  stashed.value = "|S:"
+  stashed.value = "\uf01cS:" # 
   stashed.style = ""
   stashed_count.enabled = true
   stashed_count.style = ""
   # Modified
-  modified.value = "|M:"
+  modified.value = "|\uf459M:" # 
   modified.style ="bold yellow"
   modified_count.enabled = true
   modified_count.style = "bold yellow"
   # Staged
   staged.value = "|+S:"
-  staged.style = "bold yellow"
+  staged.style = "bold green"
   staged_count.enabled = true
-  staged_count.style = "bold yellow"
+  staged_count.style = "bold green"
   # Renamed
-  renamed.value = "|R:"
-  renamed.style = "bold yellow"
+  renamed.value = "|\uf45aR:" # 
+  renamed.style = "purple"
   renamed_count.enabled = true
-  renamed_count.style = "bold yellow"
+  renamed_count.style = "purple"
   # Deleted
-  deleted.value = "|D:"
-  deleted.style = "bold yellow"
+  deleted.value = "|\uf48eD:" # 
+  deleted.style = "red"
   deleted_count.enabled = true
-  deleted_count.style = "bold yellow"
+  deleted_count.style = "red"
 
 # line_break
 [battery]
