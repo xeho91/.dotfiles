@@ -1,0 +1,5 @@
+[wsl2]
+memory=4GB
+
+[user]
+default=xeho91
