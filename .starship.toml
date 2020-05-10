@@ -40,7 +40,7 @@ scan_timeout = 10
 [jobs]
   symbol = "⚠️⚠️"
   threshold = 1
-  style="fg:white bg:red"
+  style="fg:bright-white bg:red"
   disabled="true"
 
 [hostname]
@@ -48,14 +48,14 @@ scan_timeout = 10
   prefix = "🖥️"
   suffix = ""
   trim_at = ".companyname.com"
-  style = "fg:white bg:purple"
+  style = "fg:bright-white bg:purple"
   disabled = false
 
 [directory]
   truncation_length = 3
   truncate_to_repo = true
   prefix = "in 📂: "
-  style = "bold purple"
+  style = "purple"
   fish_style_pwd_dir_length	= 5
   use_logical_path = true
   disabled = false
@@ -64,14 +64,14 @@ scan_timeout = 10
   symbol = "\ue725 " # 
   truncation_length = 0
   truncation_symbol = ""
-  style = "bold blue"
+  style = "bright-cyan"
   disable = false
 
 [git_commit]
   commit_hash_length = 5
   prefix = "🚨DETACHED: "
   suffix = ""
-  style = "red"
+  style = "bright-red"
   only_detached = true
   disabled = false
 
@@ -84,91 +84,93 @@ scan_timeout = 10
   am = "AM"
   am_or_rebase = "AM/REBASE"
   progress_divider = " of "
-  style = "bold red"
+  style = "red"
   disable = false
 
 [git_status]
   show_sync_count = true
   prefix = "📎"
   suffix = ""
-  style = "bold blue"
+  style = "bright-blue"
   disabled = false
   # Conflicted
   conflicted.value = "|🚩C:"
-  conflicted.style = "bold red"
+  conflicted.style = "bright-red"
   conflicted_count.enabled = true
-  conflicted_count.style = "bold red"
+  conflicted_count.style = "bright-red"
   # Ahead
-  ahead.value = "|A:"
-  ahead.style = "bold blue"
+  ahead.value = "|⇡A:"
+  ahead.style = "bright-blue"
   # Behind
-  behind = "|B:" 
+  behind.value = "|⇣B:" 
+  behind.style = "bright-yellow"
   # Diverged
-  diverged = "|D:"
-  # Untracked
-  untracked.value = "|?U:"
-  untracked.style = "cyan"
-  untracked_count.enabled = true
-  untracked_count.style = "cyan"
+  diverged.value = "D:"
+  diverged.style = "bright-red"
   # Stashed
-  stashed.value = "\uf01cS:" # 
+  stashed.value = "|\uf01cS:" # 
   stashed.style = ""
   stashed_count.enabled = true
   stashed_count.style = ""
-  # Modified
-  modified.value = "|\uf459M:" # 
-  modified.style ="bold yellow"
-  modified_count.enabled = true
-  modified_count.style = "bold yellow"
-  # Staged
-  staged.value = "|+S:"
-  staged.style = "bold green"
-  staged_count.enabled = true
-  staged_count.style = "bold green"
-  # Renamed
-  renamed.value = "|\uf45aR:" # 
-  renamed.style = "purple"
-  renamed_count.enabled = true
-  renamed_count.style = "purple"
   # Deleted
   deleted.value = "|\uf48eD:" # 
-  deleted.style = "red"
+  deleted.style = "bright-red"
   deleted_count.enabled = true
-  deleted_count.style = "red"
+  deleted_count.style = "bright-red"
+  # Renamed
+  renamed.value = "|\uf45aR:" # 
+  renamed.style = "bright-purple"
+  renamed_count.enabled = true
+  renamed_count.style = "bright-purple"
+  # Modified
+  modified.value = "|\uf459M:" # 
+  modified.style ="bright-yellow"
+  modified_count.enabled = true
+  modified_count.style = "bright-yellow"
+  # Staged
+  staged.value = "|\uf457S:" # 
+  staged.style = "bright-green"
+  staged_count.enabled = true
+  staged_count.style = "bright-green"
+  # Untracked
+  untracked.value = "|\uf29cU:" # 
+  untracked.style = "bright-red"
+  untracked_count.enabled = true
+  untracked_count.style = "bright-red"
 
 # line_break
 [battery]
-  full_symbol = ""
-  charging_symbol = ""
-  discharging_symbol = ""
+  full_symbol = ":"
+  charging_symbol = ":"
+  discharging_symbol = ":"
   disabled = "false"
   [[battery.display]]
     threshold = 50
-    style = "red"
+    style = "fg:bright-white bg:red"
   [[battery.display]]
     threshold = 75
-    style = "yellow"
+    style = "fg:black bg:bright-yellow"
   [[battery.display]]
-    threshold = 85 
-    style = "green"
+    threshold = -1
+    style = "bright-green"
 
 [memory_usage]
   show_percentage = true
   show_swap = true
-  threshold = -1
-  symbol = ""
+  threshold = 75 
+  symbol = ":"
   separator = "|"
-  style = "blue"
+  style = "bright-blue"
   disabled = false
 
 [nodejs]
   symbol = " "
-  style = "bold green"
+  style = "bright-green"
   disabled = false
 
 [package]
   symbol = " "
-  style = "bold red"
+  style = "yellow"
   display_private = "true"
   disabled = false
 
@@ -176,21 +178,21 @@ scan_timeout = 10
   min_time = 100
   show_milliseconds = true
   style = ""
-  prefix = ":"
+  prefix = "Last operation :"
   disabled = false
 
 # Line_break
 [username]
-  style_root = "bold red"
-  style_user = "fg:white bg:purple"
+  style_root = "red"
+  style_user = "bright-purple"
   show_always = false
   disabled = false
 
 [character]
-  symbol = " [i]" 
-  error_symbol = "✗[i]"
+  symbol = "❯" 
+  error_symbol = "\uf00d" # 
   use_symbol_for_status = true
-  vicmd_symbol = " []"
-  style_success = "bold green"
-  style_failure = "bold red"
+  # vicmd_symbol = " []"
+  style_success = ""
+  style_failure = "bright-red"
   disabled = "false"
