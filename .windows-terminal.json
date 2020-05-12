@@ -36,7 +36,7 @@
         },
 
         "list":
-        [ 
+        [
             {
                 "name": "Ubuntu",
                 "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
@@ -79,27 +79,27 @@
     // To learn more about color schemes, visit https://aka.ms/terminal-color-schemes
     "schemes":
         [
-            {
-                "name": "xeho91",
-                "background" : "#232323",
-                "foreground" : "#D3D3D3",
-                "black" : "#232323",
-                "red" : "#CF2A23",
-                "green" : "#107945",
-                "yellow" : "#9E833C",
-                "blue" : "#3F61E1",
-                "purple" : "#B403DE",
-                "cyan" : "#0971B1",
-                "white" : "#D3D3D3",
-                "brightBlack" : "#7B7B7B",
-                "brightRed" : "#D36556",
-                "brightGreen" : "#109D60",
-                "brightYellow" : "#D1A82F",
-                "brightBlue" : "#5C80ED",
-                "brightPurple" : "#C74BF6",
-                "brightCyan" : "#048ECE",
-                "brightWhite" : "#E9E9E9"
-            }
+          {
+            "name": "xeho91",
+            "background" : "#232323",
+            "foreground" : "#BEBEBE",
+            "black" : "#433535",
+            "red" : "#CF2A23",
+            "green" : "#107945",
+            "yellow" : "#9E833C",
+            "blue" : "#3F61E1",
+            "purple" : "#B403DE",
+            "cyan" : "#0971B1",
+            "white" : "#E0E0E0",
+            "brightBlack" : "#776969",
+            "brightRed" : "#D36556",
+            "brightGreen" : "#109D60",
+            "brightYellow" : "#D1A82F",
+            "brightBlue" : "#5C80ED",
+            "brightPurple" : "#C74BF6",
+            "brightCyan" : "#048ECE",
+            "brightWhite" : "#F0F0F0"
+           }
         ],
 
     // Add custom keybindings to this array.
@@ -121,10 +121,10 @@
         // - "splitMode": "duplicate" makes the new pane use the focused pane's profile.
         // To learn more about panes, visit https://aka.ms/terminal-panes
         { "command": { "action": "splitPane", "split": "auto", "splitMode": "duplicate" }, "keys": "alt+shift+d" },
-       
-        //Press Alt + 1 to go pane 1 
+
+        //Press Alt + 1 to go pane 1
         { "command": { "action": "switchToTab", "index": 0 }, "keys": "alt+1" },
-        //Press Alt + 2 to go pane 2 
+        //Press Alt + 2 to go pane 2
         { "command": { "action": "switchToTab", "index": 1 }, "keys": "alt+2" },
          //Press Alt + 3 to go pane 3
         { "command": { "action": "switchToTab", "index": 2 }, "keys": "alt+3" },
