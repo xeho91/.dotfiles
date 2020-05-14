@@ -20,6 +20,8 @@ prompt_order=[
   "memory_usage",
   "package",
   "nodejs",
+  "custom.npm",
+  "custom.yarn",
   "cmd_duration",
   #
   "line_break",
@@ -105,7 +107,7 @@ scan_timeout = 10
   ahead.value = "|⇡A:"
   ahead.style = "bright-blue"
   # Behind
-  behind.value = "|⇣B:" 
+  behind.value = "|⇣B:"
   behind.style = "bright-yellow"
   # Stashed
   stashed.value = "\uf01cS:" # 
@@ -157,15 +159,10 @@ scan_timeout = 10
 [memory_usage]
   show_percentage = true
   show_swap = true
-  threshold = 75 
+  threshold = 75
   symbol = ":"
   separator = "|"
   style = "bright-blue"
-  disabled = false
-
-[nodejs]
-  symbol = " "
-  style = "bright-green"
   disabled = false
 
 [package]
@@ -174,11 +171,32 @@ scan_timeout = 10
   display_private = "true"
   disabled = false
 
+[nodejs]
+  symbol = " "
+  style = "bright-green"
+  disabled = false
+
+[custom.npm]
+  symbol = "\ue71e " # 
+  prefix = "" # 
+  command = "npm -v"
+  files = ["package.json"]
+  style = "red"
+  disabled = false
+
+[custom.yarn]
+  symbol = "\uf61a " # 
+  prefix = "" # 
+  command = "yarn -v"
+  files = ["yarn.lock"]
+  style = "cyan"
+  disabled = false
+
 [cmd_duration]
   min_time = 100
   show_milliseconds = true
   style = ""
-  prefix = "Last operation :"
+  prefix = "| Last operation :"
   disabled = false
 
 # Line_break
@@ -189,7 +207,7 @@ scan_timeout = 10
   disabled = false
 
 [character]
-  symbol = "❯" 
+  symbol = "❯"
   error_symbol = "\uf00d" # 
   use_symbol_for_status = true
   # vicmd_symbol = " []"
