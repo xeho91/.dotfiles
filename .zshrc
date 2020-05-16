@@ -1,11 +1,6 @@
 # FIX for WSL2 with high memory consumption
 [ -z "$(ps -ef | grep cron | grep -v grep)"  ] && sudo /etc/init.d/cron start &> /dev/null
 
-# Starship - cross-shell prompt
-# https://starship.rs/
-export STARSHIP_CONFIG=~/.dotfiles/.starship.toml
-eval "$(starship init zsh)"
-
 # SSH
 eval "$(keychain --eval --agents ssh xeho91)"
 
@@ -64,3 +59,22 @@ zinit load zdharma/zsh-diff-so-fancy
 
 # Enable colorls (colors and icons for ls command)
 source $(dirname $(gem which colorls))/tab_complete.sh
+
+# =============================
+# Starship - cross-shell prompt
+# =============================
+# https://starship.rs/
+# https://github.com/starship/starship
+#
+# Change Terminal tab title...
+function set_terminal_tab_title() {
+  # to display current location
+  echo -ne "\033]0;\U1F4C2${PWD##*/}\007"
+}
+# Add it to pre-command functions
+precmd_functions+=(set_terminal_tab_title)
+# Import settings from...
+export STARSHIP_CONFIG=~/.dotfiles/.starship.toml
+# Initiate Starship prompt in zsh
+eval "$(starship init zsh)"
+
