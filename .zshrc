@@ -23,10 +23,6 @@ alias open="explorer.exe"
 # Custom functions
 function ShowWeather { curl -v http://wttr.in/$1 }
 
-# asdf - multiple runtime versions manager
-# https://asdf-vm.com/
-. $HOME/.asdf/asdf.sh
-
 # zinit - ZSH plugin manager
 # https://github.com/zdharma/zinit
 ### Added by Zinit's installer
@@ -57,7 +53,25 @@ zinit for \
 zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
 zinit load zdharma/zsh-diff-so-fancy
 
-# Enable colorls (colors and icons for ls command)
+# ====================================================
+# asdf-vm - multiple language runtime versions manager
+# ====================================================
+# https://asdf-vm.com/
+#
+# Initiate asdf
+. $HOME/.asdf/asdf.sh
+# Append completions to fpath
+fpath=(${ASDF_DIR}/completions $fpath)
+# Initialise completions with ZSH's compinit
+autoload -Uz compinit
+compinit
+
+# =======================================================
+# Color LS - colorizes the ls output with color and icons
+# =======================================================
+# https://github.com/athityakumar/colorls
+#
+# Enable tab completion for flags
 source $(dirname $(gem which colorls))/tab_complete.sh
 
 # =============================
