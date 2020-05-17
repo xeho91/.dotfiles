@@ -1,6 +1,6 @@
 # FIX for WSL2 with high memory consumption
 [ -z "$(ps -ef | grep cron | grep -v grep)" ] \
-  && sudo /etc/init.d/cron start &> /dev/null
+	&& sudo /etc/init.d/cron start &> /dev/null
 
 # ==================
 # SSH - Secure SHell
@@ -51,11 +51,11 @@ alias open="explorer.exe"
 #
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
-    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
-        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+	print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+	command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+	command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+		print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+		print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
 #
 source "$HOME/.zinit/bin/zinit.zsh"
@@ -67,9 +67,9 @@ autoload -Uz _zinit
 # plugins with a single command. For more information see:
 # https://zdharma.org/zinit/wiki/For-Syntax/
 zinit for \
-    light-mode zsh-users/zsh-autosuggestions \
-               zdharma/fast-syntax-highlighting \
-               zdharma/history-search-multi-word
+	light-mode zsh-users/zsh-autosuggestions \
+	zdharma/fast-syntax-highlighting \
+	zdharma/history-search-multi-word
 #
 # Download the default profile
 #
@@ -108,12 +108,12 @@ source $(dirname $(gem which colorls))/tab_complete.sh
 #
 # Change terminal's tab title...
 function set_terminal_tab_title() {
-  echo -ne "\033]0;"
-  # display opened file folder emoji
-  echo -ne "\U1F4C2"
-  # display current current folder (from current location)
-  echo -ne "${PWD##*/}"
-  echo -ne "\007"
+	echo -ne "\033]0;"
+	# display opened file folder emoji
+  	echo -ne "\U1F4C2"
+ 	# display current current folder (from current location)
+ 	echo -ne "${PWD##*/}"
+	echo -ne "\007"
 }
 # ...and add it to pre-command functions
 precmd_functions+=(set_terminal_tab_title)
@@ -121,4 +121,3 @@ precmd_functions+=(set_terminal_tab_title)
 export STARSHIP_CONFIG=~/.dotfiles/.starship.toml
 # Initiate Starship prompt in zsh
 eval "$(starship init zsh)"
-

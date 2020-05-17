@@ -26,15 +26,15 @@ set go+=a
 " Indentation settings
 " ====================
 " The width of the TAB
-set tabstop=2
+" set tabstop=4
 " Indent width
-set shiftwidth=2
+" set shiftwidth=4
 " Number of columns for a TAB
-set softtabstop=2
+" set softtabstop=4
 " Expand TAB to spaces
-set expandtab
+" set expandtab
 " Show whitespaces '>'
-set list
+" set list
 " Show line's number on the left
 set number
 " ======================
@@ -53,44 +53,50 @@ let g:indent_guides_guide_size = 1
 " Plugins will be downloaded under the specified directory.
 call plug#begin('~/.vim/plugged')
 " Declare the list of plugins.
-
-  " Essentials
-  Plug 'tpope/vim-sensible'
-  Plug 'mileszs/ack.vim'
-  Plug 'ctrlpvim/ctrlp.vim'
-  Plug 'preservim/nerdcommenter'
-  " Theme and visuals
-  Plug 'haishanh/night-owl.vim'
-  Plug 'joshdick/onedark.vim'
-  Plug 'itchyny/lightline.vim'
-  Plug 'ryanoasis/vim-devicons'
-  Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-  " File system tree & navigation
-  Plug 'scrooloose/nerdtree'
-  Plug 'Xuyuanp/nerdtree-git-plugin'
-  Plug 'majutsushi/tagbar'
-  " Syntax
-  Plug 'luochen1990/rainbow'
-  Plug 'sheerun/vim-polyglot'
-  Plug 'nathanaelkane/vim-indent-guides'
-  Plug 'machakann/vim-highlightedyank'
-  " Other
-  Plug 'junegunn/vim-easy-align'
-  Plug 'vim-scripts/matchit.zip'
-  Plug 'easymotion/vim-easymotion'
-  Plug 'justinmk/vim-sneak'
-  Plug 'editorconfig/editorconfig-vim'
-  " Git
-  Plug 'airblade/vim-gitgutter'
-  Plug 'tpope/vim-fugitive'
-  " Autocompletion
-  Plug 'jiangmiao/auto-pairs'
-  Plug '~/.fzf'
-  Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-  Plug 'honza/vim-snippets'
-  Plug 'mattn/emmet-vim'
-  Plug 'tpope/vim-surround'
-
+"
+	" Essentials
+	Plug 'tpope/vim-sensible'
+	Plug 'mileszs/ack.vim'
+	Plug 'ctrlpvim/ctrlp.vim'
+	Plug 'preservim/nerdcommenter'
+"
+	" Theme and visuals
+	Plug 'haishanh/night-owl.vim'
+	Plug 'joshdick/onedark.vim'
+	Plug 'itchyny/lightline.vim'
+	Plug 'ryanoasis/vim-devicons'
+	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+"
+	" File system tree & navigation
+	Plug 'scrooloose/nerdtree'
+	Plug 'Xuyuanp/nerdtree-git-plugin'
+	Plug 'majutsushi/tagbar'
+"
+	" Syntax
+	Plug 'luochen1990/rainbow'
+	Plug 'sheerun/vim-polyglot'
+	Plug 'nathanaelkane/vim-indent-guides'
+	Plug 'machakann/vim-highlightedyank'
+"
+	" Other
+	Plug 'junegunn/vim-easy-align'
+	Plug 'vim-scripts/matchit.zip'
+	Plug 'easymotion/vim-easymotion'
+	Plug 'justinmk/vim-sneak'
+	Plug 'editorconfig/editorconfig-vim'
+"
+	" Git
+	Plug 'airblade/vim-gitgutter'
+	Plug 'tpope/vim-fugitive'
+"
+	" Autocompletion
+	Plug 'jiangmiao/auto-pairs'
+	Plug '~/.fzf'
+	Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+	Plug 'honza/vim-snippets'
+	Plug 'mattn/emmet-vim'
+	Plug 'tpope/vim-surround'
+"
 " List ends here. Plugins become visible to Vim after this call.
 call plug#end()
 
@@ -127,7 +133,7 @@ nmap <silent> <F8> :TagbarToggle<CR>
 " ==============
 " Expand colors in terminal using GUI
 if (has("termguicolors"))
-  set termguicolors
+	set termguicolors
 endif
 
 " Enable syntax highlight
@@ -223,15 +229,15 @@ set signcolumn=yes
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+			\ pumvisible() ? "\<C-n>" :
+			\ <SID>check_back_space() ? "\<TAB>" :
+			\ coc#refresh()
 
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
@@ -240,9 +246,9 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " position. Coc only does snippet and additional edit on confirm.
 " <CR> could be remapped by other vim plugin, try `:verbose imap <CR>`.
 if exists('*complete_info')
-  inoremap <expr> <CR> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+	inoremap <expr> <CR> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
 else
-  imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+	imap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 endif
 
 " Use `[g` and `]g` to navigate diagnostics
@@ -259,11 +265,11 @@ nmap <silent> gr <Plug>(coc-references)
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
+	if (index(['vim','help'], &filetype) >= 0)
+		execute 'h '.expand('<cword>')
+	else
+		call CocAction('doHover')
+	endif
 endfunction
 
 " Highlight the symbol and its references when holding the cursor.
@@ -277,11 +283,11 @@ xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder.
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+	autocmd!
+	" Setup formatexpr specified filetype(s).
+	autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+	" Update signature help on jump placeholder.
+	autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
 " Applying codeAction to the selected region.

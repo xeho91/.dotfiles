@@ -1,11 +1,9 @@
-/*
-NOTE: This configureation file should be located in:
-C:\Users\%USERPROFILE%\
-*/
+# NOTE: This configureation file should be located in:
+# C:\Users\%USERPROFILE%\
 
 [wsl2]
-  memory=4GB
-  processors=2
+	memory=2GB
+	processors=2
 
 [user]
-  default=xeho91
+	default=xeho91
