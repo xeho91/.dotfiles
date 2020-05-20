@@ -21,6 +21,9 @@ eval "$(keychain --eval --agents ssh xeho91)"
 # Enable passphrase prompt
 export GPG_TTY=$(tty)
 
+# change path to zsh's history log file
+HISTFILE=~/.zsh_history
+
 # ================================
 # JQ - command line JSON processor
 # ================================
@@ -43,6 +46,7 @@ alias wttr=show_weather
 alias weather=show_weather
 alias ls="colorls"
 alias open="explorer.exe"
+alias clip="clip.exe"
 
 # ==========================
 # zinit - ZSH plugin manager
