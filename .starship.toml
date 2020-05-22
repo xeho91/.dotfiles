@@ -18,6 +18,8 @@ prompt_order=[
 	"line_break",
 	"battery",
 	"memory_usage",
+	"custom.docker",
+	"docker_context",
 	"package",
 	"nodejs",
 	"custom.npm",
@@ -54,11 +56,11 @@ scan_timeout = 10
 	disabled = false
 
 [directory]
-	truncation_length = 3
+	truncation_length = 4
 	truncate_to_repo = true
 	prefix = "in 📂: "
-	style = "purple"
-	fish_style_pwd_dir_length	= 5
+	style = "yellow"
+	fish_style_pwd_dir_length = 1
 	use_logical_path = true
 	disabled = false
 
@@ -66,7 +68,7 @@ scan_timeout = 10
 	symbol = "\ue725 " # 
 	truncation_length = 0
 	truncation_symbol = ""
-	style = "bright-cyan"
+	style = "bright-white"
 	disable = false
 
 [git_commit]
@@ -165,9 +167,22 @@ scan_timeout = 10
 	style = "bright-blue"
 	disabled = false
 
+[custom.docker]
+	symbol = "\uf308 " # 
+	command = "docker version -f {{.Server.Version}}"
+	files = ["Dockerfile", "docker-compose.yml"]
+	style = "bright-cyan"
+	disable = false
+
+[docker_context]
+	symbol = "\uf308 " # 
+	only_with_files = false
+	style = "bright-cyan"
+	disabled = false
+
 [package]
-	symbol = " "
-	style = "yellow"
+	symbol = "\uf02b " # 
+	style = "bright-black"
 	display_private = "true"
 	disabled = false
 
