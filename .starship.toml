@@ -18,9 +18,11 @@ prompt_order=[
 	"line_break",
 	"battery",
 	"memory_usage",
+	"kubernetes",
 	"custom.docker",
 	"docker_context",
 	"package",
+	"custom.deno",
 	"nodejs",
 	"custom.npm",
 	"custom.yarn",
@@ -167,6 +169,13 @@ scan_timeout = 10
 	style = "bright-blue"
 	disabled = false
 
+[kubernetes]
+	symbol = "\ufd31 " # ﴱ
+	style = "bright-blue"
+	disabled = false
+	[kubernetes.context_aliases]
+	"dev.local.cluster.k8s" = "dev"
+
 [custom.docker]
 	symbol = "\uf308 " # 
 	command = "docker version -f {{.Server.Version}}"
@@ -184,6 +193,14 @@ scan_timeout = 10
 	symbol = "\uf02b " # 
 	style = "bright-black"
 	display_private = "true"
+	disabled = false
+
+[custom.deno]
+	symbol ="🦕 "
+	prefix = ""
+	command = "deno -V"
+	files = ["scripts.json"]
+	style = "bright-white"
 	disabled = false
 
 [nodejs]
