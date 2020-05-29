@@ -1,6 +1,11 @@
+#!/usr/bin/env bash
+
 # FIX for WSL2 with high memory consumption
 [ -z "$(ps -ef | grep cron | grep -v grep)" ] \
 	&& sudo /etc/init.d/cron start &> /dev/null
+
+# Add Windows' home path to environmental variables
+export WIN_HOME="/mnt/c/Users/matka/"
 
 # ==================
 # SSH - Secure SHell
@@ -71,16 +76,12 @@ export JQ_COLORS="1;30:0;31:0;32:0;33:0;37:1;35:1;36"
 # ================
 # Custom functions
 # ================
-function show_weather { curl http://wttr.in/$1 }
+show_weather() { curl "http://wttr.in/$1"; }
 
 # =======
 # Aliases
 # =======
-alias wttr=show_weather
-alias weather=show_weather
-alias ls="colorls"
-alias open="explorer.exe"
-alias clip="clip.exe"
+source "$HOME/.dotfiles/.aliases"
 
 # ==========================
 # zinit - ZSH plugin manager
@@ -107,7 +108,7 @@ autoload -Uz _zinit
 zinit for \
 	light-mode zsh-users/zsh-autosuggestions \
 	zdharma/fast-syntax-highlighting \
-	zdharma/history-search-multi-word
+	zdharma/history-search-multi-word \
 #
 # Download the default profile
 #
@@ -115,28 +116,9 @@ zinit for \
 zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
 zinit load zdharma/zsh-diff-so-fancy
 #
-zinit wait lucid for OMZP::colored-man-pages
-
-# ====================================================
-# asdf-vm - multiple language runtime versions manager
-# ====================================================
-# https://asdf-vm.com/
-#
-# Initiate asdf
-. $HOME/.asdf/asdf.sh
-# Append completions to fpath
-fpath=(${ASDF_DIR}/completions $fpath)
-# Initialise completions with ZSH's compinit
-autoload -Uz compinit
-compinit
-
-# =======================================================
-# Color LS - colorizes the ls output with color and icons
-# =======================================================
-# https://github.com/athityakumar/colorls
-#
-# Enable tab completion for flags
-source $(dirname $(gem which colorls))/tab_complete.sh
+zinit wait lucid for \
+	OMZP::colored-man-pages \
+	OMZP::alias-finder \
 
 # =============================
 # Starship - cross-shell prompt
@@ -159,3 +141,29 @@ precmd_functions+=(set_terminal_tab_title)
 export STARSHIP_CONFIG=~/.dotfiles/.starship.toml
 # Initiate Starship prompt in zsh
 eval "$(starship init zsh)"
+
+# PLUGINS:
+ZSH_ALIAS_FINDER_AUTOMATIC=true
+
+ export PATH="/home/xeho91/.deno/bin:$PATH"
+
+# ====================================================
+# asdf-vm - multiple language runtime versions manager
+# ====================================================
+# https://asdf-vm.com/
+#
+# Initiate asdf
+. $HOME/.asdf/asdf.sh
+# Append completions to fpath
+fpath=(${ASDF_DIR}/completions $fpath)
+# Initialise completions with ZSH's compinit
+autoload -Uz compinit
+compinit
+
+# =======================================================
+# Color LS - colorizes the ls output with color and icons
+# =======================================================
+# https://github.com/athityakumar/colorls
+#
+# Enable tab completion for flags
+source "$(dirname $(gem which colorls))/tab_complete.sh"
