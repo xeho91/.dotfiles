@@ -292,6 +292,7 @@ zinit ice as"program" \
 	atpull"%atclone" make pick"src/vim"
 zinit light vim/vim
 export VIMRUNTIME=~/.zinit/plugins/vim---vim/runtime
+alias vi=vim
 
 # 'rg' recursively searching directories for a regex pattern with gitignore
 # -------------------------------------------------------------------------
@@ -363,14 +364,14 @@ zinit light wfxr/forgit
 zinit ice wait lucid
 zinit light hlissner/zsh-autopair
 
-# A Zsh theme with lots of features
-# ---------------------------------
+# Prompt theme with lots of features
+# ----------------------------------
 # https://github.com/romkatv/powerlevel10k
 #
 zinit ice depth=1
 zinit light romkatv/powerlevel10k
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# To customize prompt, run `p10k configure`
+[[ ! -f $DOTFILES/Zsh/.p10k.zsh ]] || source $DOTFILES/Zsh/.p10k.zsh
 
 # 'fpp' - command line tool for selecting files out of bash output
 # ----------------------------------------------------------------
@@ -444,6 +445,12 @@ zinit light stedolan/jq
 # https://stedolan.github.io/jq/manual/#Colors
 # In this order: null, false, true, numbers, strings, arrays, objects
 export JQ_COLORS="1;30:0;31:0;32:0;33:0;37:1;35:1;36"
+
+# Git utilities
+# -------------
+# https://github.com/tj/git-extras
+zinit ice as"program" pick"$ZPFX/bin/git-*" make"PREFIX=$ZPFX"
+zinit light tj/git-extras
 
 # =============================================================================
 # Oh My Zsh (OMZ) - open source framework for managing Zsh configuration
