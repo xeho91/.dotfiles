@@ -7,10 +7,13 @@
 [user]
 	name = xeho91
 	email = xeho91@pm.me
-	signinkey = 24926CC31A40057D
+	signinkey = <insert your GPG key here>
 
 [gpg]
 	program = gpg
+
+[pager]
+	program = bat
 
 [commit]
 	# https://help.github.com/articles/signing-commits-using-gpg/
