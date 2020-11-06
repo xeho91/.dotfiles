@@ -1,0 +1,6 @@
+# Ignore file produced by Zsh's `compinit` (completion system) to speed up
+# completion
+.zcompdump
+
+# Ignore the history file
+.zsh_history

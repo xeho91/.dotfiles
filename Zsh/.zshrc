@@ -35,35 +35,6 @@ zstyle ':completion:*' expand prefix suffix 
 source "$ZDOTDIR/configurations/options.zsh"
 # =============================================================================
 
-# =============================================================================
-# Booting / startup tasks
-# =============================================================================
-
-# Random fun distraction to kill the loading time
-if type shuf > /dev/null; then
-	cowfile="$(cowsay -l | sed "1 d" | tr ' ' '\n' | shuf -n 1)"
-  else
-	cowfiles=( $(cowsay -l | sed "1 d") );
-	cowfile=${cowfiles[$(($RANDOM % ${#cowfiles[*]}))]}
-fi
-#
-fortune | cowsay -f "$cowfile"
-
-# GPG - GnuPrivacy Guard
-# ----------------------
-# https://www.gnupg.org/documentation/manpage.html
-# https://help.github.com/en/github/authenticating-to-github/generating-a-new-gpg-key
-#
-# Enable passphrase prompt
-export GPG_TTY=$(tty)
-
-# # SSH - Secure Shell
-# --------------------
-# https://www.openssh.com/manual.html
-# https://help.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh
-#
-# Start the ssh-agent on session start
-eval "$(keychain --eval --agents ssh xeho91_rsa)"
 
 # =============================================================================
 # Zinit - plugin manager
@@ -448,7 +419,9 @@ zinit snippet OMZP::web-search
 zinit ice depth=1
 zinit light romkatv/powerlevel10k
 # To customize prompt, run `p10k configure`
-[[ ! -f $DOTFILES/Zsh/.p10k.zsh ]] || source $DOTFILES/Zsh/.p10k.zsh
+if [[ -f $ZDOTDIR/configurations/prompts/.p10k.zsh ]]; then
+	source $ZDOTDIR/configurations/prompts/.p10k.zsh
+fi
 #
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]

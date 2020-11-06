@@ -51,7 +51,7 @@ the program>` + `rc`. Example: `.zshrc`.
 
 ---
 
-### Q: What's the difference _(in prompt)_ between `$`, `#` and `%`?
+### Q: What is the difference _(in prompt)_ between `$`, `#` and `%`?
 
 _Source & credits: https://askubuntu.com/a/706190/1145197_
 
@@ -60,4 +60,38 @@ A: These symbols indicate the user account type you are logged in to.
 - **Dollar** sign (`$`) means you are a normal user
 - **Hash** (`#`) means you are the system administrator _(root)_
 - In the C shell, the prompt ends with a **percentage** sign (`%`)
+
+---
+
+### Q: What is the `dev/null`?
+
+_Source & credits: https://stackoverflow.com/a/10508859/6753652_
+
+A: Is a special filesystem object that discards everything written into it.
+
+---
+
+### Q: What the hell is the `2>&1`?
+
+_Source & credits: https://stackoverflow.com/a/10508859/6753652_
+
+A: Redirect the **standard error** _(stderr - 2)_ to **standard output**
+   _(stdin -2)_.
+
+Reminder of File Descriptors:
+- 0 - stdin _(**st**andard **in**put)_
+- 1 - stdout _(**st**andard **out**put)_
+- 2 - stderr - _(**st**andard **err**or)_
+
+---
+
+### Q: What does a single ampersand (`&`) at the end of command do?
+
+_Source & credits: https://unix.stackexchange.com/a/86253/440634_
+
+A: It informs the shell to put the command in the background. You can switch to
+   it with `fg` command. This is known as "**job control**" in UNIX.
+
+Is possible to have more than just one jobs. List them with `jobs`.
+To switch to specific job ID from the list, use `fg %<id>`.
 
