@@ -1,12 +1,5 @@
-# Expose the colors variables
-autoload colors
-colors
-
 # =========================================================================== #
 # Random fun distraction
-# ----------------------
-# https://github.com/shlomif/fortune-mod
-# https://github.com/tnalpgge/rank-amateur-cowsay
 # =========================================================================== #
 if type shuf > /dev/null; then
 	cowfile="$(cowsay -l | sed "1 d" | tr ' ' '\n' | shuf -n 1)"
@@ -15,11 +8,10 @@ if type shuf > /dev/null; then
 	cowfile=${cowfiles[$(($RANDOM % ${#cowfiles[*]}))]}
 fi
 #
-print "$fg[yellow]$(fortune)$reset_color" | cowsay -f "$cowfile"
+command fortune | cowsay -f "$cowfile" | lolcat -f -r
 
 # =========================================================================== #
-# Show uptime of the device
+# Show the uptime of device
 # =========================================================================== #
-# Print the uptime
-print "$fg[blue]$HOST been $(uptime --pretty) (since: $(uptime --since))"
+print "$HOST been $fg[blue]$(uptime --pretty)$reset_color (since $(uptime --since))"
 
