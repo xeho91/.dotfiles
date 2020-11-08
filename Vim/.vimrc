@@ -8,7 +8,7 @@
 if empty(glob('~/.vim/autoload/plug.vim'))
 	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
 		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	autocmd VimEnter * PlugInstall --sync | source $VIMRC
 endif
 
 " Plugins will be downloaded under the specified directory
@@ -549,9 +549,9 @@ let g:lightline = {
 \ }
 " Use icons as indicators
 let g:lightline#ale#indicator_checking = "\uf110"
-let g:lightline#ale#indicator_infos = "\uf129"
-let g:lightline#ale#indicator_warnings = "\uf071"
-let g:lightline#ale#indicator_errors = "\uf05e"
+let g:lightline#ale#indicator_infos = "\uf129 "
+let g:lightline#ale#indicator_warnings = "\uf071 "
+let g:lightline#ale#indicator_errors = "\uf05e "
 let g:lightline#ale#indicator_ok = "\uf00c"
 " Force Lightline update on background color change
 autocmd OptionSet background
@@ -582,11 +582,11 @@ let g:NERDTreeWinPos = "right"
 "
 " Open NERDTree automatically when Vim starts up on opening a directory
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1
-	\ && isdirectory(argv()[0])
-	\ && !exists("s:std_in")
-		\ | wincmd p | ene | exe 'NERDTree' argv()[0]
-\ | endif
+" autocmd VimEnter * if argc() == 1
+"     \ && isdirectory(argv()[0])
+"     \ && !exists("s:std_in")
+"         \ | wincmd p | ene | exe 'NERDTree' argv()[0]
+" \ | endif
 " Close Vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1
 	\ && exists("b:NERDTree")

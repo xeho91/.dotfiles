@@ -7,11 +7,12 @@
   "diagnostic.displayByAle": true,
 
   "languageserver": {
-   // "json": {
-   //   "command": "gopls",
-   //   "rootPatterns": ["go.mod"],
-   //   "trace.server": "verbose",
-   //   "filetypes": ["go"]
-   // }
+    // "bash": {
+    //   // https://github.com/bash-lsp/bash-language-server
+    //   "command": "bash-language-server",
+    //   "args": ["start"],
+    //   "filetypes": ["sh"],
+    //   "ignoredRootPaths": ["~"]
+    // }
   }
 }

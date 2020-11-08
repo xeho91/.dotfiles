@@ -39,5 +39,6 @@ command fortune | boxes -d "${shapes[$random_index]}" | lolcat -f -r
 # =========================================================================== #
 # Print what happened
 # =========================================================================== #
-print "Logged out from $fg[magenta]$HOST$reset_color as $fg[magenta]$USER$reset_color."
+print -P "Logged out from %F{magenta}$HOST%f as %F{magenta}$USER%f." \
+	| toilet -f term -F border
 

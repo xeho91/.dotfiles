@@ -51,7 +51,7 @@ unsetopt MENU_COMPLETE
 # =========================================================================== #
 #
 # Path to zsh's history log file
-export HISTFILE=$HOME/.zsh_history
+export HISTFILE=$ZDOTDIR/.zsh_history
 #
 # Number of lines or commands that:
 # (a) are allowed in the history file at startup time of a session,

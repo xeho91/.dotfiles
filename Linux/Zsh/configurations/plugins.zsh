@@ -1,50 +1,12 @@
-# ============================================================================ #
-# Zsh Completion System configuration
-# -----------------------------------
-# http://zsh.sourceforge.net/Doc/Release/Completion-System.html#Completion-System-Configuration
-# ============================================================================ #
-#
-# Provide a visual feedback when pressing completion (TAB⇥)
-# http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Visual-effects
-zstyle ':completion:*' format '%U%B%F{magenta}Possible completions for "%f%u%K{black}%d%k%U%F{magenta}":%u%f%b'
-#
-# Try filename completion as a default when other completions failed
-# http://zsh.sourceforge.net/FAQ/zshfaq04.html
-zstyle ':completion:*' completer _complete _ignored _files
-#
-# When running `compinstall` again, it lets `compinstall` find where it has
-# written out `zstyle` statements last time. This way, is possible to run
-# `compinstall` again to update them.
-zstyle :compinstall filename '$DOTFILES/Zsh/.zshrc'
-#
-# Try to complete every partial directory name in the path entered and not just
-# the first one
-zstyle ':completion:*' list-suffixes true
-#
-# When there are two dirs 'nm' and 'node_modules' and with typing 'nm',
-# it will never try to complete it to the latter
-zstyle ':completion:*' accept-exact-dirs true
-#
-# Partial completion
-# Typing 'cd /u/lo/b<TAB⇥>' becomes '/usr/local/bin'
-# Typing 'cd ~/L/P/B<TAB⇥>' becomes '~/Library/Preferences/ByHost'
-zstyle ':completion:*' list-suffixes true
-zstyle ':completion:*' expand prefix suffix 
-
-# =============================================================================
-source "$ZDOTDIR/configurations/options.zsh"
-# =============================================================================
-
-
-# =============================================================================
+# =========================================================================== #
 # Zinit - plugin manager
 # ----------------------
 # https://github.com/zdharma/zinit
-# =============================================================================
+# =========================================================================== #
 
 # Check if environment variable exists
 if [ -z "$ZPLG_HOME" ]; then
-	ZPLG_HOME="${ZHOMEDIR:-$HOME}/zinit"
+	ZPLG_HOME="${ZDOTDIR:-$HOME}/.zinit"
 fi
 
 ### Added by Zinit's installer
@@ -52,13 +14,14 @@ if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
     command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
     command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
-        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+		print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+		print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
-#
+
 source "$HOME/.zinit/bin/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
+
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
 zinit light-mode for \
@@ -101,9 +64,8 @@ alias ls="lsd"
 # ----------------------------------------------------------------
 # https://github.com/b4b4r07/enhancd
 #
-zinit ice pick"init.sh"
+zinit ice pick"init.sh" atload"export ENHANCD_DISABLE_DOT=1"
 zinit light b4b4r07/enhancd
-export ENHANCD_DISABLE_DOT=1
 
 # =============================================================================
 # Zsh UX (User Experience) improvements
@@ -140,15 +102,11 @@ zinit light zdharma/history-search-multi-word
 # displayed when using `ls`
 # --------------------------------------------------------------------------
 # https://github.com/trapd00r/LS_COLORS
-zinit ice atclone"dircolors -b LS_COLORS > c.zsh" atpull"%atclone" pick"c.zsh"
-zinit ice wait"0c" lucid reset \
-	atclone"local P=${${(M)OSTYPE:#*darwin*}:+g}
-				\${P}sed -i \
-				'/DIR/c\DIR 38;5;63;1' LS_COLORS; \
-			\${P}dircolors -b LS_COLORS > c.zsh" \
-	atpull'%atclone' pick"c.zsh" nocompile'!' \
-	atload'zstyle ":completion:*" list-colors “${(s.:.)LS_COLORS}”'
-zinit light trapd00r/LS_COLORS
+# zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
+#     atpull'%atclone' pick"clrs.zsh" nocompile'!' \
+#     atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
+# zinit load trapd00r/LS_COLORS
+zinit pack for ls_colors
 
 # Auto-close and delete matching delimiters in Zsh
 # ------------------------------------------------
@@ -172,15 +130,15 @@ zinit snippet OMZP::git-extras
 # ------------------------------------------
 # https://github.com/cli/cli/
 #
-zinit ice from"gh-r" as"program" bpick"*.tar.gz" mv"gh*/bin/gh -> gh" \
-	atload'gh completion --shell zsh > $ZINIT_DIR/completions/_gh'
-zinit load cli/cli
+# zinit ice from"gh-r" as"program" bpick"*.tar.gz" mv"gh*/bin/gh -> gh" \
+#     atload`gh completion --shell zsh > $ZINIT_DIR/completions/_gh`
+# zinit load cli/cli
 
 # A utility tool powered by 'fzf' for using Git interactively
 # -----------------------------------------------------------
 # https://github.com/wfxr/forgit
 #
-zinit light wfxr/forgit
+# zinit light wfxr/forgit
 
 # Better, human readable Git diffs
 # --------------------------------
@@ -203,8 +161,8 @@ zinit light jhawthorn/fzy
 # ---------------------------------
 # https://github.com/junegunn/fzf
 #
-zinit ice wait lucid from"gh-r" as"program"
-zinit load junegunn/fzf
+# zinit ice wait lucid from"gh-r" as"program"
+# zinit load junegunn/fzf
 
 # `rg` - recursively searching directories for a regex pattern with gitignore
 # ---------------------------------------------------------------------------
@@ -245,29 +203,32 @@ zinit light facebook/PathPicker
 # --------------------------------------------------
 # https://github.com/vim/vim/
 #
-zinit ice as"program" \
-	atclone"rm -f src/auto/config.cache; \
-			./configure \
-				--with-features=huge \
-				--enable-gui=auto \
-				--enable-multibyte \
-				--enable-gtk2-check \
-				--enable-wcsope \
-				--with-x \
-				--prefix=/usr/local \
-				--with-python3-config-dir=$(python3-config --configdir) \
-				--enable-pythoninterp=yes \
-				--enable-python3interp=yes \
-				--enable-luainterp=yes \
-				--enable-rubyinterp=yes \
-				--enable-perlinterp=yes \
-				--disable-arabic \
-				--enable-fail-if-missing" \
-	atpull"%atclone" make pick"src/vim"
-zinit light vim/vim
-export VIMRUNTIME=$HOME/.zinit/plugins/vim---vim/runtime
-alias vi=vim
-
+# zinit ice as"program" \
+#     atclone`\
+#         rm -f src/auto/config.cache; \
+#         ./configure \
+#             --prefix=/usr/local \
+#             --with-features=huge \
+#             --with-x \
+#             --enable-fail-if-missing \
+#             --enable-gui=auto \
+#             --enable-gtk2-check \
+#             --enable-multibyte \
+#             --enable-cscope \
+#             --enable-luainterp=yes \
+#             --enable-perlinterp=yes \
+#             --enable-pythoninterp=yes \
+#             --enable-python3interp=yes \
+#             --enable-rubyinterp=yes \
+#             --disable-arabic \
+#     ` \
+#     atpull"%atclone" make pick"src/vim" \
+#     atload`\
+#         export VIMRUNTIME="$HOME/.zinit/plugins/vim---vim/runtime"; \
+#         alias vi=vim \
+#     `
+# zinit light vim/vim
+#
 # `glow` - Terminal based markdown reader
 # ---------------------------------------
 # https://github.com/charmbracelet/glow
@@ -291,10 +252,7 @@ zinit light denisidoro/navi
 # -------------------------------------------------------
 # https://github.com/tldr-pages/tldr
 #
-zinit ice as"program" pick"tldr tldr-lint" \
-	atinit`cachedir=$HOME/.local/share/tldr \
-		complete -W "$(q=($cachedir/*/*) \
-		sed 's@\.md @ @g' <<<${q[@]##*/})" tldr`
+zinit ice as"program" pick"tldr tldr-lint"
 zinit load pepa65/tldr-bash-client
 
 # =============================================================================
@@ -371,6 +329,21 @@ zinit light stedolan/jq
 # In this order: null, false, true, numbers, strings, arrays, objects
 export JQ_COLORS="1;30:0;31:0;32:0;33:0;37:1;35:1;36"
 
+# Rainbow and unicorns
+# ---------------------------------
+# https://github.com/jaseg/lolcat
+#
+zinit ice as"program" make
+zinit light jaseg/lolcat
+
+# Boxes with fancy shapes
+# -----------------------
+# https://github.com/ascii-boxes/boxes
+#
+zinit ice as"program" make pick"src/boxes" \
+	atload`alias boxes="boxes -f ~/.zinit/plugins/ascii-boxes---boxes/boxes-config"`
+zinit load ascii-boxes/boxes
+
 # =============================================================================
 # Oh My Zsh (OMZ) - open source framework for managing Zsh configuration
 # ----------------------------------------------------------------------
@@ -408,30 +381,3 @@ zinit snippet OMZP::tmux
 zinit snippet OMZP::vi-mode
 zinit snippet OMZP::web-search
 
-# =============================================================================
-# Prompt
-# =============================================================================
-
-# Prompt theme with lots of features
-# ----------------------------------
-# https://github.com/romkatv/powerlevel10k
-#
-zinit ice depth=1
-zinit light romkatv/powerlevel10k
-# To customize prompt, run `p10k configure`
-if [[ -f $ZDOTDIR/configurations/prompts/.p10k.zsh ]]; then
-	source $ZDOTDIR/configurations/prompts/.p10k.zsh
-fi
-#
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-# ------------------------------------------------------------------------------
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-# Other
-# Load & execute completions
-autoload -Uz compinit
-compinit

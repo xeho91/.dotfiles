@@ -13,5 +13,5 @@ command fortune | cowsay -f "$cowfile" | lolcat -f -r
 # =========================================================================== #
 # Show the uptime of device
 # =========================================================================== #
-print "$HOST been $fg[blue]$(uptime --pretty)$reset_color (since $(uptime --since))"
-
+print -P "$HOST been %F{blue}$(uptime --pretty)%f (since $(uptime --since))." \
+	| toilet -f term -F border \

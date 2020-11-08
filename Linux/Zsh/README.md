@@ -90,9 +90,9 @@ _Documentation source: http://zsh.sourceforge.net/Intro/intro_3.html_
 > Here, you can clear your terminal or any other resource which was setup at
 > login.
 
-### **How to choose where to put a setting**
+### Q: How to choose where to put a setting?
 
-If it...
+A: If it...
 - ... should be updated on each new shell -> [`.zshenv`](.zshenv)
 - ... is needed by a command run non->interactively -> [`.zshenv`](.zshenv)
 - ... runs a command which may take some time to complete -> [`.zprofile`](.zprofile)
@@ -104,11 +104,38 @@ _Credits for notes above: https://unix.stackexchange.com/a/487889_
 
 ---
 
-### What are `.zcompdump` files?
+### Q: What are `.zcompdump` files?
 
 _Documentation source: http://zsh.sourceforge.net/Doc/Release/Completion-System.html#Use-of-compinit_
 
-These files are used by Zsh completion system to speed up completion. It's safe
-to delete them, but they will be recreated unless `-D` is added to `compinit`
-line.
+A: These files are used by Zsh completion system to speed up completion. It's
+safe to delete them, but they will be recreated unless `-D` is added to
+`compinit` line.
+
+---
+
+### Q: What does `autoload` do?
+
+_Documentation source: http://zsh.sourceforge.net/Doc/Release/Functions.html_
+
+A: Because in Zsh functions are called in the same way as any other command.
+There can be a name conflict between a program and a function. **What
+`autoload` does is to mark that name as being a function rather than an
+external program**.
+`autoload` tells Zsh to look for a file in `$FPATH`/`$fpath` containing a
+function definition, instead of a file in `$PATH`/`$path` containing a script.
+
+In the example:
+```zsh
+autoload -Uz compinit
+```
+Flags:
+- `-U` - It marks the function `compinit` for autoloading and suppress alias
+  expansion. **It records the name is a function, not an external command and
+  it does not calls it.**
+- `-z` - Use the Zsh style.
+
+_Credits:_
+- _https://stackoverflow.com/a/30840986/6753652_
+- _https://stackoverflow.com/a/63661686/6753652_
 
