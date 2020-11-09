@@ -31,89 +31,15 @@ zinit light-mode for \
     zinit-zsh/z-a-bin-gem-node
 ### End of Zinit's installer chunk
 
-# =============================================================================
-# Existing Linux commands improvements
-# ------------------------------------
-# NOTE:
-# * `zinit load` -> causes reporting to be enabled – you can track what plugin
-#					does, view the information with zinit report {plugin-spec}
-#					and then also unload the plugin with `zinit unload`
-#
-# * `zinit light` -> significantly faster loading without tracking and
-#					 reporting, by using which user resigns of the ability to
-#					 view the plugin report and to unload information
-# =============================================================================
+# =========================================================================== #
+# Load existing Linux commands improvements
+# =========================================================================== #
+source "$ZDOTDIR/configurations/plugins/command_improvements.zsh"
 
-# A `cat` clone with wings
-# ------------------------
-# https://github.com/sharkdp/bat
-#
-zinit ice as"program" from"gh-r" mv"bat* -> bat" pick"bat/bat"
-zinit load sharkdp/bat
-alias cat="bat"
-
-# The next generation 'ls' command
-# --------------------------------
-# https://github.com/Peltoche/lsd
-#
-zinit ice as"program" from"gh-r" mv"lsd* -> lsd" pick"lsd/lsd"
-zinit load Peltoche/lsd
-alias ls="lsd"
-
-# A next-generation 'cd' command with installed interactive filter
-# ----------------------------------------------------------------
-# https://github.com/b4b4r07/enhancd
-#
-zinit ice pick"init.sh" atload"export ENHANCD_DISABLE_DOT=1"
-zinit light b4b4r07/enhancd
-
-# =============================================================================
+# =========================================================================== #
 # Zsh UX (User Experience) improvements
-# =============================================================================
-
-# Syntax highlighting for commands in Zsh
-# ---------------------------------------
-# https://github.com/zdharma/fast-syntax-highlighting
-# -
-# Additional completion definitions for Zsh
-# -----------------------------------------
-# https://github.com/zsh-users/zsh-completions
-# -
-# Suggestion of commands as you type based on completions and history
-# -------------------------------------------------------------------
-# https://github.com/zsh-users/zsh-autosuggestions
-#
-zinit wait lucid for \
-	atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
-	zdharma/fast-syntax-highlighting \
-	blockf \
-	zsh-users/zsh-completions \
-	atload"!_zsh_autosuggest_start" \
-	zsh-users/zsh-autosuggestions
-
-# Multi-word, syntax highlighted history searching for Zsh
-# --------------------------------------------------------
-# https://github.com/zdharma/history-search-multi-word
-#
-zinit ice wait lucid
-zinit light zdharma/history-search-multi-word
-
-# Collection of extension color mappings for LS_COLORS environment variable,
-# displayed when using `ls`
-# --------------------------------------------------------------------------
-# https://github.com/trapd00r/LS_COLORS
-# zinit ice atclone"dircolors -b LS_COLORS > clrs.zsh" \
-#     atpull'%atclone' pick"clrs.zsh" nocompile'!' \
-#     atload'zstyle ":completion:*" list-colors "${(s.:.)LS_COLORS}"'
-# zinit load trapd00r/LS_COLORS
-zinit pack for ls_colors
-
-# Auto-close and delete matching delimiters in Zsh
-# ------------------------------------------------
-# https://github.com/hlissner/zsh-autopair
-#
-zinit ice wait lucid
-zinit light hlissner/zsh-autopair
+# =========================================================================== #
+source "$ZDOTDIR/configurations/plugins/ux_improvements.zsh"
 
 # =============================================================================
 # Improving Git experience
