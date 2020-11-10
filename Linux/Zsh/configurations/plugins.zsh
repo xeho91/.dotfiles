@@ -4,21 +4,31 @@
 # https://github.com/zdharma/zinit
 # =========================================================================== #
 
-# Check if environment variable exists
-if [ -z "$ZPLG_HOME" ]; then
-	ZPLG_HOME="${ZDOTDIR:-$HOME}/.zinit"
-fi
+# initial Zinit's hash definition
+declare -A ZINIT
+
+ZINIT[HOME_DIR]="$ZDOTDIR/.zinit"
+ZINIT[BIN_DIR]="$ZINIT[HOME_DIR]/bin"
+ZINIT[PLUGINS_DIR]="$ZINIT[HOME_DIR]/plugins"
+ZINIT[COMPLETIONS_DIR]="$ZINIT[HOME_DIR]/completions"
+ZINIT[SNIPPETS_DIR]="$ZINIT[HOME_DIR]/snippets"
+# ZINIT[ZCOMPDUMP_PATH]="$ZDOTDIR"
+ZINIT[COMPINIT_OPTS]="-C"
+ZINIT[MUTE_WARNINGS]=0
+ZINIT[OPTIMIZE_OUT_DISK_ACCESSES]=0
+
 
 ### Added by Zinit's installer
-if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+if [[ ! -f $ZINIT[HOME_DIR]/bin/zinit.zsh ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+    command mkdir -p "$ZINIT[HOME_DIR]" && command chmod g-rwX "$ZINIT[HOME_DIR]"
+    command git clone https://github.com/zdharma/zinit "$ZINIT[HOME_DIR]/bin" && \
 		print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
 		print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
 
-source "$HOME/.zinit/bin/zinit.zsh"
+source "$ZINIT[HOME_DIR]/bin/zinit.zsh"
+
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
@@ -31,95 +41,49 @@ zinit light-mode for \
     zinit-zsh/z-a-bin-gem-node
 ### End of Zinit's installer chunk
 
-# =========================================================================== #
-# Load existing Linux commands improvements
-# =========================================================================== #
-source "$ZDOTDIR/configurations/plugins/command_improvements.zsh"
+# Adding additional path for manpages, because some plugins install it under
+# `share` directory
+export MANPATH=$ZPFX/share/man:$(manpath)
 
 # =========================================================================== #
-# Zsh UX (User Experience) improvements
+# Sourcing (loading configurations)
 # =========================================================================== #
-source "$ZDOTDIR/configurations/plugins/ux_improvements.zsh"
+# Define a path to Zsh directory with configurations
+export ZSH_CONFIG="$ZDOTDIR/configurations"
 
-# =============================================================================
-# Improving Git experience
-# =============================================================================
+source "$ZSH_CONFIG/plugins/ux_improvements.zsh"
+source "$ZSH_CONFIG/plugins/interactive_filters.zsh"
+source "$ZSH_CONFIG/plugins/commands_improvements.zsh"
+source "$ZSH_CONFIG/plugins/git_improvements.zsh"
 
-# Git utilities as in extra commands added to `git`
-# -------------------------------------------------
-# https://github.com/tj/git-extras
-zinit ice as"program" pick"$ZPFX/bin/git-*" make"PREFIX=$ZPFX"
-zinit light tj/git-extras
-zinit snippet OMZP::git-extras
 
-# `gh` - GitHub's official command line tool
-# ------------------------------------------
-# https://github.com/cli/cli/
-#
-# zinit ice from"gh-r" as"program" bpick"*.tar.gz" mv"gh*/bin/gh -> gh" \
-#     atload`gh completion --shell zsh > $ZINIT_DIR/completions/_gh`
-# zinit load cli/cli
 
-# A utility tool powered by 'fzf' for using Git interactively
-# -----------------------------------------------------------
-# https://github.com/wfxr/forgit
-#
-# zinit light wfxr/forgit
 
-# Better, human readable Git diffs
-# --------------------------------
-# https://github.com/zdharma/zsh-diff-so-fancy
-#
-zinit ice wait"2" lucid as"program" pick"bin/git-dsf"
-zinit load zdharma/zsh-diff-so-fancy
 
-# =============================================================================
-# Finders, filters, searchers
-# =============================================================================
 
-# `fzy` - simple, fast fuzzy finder for the terminal
-# --------------------------------------------
-# https://github.com/jhawthorn/fzy
-zinit ice as"program" make
-zinit light jhawthorn/fzy
 
-# `fzf` - command-line fuzzy finder
-# ---------------------------------
-# https://github.com/junegunn/fzf
-#
-# zinit ice wait lucid from"gh-r" as"program"
-# zinit load junegunn/fzf
 
+
+
+
+
+
+
+
+# =========================================================================== #
 # `rg` - recursively searching directories for a regex pattern with gitignore
 # ---------------------------------------------------------------------------
 # https://github.com/BurntSushi/ripgrep
-#
-zinit ice from"gh-r" as"program" bpick"*amd64.deb" mv"usr/bin/rg -> rg"
-zinit light BurntSushi/ripgrep
-
-# `fd` -  simple, fast and user-friendly alternative to `find`
-# ------------------------------------------------------------
-# https://github.com/sharkdp/fd
-#
-zinit ice from"gh-r" as"command" mv"fd* -> fd" pick"fd/fd"
-zinit light sharkdp/fd
-zinit ice as"completion"
-zinit snippet OMZP::fd/_fd
-
-# `peco` - simplistic interactive filtering tool
-# -------------------------------------
-# https://github.com/peco/peco
-#
-zinit ice from"gh-r" as"program" mv"peco* -> peco" pick"peco/peco";
-zinit light peco/peco
-
+# =========================================================================== #
+# zinit ice from"gh-r" as"program" bpick"*amd64.deb" mv"usr/bin/rg -> rg"
+# zinit light BurntSushi/ripgrep
 # `fpp` - command line tool for selecting files out of bash output
 # ----------------------------------------------------------------
 # https://github.com/facebook/PathPicker
 #
-zinit ice as"program" cd"PathPicker/debian" atpull"./package.sh" \
-	pick"facebook/PathPicker"
-zinit light facebook/PathPicker
+# zinit ice as"program" cd"PathPicker/debian" atpull"./package.sh" \
+#     pick"facebook/PathPicker"
+# zinit light facebook/PathPicker
 
 # =============================================================================
 # Editors & readers
@@ -149,7 +113,7 @@ zinit light facebook/PathPicker
 #             --disable-arabic \
 #     ` \
 #     atpull"%atclone" make pick"src/vim" \
-#     atload`\
+	# atload`\
 #         export VIMRUNTIME="$HOME/.zinit/plugins/vim---vim/runtime"; \
 #         alias vi=vim \
 #     `
@@ -159,8 +123,8 @@ zinit light facebook/PathPicker
 # ---------------------------------------
 # https://github.com/charmbracelet/glow
 #
-zinit ice from"gh-r" as"program" bpick"*.tar.gz"
-zinit light charmbracelet/glow
+# zinit ice from"gh-r" as"program" bpick"*.tar.gz"
+# zinit light charmbracelet/glow
 
 # =============================================================================
 # Help, documentationm, cheatsheets
@@ -171,15 +135,15 @@ zinit light charmbracelet/glow
 # ---------------------------------------------------------
 # https://github.com/denisidoro/navi
 #
-zinit ice from"gh-r" as"program" bpick"*linux*" mv"navi -> navi"
-zinit light denisidoro/navi
+# zinit ice from"gh-r" as"program" bpick"*linux*" mv"navi -> navi"
+# zinit light denisidoro/navi
 
 # `tldr` - Collaborative cheatsheets for console commands
 # -------------------------------------------------------
 # https://github.com/tldr-pages/tldr
 #
-zinit ice as"program" pick"tldr tldr-lint"
-zinit load pepa65/tldr-bash-client
+# zinit ice as"program" pick"tldr tldr-lint"
+# zinit load pepa65/tldr-bash-client
 
 # =============================================================================
 # Other
@@ -190,85 +154,85 @@ zinit load pepa65/tldr-bash-client
 # -----------------------------------
 # https://github.com/ogham/exa
 #
-zinit ice from"gh-r" as"program" mv"exa-* -> exa"
-zinit light ogham/exa
-zinit as"completion" mv"c* -> _exa" \
-	for "https://github.com/ogham/exa/blob/master/completions/completions.zsh"
+# zinit ice from"gh-r" as"program" mv"exa-* -> exa"
+# zinit light ogham/exa
+# zinit as"completion" mv"c* -> _exa" \
+#     for "https://github.com/ogham/exa/blob/master/completions/completions.zsh"
 
 # Crowd-sourced code mentorship and practice, conversations about code
 # --------------------------------------------------------------------
 # https://exercism.io/
 #
-zinit ice from"gh-r" as"program" bpick"exercism-linux-64bit.tgz"
-zinit light exercism/cli
+# zinit ice from"gh-r" as"program" bpick"exercism-linux-64bit.tgz"
+# zinit light exercism/cli
 
 # Quick access to files and directories, inspired by 'autojump', 'z' and 'v'
 # --------------------------------------------------------------------------
 # https://github.com/clvv/fasd
 #
-zinit ice as"program" pick"fasd" make"install"
-zinit light clvv/fasd
-eval "$(fasd --init auto)"
+# zinit ice as"program" pick"fasd" make"install"
+# zinit light clvv/fasd
+# eval "$(fasd --init auto)"
 
 # Yank terminal output to clipboard
 # ---------------------------------
 # https://github.com/mptre/yank
 #
-zinit ice as"program" pick"yank" make
-zinit light mptre/yank
+# zinit ice as"program" pick"yank" make
+# zinit light mptre/yank
 
 # Extendable version manager
 # --------------------------
 # https://github.com/asdf-vm/asdf
 #
-zinit load asdf-vm/asdf
+# zinit load asdf-vm/asdf
 
 # command line tool to highlight terms
 # ------------------------------------
 # https://github.com/paoloantinori/hhighlighter
 #
-zinit ice pick"h.sh"
-zinit light paoloantinori/hhighlighter
+# zinit ice pick"h.sh"
+# zinit light paoloantinori/hhighlighter
 
 # n³ The unorthodox terminal file manager
 # ---------------------------------------
 # https://github.com/jarun/nnn
 #
-zinit ice as"program" make"O_NERD=1"
-zinit light jarun/nnn
+# zinit ice as"program" make"O_NERD=1"
+# zinit light jarun/nnn
 
 # Jump back to a specific directory, without doing `cd ../../..`
 # --------------------------------------------------------------
 # https://github.com/Tarrasch/zsh-bd
 #
-zinit light Tarrasch/zsh-bd
+# zinit light Tarrasch/zsh-bd
 
 # Command-line JSON processor
 # ---------------------------
 # https://github.com/stedolan/jq
 #
-zinit ice as"program" from"gh-r" mv"jq* -> jq"
-zinit light stedolan/jq
+# zinit ice as"program" from"gh-r" mv"jq* -> jq"
+# zinit light stedolan/jq
 #
 # Colors configuration
 # https://stedolan.github.io/jq/manual/#Colors
 # In this order: null, false, true, numbers, strings, arrays, objects
-export JQ_COLORS="1;30:0;31:0;32:0;33:0;37:1;35:1;36"
+# export JQ_COLORS="1;30:0;31:0;32:0;33:0;37:1;35:1;36"
 
 # Rainbow and unicorns
 # ---------------------------------
 # https://github.com/jaseg/lolcat
 #
-zinit ice as"program" make
-zinit light jaseg/lolcat
+# zinit ice as"program" make
+# zinit light jaseg/lolcat
 
 # Boxes with fancy shapes
 # -----------------------
 # https://github.com/ascii-boxes/boxes
 #
-zinit ice as"program" make pick"src/boxes" \
-	atload`alias boxes="boxes -f ~/.zinit/plugins/ascii-boxes---boxes/boxes-config"`
-zinit load ascii-boxes/boxes
+# zinit ice as"program" make pick"src/boxes" \
+#     atload`alias boxes="boxes -f ~/.zinit/plugins/ascii-boxes---boxes/boxes-config"`
+# zinit load ascii-boxes/boxes
 
 # =============================================================================
 # Oh My Zsh (OMZ) - open source framework for managing Zsh configuration
@@ -280,30 +244,26 @@ zinit load ascii-boxes/boxes
 # ---------------------------------
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/lib
 #
-zinit snippet OMZL::clipboard.zsh
-zinit snippet OMZL::completion.zsh
-zinit snippet OMZL::directories.zsh
-zinit snippet OMZL::functions.zsh
-zinit snippet OMZL::misc.zsh
-zinit snippet OMZL::spectrum.zsh
-zinit snippet OMZL::termsupport.zsh
+# zinit snippet OMZL::clipboard.zsh
+# zinit snippet OMZL::completion.zsh
+# zinit snippet OMZL::directories.zsh
+# zinit snippet OMZL::functions.zsh
+# zinit snippet OMZL::misc.zsh
+# zinit snippet OMZL::spectrum.zsh
+# zinit snippet OMZL::termsupport.zsh
 
 # Plugins from OMZ
 # ----------------
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins
 #
-zinit snippet OMZP::alias-finder; ZSH_ALIAS_FINDER_AUTOMATIC=true
-zinit snippet OMZP::autojump
-zinit snippet OMZP::colored-man-pages
-zinit snippet OMZP::command-not-found
-zinit snippet OMZP::gitignore
-zinit snippet OMZP::jira
-zinit snippet OMZP::jsontools
-zinit snippet OMZP::last-working-dir
-zinit snippet OMZP::node
-zinit ice as"completion"; zinit snippet OMZP::pip/_pip
-zinit snippet OMZP::thefuck
-zinit snippet OMZP::tmux
-zinit snippet OMZP::vi-mode
-zinit snippet OMZP::web-search
+# zinit snippet OMZP::autojump
+# zinit snippet OMZP::gitignore
+# zinit snippet OMZP::jira
+# zinit snippet OMZP::jsontools
+# zinit snippet OMZP::node
+# zinit ice as"completion"; zinit snippet OMZP::pip/_pip
+# zinit snippet OMZP::thefuck
+# zinit snippet OMZP::tmux
+# zinit snippet OMZP::vi-mode
+# zinit snippet OMZP::web-search
 

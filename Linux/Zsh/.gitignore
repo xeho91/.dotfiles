@@ -4,3 +4,6 @@
 
 # Ignore the history file
 .zsh_history
+
+# Ignore the Zinit's folder with everything
+.zinit
