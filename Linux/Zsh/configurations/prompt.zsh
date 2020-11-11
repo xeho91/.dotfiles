@@ -1,17 +1,19 @@
-# Prompt theme with lots of features
-# ----------------------------------
+# =========================================================================== #
+# Powerlevel10k - prompt theme with lots of features
+# --------------------------------------------------
 # https://github.com/romkatv/powerlevel10k
+# =========================================================================== #
 zinit ice \
 	id-as "powerlevel10k" \
 	depth=1
 zinit load romkatv/powerlevel10k
 
 # To customize prompt, run `p10k configure`
-if [[ -f $ZDOTDIR/configurations/prompts/.p10k.zsh ]]; then
-	source $ZDOTDIR/configurations/prompts/.p10k.zsh
+if [[ -f "$ZSH_CONFIG[PROMPTS_DIR]/.p10k.zsh" ]]; then
+	source "$ZSH_CONFIG[PROMPTS_DIR]/.p10k.zsh"
 fi
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Enable Powerlevel10k instant prompt. Should stay close to the top of `.zshrc`.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 # ------------------------------------------------------------------------------

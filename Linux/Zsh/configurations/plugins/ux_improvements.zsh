@@ -5,7 +5,7 @@
 # =========================================================================== #
 zinit ice wait lucid \
 	id-as"fast-syntax-highlighting" \
-	atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay"
+	atinit"zicompinit; zicdreplay"
 zinit load zdharma/fast-syntax-highlighting
 
 # =========================================================================== #
@@ -79,7 +79,31 @@ zinit snippet OMZP::last-working-dir
 # Alias finder
 # ------------
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/alias-finder
+# NOTE: This plugin doesn't include Git aliases from `.gitconfig`
+# =========================================================================== #
+# zinit ice \
+#     atload'ZSH_ALIAS_FINDER_AUTOMATIC=true'
+# zinit snippet OMZP::alias-finder
+
+# =========================================================================== #
+# Alias tips - helps remembering defined aliases
+# ----------------------------------------------
+# https://github.com/djui/alias-tips
 # =========================================================================== #
 zinit ice \
-	atload'ZSH_ALIAS_FINDER_AUTOMATIC=true'
-zinit snippet OMZP::alias-finder
+	id-as"alias-tips" \
+	pick"alias-tips.plugin.zsh" \
+	atload'export ZSH_PLUGINS_ALIAS_TIPS_REVEAL=1'
+zinit load djui/alias-tips
+
+# =========================================================================== #
+# fzf tabs - replace Zsh's default completion selection menu with `fzf`
+# ---------------------------------------------------------------------
+# https://github.com/Aloxaf/fzf-tab
+# =========================================================================== #
+zinit ice wait lucid \
+	id-as"fzf-tab" \
+	has"fzf" \
+	atload"zstyle ':fzf-tab:complete:cd:*' fzf-preview --height=60% 'lsd -1 --color=always $realpath'"
+zinit load Aloxaf/fzf-tab
+

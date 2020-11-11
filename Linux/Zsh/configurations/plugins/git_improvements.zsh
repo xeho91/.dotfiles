@@ -3,14 +3,14 @@
 # -------------------------------------------------
 # https://github.com/tj/git-extras
 # =========================================================================== #
-# zinit ice wait lucid \
-#     id-as"git-extras" \
-#     as"program" \
-#     atclone'mv etc/git-extras-completion.zsh etc/_git-extras' \
-#     atpull'%atclone' \
-#     make"PREFIX=$ZPFX" \
-#     pick"$ZPFX/bin/git-*"
-# zinit light tj/git-extras
+zinit ice wait lucid \
+	id-as"git-extras" \
+	as"program" \
+	atclone'mv etc/git-extras-completion.zsh etc/_git-extras' \
+	atpull'%atclone' \
+	make"PREFIX=$ZPFX" \
+	pick"$ZPFX/bin/git-*"
+zinit load tj/git-extras
 
 # =========================================================================== #
 # `gh` - GitHub's official command line tool

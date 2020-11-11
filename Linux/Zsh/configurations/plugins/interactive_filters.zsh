@@ -5,7 +5,6 @@
 # =========================================================================== #
 zinit ice \
 	id-as"fzy" \
-	as"program" \
 	make"PREFIX=$ZPFX install"
 zinit load jhawthorn/fzy
 
@@ -13,8 +12,13 @@ zinit load jhawthorn/fzy
 # `fzf` - command-line fuzzy finder
 # ---------------------------------
 # https://github.com/junegunn/fzf
+# TODO: Fix completions
 # =========================================================================== #
-zinit pack"bgn-binary+keys" for fzf
+zinit pack"bgn-binary+keys" \
+	atload'export FZF_DEFAULT_OPTS="--multi --border --layout=reverse --height=60%"' \
+	for fzf
+	# atload'export FZF_DEFAULT_OPTS="--multi --border --layout=reverse --height=60%"; \
+	#     export FZF_DEFAULT_COMMAND="fd --hidden --follow"' \
 
 # =========================================================================== #
 # `peco` - simplistic interactive filtering tool
@@ -22,9 +26,10 @@ zinit pack"bgn-binary+keys" for fzf
 # https://github.com/peco/peco
 # =========================================================================== #
 # zinit ice \
-#     as"program" \
+#     id-as"peco" \
 #     from"gh-r" \
 #     mv"peco* -> peco" \
-#     pick"peco/peco"
+#     pick"peco/peco" \
+#     as"program"
 # zinit load peco/peco
 

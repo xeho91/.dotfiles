@@ -121,6 +121,9 @@ setopt CORRECT
 #
 # Try to correct the spelling of all arguments in a line
 # setopt CORRECT_ALL
+#
+# Allow comments even in interactive shells
+setopt INTERACTIVE_COMMENTS
 
 # =========================================================================== #
 # Prompting options
@@ -130,3 +133,12 @@ setopt CORRECT
 #
 # Adds support for command substitution
 setopt PROMPT_SUBST
+
+# =========================================================================== #
+# Shell state options
+# -------------------
+# http://zsh.sourceforge.net/Doc/Release/Options.html#Shell-State
+# =========================================================================== #
+#
+# setopt INTERACTIVE
+#

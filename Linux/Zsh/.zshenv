@@ -1,4 +1,23 @@
 # =========================================================================== #
+# XDG base directory
+# ------------------
+# https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html
+# =========================================================================== #
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$XDG_CONFIG_HOME/.local/share"
+export XDG_CACHE_HOME="$XDG_CONFIG_HOME/.cache"
+
+# =========================================================================== #
+# Define path to user's "dotfiles"
+# =========================================================================== #
+export DOTFILES=$HOME/.dotfiles
+
+# =========================================================================== #
+# Set the default location for Zsh files
+# =========================================================================== #
+export ZDOTDIR=$DOTFILES/Linux/Zsh
+
+# =========================================================================== #
 # Locale settings variables
 # -------------------------
 # https://help.ubuntu.com/community/EnvironmentVariables#Locale_setting_variables
@@ -31,14 +50,4 @@ export LESS='--raw-control-chars --status-column --tab=4 --window=5 --chop-long-
 if builtin command -v lesspipe.sh > /dev/null 2>&1; then
 	export LESSOPEN="|lesspipe.sh %s"
 fi
-
-# =========================================================================== #
-# Define path to user's "dotfiles"
-# =========================================================================== #
-export DOTFILES=$HOME/.dotfiles
-
-# =========================================================================== #
-# Set the default location for Zsh files
-# =========================================================================== #
-export ZDOTDIR=$DOTFILES/Linux/Zsh
 

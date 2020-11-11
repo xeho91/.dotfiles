@@ -6,7 +6,7 @@
 
 # Provide a visual feedback when pressing completion (TAB⇥)
 # http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Visual-effects
-zstyle ':completion:*' format '%U%B%F{magenta}Possible completions for "%f%u%K{black}%d%k%U%F{magenta}":%u%f%b'
+# zstyle ':completion:*' format '%U%B%F{magenta}Possible completions for "%f%u%K{black}%d%k%U%F{magenta}":%u%f%b'
 
 # Try filename completion as a default when other completions failed
 # http://zsh.sourceforge.net/FAQ/zshfaq04.html
@@ -30,3 +30,13 @@ zstyle ':completion:*' accept-exact-dirs true
 # Typing 'cd ~/L/P/B<TAB⇥>' becomes '~/Library/Preferences/ByHost'
 zstyle ':completion:*' list-suffixes true
 zstyle ':completion:*' expand prefix suffix 
+
+# Don't sort Git's hashes
+zstyle ":completion:*:git-checkout:*" sort false
+
+# Format descriptions
+zstyle ':completion:*:descriptions' format '[%d]'
+
+# Colorize the list
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+

@@ -4,9 +4,8 @@
 # https://github.com/zdharma/zinit
 # =========================================================================== #
 
-# initial Zinit's hash definition
+# Configration of paths for Zinit and its options
 declare -A ZINIT
-
 ZINIT[HOME_DIR]="$ZDOTDIR/.zinit"
 ZINIT[BIN_DIR]="$ZINIT[HOME_DIR]/bin"
 ZINIT[PLUGINS_DIR]="$ZINIT[HOME_DIR]/plugins"
@@ -16,7 +15,6 @@ ZINIT[SNIPPETS_DIR]="$ZINIT[HOME_DIR]/snippets"
 ZINIT[COMPINIT_OPTS]="-C"
 ZINIT[MUTE_WARNINGS]=0
 ZINIT[OPTIMIZE_OUT_DISK_ACCESSES]=0
-
 
 ### Added by Zinit's installer
 if [[ ! -f $ZINIT[HOME_DIR]/bin/zinit.zsh ]]; then
@@ -46,15 +44,16 @@ zinit light-mode for \
 export MANPATH=$ZPFX/share/man:$(manpath)
 
 # =========================================================================== #
-# Sourcing (loading configurations)
+# Sourcing (loading configurations) files
 # =========================================================================== #
-# Define a path to Zsh directory with configurations
-export ZSH_CONFIG="$ZDOTDIR/configurations"
-
-source "$ZSH_CONFIG/plugins/ux_improvements.zsh"
-source "$ZSH_CONFIG/plugins/interactive_filters.zsh"
-source "$ZSH_CONFIG/plugins/commands_improvements.zsh"
-source "$ZSH_CONFIG/plugins/git_improvements.zsh"
+source "$ZSH_CONFIG[PLUGINS_DIR]/ux_improvements.zsh"
+source "$ZSH_CONFIG[PLUGINS_DIR]/interactive_filters.zsh"
+source "$ZSH_CONFIG[PLUGINS_DIR]/commands_improvements.zsh"
+source "$ZSH_CONFIG[PLUGINS_DIR]/git_improvements.zsh"
+source "$ZSH_CONFIG[PLUGINS_DIR]/productivity_improvements.zsh"
+source "$ZSH_CONFIG[PLUGINS_DIR]/oh_my_zsh.zsh"
+source "$ZSH_CONFIG[PLUGINS_DIR]/helpers.zsh"
+source "$ZSH_CONFIG[PLUGINS_DIR]/easter_eggs.zsh"
 
 
 
@@ -88,36 +87,6 @@ source "$ZSH_CONFIG/plugins/git_improvements.zsh"
 # =============================================================================
 # Editors & readers
 # =============================================================================
-
-# `vim` (Vi iMproved) - Text editor program for UNIX
-# --------------------------------------------------
-# https://github.com/vim/vim/
-#
-# zinit ice as"program" \
-#     atclone`\
-#         rm -f src/auto/config.cache; \
-#         ./configure \
-#             --prefix=/usr/local \
-#             --with-features=huge \
-#             --with-x \
-#             --enable-fail-if-missing \
-#             --enable-gui=auto \
-#             --enable-gtk2-check \
-#             --enable-multibyte \
-#             --enable-cscope \
-#             --enable-luainterp=yes \
-#             --enable-perlinterp=yes \
-#             --enable-pythoninterp=yes \
-#             --enable-python3interp=yes \
-#             --enable-rubyinterp=yes \
-#             --disable-arabic \
-#     ` \
-#     atpull"%atclone" make pick"src/vim" \
-	# atload`\
-#         export VIMRUNTIME="$HOME/.zinit/plugins/vim---vim/runtime"; \
-#         alias vi=vim \
-#     `
-# zinit light vim/vim
 #
 # `glow` - Terminal based markdown reader
 # ---------------------------------------
@@ -130,34 +99,10 @@ source "$ZSH_CONFIG/plugins/git_improvements.zsh"
 # Help, documentationm, cheatsheets
 # =============================================================================
 
-# `navi` - Interactive cheatsheet tool for the command-line
-#          and application launchers
-# ---------------------------------------------------------
-# https://github.com/denisidoro/navi
-#
-# zinit ice from"gh-r" as"program" bpick"*linux*" mv"navi -> navi"
-# zinit light denisidoro/navi
-
-# `tldr` - Collaborative cheatsheets for console commands
-# -------------------------------------------------------
-# https://github.com/tldr-pages/tldr
-#
-# zinit ice as"program" pick"tldr tldr-lint"
-# zinit load pepa65/tldr-bash-client
-
 # =============================================================================
 # Other
 # TODO: Organize & clean
 # =============================================================================
-
-# `exa` - modern replacement for `ls`
-# -----------------------------------
-# https://github.com/ogham/exa
-#
-# zinit ice from"gh-r" as"program" mv"exa-* -> exa"
-# zinit light ogham/exa
-# zinit as"completion" mv"c* -> _exa" \
-#     for "https://github.com/ogham/exa/blob/master/completions/completions.zsh"
 
 # Crowd-sourced code mentorship and practice, conversations about code
 # --------------------------------------------------------------------
@@ -219,38 +164,8 @@ source "$ZSH_CONFIG/plugins/git_improvements.zsh"
 # In this order: null, false, true, numbers, strings, arrays, objects
 # export JQ_COLORS="1;30:0;31:0;32:0;33:0;37:1;35:1;36"
 
-# Rainbow and unicorns
-# ---------------------------------
-# https://github.com/jaseg/lolcat
-#
-# zinit ice as"program" make
-# zinit light jaseg/lolcat
 
-# Boxes with fancy shapes
-# -----------------------
-# https://github.com/ascii-boxes/boxes
-#
-# zinit ice as"program" make pick"src/boxes" \
-#     atload`alias boxes="boxes -f ~/.zinit/plugins/ascii-boxes---boxes/boxes-config"`
-# zinit load ascii-boxes/boxes
 
-# =============================================================================
-# Oh My Zsh (OMZ) - open source framework for managing Zsh configuration
-# ----------------------------------------------------------------------
-# https://github.com/ohmyzsh/ohmyzsh
-# =============================================================================
-
-# Functionalities (libary) from OMZ
-# ---------------------------------
-# https://github.com/ohmyzsh/ohmyzsh/tree/master/lib
-#
-# zinit snippet OMZL::clipboard.zsh
-# zinit snippet OMZL::completion.zsh
-# zinit snippet OMZL::directories.zsh
-# zinit snippet OMZL::functions.zsh
-# zinit snippet OMZL::misc.zsh
-# zinit snippet OMZL::spectrum.zsh
-# zinit snippet OMZL::termsupport.zsh
 
 # Plugins from OMZ
 # ----------------

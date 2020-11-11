@@ -15,3 +15,4 @@ command fortune | cowsay -f "$cowfile" | lolcat -f -r
 # =========================================================================== #
 print -P "$HOST been %F{blue}$(uptime --pretty)%f (since $(uptime --since))." \
 	| toilet -f term -F border \
+

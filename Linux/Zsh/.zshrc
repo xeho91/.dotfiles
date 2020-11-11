@@ -1,20 +1,13 @@
-# =========================================================================== #
-# Load options
-# =========================================================================== #
-source "$ZDOTDIR/configurations/options.zsh"
+# Declare Zsh config associative array with paths to directories
+declare -A ZSH_CONFIG
 
-# =========================================================================== #
-# Load completions configuration
-# =========================================================================== #
-source "$ZDOTDIR/configurations/completions.zsh"
+ZSH_CONFIG[HOME_DIR]="$ZDOTDIR/configurations"
+ZSH_CONFIG[PLUGINS_DIR]="$ZSH_CONFIG[HOME_DIR]/plugins"
+ZSH_CONFIG[PROMPTS_DIR]="$ZSH_CONFIG[HOME_DIR]/prompts"
 
-# =========================================================================== #
-# Load plugins
-# =========================================================================== #
-source "$ZDOTDIR/configurations/plugins.zsh"
-
-# =========================================================================== #
-# Load prompt configuration
-# =========================================================================== #
-source "$ZDOTDIR/configurations/prompt.zsh"
+# Load configurations
+source "$ZSH_CONFIG[HOME_DIR]/options.zsh"
+source "$ZSH_CONFIG[HOME_DIR]/completions.zsh"
+source "$ZSH_CONFIG[HOME_DIR]/plugins.zsh"
+source "$ZSH_CONFIG[HOME_DIR]/prompt.zsh"
 
