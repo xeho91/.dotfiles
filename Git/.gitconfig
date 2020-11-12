@@ -1,88 +1,149 @@
-# =============================================================================
 # Git global configuration
 # ------------------------
 # https://www.git-scm.com/book/en/v2/Customizing-Git-Git-Configuration
-# =============================================================================
+# https://git-scm.com/docs/git-config
 
+# =========================================================================== #
+# User credentials
+# =========================================================================== #
 [user]
 	name = xeho91
 	email = xeho91@pm.me
-	signinkey = <insert your GPG key here>
+	signinkey = <GPG key>
 
+# =========================================================================== #
+# Options for GPG - GnuPrivacy Guard
+# ----------------------------------
+# https://www.gnupg.org/documentation/manpage.html
+# https://help.github.com/en/github/authenticating-to-github/generating-a-new-gpg-key
+# https://help.github.com/articles/signing-commits-using-gpg/
+# =========================================================================== #
 [gpg]
 	program = gpg
 
-[pager]
-	program = bat
-
 [commit]
-	# https://help.github.com/articles/signing-commits-using-gpg/
 	gpgsign = true
 
+# =========================================================================== #
+# Core git options
+# =========================================================================== #
 [core]
+	pager = delta
 	editor = vim
+	eol = lf
 	autocrlf = false
 	whitespace = trailing-space, space-before-tab
 
+# =========================================================================== #
+# Determine the default value for variables that control the use of color per
+# command family
+# =========================================================================== #
 [color]
 	ui = true
 
+# =========================================================================== #
+# Reuse recorded resolution of conflicted merges
+# ----------------------------------------------
+# https://git-scm.com/docs/git-rerere
+# =========================================================================== #
 [rerere]
 	enabled = true
 
+# =========================================================================== #
+# Options for Delta - a viever for Git and diff output
+# ----------------------------------------------------
+# https://github.com/dandavison/delta
+# =========================================================================== #
+[delta]
+	side-by-side = true
+	line-numbers = true
+	whitespace-error-style = 22 reverse
+	navigate = true
+	line-numbers-left-format = "{nm:>3}┊"
+	line-numbers-right-format = "│{nm:>3}┊"
+	syntax-theme = Dracula
+	plus-style = syntax "#003800"
+	minus-style = syntax "#3f0001"
+
+[delta "decorations"]
+	commit-decoration-style = bold yellow box ul
+	file-style = bold yellow ul
+	file-decoration-style = none
+	hunk-header-decoration-style = cyan box ul
+
+[delta "line-numbers"]
+	line-numbers-left-style = cyan
+	line-numbers-right-style = cyan
+	line-numbers-minus-style = 124
+	line-numbers-plus-style = 28
+
+[diff]
+	colorMoved = default
+
+[interactive]
+	diffFilter = delta --color-only
+
+# =========================================================================== #
 # URL shorthands
+# =========================================================================== #
 [url "git@github.com:"]
 	insteadOf = "gh:"
 	pushInsteadOf = "github:"
 	pushInsteadOf = "git://github.com/"
+
 [url "git://github.com/"]
 	insteadOf = "github:"
+
 [url "git@gist.github.com:"]
 	insteadOf = "gst:"
 	pushInsteadOf = "gist:"
 	pushInsteadOf = "git://gist.github.com/"
+
 [url "git://gist.github.com/"]
 	insteadOf = "gist:"
 
-[alias]
-	# Add
-	a = add
-	all = add --all
-	# Status
-	st = status --short --branch
-	# Commit
-	cm = commit --message
-	ca = commit --amend
-	cane = commit --amend --no-edit
-	# Branch
-	br = branch
-	bd = branch -D
-	# Checkout
-	co = checkout
-	cb = checkout -b
-	# Diff
-	df = diff
-	dfc = diff --cached
-	# Log
-	lg = log --oneline --graph --decorate -m
-	lga = log --oneline --graph --decorate --all
-	last = log -1 HEAD
-	# Pull
-	pl = pull
-	plro = pull --rebase origin master
-	# Push
-	ps = push
-	psf = push --force-with-lease
-	pssu = push --set-upstream origin HEAD
-	# Reset
-	undo = reset --soft HEAD^
-	uall = reset .
-	# Fetch
-	f = fetch
-	# Stash
-	sta = stash
-	stap = stash apply
-	# Rebase
-	rbc = rebase --continue
-	rbs = rebase --skip
-	rba = rebase --abort
+# =========================================================================== #
+# Aliases for git commands
+# =========================================================================== #
+; [alias]
+	; # Add
+	; a = add
+	; all = add --all
+	; # Status
+	; st = status --short --branch
+	; # Commit
+	; cm = commit --message
+	; ca = commit --amend
+	; cane = commit --amend --no-edit
+	; # Branch
+	; br = branch
+	; bd = branch -D
+	; # Checkout
+	; co = checkout
+	; cb = checkout -b
+	; # Diff
+	; df = diff
+	; dfc = diff --cached
+	; # Log
+	; lg = log --oneline --graph --decorate -m
+	; lga = log --oneline --graph --decorate --all
+	; last = log -1 HEAD
+	; # Pull
+	; pl = pull
+	; plro = pull --rebase origin master
+	; # Push
+	; ps = push
+	; psf = push --force-with-lease
+	; pssu = push --set-upstream origin HEAD
+	; # Reset
+	; undo = reset --soft HEAD^
+	; uall = reset .
+	; # Fetch
+	; f = fetch
+	; # Stash
+	; sta = stash
+	; stap = stash apply
+	; # Rebase
+	; rbc = rebase --continue
+	; rbs = rebase --skip
+	; rba = rebase --abort

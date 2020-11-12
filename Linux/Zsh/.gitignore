@@ -5,5 +5,15 @@
 # Ignore the history file
 .zsh_history
 
-# Ignore the Zinit's folder with everything
+# Ignore the Zinit's directory
 .zinit
+
+# Ignore the cache directory
+.cache
+
+# Ignore the config directory
+.config
+
+# Ignore the data directory
+.local
+

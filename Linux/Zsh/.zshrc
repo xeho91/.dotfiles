@@ -9,5 +9,7 @@ ZSH_CONFIG[PROMPTS_DIR]="$ZSH_CONFIG[HOME_DIR]/prompts"
 source "$ZSH_CONFIG[HOME_DIR]/options.zsh"
 source "$ZSH_CONFIG[HOME_DIR]/completions.zsh"
 source "$ZSH_CONFIG[HOME_DIR]/plugins.zsh"
+source "$ZSH_CONFIG[HOME_DIR]/functions.zsh"
+source "$ZSH_CONFIG[HOME_DIR]/aliases.zsh"
 source "$ZSH_CONFIG[HOME_DIR]/prompt.zsh"
 

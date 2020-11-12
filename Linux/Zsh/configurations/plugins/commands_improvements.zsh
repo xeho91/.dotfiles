@@ -32,7 +32,8 @@ zinit load Peltoche/lsd
 # `exa` - modern replacement for `ls`
 # -----------------------------------
 # https://github.com/ogham/exa
-# NOTE: Wrong version & not maintained anymore?
+# ---
+# NOTE: Latest binaries has chaos with versions & not maintained anymore?
 # =========================================================================== #
 # zinit ice wait lucid \
 #     id-as"exa" \
@@ -50,43 +51,14 @@ zinit load Peltoche/lsd
 # ----------------------------------------------------------------
 # https://github.com/b4b4r07/enhancd
 # =========================================================================== #
-# FIXME:
-# zinit ice wait lucid \
-#     has'fzy' \
-#     id-as"enhancd" \
-#     as"program" \
-#     atclone'rm -f *.fish */*.fish' \
-#     pick"init.sh" \
-#     as"program" \
-#     atload'export ENHANCD_DISABLE_DOT=1'
-# zinit light b4b4r07/enhancd
-
-# =========================================================================== #
-# `fd` -  simple, fast and user-friendly alternative to `find`
-# ------------------------------------------------------------
-# https://github.com/sharkdp/fd
-# =========================================================================== #
-zinit ice \
-	if'[[ -v $LS_COLORS ]]' \
-	id-as"fd" \
-	from"gh-r" \
-	mv"fd* -> fd" \
-	pick"fd/fd" \
-	as"program"
-zinit light sharkdp/fd
-
-# =========================================================================== #
-# `ag` - code-searching tool similar to `ack`, but faster
-# -------------------------------------------------------
-# https://github.com/ggreer/the_silver_searcher
-# =========================================================================== #
-zinit ice \
-	id-as"ag" \
-	atclone'./build.sh; \
-		./configure --prefix=$ZPFX' \
+zinit ice wait lucid \
+	id-as"enhancd" \
+	has'fzy' \
+	atinit'export ENHANCD_DISABLE_DOT=1; \
+		export ENHANCD_DIR="$XDG_CACHE_HOME/.enhancd"' \
+	atclone'rm -f *.fish */*.fish' \
 	atpull'%atclone' \
-	make'install' \
-	pick"$ZPFX/bin/ag" \
+	pick"init.sh" \
 	as"program"
-zinit load ggreer/the_silver_searcher
+zinit load b4b4r07/enhancd
 

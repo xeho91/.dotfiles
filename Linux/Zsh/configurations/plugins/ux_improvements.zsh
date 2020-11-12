@@ -69,13 +69,6 @@ zinit snippet OMZP::colored-man-pages
 zinit snippet OMZP::command-not-found
 
 # =========================================================================== #
-# Last working directory
-# ----------------------
-# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/last-working-dir
-# =========================================================================== #
-zinit snippet OMZP::last-working-dir
-
-# =========================================================================== #
 # Alias finder
 # ------------
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/alias-finder
@@ -97,13 +90,23 @@ zinit ice \
 zinit load djui/alias-tips
 
 # =========================================================================== #
-# fzf tabs - replace Zsh's default completion selection menu with `fzf`
+# Fzf tabs - replace Zsh's default completion selection menu with `fzf`
 # ---------------------------------------------------------------------
 # https://github.com/Aloxaf/fzf-tab
+# TODO: Fix cd completions being too small
 # =========================================================================== #
 zinit ice wait lucid \
 	id-as"fzf-tab" \
 	has"fzf" \
-	atload"zstyle ':fzf-tab:complete:cd:*' fzf-preview --height=60% 'lsd -1 --color=always $realpath'"
+	atload"zstyle ':fzf-tab:complete:cd:*' fzf-preview --height=100% 'lsd -1 --color=always $realpath'"
 zinit load Aloxaf/fzf-tab
+
+# =========================================================================== #
+# command line tool to highlight terms
+# ------------------------------------
+# https://github.com/paoloantinori/hhighlighter
+# =========================================================================== #
+zinit ice \
+	id-as"highlighter"
+zinit snippet https://github.com/paoloantinori/hhighlighter/blob/master/h.sh
 

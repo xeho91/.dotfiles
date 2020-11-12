@@ -7,7 +7,10 @@
 zinit ice wait lucid \
 	id-as"navi" \
 	has'cargo' \
-	make"SRC_DIR=$ZINIT[PLUGINS_DIR] BIN_DIR=$ZPFX/bin TMP_DIR=$XDG_CACHE_HOME install" \
+	make"SRC_DIR=$ZINIT[PLUGINS_DIR] \
+		BIN_DIR=$ZPFX/bin \
+		TMP_DIR=$XDG_CACHE_HOME \
+		install" \
 	as"program"
 zinit load denisidoro/navi
 
@@ -21,4 +24,21 @@ zinit ice wait lucid \
 	pick"tldr tldr-lint" \
 	as"program"
 zinit load pepa65/tldr-bash-client
+
+# =========================================================================== #
+# Cheat.sh - the only cheatsheet you need
+# ---------------------------------------
+# https://github.com/chubin/cheat.sh
+# =========================================================================== #
+zinit ice wait lucid \
+	id-as"cht.sh" \
+	has'rlwrap' \
+	as"program"
+zinit snippet "https://cht.sh/:cht.sh"
+zinit ice wait"1" lucid \
+	id-as"cht-completion" \
+	has'rlwrap' \
+	mv"cht* -> _cht" \
+	as"completion"
+zinit snippet https://cheat.sh/:zsh
 
