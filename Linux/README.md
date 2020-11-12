@@ -2,13 +2,13 @@
 
 <img alt="Linux logo" height="100" src="https://upload.wikimedia.org/wikipedia/commons/3/3c/TuxFlat.svg" />
 
-This directory contains configurations for Linux OS tools.
+This directory contains configurations for Linux OS (Operating System) tools.
 
 ---
 
 ## Linux distributions
 
-Distributions I have used so far.
+Distributions I have used so far:
 
 ### Debian
 
@@ -27,8 +27,6 @@ _Official documentation: https://help.ubuntu.com/_
 ## Learning notes
 
 ### Linux directory structure
-
-![Linux directory structure](https://linuxhandbook.com/content/images/2020/06/linux-directory-structure.png)
 
 `/` - The **root** directory
 
@@ -62,7 +60,7 @@ _Source & Credits:_
 
 ---
 
-### Q: What is Linux `kernel`?
+### Q: What is the Linux "kernel"?
 
 A: Main component of a Linux operating system _(OS)_ and is the core interface
 between a computer’s hardware and its processes. It communicates between the 2,
@@ -72,7 +70,7 @@ _Source & Credits: https://www.redhat.com/en/topics/linux/what-is-the-linux-kern
 
 ---
 
-### Q: What are "**Environment Variables**"?
+### Q: What are the "Environment Variables"?
 
 _Debian documentation: https://wiki.debian.org/EnvironmentVariables_
 _Ubuntu documentation: https://help.ubuntu.com/community/EnvironmentVariables_
@@ -144,8 +142,8 @@ A: Is a special filesystem object that discards everything written into it.
 
 _Source & credits: https://stackoverflow.com/a/10508859/6753652_
 
-A: Redirect the **standard error** _(stderr - 2)_ to **standard output**
-   _(stdin -2)_.
+A: Redirecting the **standard error** _(stderr - 2)_ to **standard output**
+   _(stdout - 1)_.
 
 Reminder of File Descriptors:
 - 0 - stdin _(**st**andard **in**put)_
