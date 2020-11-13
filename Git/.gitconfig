@@ -9,7 +9,7 @@
 [user]
 	name = xeho91
 	email = xeho91@pm.me
-	signinkey = <GPG key>
+	signinkey = <GPG_key>
 
 # =========================================================================== #
 # Options for GPG - GnuPrivacy Guard
@@ -84,66 +84,224 @@
 	diffFilter = delta --color-only
 
 # =========================================================================== #
+# Git LFS (Large Files Storage) settings
+# --------------------------------------
+# https://git-lfs.github.com/
+# =========================================================================== #
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+# =========================================================================== #
 # URL shorthands
 # =========================================================================== #
-[url "git@github.com:"]
-	insteadOf = "gh:"
-	pushInsteadOf = "github:"
-	pushInsteadOf = "git://github.com/"
-
-[url "git://github.com/"]
-	insteadOf = "github:"
-
-[url "git@gist.github.com:"]
-	insteadOf = "gst:"
-	pushInsteadOf = "gist:"
-	pushInsteadOf = "git://gist.github.com/"
-
-[url "git://gist.github.com/"]
-	insteadOf = "gist:"
+; [url "git@github.com:"]
+;     insteadOf = "gh:"
+;     pushInsteadOf = "github:"
+;     pushInsteadOf = "git://github.com/"
+;
+; [url "git://github.com/"]
+;     insteadOf = "github:"
+;
+; [url "git@gist.github.com:"]
+;     insteadOf = "gst:"
+;     pushInsteadOf = "gist:"
+;     pushInsteadOf = "git://gist.github.com/"
+;
+; [url "git://gist.github.com/"]
+;     insteadOf = "gist:"
 
 # =========================================================================== #
 # Aliases for git commands
+# ---
+# Inspired by:
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git
 # =========================================================================== #
-; [alias]
-	; # Add
-	; a = add
-	; all = add --all
-	; # Status
-	; st = status --short --branch
-	; # Commit
-	; cm = commit --message
-	; ca = commit --amend
-	; cane = commit --amend --no-edit
-	; # Branch
-	; br = branch
-	; bd = branch -D
-	; # Checkout
-	; co = checkout
-	; cb = checkout -b
-	; # Diff
-	; df = diff
-	; dfc = diff --cached
-	; # Log
-	; lg = log --oneline --graph --decorate -m
-	; lga = log --oneline --graph --decorate --all
-	; last = log -1 HEAD
-	; # Pull
-	; pl = pull
-	; plro = pull --rebase origin master
-	; # Push
-	; ps = push
-	; psf = push --force-with-lease
-	; pssu = push --set-upstream origin HEAD
-	; # Reset
-	; undo = reset --soft HEAD^
-	; uall = reset .
-	; # Fetch
-	; f = fetch
-	; # Stash
-	; sta = stash
-	; stap = stash apply
-	; # Rebase
-	; rbc = rebase --continue
-	; rbs = rebase --skip
-	; rba = rebase --abort
+[alias]
+	# Add
+	a        = add
+	aa       = add --all
+	apa      = add --patch
+	a        = add --update
+	a        = add --verbose
+	# Am
+	am       = am
+	amc      = am --continue
+	ams      = am --skip
+	ama      = am --abort
+	amscp    = am --show-current-patchdasd
+	# Apply
+	a        = apply
+	apt      = apply --3way
+	# Bisect
+	bs       = bisect
+	bsb      = bisect bad
+	bsg      = bisect good
+	bsr      = bisect reset
+	bss      = bisect start
+	# Blame
+	bl       = blame -b -w
+	# Branch
+	a        = branch
+	ba       = branch -a
+	bd       = branch -d
+	bD       = branch -D
+	bnm      = branch --no-merged
+	br       = branch --remote
+	gsup     = branch --set-upstream-to=origin/$(=_current_branch)
+	# Checkout
+	co       = checkout
+	cb       = checkout -b
+	cm       = checkout $(=_main_branch)
+	cd       = checkout develop
+	# Cherry-pick
+	cp       = cherry-pick
+	cpa      = cherry-pick --abort
+	cpc      = cherry-pick --continue
+	# Clean
+	clean    = clean -id
+	# Clone
+	cl       = clone --recurse-submodules
+	# Commit
+	c        = commit -v
+	cva      = commit -v --amend
+	cnoa     = commit -v --no-edit --amend
+	ca       = commit -v -a
+	caa      = commit -v -a --amend
+	cana     = commit -v -a --no-edit --amend
+	cana     = commit -v -a -s --no-edit --amend
+	cam      = commit -a -m
+	csm      = commit -s -m
+	cmsg     = commit -m
+	cs       = commit -S
+	# Config
+	cf       = config --list
+	# Describe
+	dct      = describe --tags $(= rev-list --tags --max-count=1)
+	# Diff
+	d        = diff
+	dca      = diff --cached
+	dcw      = diff --cached --word-diff
+	ds       = diff --staged
+	dw       = diff --word-diff
+	dv       = diff -w $@ | view -
+	dnolock  = diff $@ ":(exclude)package-lock.json" ":(exclude)*.lock"
+	dt       = diff-tree --no-commit-id --name-only -r
+	# Fetch
+	f        = fetch
+	fa       = fetch --all --prune
+	fo       = fetch origin
+	# Gui
+	g        = gui citool
+	ga       = gui citool --amend
+	# Log
+	lg       = log --stat
+	lgp      = log --stat -p
+	lgg      = log --graph
+	lgga     = log --graph --decorate --all
+	lgm      = log --graph --max-count=10
+	lo       = log --oneline --decorate
+	lol      = log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+	lols     = log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --stat
+	lod      = log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset'
+	lods     = log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --date=short
+	lola     = log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --all
+	log      = log --oneline --decorate --graph
+	loga     = log --oneline --decorate --graph --all
+	lp       = log --pretty=<format>
+	# Merge
+	m        = merge
+	ma       = merge --abort
+	mom      = merge origin/$(=_main_branch)
+	mum      = merge upstream/$(=_main_branch)
+	# Mergetool
+	mt       = mergetool --no-prompt
+	mtvim    = mergetool --no-prompt --tool=vimdiff
+	# Pull
+	l        = pull
+	gl       = pull origin $(current_branch)
+	lum      = pull upstream $(=_main_branch)
+	gu       = pull --rebase origin $(current_branch)
+	up       = pull --rebase
+	upv      = pull --rebase -v
+	upa      = pull --rebase --autostash
+	upav     = pull --rebase --autostash -v
+	# Push
+	p        = push
+	pd       = push --dry-run
+	pfwl     = push --force-with-lease
+	pf       = push --force
+	gfo      = push --force origin $(current_branch)
+	gflo     = push --force-with-lease origin $(current_branch)
+	psup     = push --set-upstream origin $(=_current_branch)
+	pv       = push -v
+	pu       = push upstream
+	gp       = push origin $(current_branch)
+	# Rebase
+	rb       = rebase
+	rba      = rebase --abort
+	rbc      = rebase --continue
+	rbs      = rebase --skip
+	rbi      = rebase -i
+	rbd      = rebase develop
+	rbm      = rebase $(=_main_branch)
+	# Remote
+	r        = remote
+	ra       = remote add
+	rup      = remote update
+	rv       = remote -v
+	rmv      = remote rename
+	rrm      = remote remove
+	rset     = remote set-url
+	# Reset
+	rh       = reset
+	ru       = reset --
+	rhh      = reset --hard
+	roh      = reset origin/$(=_current_branch) --hard
+	# Restore
+	rs       = restore
+	rss      = restore --source
+	# Revert
+	rev      = revert
+	# Rm
+	rmc      = rm --cached
+	# Shortlog
+	count    = shortlog -sn
+	# Show
+	sh       = show
+	sps      = show --pretty=short --show-signature
+	# Stash
+	sta      = stash push
+	sta      = stash save
+	staa     = stash apply
+	stc      = stash clear
+	std      = stash drop
+	stl      = stash list
+	stp      = stash pop
+	sts      = stash show --text
+	stu      = stash --include-untracked
+	stall    = stash --all
+	# Status
+	st       = status
+	ss       = status -s
+	sb       = status -sb
+	# Submodule
+	si       = submodule init
+	su       = submodule update
+	# Svn
+	sd       = svn dcommit
+	sr       = svn rebase
+	# Switch
+	sw       = switch
+	swc      = switch -c
+	# Tag
+	ts       = tag -s
+	tv       = tag | sort -V
+	# Update-index
+	ignore   = update-index --assume-unchanged
+	unignore = update-index --no-assume-unchanged
+	# Whatchanged
+	wch      = whatchanged -p --abbrev-commit --pretty=medium
+
