@@ -64,3 +64,32 @@ zinit ice wait lucid \
 	as"program"
 zinit load dandavison/delta
 
+# =========================================================================== #
+# `git flow` - AVH Edition of the Git extensions to provide high-level
+#			   repository operations for Vincent Driessen's branching model
+# -------------------------------------------------------------------------
+# https://nvie.com/posts/a-successful-git-branching-model/
+# https://github.com/petervanderdoes/gitflow-avh
+# =========================================================================== #
+zinit ice wait lucid \
+	id-as"git-flow" \
+	make"prefix=$ZPFX install" \
+	pick"$ZPFX/bin/git-flow*" \
+	as"program"
+zinit load petervanderdoes/gitflow-avh
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git-flow-avh
+zinit snippet OMZP::git-flow-avh
+
+# =========================================================================== #
+# `git lfs` - Git Large File Storage - extension for versioning large files
+# -------------------------------------------------------------------------
+# https://git-lfs.github.com/
+# https://github.com/git-lfs/git-lfs
+# =========================================================================== #
+zinit ice \
+	id-as"git-lfs" \
+	from"gh-r" \
+	atclone"PREFIX=$ZPFX ./install.sh" \
+	as"program"
+zinit load git-lfs/git-lfs
+

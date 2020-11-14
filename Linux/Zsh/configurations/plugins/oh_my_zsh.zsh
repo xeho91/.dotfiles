@@ -3,13 +3,14 @@
 # ----------------------------------------------------------------------
 # https://github.com/ohmyzsh/ohmyzsh
 # ----------------------------------
-# Functionalities (libary) from OMZ
-# ---------------------------------
-# https://github.com/ohmyzsh/ohmyzsh/tree/master/lib
 # ============================================================================
 
 # Add path for caching the selected functionalities from OMZ
 export ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/ohmyzsh"
+
+# Functionalities (libary) from OMZ
+# ---------------------------------
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/lib
 
 # Clipboard
 zinit ice \
@@ -47,3 +48,6 @@ zinit snippet OMZL::spectrum.zsh
 # Termninal support (setting terminal window tab/icon title)
 zinit snippet OMZL::termsupport.zsh
 
+# Plugins from OMZ
+# ----------------
+#

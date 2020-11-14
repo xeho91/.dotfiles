@@ -20,7 +20,6 @@ export XDG_CONFIG_HOME="$ZDOTDIR/.config"
 export XDG_DATA_HOME="$ZDOTDIR/.local/share"
 export XDG_CACHE_HOME="$ZDOTDIR/.cache"
 
-
 # =========================================================================== #
 # Make administrator commands/tools available in Zsh
 # =========================================================================== #
@@ -42,10 +41,10 @@ export LANGUAGE="en_US:en"
 
 # EDITOR
 # ------
-if builtin command -v nvim > /dev/null 2>&1; then
-	export EDITOR=nvim
+if (( $+commands[nvim] )); then
+	export EDITOR="nvim"
 else
-	export EDITOR=vim
+	export EDITOR="vim"
 fi
 
 # PAGER
@@ -56,7 +55,7 @@ export PAGER=less
 export LESS='--raw-control-chars --status-column --tab=4 --window=5 --chop-long-lines'
 #
 # Allow `less` to preview compressed files
-if builtin command -v lesspipe.sh > /dev/null 2>&1; then
+if (( $+commands[lesspipe.sh] )); then
 	export LESSOPEN="|lesspipe.sh %s"
 fi
 

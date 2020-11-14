@@ -9,7 +9,7 @@
 [user]
 	name = xeho91
 	email = xeho91@pm.me
-	signinkey = <GPG_key>
+	signinkey = 747B924FCE9775203207CBEB24926CC31A40057D
 
 # =========================================================================== #
 # Options for GPG - GnuPrivacy Guard

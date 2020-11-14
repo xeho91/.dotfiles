@@ -62,13 +62,6 @@ zinit load hlissner/zsh-autopair
 zinit snippet OMZP::colored-man-pages
 
 # =========================================================================== #
-# Command not found
-# -----------------
-# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/command-not-found
-# =========================================================================== #
-zinit snippet OMZP::command-not-found
-
-# =========================================================================== #
 # Alias finder
 # ------------
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/alias-finder
@@ -109,4 +102,5 @@ zinit load Aloxaf/fzf-tab
 zinit ice \
 	id-as"highlighter"
 zinit snippet https://github.com/paoloantinori/hhighlighter/blob/master/h.sh
+
 

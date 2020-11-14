@@ -54,18 +54,9 @@ source "$ZSH_CONFIG[PLUGINS_DIR]/git_improvements.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/productivity_improvements.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/oh_my_zsh.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/tools.zsh"
-source "$ZSH_CONFIG[PLUGINS_DIR]/helpers.zsh"
+source "$ZSH_CONFIG[PLUGINS_DIR]/cheatsheets.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/easter_eggs.zsh"
 
-
-
-# n³ The unorthodox terminal file manager
-# ---------------------------------------
-# https://github.com/jarun/nnn
-#
-# zinit ice as"program" make"O_NERD=1"
-# zinit light jarun/nnn
-#
 # zinit snippet OMZP::autojump
 # zinit snippet OMZP::gitignore
 # zinit snippet OMZP::jira

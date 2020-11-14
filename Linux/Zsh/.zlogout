@@ -6,39 +6,44 @@ command clear
 # =========================================================================== #
 # Random fun distraction while logging out
 # =========================================================================== #
-shapes=(\
-	bear \
-	boy \
-	capgirl \
-	cat \
-	columns \
-	diamonds \
-	dog \
-	face \
-	fence \
-	girl \
-	ian_jones \
-	mouse \
-	nuke \
-	parchment \
-	peek \
-	santa \
-	scroll \
-	scroll-akn \
-	spring \
-	sunset \
-	twisted \
-	unicornsay \
-	unicornthink \
-	whirly \
-)
-shapes_length=${#shapes[@]}
-random_index=($((RANDOM % shapes_length))+1)
-command fortune | boxes -d "${shapes[$random_index]}" | lolcat -f -r
+if typeset -f quote > /dev/null \
+	&& (( $+commands[boxes] && $+commands[lolcat] )); then
+	shapes=(\
+		"bear" \
+		"boy" \
+		"capgirl" \
+		"cat" \
+		"columns" \
+		"diamonds" \
+		"dog" \
+		"face" \
+		"fence" \
+		"girl" \
+		"ian_jones" \
+		"mouse" \
+		"nuke" \
+		"parchment" \
+		"peek" \
+		"santa" \
+		"scroll" \
+		"scroll-akn" \
+		"spring" \
+		"sunset" \
+		"twisted" \
+		"unicornsay" \
+		"unicornthink" \
+		"whirly" \
+	)
+	shapes_length=${#shapes[@]}
+	random_index=($((RANDOM % shapes_length))+1)
+	quote | boxes -d ${shapes[$random_index]} | lolcat -f -r
+fi
 
 # =========================================================================== #
 # Print what happened
 # =========================================================================== #
-print -P "Logged out from %F{magenta}$HOST%f as %F{magenta}$USER%f." \
-	| toilet -f term -F border
+if (( $+commands[toilet] )); then
+	print -P "Logged out from %F{magenta}$HOST%f as %F{magenta}$USER%f." \
+		| toilet -f term -F border
+fi
 

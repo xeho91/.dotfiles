@@ -69,6 +69,10 @@ zinit ice \
 	atload'export _FASD_DATA=$XDG_CACHE_HOME/.fasd; \
 		eval "$(fasd --init auto)"'
 zinit load clvv/fasd
+# https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/fasd/fasd.plugin.zsh
+zinit ice \
+	has"fasd"
+zinit snippet OMZP::fasd
 
 # =========================================================================== #
 # `fzf` + `fasd` integration
@@ -94,4 +98,16 @@ zinit snippet https://github.com/wookayin/fzf-fasd/blob/master/fzf-fasd.plugin.z
 #     pick"fpp" \
 #     as"program"
 # zinit load facebook/PathPicker
+
+# =========================================================================== #
+# `frontend` -quickly search in documentations for FrontEnd stuff
+# ---------------------------------------------------------------
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/frontend-search
+# =========================================================================== #
+zinit ice \
+	atload'export FRONTEND_SEARCH_FALLBACK="duckduckgo"'
+zinit snippet OMZP::frontend-search
+zinit ice \
+	as"completion"
+zinit snippet OMZP::frontend-search/_frontend-search.sh
 

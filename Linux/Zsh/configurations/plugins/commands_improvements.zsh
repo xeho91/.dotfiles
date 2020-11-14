@@ -62,3 +62,12 @@ zinit ice wait lucid \
 	as"program"
 zinit load b4b4r07/enhancd
 
+# =========================================================================== #
+# Completions for `ufw` (Uncomplicated FireWall)
+# ----------------------------------------------
+# https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/ufw/
+# =========================================================================== #
+zinit ice wait lucid \
+	as"completion"
+zinit snippet OMZP::ufw/_ufw
+
