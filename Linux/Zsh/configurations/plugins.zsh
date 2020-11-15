@@ -24,12 +24,9 @@ if [[ ! -f $ZINIT[HOME_DIR]/bin/zinit.zsh ]]; then
 		print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
 		print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
-
 source "$ZINIT[HOME_DIR]/bin/zinit.zsh"
-
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
-
 # Load a few important annexes, without Turbo
 # (this is currently required for annexes)
 zinit light-mode for \
@@ -41,7 +38,9 @@ zinit light-mode for \
 
 # Appending additional path for manpages, because some plugins install it under
 # `share` directory
-export MANPATH="$(manpath):$ZPFX/share/man"
+# NOTE: Apparently because of the warnings and weird behaviors, is better to
+#		edit `/etc/manpath.config`
+export MANPATH=:"$(manpath):$ZPFX/share/man"
 
 # =========================================================================== #
 # Sourcing (loading configurations) files
@@ -54,15 +53,8 @@ source "$ZSH_CONFIG[PLUGINS_DIR]/git_improvements.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/productivity_improvements.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/oh_my_zsh.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/tools.zsh"
+source "$ZSH_CONFIG[PLUGINS_DIR]/programming_languages.zsh"
+source "$ZSH_CONFIG[PLUGINS_DIR]/recorders.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/cheatsheets.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/easter_eggs.zsh"
-
-# zinit snippet OMZP::autojump
-# zinit snippet OMZP::gitignore
-# zinit snippet OMZP::jira
-# zinit snippet OMZP::jsontools
-# zinit snippet OMZP::node
-# zinit ice as"completion"; zinit snippet OMZP::pip/_pip
-# zinit snippet OMZP::tmux
-# zinit snippet OMZP::web-search
 

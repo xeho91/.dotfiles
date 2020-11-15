@@ -66,7 +66,7 @@ zinit load dandavison/delta
 
 # =========================================================================== #
 # `git flow` - AVH Edition of the Git extensions to provide high-level
-#			   repository operations for Vincent Driessen's branching model
+#              repository operations for Vincent Driessen's branching model
 # -------------------------------------------------------------------------
 # https://nvie.com/posts/a-successful-git-branching-model/
 # https://github.com/petervanderdoes/gitflow-avh
@@ -92,4 +92,72 @@ zinit ice \
 	atclone"PREFIX=$ZPFX ./install.sh" \
 	as"program"
 zinit load git-lfs/git-lfs
+
+# =========================================================================== #
+# `git-cal` - GitHub like contributions calendar on terminal
+# ----------------------------------------------------------
+# https://github.com/k4rthik/git-cal
+# =========================================================================== #
+zinit ice wait lucid \
+	id-as"git-cal" \
+	atclone'perl Makefile.PL PREFIX=$ZPFX' \
+	atpull'%atclone' \
+	make"install"
+zinit load k4rthik/git-cal
+
+# =========================================================================== #
+# `git-recall` - an interactive way to peruse Git history from the terminal
+# -------------------------------------------------------------------------
+# https://github.com/Fakerr/git-recall
+# =========================================================================== #
+zinit ice wait lucid \
+	id-as"git-recall" \
+	make"PREFIX=$ZPFX install"
+zinit load Fakerr/git-recall
+
+# =========================================================================== #
+# `git open` - open the GitHub page or website for a repository in your browser
+# -----------------------------------------------------------------------------
+# https://github.com/paulirish/git-open
+# =========================================================================== #
+zinit ice wait lucid \
+	id-as"git-open" \
+	if'[[ -v "$DISPLAY" ]]' \
+	atclone"mv git-open.1 $ZPFX/man/man1" \
+	atpull'%atclone'
+zinit load paulirish/git-open
+
+# =========================================================================== #
+# `git recent` - see your latest local Git branches, formatted real fancy
+# -----------------------------------------------------------------------
+# https://github.com/paulirish/git-recent
+# =========================================================================== #
+zinit ice wait lucid \
+	id-as"git-recent" \
+	pick"git-recent" \
+	as"program"
+zinit load paulirish/git-recent
+
+# =========================================================================== #
+# `git my` - Lists a user's remote branches and shows if it was merged and/or
+#            available locally
+# -----------------------------------------------------------------------
+# https://github.com/davidosomething/git-my
+# =========================================================================== #
+zinit ice wait lucid \
+	id-as"git-my" \
+	pick"git-my" \
+	as"program"
+zinit load davidosomething/git-my
+
+# =========================================================================== #
+# `git quick-stats` - Git quick statistics is a simple and efficient way to
+#                     access various statistics in Git repository
+# -----------------------------------------------------------------------
+# https://github.com/davidosomething/git-my
+# =========================================================================== #
+zinit ice wait lucid \
+	id-as"git-quick-stats" \
+	make"PREFIX=$ZPFX install"
+zinit load arzzen/git-quick-stats
 

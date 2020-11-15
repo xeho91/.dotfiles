@@ -37,7 +37,7 @@ zinit snippet OMZL::grep.zsh
 # zinit snippet OMZL::functions.zsh
 
 # Key bindings (based on emacs)
-# zinit snippet OMZL::key-bindings.zsh
+zinit snippet OMZL::key-bindings.zsh
 
 # Misc
 # zinit snippet OMZL::misc.zsh

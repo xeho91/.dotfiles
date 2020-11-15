@@ -11,5 +11,9 @@ source "$ZSH_CONFIG[HOME_DIR]/completions.zsh"
 source "$ZSH_CONFIG[HOME_DIR]/plugins.zsh"
 source "$ZSH_CONFIG[HOME_DIR]/functions.zsh"
 source "$ZSH_CONFIG[HOME_DIR]/aliases.zsh"
+source "$ZSH_CONFIG[HOME_DIR]/keybinds.zsh"
 source "$ZSH_CONFIG[HOME_DIR]/prompt.zsh"
+
+# Remove duplicates
+typeset -aU path dpath fpath manpath module_path
 

@@ -33,18 +33,20 @@ zinit load Peltoche/lsd
 # -----------------------------------
 # https://github.com/ogham/exa
 # ---
-# NOTE: Latest binaries has chaos with versions & not maintained anymore?
+# NOTE: Latest binaries has chaos with versions? Installed v0.9 but is v0.8
 # =========================================================================== #
-# zinit ice wait lucid \
-#     id-as"exa" \
-#     from"gh-r" \
-#     mv"exa-* -> exa" \
-#     as"program"
-# zinit load ogham/exa
-# zinit ice \
-#     mv"comp* -> _exa" \
-#     as"completion"
-# zinit snippet "https://github.com/ogham/exa/blob/master/completions/completions.zsh"
+zinit ice wait lucid \
+	id-as"exa" \
+	from"gh-r" \
+	mv"exa-* -> exa" \
+	atload'alias exa="exa --git -la"' \
+	as"program"
+zinit load ogham/exa
+zinit ice \
+	id-as"exa-completions" \
+	mv"exa* -> _exa" \
+	as"completion"
+zinit snippet "https://github.com/ogham/exa/blob/master/completions/completions.zsh"
 
 # =========================================================================== #
 # A next-generation 'cd' command with installed interactive filter
@@ -63,11 +65,12 @@ zinit ice wait lucid \
 zinit load b4b4r07/enhancd
 
 # =========================================================================== #
-# Completions for `ufw` (Uncomplicated FireWall)
-# ----------------------------------------------
-# https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/ufw/
+# Package of completions for existing Linux commands
+# --------------------------------------------------
+# https://github.com/zsh-users/zsh-completions
 # =========================================================================== #
 zinit ice wait lucid \
-	as"completion"
-zinit snippet OMZP::ufw/_ufw
+	id-as"zsh-completions" \
+	blockf
+zinit load zsh-users/zsh-completions
 

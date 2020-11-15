@@ -2,17 +2,18 @@
 # `fzy` - simple, fast fuzzy finder for the terminal
 # --------------------------------------------------
 # https://github.com/jhawthorn/fzy
+# https://github.com/Zsh-Packages/fzy
+# ---
 # NOTE: This tool has no completions
 # =========================================================================== #
-zinit ice \
-	id-as"fzy" \
-	make"PREFIX=$ZPFX install"
-zinit load jhawthorn/fzy
+zinit pack"default" for fzy
 
 # =========================================================================== #
 # `fzf` - command-line fuzzy finder
 # ---------------------------------
 # https://github.com/junegunn/fzf
+# https://github.com/Zsh-Packages/fzf
+# ---
 # NOTE: Completion trigger not working
 # =========================================================================== #
 zinit pack"bgn-binary+keys" \
@@ -55,6 +56,8 @@ zinit pack"bgn-binary+keys" \
 # `peco` - simplistic interactive filtering tool
 # ----------------------------------------------
 # https://github.com/peco/peco
+# ---
+# NOTE: Is it needed?
 # =========================================================================== #
 # zinit ice \
 #     id-as"peco" \

@@ -13,17 +13,6 @@ zinit snippet OMZP::vi-mode
 zinit snippet OMZP::fancy-ctrl-z
 
 # =========================================================================== #
-# Alias finder
-# ------------
-# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/alias-finder
-# ---
-# NOTE: This plugin doesn't read Git's aliases
-# =========================================================================== #
-# zinit ice \
-#     atload'ZSH_ALIAS_FINDER_AUTOMATIC=true'
-# zinit snippet OMZP::alias-finder
-
-# =========================================================================== #
 # Alias tips - helps remembering defined aliases
 # ----------------------------------------------
 # https://github.com/djui/alias-tips
