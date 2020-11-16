@@ -6,48 +6,40 @@
 # ============================================================================
 
 # Add path for caching the selected functionalities from OMZ
-export ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/ohmyzsh"
+export ZSH_CACHE_DIR="$XDG_CACHE_HOME/ohmyzsh"
 
 # Functionalities (libary) from OMZ
 # ---------------------------------
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/lib
 
 # Clipboard
-zinit ice \
-	if'[[ -v "$DISPLAY" ]]'
-zinit snippet OMZL::clipboard.zsh
+zinit wait lucid \
+ 	if'[[ -v "$DISPLAY" ]]' \
+	for OMZL::clipboard.zsh
 
 # Completions
-zinit ice \
-	atload'export COMPLETION_WAITING_DOTS=true'
-zinit snippet OMZL::completion.zsh
+zinit wait lucid \
+	atload'export COMPLETION_WAITING_DOTS=true' \
+	for OMZL::completion.zsh
 
 # Correction
-zinit ice \
-	atload'export ENABLE_CORRECTION=true'
-zinit snippet OMZL::correction.zsh
+zinit wait lucid \
+	atload'export ENABLE_CORRECTION=true' \
+	for OMZL::correction.zsh
 
 # Directories
-zinit snippet OMZL::directories.zsh
+zinit wait lucid \
+	for OMZL::directories.zsh
 
 # Improving `grep`
-zinit snippet OMZL::grep.zsh
-
-# Functions
-# zinit snippet OMZL::functions.zsh
+zinit wait lucid \
+	for OMZL::grep.zsh
 
 # Key bindings (based on emacs)
-zinit snippet OMZL::key-bindings.zsh
-
-# Misc
-# zinit snippet OMZL::misc.zsh
-
-# Spectrum
-zinit snippet OMZL::spectrum.zsh
+zinit wait lucid \
+	for OMZL::key-bindings.zsh
 
 # Termninal support (setting terminal window tab/icon title)
-zinit snippet OMZL::termsupport.zsh
+zinit wait lucid \
+	for OMZL::termsupport.zsh
 
-# Plugins from OMZ
-# ----------------
-#

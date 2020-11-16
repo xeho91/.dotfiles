@@ -18,5 +18,13 @@ alias reload="exec $SHELL -i -l"
 # =========================================================================== #
 # Suffix aliases (set default program to open files with specifed extension)
 # =========================================================================== #
-alias -s md="glow"
+declare -a extensions=("md" "txt")
+for extension in $extensions; do
+	if (( $+commands[glow] )); then
+		alias -s "$extension"="glow --pager"
+	else
+		alias -s $extension="cat --color=auto | less"
+	fi
+done
+unset extensions extension
 

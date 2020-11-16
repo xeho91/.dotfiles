@@ -3,7 +3,7 @@
 # ------------------------
 # https://github.com/sharkdp/bat
 # =========================================================================== #
-zinit ice wait lucid \
+zinit \
 	id-as"bat" \
 	from"gh-r" \
 	mv"bat* -> bat" \
@@ -11,22 +11,22 @@ zinit ice wait lucid \
 	atpull'%atclone' \
 	pick"bat/bat" \
 	as"program" \
-	atload'alias cat="bat"'
-zinit load sharkdp/bat
+	atload'alias cat="bat"' \
+	for @sharkdp/bat
 
 # =========================================================================== #
 # The next generation 'ls' command
 # --------------------------------
 # https://github.com/Peltoche/lsd
 # =========================================================================== #
-zinit ice wait lucid \
+zinit \
 	id-as"lsd" \
 	from"gh-r" \
 	mv"lsd* -> lsd" \
 	pick"lsd/lsd" \
 	as"program" \
-	atload'alias ls="lsd"'
-zinit load Peltoche/lsd
+	atload'alias ls="lsd"' \
+	for @Peltoche/lsd
 
 # =========================================================================== #
 # `exa` - modern replacement for `ls`
@@ -35,25 +35,26 @@ zinit load Peltoche/lsd
 # ---
 # NOTE: Latest binaries has chaos with versions? Installed v0.9 but is v0.8
 # =========================================================================== #
-zinit ice wait lucid \
+zinit wait"0a" lucid \
 	id-as"exa" \
 	from"gh-r" \
 	mv"exa-* -> exa" \
 	atload'alias exa="exa --git -la"' \
-	as"program"
-zinit load ogham/exa
-zinit ice \
+	as"program" \
+	for @ogham/exa
+zinit wait"0b" lucid \
 	id-as"exa-completions" \
+	has"exa" \
 	mv"exa* -> _exa" \
-	as"completion"
-zinit snippet "https://github.com/ogham/exa/blob/master/completions/completions.zsh"
+	as"completion" \
+	for https://github.com/ogham/exa/blob/master/completions/completions.zsh
 
 # =========================================================================== #
 # A next-generation 'cd' command with installed interactive filter
 # ----------------------------------------------------------------
 # https://github.com/b4b4r07/enhancd
 # =========================================================================== #
-zinit ice wait lucid \
+zinit \
 	id-as"enhancd" \
 	has'fzy' \
 	atinit'export ENHANCD_DISABLE_DOT=1; \
@@ -61,16 +62,30 @@ zinit ice wait lucid \
 	atclone'rm -f *.fish */*.fish' \
 	atpull'%atclone' \
 	pick"init.sh" \
-	as"program"
-zinit load b4b4r07/enhancd
+	as"program" \
+	for @b4b4r07/enhancd
+
+# =========================================================================== #
+# `procs` - a modern replacement for `ps`
+# ---------------------------------------
+# https://github.com/dalance/procs
+# =========================================================================== #
+zinit \
+	id-as"procs" \
+	atclone"cargo build --release" \
+	atpull"%atclone" \
+	pick"target/release/procs" \
+	as"program" \
+	atload'alias ps="procs"' \
+	for @dalance/procs
 
 # =========================================================================== #
 # Package of completions for existing Linux commands
 # --------------------------------------------------
 # https://github.com/zsh-users/zsh-completions
 # =========================================================================== #
-zinit ice wait lucid \
+zinit \
 	id-as"zsh-completions" \
-	blockf
-zinit load zsh-users/zsh-completions
+	blockf \
+	for @zsh-users/zsh-completions
 

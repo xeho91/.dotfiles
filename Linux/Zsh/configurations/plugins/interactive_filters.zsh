@@ -16,7 +16,8 @@ zinit pack"default" for fzy
 # ---
 # NOTE: Completion trigger not working
 # =========================================================================== #
-zinit pack"bgn-binary+keys" \
+zinit wait"1" lucid \
+	has"fd" \
 	atload'\
 		export FZF_DEFAULT_COMMAND="fd \
 			--hidden \
@@ -49,21 +50,7 @@ zinit pack"bgn-binary+keys" \
 		export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"; \
 		export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"; \
 		export FZF_COMPLETION_TRIGGER="@@" \
-	' \
+		' \
+	pack"bgn-binary+keys" \
 	for fzf
-
-# =========================================================================== #
-# `peco` - simplistic interactive filtering tool
-# ----------------------------------------------
-# https://github.com/peco/peco
-# ---
-# NOTE: Is it needed?
-# =========================================================================== #
-# zinit ice \
-#     id-as"peco" \
-#     from"gh-r" \
-#     mv"peco* -> peco" \
-#     pick"peco/peco" \
-#     as"program"
-# zinit load peco/peco
 

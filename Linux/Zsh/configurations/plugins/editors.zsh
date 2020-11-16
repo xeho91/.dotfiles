@@ -29,3 +29,18 @@ zinit ice \
 	atload'export VIMRUNTIME="$ZINIT[PLUGINS_DIR]/vim/runtime"; \
 		alias vi=vim'
 zinit load vim/vim
+
+# zinit wait'0' lucid \
+#       from'gh-r' ver'nightly' as'program' pick'nvim*/bin/nvim' \
+#         atclone'echo "" > ._zinit/is_release' \
+#           atpull'%atclone' \
+#             run-atpull \
+#               light-mode for @neovim/neovim
+
+# node (for coc.nvim)
+# zinit id-as=node as='readurl|command' \
+#   nocompletions extract \
+#     pick'node*/bin/*' \
+#       dlink='node-v%VERSION%-linux-x64.tar.gz' \
+#         for https://nodejs.org/download/release/latest/
+

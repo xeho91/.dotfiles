@@ -3,26 +3,26 @@
 # -------------------------------
 # https://github.com/jaseg/lolcat
 # =========================================================================== #
-zinit ice \
+zinit \
 	id-as"lolcat" \
 	make \
 	pick"lolcat censor" \
-	as"program"
-zinit load jaseg/lolcat
+	as"program" \
+	for @jaseg/lolcat
 
 # =========================================================================== #
 # `boxes` - boxes with fancy shapes
 # ---------------------------------
 # https://github.com/ascii-boxes/boxes
 # =========================================================================== #
-zinit ice \
+zinit \
 	id-as"boxes" \
 	make!"GLOBALCONF=$ZINIT[PLUGINS_DIR]/boxes/boxes-config" \
 	atclone'cp doc/boxes.1 $ZPFX/man/man1' \
 	atpull"%atclone" \
 	pick"src/boxes" \
-	as"program"
-zinit load ascii-boxes/boxes
+	as"program" \
+	for @ascii-boxes/boxes
 
 # =========================================================================== #
 # `screenfetch` - fetches system/theme information in terminal for Linux
@@ -30,18 +30,11 @@ zinit load ascii-boxes/boxes
 # ----------------------------------------------------------------------
 # https://github.com/KittyKatt/screenFetch
 # =========================================================================== #
-zinit ice \
+zinit \
 	id-as"screenfetch" \
 	mv"screenfetch-dev -> screenfetch" \
 	atclone"mv screenfetch.1 $ZPFX/man/man1" \
 	pick"screenfetch-dev" \
-	as"program"
-zinit load @KittyKatt/screenFetch
-
-# =========================================================================== #
-# `quote` - display a random quote taken from quotationspage.com
-# --------------------------------------------------------------
-# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/rand-quote
-# =========================================================================== #
-zinit snippet OMZP::rand-quote
+	as"program" \
+	for @KittyKatt/screenFetch
 

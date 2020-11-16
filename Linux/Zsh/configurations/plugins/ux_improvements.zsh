@@ -49,7 +49,7 @@ zinit load hlissner/zsh-autopair
 # ----------------------------------------------
 # https://github.com/djui/alias-tips
 # =========================================================================== #
-zinit ice \
+zinit ice wait lucid \
 	id-as"alias-tips" \
 	pick"alias-tips.plugin.zsh" \
 	atload'export ZSH_PLUGINS_ALIAS_TIPS_REVEAL=1'
@@ -73,16 +73,28 @@ zinit load Aloxaf/fzf-tab
 zinit ice wait lucid \
 	id-as"fzf-marks" \
 	has"fzf" \
-	atinit'export FZF_MARKS_FILE="$XDG_CACHE_HOME/.fzf-marks"'
+	atinit'export FZF_MARKS_FILE="$XDG_CACHE_HOME/.fzf-marks"; \
+		export FZF_MARKS_JUMP="^b"'
 zinit load urbainvaes/fzf-marks
 
 # =========================================================================== #
-# command line tool to highlight terms
-# ------------------------------------
+# `h` - command line tool to highlight terms with colors
+# ------------------------------------------------------
 # https://github.com/paoloantinori/hhighlighter
 # =========================================================================== #
-zinit ice \
+zinit ice wait lucid \
 	id-as"highlighter"
 zinit snippet https://github.com/paoloantinori/hhighlighter/blob/master/h.sh
 
+# =========================================================================== #
+# Real-time type-ahead completion for Zsh
+# ---------------------------------------
+# https://github.com/marlonrichert/zsh-autocomplete
+# ---
+# NOTE: Quite unfriendly at the moment, because is completely changing the
+# defaults
+# =========================================================================== #
+# zinit ice wait lucid \
+#     id-as"zsh-autocomplete"
+# zinit load marlonrichert/zsh-autocomplete
 
