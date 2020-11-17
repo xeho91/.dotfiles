@@ -5,29 +5,17 @@
 # ---
 # NOTE:
 # Requires:
-# - build-essential
-# - make
-# - libssl-de
-# - iubghc-zlib-dev
-# - libcurl4-gnutls-dev
-# - libexpat1-dev
-# - gettext
-#  unzip
+# build-essential make libssl-dev libghc-zlib-dev libcurl4-gnutls-dev libexpat1-dev gettext unzip
 # =========================================================================== #
-# zinit ice \
-#	id-as"git" \
-#	make"prefix=$ZPFX install"
-# zinit load git/git
-# if builtin command -v make > /dev/null 2>&1; then
-#     zinit wait'0' lucid nocompile \
-#         id-as=git as='readurl|command' \
-#         mv"%ID% -> git.tar.gz" \
-#         atclone'ziextract --move git.tar.gz && \
-#         make -j $[$(grep cpu.cores /proc/cpuinfo | sort -u | sed "s/[^0-9]//g") + 1] prefix=$ZPFX all install' \
-#         atpull"%atclone" \
-#         dlink='/git/git/archive/v%VERSION%.tar.gz' \
-#         for https://github.com/git/git/releases/
-# fi
+zinit \
+	id-as"git" \
+	mv"%ID% -> git.tar.gz" \
+	atclone"ziextract --move git.tar.gz" \
+	atpull"%atclone" \
+	make"prefix=$ZPFX install" \
+	dlink="/git/git/archive/v%VERSION%.tar.gz" \
+	as"readurl|command" \
+	for https://github.com/git/git/releases/
 
 # =========================================================================== #
 # `git lfs` - Git Large File Storage - extension for versioning large files
@@ -35,7 +23,7 @@
 # https://git-lfs.github.com/
 # https://github.com/git-lfs/git-lfs
 # =========================================================================== #
-zinit wait lucid \
+zinit \
 	id-as"git-lfs" \
 	has"git" \
 	from"gh-r" \
@@ -48,7 +36,7 @@ zinit wait lucid \
 # ------------------------------------------
 # https://github.com/cli/cli/
 # =========================================================================== #
-zinit wait lucid \
+zinit \
 	id-as"github-cli" \
 	has"git" \
 	from"gh-r" \
@@ -66,7 +54,7 @@ zinit wait lucid \
 # ----------------------------------------------------------------
 # https://github.com/tj/git-extras
 # =========================================================================== #
-zinit wait"1" lucid \
+zinit wait"git rev-parse --git-dir &> /dev/null" lucid \
 	id-as"git-extras" \
 	has"git" \
 	make"PREFIX=$ZPFX" \
@@ -80,7 +68,7 @@ zinit wait"1" lucid \
 # ---------------------------------------------------------------------------
 # https://github.com/unixorn/git-extra-commands
 # =========================================================================== #
-zinit wait"1" lucid \
+zinit wait"git rev-parse --git-dir &> /dev/null" lucid \
 	id-as"git-extra-commands" \
 	has"git" \
 	pick"bin/git*" \
@@ -93,7 +81,7 @@ zinit wait"1" lucid \
 # ------------------------------------------
 # https://github.com/dandavison/delta
 # =========================================================================== #
-zinit wait"1" lucid \
+zinit wait"git rev-parse --git-dir &> /dev/null" lucid \
 	id-as"detla" \
 	has"git" \
 	from"gh-r" \
@@ -110,14 +98,14 @@ zinit wait"1" lucid \
 # https://github.com/petervanderdoes/gitflow-avh
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git-flow-avh
 # =========================================================================== #
-zinit wait"1a" lucid \
+zinit wait"git rev-parse --git-dir &> /dev/null" lucid \
 	id-as"git-flow" \
 	has"git" \
 	make"prefix=$ZPFX install" \
 	pick"$ZPFX/bin/git-flow*" \
 	as"program" \
 	for @petervanderdoes/gitflow-avh
-zinit wait"1b" lucid \
+zinit wait"git rev-parse --git-dir &> /dev/null" lucid \
 	has"git-flow" \
 	for OMZP::git-flow-avh
 
@@ -126,7 +114,7 @@ zinit wait"1b" lucid \
 # ----------------------------------------------------------
 # https://github.com/k4rthik/git-cal
 # =========================================================================== #
-zinit wait"1" lucid \
+zinit wait"git rev-parse --git-dir &> /dev/null" lucid \
 	id-as"git-cal" \
 	has"git" \
 	atclone'perl Makefile.PL PREFIX=$ZPFX' \
@@ -139,7 +127,7 @@ zinit wait"1" lucid \
 # -------------------------------------------------------------------------
 # https://github.com/Fakerr/git-recall
 # =========================================================================== #
-zinit wait"1" lucid \
+zinit wait"git rev-parse --git-dir &> /dev/null" lucid \
 	id-as"git-recall" \
 	has"git" \
 	make"PREFIX=$ZPFX install" \
@@ -150,7 +138,7 @@ zinit wait"1" lucid \
 # -----------------------------------------------------------------------------
 # https://github.com/paulirish/git-open
 # =========================================================================== #
-zinit wait"1" lucid \
+zinit wait"git rev-parse --git-dir &> /dev/null" lucid \
 	id-as"git-open" \
 	has"git" \
 	if'[[ -v "$DISPLAY" ]]' \
@@ -163,7 +151,7 @@ zinit wait"1" lucid \
 # -----------------------------------------------------------------------
 # https://github.com/paulirish/git-recent
 # =========================================================================== #
-zinit wait"1" lucid \
+zinit wait"git rev-parse --git-dir &> /dev/null" lucid \
 	id-as"git-recent" \
 	has"git" \
 	pick"git-recent" \
@@ -176,7 +164,7 @@ zinit wait"1" lucid \
 # -----------------------------------------------------------------------
 # https://github.com/davidosomething/git-my
 # =========================================================================== #
-zinit wait"1" lucid \
+zinit wait"git rev-parse --git-dir &> /dev/null" lucid \
 	id-as"git-my" \
 	has"git" \
 	pick"git-my" \
@@ -189,7 +177,7 @@ zinit wait"1" lucid \
 # -----------------------------------------------------------------------
 # https://github.com/davidosomething/git-my
 # =========================================================================== #
-zinit wait"1" lucid \
+zinit wait"git rev-parse --git-dir &> /dev/null" lucid \
 	id-as"git-quick-stats" \
 	has"git" \
 	make"PREFIX=$ZPFX install" \
@@ -200,7 +188,7 @@ zinit wait"1" lucid \
 # -----------------------------------------------------------
 # https://github.com/wfxr/forgit
 # =========================================================================== #
-zinit wait"1" lucid \
+zinit wait"git rev-parse --git-dir &> /dev/null" lucid \
 	id-as"forgit" \
 	if'[[ -n "$commands[git]" && "$commands[fzf]" ]]' \
 	for https://github.com/wfxr/forgit/blob/master/forgit.plugin.zsh

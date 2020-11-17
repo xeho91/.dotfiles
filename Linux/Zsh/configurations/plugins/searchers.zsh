@@ -3,7 +3,7 @@
 # ------------------------------------------------------------
 # https://github.com/sharkdp/fd
 # =========================================================================== #
-zinit ice \
+zinit \
 	id-as"fd" \
 	from"gh-r" \
 	mv"fd* -> fd" \
@@ -15,9 +15,13 @@ zinit ice \
 # `ag` - code-searching tool similar to `ack`, but faster
 # -------------------------------------------------------
 # https://github.com/ggreer/the_silver_searcher
+# NOTE:
+# Depedencies:
+# automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
 # =========================================================================== #
 zinit \
 	id-as"ag" \
+	has"automake" \
 	atclone'./build.sh; \
 		./configure --prefix=$ZPFX' \
 	atpull'%atclone' \

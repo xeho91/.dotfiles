@@ -5,9 +5,8 @@
 # =========================================================================== #
 zinit \
 	id-as"lolcat" \
-	make \
-	pick"lolcat censor" \
-	as"program" \
+	nocompile \
+	make"DESTDIR=$ZPFX/bin install" \
 	for @jaseg/lolcat
 
 # =========================================================================== #
@@ -17,7 +16,8 @@ zinit \
 # =========================================================================== #
 zinit \
 	id-as"boxes" \
-	make!"GLOBALCONF=$ZINIT[PLUGINS_DIR]/boxes/boxes-config" \
+	nocompile \
+	make!'GLOBALCONF=$ZINIT[PLUGINS_DIR]/boxes/boxes-config build' \
 	atclone'cp doc/boxes.1 $ZPFX/man/man1' \
 	atpull"%atclone" \
 	pick"src/boxes" \
@@ -26,7 +26,7 @@ zinit \
 
 # =========================================================================== #
 # `screenfetch` - fetches system/theme information in terminal for Linux
-#				  desktop screenshots
+#                 desktop screenshots
 # ----------------------------------------------------------------------
 # https://github.com/KittyKatt/screenFetch
 # =========================================================================== #
@@ -37,4 +37,25 @@ zinit \
 	pick"screenfetch-dev" \
 	as"program" \
 	for @KittyKatt/screenFetch
+
+# =========================================================================== #
+# `emojify` - emoji on the command line
+# -------------------------------------
+# https://github.com/mrowa44/emojify
+# =========================================================================== #
+zinit wait"2" lucid \
+	id-as"emojify" \
+	pick"emojify" \
+	as"program" \
+	for mrowa44/emojify
+
+# =========================================================================== #
+# Emoji completion with `fzf`
+# ---------------------------
+# https://github.com/b4b4r07/emoji-cli
+# =========================================================================== #
+zinit wait"2" lucid \
+	has"jq fzf" \
+	id-as"emoji-cli" \
+	for @b4b4r07/emoji-cli
 

@@ -38,23 +38,22 @@ zinit light-mode for \
 
 # Appending additional path for manpages, because some plugins install it under
 # `share` directory
-# NOTE: Apparently because of the warnings and weird behaviors, is better to
-#		edit `/etc/manpath.config`
+unset MANPATH
 export MANPATH=:"$(manpath):$ZPFX/share/man"
 
 # =========================================================================== #
 # Sourcing (loading configurations) files
 # =========================================================================== #
-source "$ZSH_CONFIG[PLUGINS_DIR]/ux_improvements.zsh"
+source "$ZSH_CONFIG[PLUGINS_DIR]/programming_languages.zsh"
+source "$ZSH_CONFIG[PLUGINS_DIR]/searchers.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/interactive_filters.zsh"
-source "$ZSH_CONFIG[PLUGINS_DIR]/searching_tools.zsh"
+source "$ZSH_CONFIG[PLUGINS_DIR]/tools.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/commands_improvements.zsh"
+source "$ZSH_CONFIG[PLUGINS_DIR]/zsh_improvements.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/git_improvements.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/productivity_improvements.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/oh_my_zsh.zsh"
-source "$ZSH_CONFIG[PLUGINS_DIR]/tools.zsh"
-source "$ZSH_CONFIG[PLUGINS_DIR]/programming_languages.zsh"
-source "$ZSH_CONFIG[PLUGINS_DIR]/recorders.zsh"
-source "$ZSH_CONFIG[PLUGINS_DIR]/cheatsheets.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/easter_eggs.zsh"
+source "$ZSH_CONFIG[PLUGINS_DIR]/cheatsheets.zsh"
+source "$ZSH_CONFIG[PLUGINS_DIR]/recorders.zsh"
 

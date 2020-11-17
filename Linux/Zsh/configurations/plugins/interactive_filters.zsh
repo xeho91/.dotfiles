@@ -16,9 +16,9 @@ zinit pack"default" for fzy
 # ---
 # NOTE: Completion trigger not working
 # =========================================================================== #
-zinit wait"1" lucid \
+zinit \
 	has"fd" \
-	atload'\
+	atload' \
 		export FZF_DEFAULT_COMMAND="fd \
 			--hidden \
 			--follow \

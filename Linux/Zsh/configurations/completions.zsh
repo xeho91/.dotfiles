@@ -33,6 +33,8 @@ zstyle ":completion:*:git-checkout:*" sort false
 # Format descriptions
 zstyle ':completion:*:descriptions' format '[%d]'
 
-# Colorize the list
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# Colorize the lists with `$LS_COLORS`
+# ---
+# NOTE: This is handled by Zinit package "ls-colors"
+# zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 

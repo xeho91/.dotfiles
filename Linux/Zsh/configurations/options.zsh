@@ -37,6 +37,9 @@ setopt AUTO_MENU
 # after the second `d` and completions will be shown for add)
 setopt COMPLETE_IN_WORD
 #
+# Don't beep on ambiguous completions
+setopt NO_LIST_BEEP
+#
 # Disables the use of ⌃S to stop terminal output and the use of ⌃Q to resume it
 unsetopt FLOW_CONTROL
 #
@@ -141,4 +144,17 @@ setopt PROMPT_SUBST
 # =========================================================================== #
 #
 # setopt INTERACTIVE
+
+# =========================================================================== #
+# Job control options
+# -------------------
+# http://zsh.sourceforge.net/Doc/Release/Options.html#Job-Control
+# =========================================================================== #
+#
+# Don't run background jobs at lowest priority
+setopt NO_BG_NICE
+#
+# Don't send HUP signals to running jobs when the shell exists
+setopt NO_HUP
+#
 #

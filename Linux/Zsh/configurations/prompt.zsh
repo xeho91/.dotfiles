@@ -3,10 +3,10 @@
 # --------------------------------------------------
 # https://github.com/romkatv/powerlevel10k
 # =========================================================================== #
-zinit ice \
-	id-as "powerlevel10k" \
-	depth=1
-zinit load romkatv/powerlevel10k
+zinit \
+	id-as"powerlevel10k" \
+	depth=1 \
+	for @romkatv/powerlevel10k
 
 # To customize prompt, run `p10k configure`
 if [[ -f "$ZSH_CONFIG[PROMPTS_DIR]/.p10k.zsh" ]]; then

@@ -29,38 +29,17 @@ zinit \
 	for @Peltoche/lsd
 
 # =========================================================================== #
-# `exa` - modern replacement for `ls`
-# -----------------------------------
-# https://github.com/ogham/exa
-# ---
-# NOTE: Latest binaries has chaos with versions? Installed v0.9 but is v0.8
-# =========================================================================== #
-zinit wait"0a" lucid \
-	id-as"exa" \
-	from"gh-r" \
-	mv"exa-* -> exa" \
-	atload'alias exa="exa --git -la"' \
-	as"program" \
-	for @ogham/exa
-zinit wait"0b" lucid \
-	id-as"exa-completions" \
-	has"exa" \
-	mv"exa* -> _exa" \
-	as"completion" \
-	for https://github.com/ogham/exa/blob/master/completions/completions.zsh
-
-# =========================================================================== #
 # A next-generation 'cd' command with installed interactive filter
 # ----------------------------------------------------------------
 # https://github.com/b4b4r07/enhancd
 # =========================================================================== #
 zinit \
 	id-as"enhancd" \
-	has'fzy' \
+	has"fzy" \
 	atinit'export ENHANCD_DISABLE_DOT=1; \
 		export ENHANCD_DIR="$XDG_CACHE_HOME/.enhancd"' \
 	atclone'rm -f *.fish */*.fish' \
-	atpull'%atclone' \
+	atpull"%atclone" \
 	pick"init.sh" \
 	as"program" \
 	for @b4b4r07/enhancd

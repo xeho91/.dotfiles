@@ -4,7 +4,7 @@
 # ---------------------------------------------------------
 # https://github.com/denisidoro/navi
 # =========================================================================== #
-zinit wait lucid \
+zinit wait"2" lucid \
 	id-as"navi" \
 	has"cargo" \
 	make"SRC_DIR=$ZINIT[PLUGINS_DIR] BIN_DIR=$ZPFX/bin TMP_DIR=$XDG_CACHE_HOME install" \
@@ -34,13 +34,13 @@ zinit wait lucid \
 # ----------------------------------------------------------------
 # https://github.com/chubin/cheat.sh
 # =========================================================================== #
-zinit wait"0a" lucid \
+zinit wait"2a" lucid \
 	id-as"cht.sh" \
 	has'rlwrap' \
 	as"program" \
 	atload'export CHTSH="$XDG_CONFIG_HOME"' \
 	for https://cht.sh/:cht.sh
-zinit wait"0b" lucid \
+zinit wait"2b" lucid \
 	id-as"cht-completion" \
 	has'rlwrap' \
 	mv"cht* -> _cht" \
@@ -52,14 +52,14 @@ zinit wait"0b" lucid \
 # ---------------------------------------------------------------------
 # https://github.com/cheat/cheat
 # =========================================================================== #
-zinit wait"0a" lucid \
+zinit wait"2a" lucid \
 	id-as"cheat" \
 	from"gh-r" \
 	mv"cheat* -> cheat" \
 	pick"cheat" \
 	as"program" \
 	for @cheat/cheat
-zinit wait"0b" lucid \
+zinit wait"2b" lucid \
 	id-as"cheat-completion" \
 	mv"cheat* -> _cheat" \
 	as"completion" \

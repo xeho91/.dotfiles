@@ -3,8 +3,9 @@
 # ----------------------------------------------
 # https://github.com/djui/alias-tips
 # =========================================================================== #
-zinit \
+zinit wait"1" lucid \
 	id-as"alias-tips" \
+	has"python" \
 	pick"alias-tips.plugin.zsh" \
 	atload'export ZSH_PLUGINS_ALIAS_TIPS_REVEAL=1' \
 	for @djui/alias-tips
@@ -23,7 +24,7 @@ zinit \
 # ---------------------------------
 # https://github.com/mptre/yank
 # =========================================================================== #
-zinit ice \
+zinit \
 	id-as"yank" \
 	if'[[ -v "$DISPLAY" ]]' \
 	make"PREFIX=$ZPFX install" \
@@ -45,7 +46,7 @@ zinit \
 	atload'export _FASD_DATA=$XDG_CACHE_HOME/.fasd; \
 		eval "$(fasd --init auto)"' \
 	for @clvv/fasd
-zinit wait lucid \
+zinit \
 	has"fasd" \
 	for OMZP::fasd
 
@@ -54,7 +55,7 @@ zinit wait lucid \
 # --------------------------
 # https://github.com/wookayin/fzf-fasd/blob/master/fzf-fasd.plugin.zsh
 # =========================================================================== #
-zinit wait lucid \
+zinit \
 	id-as"fzf-fasd" \
 	if'[[ -n "$commands[fzf]" && -n "$commands[fasd]" ]]' \
 	for https://github.com/wookayin/fzf-fasd/blob/master/fzf-fasd.plugin.zsh
@@ -75,32 +76,29 @@ zinit wait lucid \
 # zinit load facebook/PathPicker
 
 # =========================================================================== #
-# `frontend` -quickly search in documentations for FrontEnd stuff
-# ---------------------------------------------------------------
+# `frontend` - quickly search in documentations for frontend stuff
+# ----------------------------------------------------------------
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/frontend-search
 # =========================================================================== #
-zinit wait"2a" lucid \
+zinit wait"1a" lucid \
 	if'[[ -v "$DISPLAY" ]]' \
 	atload'export FRONTEND_SEARCH_FALLBACK="duckduckgo"' \
 	for OMZP::frontend-search
-# zinit wait"0b" lucid \
-#     has"frontend" \
-#     as"completion" \
-#     for OMZP::frontend-search/_frontend-search.sh
+zinit wait"1b" lucid \
+	has"frontend" \
+	as"completion" \
+	for OMZP::frontend-search/_frontend-search.sh
 
 # =========================================================================== #
-# Vi mode in interactive command (when typing commands into shell)
-# ----------------------------------------------------------------
-# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/vi-mode
+# `mmv` - rename multiple files with editor
+# -----------------------------------------
+# https://github.com/itchyny/mmv
 # =========================================================================== #
-zinit wait"2" lucid \
-	for OMZP::vi-mode
-
-# =========================================================================== #
-# `Ctrl + Z` to back to Vim (in backgroung proces) instead of `fg`
-# ----------------------------------------------------------------
-# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/fancy-ctrl-z
-# =========================================================================== #
-zinit wait"2" lucid \
-	for OMZP::fancy-ctrl-z
+zinit \
+	id-as"mmv" \
+	has"go" \
+	make"build install" \
+	pick"mmv" \
+	as"program" \
+	for @itchyny/mmv
 
