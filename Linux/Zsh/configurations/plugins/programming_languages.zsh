@@ -24,6 +24,8 @@ function install_asdf_plugins() {
 		else
 			if [[ "$plugin" == "rust" ]]; then
 				zinit \
+					id-as"cargo-completion" \
+					mv"cargo* -> _cargo" \
 					as"completion" \
 					for https://github.com/rust-lang/cargo/blob/master/src/etc/_cargo
 			fi

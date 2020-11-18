@@ -36,12 +36,12 @@ zinit \
 zinit \
 	id-as"enhancd" \
 	has"fzy" \
+	nocompile \
 	atinit'export ENHANCD_DISABLE_DOT=1; \
 		export ENHANCD_DIR="$XDG_CACHE_HOME/.enhancd"' \
 	atclone'rm -f *.fish */*.fish' \
 	atpull"%atclone" \
-	pick"init.sh" \
-	as"program" \
+	src"init.sh" \
 	for @b4b4r07/enhancd
 
 # =========================================================================== #
@@ -59,7 +59,7 @@ zinit \
 	for @dalance/procs
 
 # =========================================================================== #
-# Package of completions for existing Linux commands
+# package of completions for existing linux commands
 # --------------------------------------------------
 # https://github.com/zsh-users/zsh-completions
 # =========================================================================== #
@@ -67,4 +67,18 @@ zinit \
 	id-as"zsh-completions" \
 	blockf \
 	for @zsh-users/zsh-completions
+
+
+# =========================================================================== #
+# `colormake` - colorize the `make` output for better readability
+# ---------------------------------------------------------------
+# https://github.com/pagekite/Colormake
+# =========================================================================== #
+zinit \
+	id-as"colormake" \
+	atclone"mv colormake.1 $ZPFX/man/man1" \
+	pick"colormake" \
+	as"program" \
+	atload'alias make="colormake"' \
+	for @pagekite/Colormake
 

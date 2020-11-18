@@ -143,3 +143,14 @@ zinit wait"1" lucid \
 	as"program" \
 	for @b4b4r07/httpstat
 
+# =========================================================================== #
+# `trans` - command-line translator using popular online translators
+# ------------------------------------------------------------------
+# https://github.com/soimort/translate-shell
+# =========================================================================== #
+zinit wait"1" lucid \
+	id-as"trans" \
+	nocompile \
+	make"PREFIX=$ZPFX install" \
+	for @soimort/translate-shell
+

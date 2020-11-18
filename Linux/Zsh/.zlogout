@@ -36,7 +36,7 @@ if typeset -f quote > /dev/null \
 	)
 	shapes_length=${#shapes[@]}
 	random_index=($((RANDOM % shapes_length))+1)
-	quote | boxes -d ${shapes[$random_index]} | lolcat -f -r
+	quote | fold -sw 80 | boxes -d ${shapes[$random_index]} -a jr | lolcat -f -r
 fi
 
 # =========================================================================== #

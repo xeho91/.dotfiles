@@ -38,7 +38,7 @@ zinit light-mode for \
 
 # Appending additional path for manpages, because some plugins install it under
 # `share` directory
-unset MANPATH
+unset MANPATH # Disables warning when reloading
 export MANPATH=:"$(manpath):$ZPFX/share/man"
 
 # =========================================================================== #
@@ -49,6 +49,7 @@ source "$ZSH_CONFIG[PLUGINS_DIR]/searchers.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/interactive_filters.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/tools.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/commands_improvements.zsh"
+source "$ZSH_CONFIG[PLUGINS_DIR]/editors.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/zsh_improvements.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/git_improvements.zsh"
 source "$ZSH_CONFIG[PLUGINS_DIR]/productivity_improvements.zsh"

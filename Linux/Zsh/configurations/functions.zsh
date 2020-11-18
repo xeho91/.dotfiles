@@ -137,3 +137,12 @@ function where_zsh() {
 	fi
 }
 
+# function make() {
+#     pathpat="(/[^/]*)+:[0-9]+"
+#     ccred=$(print -P "%F{red}")
+#     ccyellow=$(print -P "%F{yellow}")
+#     ccend=$(print -P "%f")
+#     command make "$@" 2>&1 | sed -E -e "/[Ee]rror[: ]/ $pathpat $ccred $ccend" -e "/[Ww]arning[: ]/ $pathpat $ccyellow $ccend"
+#     return ${PIPESTATUS[0]}
+# }
+

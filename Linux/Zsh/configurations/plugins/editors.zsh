@@ -1,5 +1,5 @@
 # =========================================================================== #
-# `vim` (Vi iMproved) - Text editor program for UNIX
+# `vim` (vi improved) - text editor program for unix
 # --------------------------------------------------
 # https://github.com/vim/vim/
 # =========================================================================== #
@@ -12,12 +12,9 @@ zinit \
 			--with-x \
 			--enable-fail-if-missing \
 			--enable-gui=auto \
-			--enable-gtk2-check \
 			--enable-multibyte \
 			--enable-cscope \
-			--enable-luainterp=yes \
 			--enable-perlinterp=yes \
-			--enable-pythoninterp=yes \
 			--enable-python3interp=yes \
 			--enable-rubyinterp=yes \
 			--disable-arabic \
@@ -30,10 +27,24 @@ zinit \
 		alias vi=vim' \
 	for @vim/vim
 
-# zinit wait'0' lucid \
-#     from'gh-r' ver'nightly' as'program' pick'nvim*/bin/nvim' \
-#     atclone'echo "" > ._zinit/is_release' \
-#     atpull'%atclone' \
-#     run-atpull \
-#     light-mode for @neovim/neovim
+# =========================================================================== #
+# `vim` (vi improved) - text editor program for unix
+# --------------------------------------------------
+# https://github.com/vim/vim/
+# ---
+# NOTE: Requires:
+# ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
+# =========================================================================== #
+zinit \
+	id-as"nvim" \
+	nocompile \
+	make"CMAKE_INSTALL_PREFIX=$ZPFX CMAKE_BUILD_TYPE=Release install" \
+	for @neovim/neovim
 
+	# from'gh-r' \
+	# ver'nightly' \
+	# atclone'echo "" > ._zinit/is_release' \
+	# atpull'%atclone' \
+	# run-atpull \
+	# pick'nvim*/bin/nvim' \
+	# as'program' \
