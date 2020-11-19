@@ -1,3 +1,7 @@
+set runtimepath+='$VIM_CONFIG_DIR/vim'
+set runtimepath+='$VIM_CONFIG_DIR/vim/after'
+runtime '$VIM_CONFIG_DIR/.vimrc'
+
 " ==============================================================================
 " Vim-Plug settings
 " -----------------

@@ -1,12 +1,12 @@
 # =========================================================================== #
 # Define path to user's "dotfiles"
 # =========================================================================== #
-export DOTFILES=$HOME/.dotfiles
+export DOTFILES="$HOME/.dotfiles"
 
 # =========================================================================== #
 # Set the default location for Zsh files
 # =========================================================================== #
-export ZDOTDIR=$DOTFILES/Linux/Zsh
+export ZDOTDIR="$DOTFILES/Linux/Zsh"
 
 # =========================================================================== #
 # XDG base directory
@@ -49,7 +49,7 @@ fi
 
 # PAGER
 # ------
-export PAGER=less
+export PAGER="less"
 #
 # Set passing default options when running `less` command
 export LESS='--raw-control-chars --status-column --tab=4 --window=5 --chop-long-lines'
@@ -58,4 +58,8 @@ export LESS='--raw-control-chars --status-column --tab=4 --window=5 --chop-long-
 if (( $+commands[lesspipe.sh] )); then
 	export LESSOPEN="|lesspipe.sh %s"
 fi
+
+# https://vi.stackexchange.com/questions/11879/how-can-put-vimrc-and-viminfo-into-vim-director
+export VIM_CONFIG_DIR="$DOTFILES/Editors/Vim"
+export VIMINIT="source $VIM_CONFIG_DIR/.vimrc"
 
