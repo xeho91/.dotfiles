@@ -24,7 +24,6 @@ zinit \
 	pick"src/vim" \
 	as"program" \
 	atload'export EDITOR="vim"; \
-		export VIMRUNTIME="$ZINIT[PLUGINS_DIR]/vim/runtime"; \
 		alias vi=vim' \
 	for @vim/vim
 
@@ -41,8 +40,7 @@ zinit \
 	nocompile \
 	make!"CMAKE_INSTALL_PREFIX=$ZPFX CMAKE_BUILD_TYPE=Release install" \
 	atload'export EDITOR="nvim"; \
-		export VIMRUNTIME="$ZINIT[PLUGINS_DIR]/nvim/runtime"; \
-		alias vi=nvim' \
+		alias nvi="nvim"' \
 	for @neovim/neovim
 
 	# from'gh-r' \

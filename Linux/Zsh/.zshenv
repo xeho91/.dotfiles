@@ -59,7 +59,12 @@ if (( $+commands[lesspipe.sh] )); then
 	export LESSOPEN="|lesspipe.sh %s"
 fi
 
+# =========================================================================== #
+# Defaulting the location to config files for both editors - (Neo)Vim
+# -------------------------------------------------------------------
 # https://vi.stackexchange.com/questions/11879/how-can-put-vimrc-and-viminfo-into-vim-director
-export VIM_CONFIG_DIR="$DOTFILES/Editors/Vim"
-export VIMINIT="source $VIM_CONFIG_DIR/.vimrc"
+# =========================================================================== #
+export VIM_DIR="$DOTFILES/Editors/Vim"
+export VIMRC="$VIM_DIR/.vimrc"
+export VIMINIT="source $VIMRC"
 
