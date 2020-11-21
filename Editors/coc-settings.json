@@ -1,0 +1,18 @@
+{
+  // suggestions
+  "suggest.noselect": false,
+  "suggest.enablePreview": true,
+
+  // https://github.com/dense-analysis/ale#5iii-how-can-i-use-ale-and-cocnvim-together
+  "diagnostic.displayByAle": true,
+
+  "languageserver": {
+    // "bash": {
+    //   // https://github.com/bash-lsp/bash-language-server
+    //   "command": "bash-language-server",
+    //   "args": ["start"],
+    //   "filetypes": ["sh"],
+    //   "ignoredRootPaths": ["~"]
+    // }
+  }
+}

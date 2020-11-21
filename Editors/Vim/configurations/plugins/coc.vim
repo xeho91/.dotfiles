@@ -1,9 +1,9 @@
  " =============================================================================
- " CoC (Conquer of Completion) settings
- " ------------------------------------
+ " CoC (Conquer of Completion) - intellisense engine
+ " -------------------------------------------------
  " https://github.com/neoclide/coc.nvim
  " =============================================================================
- "
+
  " TextEdit might fail if hidden is not set
  set hidden
  "

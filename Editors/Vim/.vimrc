@@ -1,199 +1,305 @@
-" ==============================================================================
+" =========================================================================== "
 " Reorganizing the location for (Neo)Vim files
 " --------------------------------------------
 " https://vi.stackexchange.com/questions/11879/how-can-put-vimrc-and-viminfo-into-vim-directory
-" ==============================================================================
-set viminfo+=n$VIM_DIR/.viminfo
-set runtimepath^=$VIM_DIR/vim
-set runtimepath+=$VIM_DIR/vim/after
+" =========================================================================== "
+set viminfo+=n"$VIM_DIR[HOME]/.viminfo"
+set runtimepath^="$VIM_DIR[HOME]/.vim"
+set runtimepath+="$VIM_DIR[HOME]/.vim/after"
 let &packpath = &runtimepath
 
-" ============================================================================= "
-let $VIM_CONFIG_DIR = expand("$VIM_DIR/configurations")
+" =========================================================================== "
+" Vim-Plug settings
+" -----------------
+" https://github.com/junegunn/vim-plug
+" =========================================================================== "
 
-execute 'source' fnameescape($VIM_CONFIG_DIR . '/plugins.vim')
-execute 'source' fnameescape($VIM_CONFIG_DIR . '/options.vim')
-execute 'source' fnameescape($VIM_CONFIG_DIR . '/commands.vim')
-execute 'source' fnameescape($VIM_CONFIG_DIR . '/maps.vim')
+" Install Vim-Plug if not found
+if empty(glob("$VIM_DIR[HOME]/.vim/autoload/plug.vim"))
+	silent !curl -fLo "$VIM_DIR[HOME]/.vim/autoload/plug.vim" --create-dirs
+		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall --sync | source "$VIMRC"
+endif
 
-" " =============================================================================
-" " Plugins settings
-" " =============================================================================
-"
-" " Lightline (bottom bar) settings
-" " -------------------------------
-" " https://github.com/itchyny/lightline.vim
-" "
-" " Integrate it with CoC (Conquer of Completion)
-" let g:lightline = {
-"     \ 'colorscheme': 'gruvbox',
-"     \ 'active': {
-"         \ 'left': [
-"             \ ['mode', 'paste'],
-"             \ ['cocstatus', 'readonly', 'filename', 'modified']
-"         \ ],
-"         \ 'right': [
-"             \ ['lineinfo'],
-"             \ ['percent'],
-"             \ ['fileformat', 'fileencoding', 'filetype'],
-"             \ ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok']
-"         \ ],
-"     \ },
-"     \ 'component_function': {
-"         \ 'cocstatus': 'coc#status'
-"     \ },
-"     \ 'component_expand': {
-"         \ 'linter_checking': 'lightline#ale#checking',
-"         \ 'linter_infos': 'lightline#ale#infos',
-"         \ 'linter_warnings': 'lightline#ale#warnings',
-"         \ 'linter_errors': 'lightline#ale#errors',
-"         \ 'linter_ok': 'lightline#ale#ok'
-"     \ },
-"     \ 'component_type': {
-"         \ 'linter_checking': 'right',
-"         \ 'linter_infos': 'right',
-"         \ 'linter_warnings': 'warning',
-"         \ 'linter_errors': 'error',
-"         \ 'linter_ok': 'right'
-"      \ }
-" \ }
-" " Use icons as indicators
-" let g:lightline#ale#indicator_checking = "\uf110"
-" let g:lightline#ale#indicator_infos = "\uf129 "
-" let g:lightline#ale#indicator_warnings = "\uf071 "
-" let g:lightline#ale#indicator_errors = "\uf05e "
-" let g:lightline#ale#indicator_ok = "\uf00c"
-" " Force Lightline update on background color change
-" autocmd OptionSet background
-"     \ execute 'source' globpath(&rtp, 'autoload/lightline/colorscheme/gruvbox.vim')
-"     \ | call lightline#colorscheme()
-"     \ | call lightline#update()
-" " Force Lightline update on CoC's status and diagnostic changes
-" autocmd User CocStatusChange, CocDiagnosticChange call lightline#update()
-" " Disable -- INSERT -- as is unnecessary anymore because the mode information
-" " is displayed in the statusline
-" set noshowmode
-"
-" " NERDTree settings
-" " -----------------
-" " https://github.com/preservim/nerdtree
-" "
-" " Binding to hotkey toggling NERDTree
-" map <F7> :NERDTreeToggle<CR>
-" "
-" " If more than one window and previous buffer was NERDTree, go back to it.
-" autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | endif
-" " Avoid crashes when calling Vim-Plug functions while the cursor is on the
-" " NERDTree window
-" let g:plug_window = 'noautocmd vertical topleft new'
-" "
-" " Move NERDTree to the right side
-" let g:NERDTreeWinPos = "right"
-" "
-" " Open NERDTree automatically when Vim starts up on opening a directory
-" autocmd StdinReadPre * let s:std_in=1
-" " autocmd VimEnter * if argc() == 1
-" "     \ && isdirectory(argv()[0])
-" "     \ && !exists("s:std_in")
-" "         \ | wincmd p | ene | exe 'NERDTree' argv()[0]
-" " \ | endif
-" " Close Vim if the only window left open is a NERDTree
-" autocmd bufenter * if (winnr("$") == 1
-"     \ && exists("b:NERDTree")
-"     \ && b:NERDTree.isTabTree()) | q
-" \ | endif
-"
-" " Rainbow bracket/parentheses settings
-" " ------------------------------------
-" " https://github.com/luochen1990/rainbow
-" let g:rainbow_active = 1
-"
-" " Indent Guides settings
-" " ----------------------
-" " https://github.com/nathanaelkane/vim-indent-guides
-" "
-" " Enable guides on Vim startup
-" let g:indent_guides_enable_on_vim_startup = 1
-" "
-" " Start indent guides from indent number...
-" let g:indent_guides_start_level = 1
-" "
-" " Size of the indent guide (block-width)
-" let g:indent_guides_guide_size = 1
-"
-" " NERD Commenter settings
-" " -----------------------
-" " https://github.com/preservim/nerdcommenter
-" "
-" " Add spaces after comment delimiters by default
-" let g:NERDSpaceDelims = 1
-" "
-" " Use compact syntax for prettified multi-line comments
-" let g:NERDCompactSexyComs = 1
-" "
-" " Align line-wise comment delimiters flush left
-" " instead of following code indentation
-" let g:NERDDefaultAlign = 'left'
-" "
-" " Set a language to use its alternate delimiters by default
-" let g:NERDAltDelims_java = 1
-" "
-" " Add your own custom formats or override the defaults
-" let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
-" "
-" " Allow commenting and inverting empty
-" " lines (useful when commenting a region)
-" let g:NERDCommentEmptyLines = 1
-" "
-" " Enable trimming of trailing whitespace when uncommenting
-" let g:NERDTrimTrailingWhitespace = 1
-" "
-" " Enable NERDCommenterToggle to check all selected lines is commented or not
-" let g:NERDToggleCheckAllLines = 1
-"
-" " Tagbar settings
-" " ---------------
-" " https://github.com/preservim/tagbar
-" "
-" " Bind toggle to hotkey
-" nmap <F8> :TagbarToggle<CR>
-"
-" " Vim Easy Align settings
-" " -----------------------
-" " https://github.com/junegunn/vim-easy-align
-" "
-" " Start interactive EasyAlign in visual mode (e.g. vipga)
-" xmap ga <Plug>(EasyAlign)
-" "
-" " Start interactive EasyAlign for a motion/text object (e.g. gaip)
-" nmap ga <Plug>(EasyAlign)
-"
-" " Limelight settings
-" " ------------------
-" " https://github.com/junegunn/limelight.vim
-" "
-" " Bind hotkey for toggling Limelight on and off
-" map <F9> :Limelight!!<CR>
-" "
-" " Bind hotkey for invoking Limelight for a visual range
-" " (NORMAL and VISUAL mode)
-" nmap <Leader>l <Plug>(Limelight)
-" xmap <Leader>l <Plug>(Limelight)
-" "
-" " Set the conceal level
-" let g:limelight_default_coefficient = 0.8
-"
-" " Goyo settings
-" " -------------
-" " https://github.com/junegunn/goyo.vim
-" "
-" " Bind toggle Goyo to hotkey
-" map <F10> :Goyo<CR>
-" "
-" " Integrate with Limelight plugin
-" autocmd! User GoyoEnter Limelight
-" autocmd! User GoyoLeave Limelight!
-"
+" Plugins will be downloaded under the specified directory
+call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
+" Declare the list of plugins
+
+	" ----------------------------------------------------------------------- "
+	"                                                              Essentials
+	" ----------------------------------------------------------------------- "
+	"
+	" Vim defaults everyone can agree on
+	" ----------------------------------
+	" https://github.com/tpope/vim-sensible
+	Plug 'tpope/vim-sensible'
+	"
+	" EditorConfig
+	" ---
+	" https://github.com/editorconfig/editorconfig-vim
+	Plug 'editorconfig/editorconfig-vim'
+
+	" ----------------------------------------------------------------------- "
+	"                                                              Navigating
+	" ----------------------------------------------------------------------- "
+	"
+	" Display tags in a window, ordered by scope
+	" ---
+	" https://github.com/preservim/tagbar
+	Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle' }
+	"
+	" A tree explorer
+	" ---
+	" https://github.com/preservim/nerdtree
+	Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+	"
+	" Fuzzy file, buffer, mru, tag, etc finder
+	" ---
+	" https://github.com/ctrlpvim/ctrlp.vim
+	Plug 'ctrlpvim/ctrlp.vim', { 'on': 'CtrlP' }
+	"
+	" Add fzf and fzf-based commands
+	" ---
+	" https://github.com/junegunn/fzf.vim
+	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+	Plug 'junegunn/fzf.vim'
+	"
+	" Physics-based smooth scrolling
+	" ---
+	" https://github.com/yuttie/comfortable-motion.vim
+	Plug 'yuttie/comfortable-motion.vim'
+	"
+	" Visualize Vim undo tree
+	" ---
+	" https://github.com/sjl/gundo.vim
+	Plug 'sjl/gundo.vim'
+
+	" ----------------------------------------------------------------------- "
+	"                                                   Motion & Productivity
+	" ----------------------------------------------------------------------- "
+	"
+	" Multiple cursors
+	" ---
+	" https://github.com/mg979/vim-visual-multi
+	Plug 'mg979/vim-visual-multi'
+	"
+	" Motions on speed
+	" ---
+	" https://github.com/easymotion/vim-easymotion
+	Plug 'easymotion/vim-easymotion'
+	"
+	" Jump to any location specified by two characters
+	" ---
+	" https://github.com/justinmk/vim-sneak
+	Plug 'justinmk/vim-sneak'
+	"
+	" Enable repeating supported plugin maps with `.`
+	" ---
+	" https://github.com/tpope/vim-repeat
+	Plug 'tpope/vim-repeat'
+	"
+	" Pairs of handy bracket mappings
+	" ---
+	" https://github.com/tpope/vim-unimpaired
+	Plug 'tpope/vim-unimpaired'
+	"
+	" Quoting/parenthesizing made simple
+	" ---
+	" https://github.com/tpope/vim-surround
+	Plug 'tpope/vim-surround'
+	"
+	" Intensely nerdy commenting powers
+	" ---
+	" https://github.com/scrooloose/nerdcommenter
+	Plug 'scrooloose/nerdcommenter'
+	"
+	" Provide additional text objects
+	" ---
+	" https://github.com/wellle/targets.vim
+	Plug 'wellle/targets.vim'
+	"
+	" Insert or delete brackets, parens, quotes in pair
+	" ---
+	" https://github.com/jiangmiao/auto-pairs
+	Plug 'jiangmiao/auto-pairs'
+	"
+	" Alignment
+	" ---
+	" https://github.com/junegunn/vim-easy-align
+	Plug 'junegunn/vim-easy-align'
+	"
+	" Emmet
+	" ---
+	" https://github.com/mattn/emmet-vim
+	Plug 'mattn/emmet-vim'
+
+	" ----------------------------------------------------------------------- "
+	"                                                               Git tools
+	" ----------------------------------------------------------------------- "
+	" NERDTree showing Git status
+	" https://github.com/Xuyuanp/nerdtree-git-plugin
+	Plug 'Xuyuanp/nerdtree-git-plugin'
+	"
+	" Git wrapper
+	" https://github.com/tpope/vim-fugitive
+	Plug 'tpope/vim-fugitive'
+	"
+	" Shows git diff markers in the sign column and stages/previews/undoes
+	" https://github.com/airblade/vim-gitgutter
+	Plug 'airblade/vim-gitgutter'
+
+	" ----------------------------------------------------------------------- "
+	"                                                              Completion
+	" ----------------------------------------------------------------------- "
+	" Code completion engine
+	" https://github.com/ycm-core/YouCompleteMe
+	" Plug 'ycm-core/YouCompleteMe'
+	"
+	" CoC (Conquer of Completion) - intellisense engine for Vim
+	" https://github.com/neoclide/coc.nvim
+	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+	"
+	" Snippet engine
+	" https://github.com/SirVer/ultisnips
+	" Plug 'SirVer/ultisnips'
+	"
+	" Default snippets
+	" https://github.com/honza/vim-snippets
+	Plug 'honza/vim-snippets'
+	"
+	" Perform all Vim insert mode completions with Tab
+	" https://github.com/ervandew/supertab
+	" Plug 'ervandew/supertab'
+	"
+	" Emojis
+	" https://github.com/junegunn/vim-emoji
+	Plug 'junegunn/vim-emoji'
+
+	" ----------------------------------------------------------------------- "
+	"                                                              Theme & UI
+	" ----------------------------------------------------------------------- "
+	"
+	" Retro groove color theme
+	" ---
+	" https://github.com/morhetz/gruvbox
+	Plug 'morhetz/gruvbox'
+	"
+	" File type icons
+	" ---
+	" https://github.com/ryanoasis/vim-devicons
+	Plug 'ryanoasis/vim-devicons'
+	"
+	" A light and configurable statusline/tabline
+	" ---
+	" https://github.com/itchyny/lightline.vim
+	Plug 'itchyny/lightline.vim'
+	"
+	" Distraction-free writing
+	" ---
+	" https://github.com/junegunn/goyo.vim
+	Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+
+	" ----------------------------------------------------------------------- "
+	"                                                                  Syntax
+	" ----------------------------------------------------------------------- "
+	"
+	" A solid language pack
+	" ---
+	" https://github.com/sheerun/vim-polyglot
+	Plug 'sheerun/vim-polyglot'
+	"
+	" Extra syntax and highlight for NERDTree files
+	" ---
+	" https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
+	Plug 'tiagofumo/vim-nerdtree-syntax-highlight', { 'on': 'NERDTreeToggle' }
+	"
+	" Rainbow parentheses/brackets
+	" https://github.com/luochen1990/rainbow
+	Plug 'luochen1990/rainbow'
+	"
+	" Visually displaying indent levels in code
+	" https://github.com/nathanaelkane/vim-indent-guides
+	Plug 'nathanaelkane/vim-indent-guides'
+	"
+	" Make the yanked region apparent
+	" https://github.com/machakann/vim-highlightedyank
+	Plug 'machakann/vim-highlightedyank'
+	"
+	" Hyperfocus-writing
+	" https://github.com/junegunn/limelight.vim
+	Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
+	"
+	" Extra syntax and highlight for NERDTree files
+	" https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
+	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+	"
+	" Syntax highlighting plugin for JSONC files
+	" https://github.com/kevinoid/vim-jsonc
+	Plug 'kevinoid/vim-jsonc'
+
+	" ----------------------------------------------------------------------- "
+	"                                                                 Linters
+	" ----------------------------------------------------------------------- "
+	" Check syntax in Vim asynchronously and fix files, with Language Server
+	" Protocol (LSP) support
+	" https://github.com/dense-analysis/ale
+	Plug 'dense-analysis/ale'
+	"
+	" ALE indicator for the Lightline Vim plugin
+	" https://github.com/maximbaz/lightline-ale
+	Plug 'maximbaz/lightline-ale'
+
+	" ----------------------------------------------------------------------- "
+	"                                                                   Other
+	" ----------------------------------------------------------------------- "
+	" The interactive scratchpad for hackers
+	" https://github.com/metakirby5/codi.vim
+	Plug 'metakirby5/codi.vim'
+	"
+	" Automatic Window Resizing Plugin
+	" https://github.com/camspiers/lens.vim
+	" Plug 'camspiers/animate.vim'
+	" Plug 'camspiers/lens.vim'
+	"
+	" Helpers for UNIX
+	" https://github.com/tpope/vim-eunuch
+	Plug 'tpope/vim-eunuch'
+
+
+" List ends here and, plugins become visible to (Neo)Vim after this call
+call plug#end()
+
+" =========================================================================== "
+" Load (Neo)Vim's configuration files
+" =========================================================================== "
+execute 'source' fnameescape(expand("$VIM_DIR[CONFIGS]") . '/options.vim')
+execute 'source' fnameescape(expand("$VIM_DIR[CONFIGS]") . '/commands.vim')
+execute 'source' fnameescape(expand("$VIM_DIR[CONFIGS]") . '/maps.vim')
+execute 'source' fnameescape(expand("$VIM_DIR[CONFIGS]") . '/theme.vim')
+
+" =========================================================================== "
+"Load plugins configuration files
+" =========================================================================== "
+"execute 'source' fnameescape(expand("$VIM_DIR[PLUGINS]") . '/coc.vim')
+if has_key(plugs, 'lightline.vim')
+	execute 'source' fnameescape(expand("$VIM_DIR[PLUGINS]") . '/lightline.vim')
+endif
+
+if has_key(plugs, 'ctrlp.vim')
+	execute 'source' fnameescape(expand("$VIM_DIR[PLUGINS]") . '/ctrlp.vim')
+endif
+
+if has_key(plugs, 'nerdtree')
+	execute 'source' fnameescape(expand("$VIM_DIR[PLUGINS]") . '/nerdtree.vim')
+endif
+
+if has_key(plugs, 'nerdcommenter')
+	execute 'source' fnameescape(expand("$VIM_DIR[PLUGINS]") . '/nerdcommenter.vim')
+endif
+
+
+
+
 " " Vim Emoji settings
 " " ------------------
 " " https://github.com/junegunn/vim-emoji

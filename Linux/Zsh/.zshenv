@@ -64,7 +64,10 @@ fi
 # -------------------------------------------------------------------
 # https://vi.stackexchange.com/questions/11879/how-can-put-vimrc-and-viminfo-into-vim-director
 # =========================================================================== #
-export VIM_DIR="$DOTFILES/Editors/Vim"
-export VIMRC="$VIM_DIR/.vimrc"
+declare -A VIM_DIR
+export VIM_DIR[HOME]="$DOTFILES/Editors/Vim"
+export VIM_DIR[CONFIGS]="$VIM_DIR[HOME]/configurations"
+export VIM_DIR[PLUGINS]="$VIM_DIR[CONFIGS]/plugins"
+export VIMRC="$VIM_DIR[HOME]/.vimrc"
 export VIMINIT="source $VIMRC"
 

@@ -15,9 +15,6 @@ set incsearch
 "
 " Highlight matches once a search is complete
 set hlsearch
-"
-" Bind turning off highlighting to hotkey (":noh" alias)
-nnoremap <Leader><Space> :nohlsearch<CR>
 
 " =========================================================================== "
 " Invisible characters & wrapping
@@ -94,24 +91,6 @@ set foldmethod=indent
 "
 " Close folds (0 - all, higher number will close fewer folds)
 set foldlevel=0
-
-" =========================================================================== "
-" Theme settings
-" =========================================================================== "
-" Expand colors in terminal using GUI
-if (has("termguicolors"))
-	set termguicolors
-endif
-"
-" Enable syntax highlight
-syntax enable
-"
-" Set theme
-colorscheme gruvbox
-set background=dark
-"
-" Bind hotkey to toggle dark/light theme
-map <silent><F12> :let &background = ( &background == "dark"? "light" : "dark" )<CR>
 
 " =========================================================================== "
 " Performance
