@@ -6,15 +6,23 @@ This directory contains configuration for editors related to UNIX text editor `v
 
 Editors I have used so far:
 
-### `vim`
+### Vim
 
-<img alt="Vim logo" height="25" src="https://en.wikipedia.org/wiki/Vim_(text_editor)#/media/File:Vimlogo.svg" />
+<img alt="Vim logo" height="50" src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Vimlogo.svg" />
 
-**Vi** i**M**proved
+**Vi** i**M**proved - `vim`
 
-### `nvim`
+### Neovim
 
-**N**eo**vim**
+<img alt="Neovim logo" height="50" src="https://upload.wikimedia.org/wikipedia/commons/0/07/Neovim-mark-flat.svg" />
+
+**N**eo**vim** - `nvim`
+
+---
+
+## Learning resources
+
+https://learnvimscriptthehardway.stevelosh.com/
 
 ---
 

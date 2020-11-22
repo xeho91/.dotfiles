@@ -10,7 +10,7 @@ let g:lightline = {
 	\ 'active': {
 		\ 'left': [
 			\ ['mode', 'paste'],
-			\ ['cocstatus', 'readonly', 'filename', 'modified']
+			\ ['cocstatus', 'readonly', 'filename', 'modified', 'method']
 		\ ],
 		\ 'right': [
 			\ ['lineinfo'],
@@ -19,8 +19,9 @@ let g:lightline = {
 			\ ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok']
 		\ ],
 	\ },
-		\ 'component_function': {
-		\ 'cocstatus': 'coc#status'
+	\ 'component_function': {
+		\ 'cocstatus': 'coc#status',
+		\ 'method': 'NearestMethodOrFunction'
 	\ },
 	\ 'component_expand': {
 		\ 'linter_checking': 'lightline#ale#checking',

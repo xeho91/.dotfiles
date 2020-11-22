@@ -1,11 +1,12 @@
 " =========================================================================== "
-" CtrlP settings
+" Gundo settings
 " --------------
-" https://github.com/ctrlpvim/ctrlp.vim
-" ---
-" NOTE: MRU means Most Recently Used
+" https://github.com/sjl/gundo.vim
 " =========================================================================== "
 
-" Bind to hotkey toggling CtrlP
-map <c-p> :CtrlP<CR>
+" Bind toggle Gundo tree to hotkey
+nnoremap <F6> :GundoToggle<CR>
+
+" Use Python3 instead
+let g:gundo_prefer_python3 = 1
 

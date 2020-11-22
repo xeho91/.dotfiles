@@ -1,9 +1,8 @@
 " =========================================================================== "
-" Tagbar settings
-" ---------------
-" https://github.com/preservim/tagbar
+" Lens.vim settings
+" -----------------
+" https://github.com/camspiers/lens.vim
 " =========================================================================== "
 
-" Bind toggle to hotkey
-nmap <F8> :TagbarToggle<CR>
+let g:lens#disabled_filetypes = ['nerdtree', 'fzf', 'tagbar']
 

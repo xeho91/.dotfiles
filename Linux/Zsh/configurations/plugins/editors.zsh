@@ -28,12 +28,9 @@ zinit \
 	for @vim/vim
 
 # =========================================================================== #
-# `vim` (vi improved) - text editor program for unix
-# --------------------------------------------------
-# https://github.com/vim/vim/
-# ---
-# NOTE: Requires:
-# ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
+# `nvim` (neovim) - for of `vim` focused on extensibility and usability
+# ---------------------------------------------------------------------
+# https://github.com/neovim/neovim
 # =========================================================================== #
 zinit \
 	id-as"nvim" \
@@ -43,10 +40,17 @@ zinit \
 		alias nvi="nvim"' \
 	for @neovim/neovim
 
-	# from'gh-r' \
-	# ver'nightly' \
-	# atclone'echo "" > ._zinit/is_release' \
-	# atpull'%atclone' \
-	# run-atpull \
-	# pick'nvim*/bin/nvim' \
-	# as'program' \
+# =========================================================================== #
+# SpaceVim - a community driven distribution of (Neo)Vim
+# ------------------------------------------------------
+# https://github.com/SpaceVim/SpaceVim
+# =========================================================================== #
+zinit \
+	id-as"spacevim" \
+	has"vim nvim" \
+	nocompile \
+	atload'export SPACEVIMDIR="$DOTFILES/Editors/Vim/.SpaceVim.d"; \
+		alias svim="vim -u $ZINIT[PLUGINS_DIR]/spacevim/vimrc"; \
+		alias snvim="nvim -u $ZINIT[PLUGINS_DIR]/spacevim/init.vim"' \
+	for @spacevim/spacevim
+
