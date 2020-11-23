@@ -41,18 +41,23 @@ call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
 	Plug 'editorconfig/editorconfig-vim'
 
 	" ----------------------------------------------------------------------- "
-	"                                                              Navigating
+	"                                                               Searchers
 	" ----------------------------------------------------------------------- "
 	"
-	" Viewer & Finder for LSP (Language Server Protocol) symbols and tags
-	" -------------------------------------------------------------------
-	" https://github.com/liuchengxu/vista.vim
-	Plug 'liuchengxu/vista.vim'
+	" Plugin for the the Perl module `ack` or `ag`
+	" ----------------------------------
+	" https://github.com/mileszs/ack.vim
+	Plug 'mileszs/ack.vim'
+
+	" ----------------------------------------------------------------------- "
+	"                                                     Interactive filters
+	" ----------------------------------------------------------------------- "
 	"
-	" File tree explorer
-	" ------------------
-	" https://github.com/preservim/nerdtree
-	Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+	" Add `fzf` and fzf-based commands
+	" --------------------------------
+	" https://github.com/junegunn/fzf.vim
+	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+	Plug 'junegunn/fzf.vim'
 	"
 	" Fuzzy file, buffer, mru, tag, etc finder
 	" ----------------------------------------
@@ -62,13 +67,35 @@ call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
 	" Efficient fuzzy finder that helps to locate files, buffers, mrus, etc.
 	" ---------------------------------------------------------------------
 	" https://github.com/Yggdroot/LeaderF
-	Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension'  }
+	Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
+
+	" ----------------------------------------------------------------------- "
+	"                                                NERDTree (file explorer)
+	" ----------------------------------------------------------------------- "
 	"
-	" Add `fzf` and fzf-based commands
-	" --------------------------------
-	" https://github.com/junegunn/fzf.vim
-	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-	Plug 'junegunn/fzf.vim'
+	" File tree explorer
+	" ------------------
+	" https://github.com/preservim/nerdtree
+	Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+	"
+	" NERDTree showing Git status
+	" ---------------------------
+	" https://github.com/Xuyuanp/nerdtree-git-plugin
+	Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
+	"
+	" Extra syntax and highlight for NERDTree files
+	" ---------------------------------------------
+	" https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
+	Plug 'tiagofumo/vim-nerdtree-syntax-highlight', { 'on': 'NERDTreeToggle' }
+
+	" ----------------------------------------------------------------------- "
+	"                                                              Navigating
+	" ----------------------------------------------------------------------- "
+	"
+	" Viewer & Finder for LSP (Language Server Protocol) symbols and tags
+	" -------------------------------------------------------------------
+	" https://github.com/liuchengxu/vista.vim
+	Plug 'liuchengxu/vista.vim'
 	"
 	" Visualize Vim undo tree
 	" -----------------------
@@ -138,11 +165,6 @@ call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
 	"                                                               Git tools
 	" ----------------------------------------------------------------------- "
 	"
-	" NERDTree showing Git status
-	" ---
-	" https://github.com/Xuyuanp/nerdtree-git-plugin
-	Plug 'Xuyuanp/nerdtree-git-plugin'
-	"
 	" Git wrapper
 	" ---
 	" https://github.com/tpope/vim-fugitive
@@ -202,12 +224,12 @@ call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
 	Plug 'ryanoasis/vim-devicons'
 	"
 	" A light and configurable statusline/tabline
-	" ---
+	" -------------------------------------------
 	" https://github.com/itchyny/lightline.vim
 	Plug 'itchyny/lightline.vim'
 	"
 	" Distraction-free writing
-	" ---
+	" ------------------------
 	" https://github.com/junegunn/goyo.vim
 	Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 
@@ -220,10 +242,10 @@ call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
 	" https://github.com/sheerun/vim-polyglot
 	Plug 'sheerun/vim-polyglot'
 	"
-	" Extra syntax and highlight for NERDTree files
-	" ---
-	" https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
-	Plug 'tiagofumo/vim-nerdtree-syntax-highlight', { 'on': 'NERDTreeToggle' }
+	" Speed up (Neo)Vim by updating folds only when called-for
+	" --------------------------------------------------------
+	" https://github.com/Konfekt/FastFold
+	Plug 'Konfekt/FastFold'
 	"
 	" Rainbow parentheses/brackets
 	" ---
@@ -244,11 +266,6 @@ call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
 	" ---
 	" https://github.com/junegunn/limelight.vim
 	Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
-	"
-	" Extra syntax and highlight for NERDTree files
-	" ---
-	" https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
-	Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 	"
 	" Syntax highlighting plugin for JSONC files
 	" ---

@@ -41,8 +41,9 @@ set listchars=
 " =========================================================================== "
 "
 " Visual indicator to show where your cursor is (line and column)
-set cursorline
-set cursorcolumn
+" NOTE: This slows down Vim
+" set cursorline
+" set cursorcolumn
 
 " Visually highlight the preferred line length (column on the right)
 set colorcolumn=80
@@ -105,4 +106,7 @@ set ttyfast
 
 " Stop redrawing screen while executing macros
 set lazyredraw
+
+" Use newer algorithm for RegExp engine
+set re=1
 

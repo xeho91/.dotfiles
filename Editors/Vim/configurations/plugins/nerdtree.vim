@@ -10,6 +10,8 @@ map <F3> :NERDTreeToggle<CR>
 " Move NERDTree to the right side
 let g:NERDTreeWinPos = "right"
 
+let g:NERDTreeShowHidden = 1
+
 " If more than one window and previous buffer was NERDTree, go back to it.
 autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | endif
 

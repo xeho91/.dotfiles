@@ -49,7 +49,7 @@ zinit \
 	id-as"spacevim" \
 	has"vim nvim" \
 	nocompile \
-	atload'export SPACEVIMDIR="$DOTFILES/Editors/Vim/.SpaceVim.d"; \
+	atload'export SPACEVIMDIR="$DOTFILES/Editors/Vim/.SpaceVim.d/"; \
 		alias svim="vim -u $ZINIT[PLUGINS_DIR]/spacevim/vimrc"; \
 		alias snvim="nvim -u $ZINIT[PLUGINS_DIR]/spacevim/init.vim"' \
 	for @spacevim/spacevim
