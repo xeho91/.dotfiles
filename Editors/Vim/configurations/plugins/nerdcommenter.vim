@@ -4,6 +4,9 @@
 " https://github.com/preservim/nerdcommenter
 " =========================================================================== "
 
+" Create default mappings
+let g:NERDCreateDefaultMappings = 1
+
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
 

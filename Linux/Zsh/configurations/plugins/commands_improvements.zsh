@@ -51,7 +51,8 @@ zinit \
 # =========================================================================== #
 zinit \
 	id-as"procs" \
-	atclone"cargo build --release" \
+	atclone"cargo build --release; \
+		procs --completion zsh" \
 	atpull"%atclone" \
 	pick"target/release/procs" \
 	as"program" \

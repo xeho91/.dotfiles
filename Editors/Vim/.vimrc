@@ -48,6 +48,11 @@ call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
 	" ----------------------------------
 	" https://github.com/mileszs/ack.vim
 	Plug 'mileszs/ack.vim'
+	"
+	" An `ack/ag/pt/rg` powered code search and view tool
+	" ---------------------------------------------------
+	" https://github.com/dyng/ctrlsf.vim
+	Plug 'dyng/ctrlsf.vim'
 
 	" ----------------------------------------------------------------------- "
 	"                                                     Interactive filters
@@ -97,10 +102,10 @@ call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
 	" https://github.com/liuchengxu/vista.vim
 	Plug 'liuchengxu/vista.vim'
 	"
-	" Visualize Vim undo tree
-	" -----------------------
-	" https://github.com/sjl/gundo.vim
-	Plug 'sjl/gundo.vim', { 'on': 'GundoToggle' }
+	" Graph Vim undo tree in style
+	" ----------------------------
+	" https://github.com/simnalamburt/vim-mundo
+	Plug 'simnalamburt/mundo.vim', { 'on': 'MundoToggle' }
 
 	" ----------------------------------------------------------------------- "
 	"                                                   Motion & Productivity
