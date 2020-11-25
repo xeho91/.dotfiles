@@ -152,7 +152,7 @@ call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
 	Plug 'wellle/targets.vim'
 	"
 	" Insert or delete brackets, parens, quotes in pair
-	" ---------------------------------------------- --
+	" -------------------------------------------------
 	" https://github.com/jiangmiao/auto-pairs
 	Plug 'jiangmiao/auto-pairs'
 	"
@@ -171,12 +171,12 @@ call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
 	" ----------------------------------------------------------------------- "
 	"
 	" Git wrapper
-	" ---
+	" -----------
 	" https://github.com/tpope/vim-fugitive
 	Plug 'tpope/vim-fugitive'
 	"
 	" Shows git diff markers in the sign column and stages/previews/undoes
-	" ---
+	" --------------------------------------------------------------------
 	" https://github.com/airblade/vim-gitgutter
 	Plug 'airblade/vim-gitgutter'
 
@@ -192,7 +192,7 @@ call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
 	" CoC (Conquer of Completion) - intellisense engine for Vim
 	" ---
 	" https://github.com/neoclide/coc.nvim
-	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+	" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 	"
 	" Snippet engine
 	" ---
@@ -202,7 +202,7 @@ call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
 	" Default snippets
 	" ---
 	" https://github.com/honza/vim-snippets
-	Plug 'honza/vim-snippets'
+	" Plug 'honza/vim-snippets'
 	"
 	" Perform all Vim insert mode completions with Tab
 	" ---
@@ -276,6 +276,11 @@ call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
 	" ---
 	" https://github.com/kevinoid/vim-jsonc
 	Plug 'kevinoid/vim-jsonc'
+	"
+	" Range, pattern and substitute preview
+	" -------------------------------------
+	" https://github.com/markonm/traces.vim
+	Plug 'markonm/traces.vim'
 
 	" ----------------------------------------------------------------------- "
 	"                                                                 Linters

@@ -59,3 +59,18 @@ zinit wait"2" lucid \
 	id-as"emoji-cli" \
 	for @b4b4r07/emoji-cli
 
+# =========================================================================== #
+# `hacker-laws-cli` - Laws, Theories, Principles and Patterns that developers
+#                     will find useful #hackerlaws
+# ------------------------------------------------
+# https://github.com/umutphp/hacker-laws-cli
+# =========================================================================== #
+zinit \
+	id-as"hacker-laws-cli" \
+	nocompile \
+	atclone'go build' \
+	atpull"%atclone" \
+	pick"hacker-laws-cli" \
+	as"program" \
+	for @umutphp/hacker-laws-cli
+

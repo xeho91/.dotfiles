@@ -7,14 +7,7 @@
 " Bind toggle to hotkey
 nmap <F8> :Vista!!<CR>
 
-function! NearestMethodOrFunction() abort
-	return get(b:, 'vista_nearest_method_or_function', '')
-endfunction
-
-set statusline+=%{NearestMethodOrFunction()}
-
-" By default vist never run if you don't call it explicitly
-" Show the nearest function in your statusline automatically
+" Show the nearest function in statusline automatically
 autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
 " How each level is indented and what to prepend
@@ -24,7 +17,7 @@ let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
 
 " Executive used when opening vista sidebar without specifying it
 " See all the avaliable executives via `:echo g:vista#executives`
-let g:vista_default_executive = 'ctags'"
+" let g:vista_default_executive = 'ctags'
 
 " Set the executive for some filetypes explicitly. Use the explicit executive
 " instead of the default one for these filetypes when using `:Vista` without
@@ -48,7 +41,7 @@ let g:vista_default_executive = 'ctags'"
 let g:vista_fzf_preview = ['right:50%']
 
 " Ensure you have installed some decent font to show these pretty symbols,
-" then you can enable icon for the kind.
+" then you can enable icon for the kind
 let g:vista#renderer#enable_icon = 1
 
 " The default icons can't be suitable for all the filetypes, you can extend it

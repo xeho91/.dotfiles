@@ -6,17 +6,44 @@ if (( $+commands[screenfetch] )); then
 fi
 
 # =========================================================================== #
-# Random fun distraction
+# Random distraction with hacker laws
+# -----------------------------------
+# https://github.com/dwmkerr/hacker-laws
 # =========================================================================== #
-if (( $+commands[fortune] && $+commands[cowsay] && $+commands[lolcat] )); then
-	if type shuf > /dev/null; then
-		cowfile="$(cowsay -l | sed "1 d" | tr ' ' '\n' | shuf -n 1)"
-	  else
-		cowfiles=( $(cowsay -l | sed "1 d") );
-		cowfile=${cowfiles[$(($RANDOM % ${#cowfiles[*]}))]}
-	fi
-	#
-	command fortune | cowsay -f "$cowfile" | lolcat -f -r
+if (( $+commands[hacker-laws-cli] \
+	&& $+commands[boxes] \
+	&& $+commands[lolcat] \
+	)); then
+	shapes=(\
+		"bear" \
+		"boy" \
+		"capgirl" \
+		"cat" \
+		"columns" \
+		"diamonds" \
+		"dog" \
+		"face" \
+		"fence" \
+		"girl" \
+		"ian_jones" \
+		"mouse" \
+		"nuke" \
+		"parchment" \
+		"peek" \
+		"santa" \
+		"scroll" \
+		"scroll-akn" \
+		"spring" \
+		"sunset" \
+		"twisted" \
+		"unicornsay" \
+		"unicornthink" \
+		"whirly" \
+	)
+	shapes_length=${#shapes[@]}
+	random_index=($((RANDOM % shapes_length))+1)
+	command hacker-laws-cli random | fold -sw 53 \
+		|boxes -d ${shapes[$random_index]} | lolcat -f -r
 fi
 
 # =========================================================================== #
