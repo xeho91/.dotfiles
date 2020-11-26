@@ -1,6 +1,6 @@
 " =========================================================================== "
-" Lightline (bottom bar) settings
-" -------------------------------
+" Lightline (statusline/tabline) settings
+" ---------------------------------------
 " https://github.com/itchyny/lightline.vim
 " =========================================================================== "
 
@@ -19,24 +19,27 @@ let g:lightline = {
 	\ 'colorscheme': 'gruvbox',
 	\ 'active': {
 		\ 'left': [
-			\ ['mode', 'paste'],
-			\ ['gitfugitive', 'gitgutter'],
-			\ ['readonly', 'filename', 'modified'],
+			\ ['readonly', 'mode', 'paste'],
+			\ ['gitfugitive', 'gitgutter', 'filename', 'modified'],
 			\ ['vista']
 		\ ],
 		\ 'right': [
 			\ ['lineinfo'],
-			\ ['percent'],
 			\ ['fileformat', 'fileencoding', 'filetype'],
 			\ ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok']
 		\ ],
 	\ },
+	\ 'tabline': {
+		\ 'left': [['tabs']],
+		\ 'right': [['close']],
+	\ },
 	\ 'component': {
 		\ 'filename': '%f%<',
-		\ 'lineinfo': ' %3l:%-2v'
+		\ 'lineinfo': '%3l:%-2v'
 	\ },
 	\ 'component_function': {
-		\ 'readonly': 'LightlineReadonly',
+		\ 'readonly': 'LightlineReadOnly',
+		\ 'fileformat': 'LightlineFileFormat',
 		\ 'vista': 'LightlineVista',
 		\ 'gitfugitive': 'LightlineGitFugitive',
 		\ 'gitgutter': 'LightlineGitGutter'
@@ -57,46 +60,24 @@ let g:lightline = {
 	\ }
 \ }
 
-" Use icons as indicators
-let g:lightline#ale#indicator_infos = "\uf129 "
-let g:lightline#ale#indicator_warnings = "\uf071 "
-let g:lightline#ale#indicator_errors = "\uf05e "
-let g:lightline#ale#indicator_ok = "\uf00c"
+" --------------------------------------------------------------------------- "
+"                                                         Component functions
+" --------------------------------------------------------------------------- "
+" NOTE: Those which are dependant on plugin are in its own setting file
 
-
-" =========================================================================== "
-" Component functions
-" =========================================================================== "
+" Add which plugin is currently in use in mode block
+" function! LightlineMode()
+"     let functionName = expand('%:t')
+"     return functionName =~# 'NERD_tree' ? 'NERDtree' : lightline#mode()
+" endfunction
 
 " Add a lock symbol if the file is readonly
-function! LightlineReadonly()
+function! LightlineReadOnly()
 	return &readonly ? '' : ''
 endfunction
 
-" Show current Git branch name
-function! LightlineGitFugitive()
-	if exists('*FugitiveHead')
-		let branchName = FugitiveHead()
-		return branchName !=# ''
-			\ ? ' '. branchName
-			\ : ''
-	endif
-	return ''
-endfunction
-
-" Show the nearest function or method with `Vista`
-function! LightlineVista() abort
-	return !empty(get(b:, 'vista_nearest_method_or_function', ''))
-		\ ? ' ' . b:vista_nearest_method_or_function
-		\ : ''
-endfunction
-
-" Show Git summary with `GitGutter`
-function! LightLineGitGutter()
-	if exists('*gitguttergethunksummary')
-		let [added, modified, removed] = gitguttergethunksummary()
-		return printf('+%d ~%d -%d', added, modified, removed)
-	endif
-	return ''
+" Add a lock symbol if the file is readonly
+function! LightlineFileFormat()
+	return &fileformat == "unix" ? '' : &fileformat
 endfunction
 

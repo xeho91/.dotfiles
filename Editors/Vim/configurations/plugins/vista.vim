@@ -7,9 +7,6 @@
 " Bind toggle to hotkey
 nmap <F8> :Vista!!<CR>
 
-" Show the nearest function in statusline automatically
-autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
-
 " How each level is indented and what to prepend
 " NOTE: this option only works the LSP executives,
 " doesn't work for `:Vista ctags`.
@@ -50,4 +47,18 @@ let g:vista#renderer#enable_icon = 1
 "     \ "function": "\uf794",
 "     \ "variable": "\uf71b",
 " \ }
+
+" --------------------------------------------------------------------------- "
+"                                                                   Lightline
+" --------------------------------------------------------------------------- "
+
+" Show the nearest function in statusline automatically
+autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+
+" Show the nearest function or method in `lightline` statusline
+function! LightlineVista() abort
+	return !empty(get(b:, 'vista_nearest_method_or_function', ''))
+		\ ? ' ' . b:vista_nearest_method_or_function
+		\ : ''
+endfunction
 
