@@ -5,7 +5,7 @@
 " =========================================================================== "
 
 " Expand colors in terminal using GUI
-if (has("termguicolors"))
+if (has('termguicolors'))
 	set termguicolors
 endif
 
@@ -14,5 +14,7 @@ syntax enable
 
 " Set theme
 colorscheme gruvbox
+
+" Set mode (light/dark)
 set background=dark
 

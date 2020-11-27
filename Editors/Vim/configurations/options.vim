@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 " =========================================================================== "
 " Vim options
 " -----------
@@ -108,5 +110,15 @@ set ttyfast
 set lazyredraw
 
 " Use newer algorithm for RegExp engine
-set re=1
+set regexpengine=1
+
+" =========================================================================== "
+" Wild menu
+" =========================================================================== "
+
+" Set completion mode for commands
+set wildmode=longest:full,full
+
+" Enable 'enhanced mode' of command-line completion
+set wildmenu
 

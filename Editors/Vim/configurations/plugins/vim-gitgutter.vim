@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 " =========================================================================== "
 " Vim Gitgutter settings
 " ----------------------
@@ -18,10 +20,14 @@ let g:gitgutter_sign_modified_removed = ''
 
 " Show Git summary with `GitGutter` in the statusline with `lightline` plugin
 function! LightlineGitGutter()
-	let [added, modified, removed] = GitGutterGetHunkSummary()
-	if added == 0 && modified == 0 && removed == 0
+	if winwidth(0) > 160
+		let [l:added, l:modified, l:removed] = GitGutterGetHunkSummary()
+		if l:added == 0 && l:modified == 0 && l:removed == 0
+			return ''
+		endif
+		return printf('%d %d %d', l:added, l:modified, l:removed)
+	else
 		return ''
 	endif
-	return printf('%d %d %d', added, modified, removed)
 endfunction
 

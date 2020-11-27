@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 " =========================================================================== "
 " Vista settings
 " --------------
@@ -10,7 +12,7 @@ nmap <F8> :Vista!!<CR>
 " How each level is indented and what to prepend
 " NOTE: this option only works the LSP executives,
 " doesn't work for `:Vista ctags`.
-let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+let g:vista_icon_indent = ['╰─ ', '├─ ']
 
 " Executive used when opening vista sidebar without specifying it
 " See all the avaliable executives via `:echo g:vista#executives`
@@ -44,8 +46,8 @@ let g:vista#renderer#enable_icon = 1
 " The default icons can't be suitable for all the filetypes, you can extend it
 " as you wish.
 " let g:vista#renderer#icons = {
-"     \ "function": "\uf794",
-"     \ "variable": "\uf71b",
+"     \ 'function': '\uf794',
+"     \ 'variable': '\uf71b',
 " \ }
 
 " --------------------------------------------------------------------------- "
@@ -53,7 +55,7 @@ let g:vista#renderer#enable_icon = 1
 " --------------------------------------------------------------------------- "
 
 " Show the nearest function in statusline automatically
-autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
+autocmd vimrc VimEnter * call vista#RunForNearestMethodOrFunction()
 
 " Show the nearest function or method in `lightline` statusline
 function! LightlineVista() abort

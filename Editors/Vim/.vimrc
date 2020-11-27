@@ -4,9 +4,9 @@
 " https://vi.stackexchange.com/questions/11879/how-can-put-vimrc-and-viminfo-into-vim-directory
 " =========================================================================== "
 set viminfo+=n"$VIM_DIR[HOME]/.viminfo"
-set runtimepath^="$VIM_DIR[HOME]/.vim"
-set runtimepath+="$VIM_DIR[HOME]/.vim/after"
-let &packpath = &runtimepath
+" set runtimepath^=$VIM_DIR[HOME]/.vim
+" set runtimepath+=$VIM_DIR[HOME]/.vim/after
+" let &packpath = &runtimepath
 
 " =========================================================================== "
 " Vim-Plug settings
@@ -14,16 +14,20 @@ let &packpath = &runtimepath
 " https://github.com/junegunn/vim-plug
 " =========================================================================== "
 
+augroup vimPlug
+	autocmd!
+augroup END
+
 " Install Vim-Plug if not found
-let vimPlugFilePath = fnameescape(expand("$VIM_DIR[HOME]") . ".vim/autoload/plug.vim")
-if empty(glob(vimPlugFilePath))
+let g:vimPlugFilePath = fnameescape(expand('$VIM_DIR[HOME]') . '.vim/autoload/plug.vim')
+if empty(glob(g:vimPlugFilePath))
 	silent !curl -fLo vimPlugFilePath --create-dirs
 		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	autocmd VimEnter * PlugInstall --sync | source "$VIMRC"
+	autocmd vimPlug VimEnter * PlugInstall --sync | source '$VIMRC'
 endif
 
 " Plugins will be downloaded under the specified directory
-call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
+call plug#begin('$VIM_DIR[HOME]/.vim/plugged')
 " Declare the list of plugins
 
 	" ----------------------------------------------------------------------- "
@@ -205,9 +209,9 @@ call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
 	" Plug 'honza/vim-snippets'
 	"
 	" Perform all Vim insert mode completions with Tab
-	" ---
+	" ------------------------------------------------
 	" https://github.com/ervandew/supertab
-	" Plug 'ervandew/supertab'
+	Plug 'ervandew/supertab'
 	"
 	" Emojis
 	" ---
@@ -219,12 +223,12 @@ call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
 	" ----------------------------------------------------------------------- "
 	"
 	" Retro groove color theme
-	" ---
+	" ------------------------
 	" https://github.com/morhetz/gruvbox
 	Plug 'morhetz/gruvbox'
 	"
 	" File type icons
-	" ---
+	" ---------------
 	" https://github.com/ryanoasis/vim-devicons
 	Plug 'ryanoasis/vim-devicons'
 	"
@@ -232,6 +236,11 @@ call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
 	" -------------------------------------------
 	" https://github.com/itchyny/lightline.vim
 	Plug 'itchyny/lightline.vim'
+	"
+	" Hyperfocus-writing
+	" ------------------
+	" https://github.com/junegunn/limelight.vim
+	Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
 	"
 	" Distraction-free writing
 	" ------------------------
@@ -247,33 +256,28 @@ call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
 	" https://github.com/sheerun/vim-polyglot
 	Plug 'sheerun/vim-polyglot'
 	"
-	" Speed up (Neo)Vim by updating folds only when called-for
-	" --------------------------------------------------------
+	" Speed up (Neo)Vim by updating folds only when called
+	" ----------------------------------------------------
 	" https://github.com/Konfekt/FastFold
 	Plug 'Konfekt/FastFold'
 	"
 	" Rainbow parentheses/brackets
-	" ---
+	" ----------------------------
 	" https://github.com/luochen1990/rainbow
 	Plug 'luochen1990/rainbow'
 	"
 	" Colorize all text in the form of #rrggbb or #rgb
-	" ---
+	" ------------------------------------------------
 	" https://github.com/lilydjwg/colorizer
 	Plug 'lilydjwg/colorizer'
 	"
 	" Make the yanked region apparent
-	" ---
+	" -------------------------------
 	" https://github.com/machakann/vim-highlightedyank
 	Plug 'machakann/vim-highlightedyank'
 	"
-	" Hyperfocus-writing
-	" ---
-	" https://github.com/junegunn/limelight.vim
-	Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
-	"
-	" Syntax highlighting plugin for JSONC files
-	" ---
+	" Syntax highlighting for JSONC files
+	" -----------------------------------
 	" https://github.com/kevinoid/vim-jsonc
 	Plug 'kevinoid/vim-jsonc'
 	"
@@ -293,6 +297,7 @@ call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
 	Plug 'dense-analysis/ale'
 	"
 	" ALE indicator for the Lightline Vim plugin
+	" ------------------------------------------
 	" https://github.com/maximbaz/lightline-ale
 	Plug 'maximbaz/lightline-ale'
 
@@ -321,29 +326,37 @@ call plug#begin("$VIM_DIR[HOME]/.vim/plugged")
 	" https://github.com/tpope/vim-eunuch
 	Plug 'tpope/vim-eunuch'
 
-
 " List ends here and, plugins become visible to (Neo)Vim after this call
 call plug#end()
+
+" If defined autocmds are without a group, Vim registers the same autocmd
+" each `:source ~/.vimrc`. And Vim executes the same autocmds each occurring a
+" Event(e.g. FileType). In one word, it's heavy.
+augroup vimrc
+	autocmd!
+augroup END
 
 " =========================================================================== "
 " Load (Neo)Vim's configuration files
 " =========================================================================== "
-execute 'source' fnameescape(expand("$VIM_DIR[CONFIGS]") . '/options.vim')
-execute 'source' fnameescape(expand("$VIM_DIR[CONFIGS]") . '/commands.vim')
-execute 'source' fnameescape(expand("$VIM_DIR[CONFIGS]") . '/maps.vim')
-execute 'source' fnameescape(expand("$VIM_DIR[CONFIGS]") . '/theme.vim')
+execute 'source' fnameescape(expand('$VIM_DIR[CONFIGS]') . '/options.vim')
+execute 'source' fnameescape(expand('$VIM_DIR[CONFIGS]') . '/commands.vim')
+execute 'source' fnameescape(expand('$VIM_DIR[CONFIGS]') . '/maps.vim')
+execute 'source' fnameescape(expand('$VIM_DIR[CONFIGS]') . '/theme.vim')
 
 " =========================================================================== "
 " Load plugin(s) configuration files
 " =========================================================================== "
-let loadedPluginsConfigs = []
-for plugin in items(plugs)
+let g:loadedPluginsConfigs = {}
+for s:plugin in items(g:plugs)
 	" Fix the plugin names ending with filename
-	let pluginName = split(plugin[0], '\.')[0]
-	let pluginConfigPath = fnameescape(expand("$VIM_DIR[PLUGINS]") . pluginName . '.vim')
-	if !empty(glob(pluginConfigPath))
-		execute 'source' pluginConfigPath
-		call add(loadedPluginsConfigs, pluginConfigPath)
+	let s:pluginName = split(s:plugin[0], '\.')[0]
+	let s:pluginConfigPath = fnameescape(
+		\ expand('$VIM_DIR[PLUGINS]') . s:pluginName . '.vim'
+	\ )
+	if !empty(glob(s:pluginConfigPath))
+		execute 'source' s:pluginConfigPath
+		let g:loadedPluginsConfigs[s:pluginName] = s:pluginConfigPath
 	endif
 endfor
 
