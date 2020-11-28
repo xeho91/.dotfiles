@@ -6,8 +6,8 @@ scriptencoding utf-8
 " https://github.com/itchyny/lightline.vim
 " =========================================================================== "
 
-" Disable -- INSERT -- as is unnecessary anymore because the mode information
-" is displayed in the statusline
+" Disable `-- INSERT --` as is unnecessary anymore because the mode information
+" is already displayed with this plugin
 set noshowmode
 
 " Force Lightline theme colors to update on background color change
@@ -16,18 +16,17 @@ autocmd OptionSet background
 	\ | call lightline#colorscheme()
 	\ | call lightline#update()
 
-" Integrate it with CoC (Conquer of Completion)
 let g:lightline = {
 	\ 'colorscheme': 'gruvbox',
 	\ 'active': {
 		\ 'left': [
 			\ ['readonly', 'mode', 'paste'],
-			\ ['gitfugitive', 'gitgutter', 'filename', 'modified'],
+			\ ['gitfugitive', 'gitgutter', 'filetype', 'filename', 'modified'],
 			\ ['vista']
 		\ ],
 		\ 'right': [
 			\ ['lineinfo'],
-			\ ['fileformat', 'fileencoding', 'filetype'],
+			\ ['fileformat', 'fileencoding'],
 			\ ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok']
 		\ ],
 	\ },
@@ -36,8 +35,8 @@ let g:lightline = {
 		\ 'right': [['close']],
 	\ },
 	\ 'tab': {
-		\ 'active': ['filename'],
-		\ 'inactive': ['tabnum', 'filename']
+		\ 'active': ['tabicon', 'filename'],
+		\ 'inactive': ['tabnum', 'tabicon', 'filename']
 	\ },
 	\ 'mode_map': {
 		\ 'n' : 'N',
@@ -54,7 +53,6 @@ let g:lightline = {
 	\ },
 	\ 'component': {
 		\ 'filename': '%f%<',
-		\ 'percent': '☰ %3p%%',
 		\ 'lineinfo': '%3l:%-2v'
 	\ },
 	\ 'component_function': {
@@ -62,15 +60,11 @@ let g:lightline = {
 		\ 'fileformat': 'LightlineFileFormat',
 		\ 'fileencoding': 'LightlineFileEncoding',
 		\ 'filetype': 'LightlineFileType',
-		\ 'filename': 'LightlineFileName',
 		\ 'modified': 'LightlineModified',
 		\ 'mode': 'LightlineMode',
 		\ 'vista': 'LightlineVista',
 		\ 'gitfugitive': 'LightlineGitFugitive',
 		\ 'gitgutter': 'LightlineGitGutter'
-	\ },
-	\ 'tab_component_function': {
-		\ 'filename': 'LightlineTabName'
 	\ },
 	\ 'component_expand': {
 		\ 'linter_checking': 'lightline#ale#checking',
@@ -85,6 +79,9 @@ let g:lightline = {
 		\ 'linter_warnings': 'warning',
 		\ 'linter_errors': 'error',
 		\ 'linter_ok': 'right'
+	\ },
+	\ 'tab_component_function': {
+		\ 'tabicon': 'LightlineTabIcon'
 	\ }
 \ }
 
@@ -124,17 +121,6 @@ function! LightlineFileEncoding()
 	return winwidth(0) > 80 ? &fileencoding : ''
 endfunction
 
-" FIXME: It doesn't display name for inactive tabs
-" https://vi.stackexchange.com/questions/21204/how-do-you-set-the-name-of-a-tab-page/21206#21206
-" Add icon to tab name
-function! LightlineTabName(tabNumber)
-	let l:fileTypeIcon = WebDevIconsGetFileTypeSymbol()
-	let l:tabName = fnamemodify(bufname(winbufnr(a:tabNumber)), ':t')
-	return l:fileTypeIcon !=# ''
-		\ ? l:fileTypeIcon . ' ' . l:tabName
-		\ : l:tabName
-endfunction
-
 " Add an icon to file type if exists
 function! LightlineFileType()
 	let l:fileTypeIcon = WebDevIconsGetFileTypeSymbol()
@@ -160,7 +146,18 @@ function! LightlineModified()
 				\ : ''
 endfunction
 
-function! LightlineFileName()
-	return expand('%:t')
+" " https://vi.stackexchange.com/questions/21204/how-do-you-set-the-name-of-a-tab-page/21206#21206
+" function! LightlineFileName()
+"     if g:LightlineFileType !=# ''
+"         return g:LightlineFileType() . ' ' . expand('%:t')
+"     else
+"         return expand('%:t')
+"     endif
+" endfunction
+
+" Display filetype icon on the tab
+function! LightlineTabIcon(tabNumber)
+	let l:bufferNumber = tabpagebuflist(a:tabNumber)[tabpagewinnr(a:tabNumber) - 1]
+	return WebDevIconsGetFileTypeSymbol(bufname(l:bufferNumber))
 endfunction
 

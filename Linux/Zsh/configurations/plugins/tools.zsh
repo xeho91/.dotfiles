@@ -154,3 +154,14 @@ zinit wait"1" lucid \
 	make"PREFIX=$ZPFX install" \
 	for @soimort/translate-shell
 
+# =========================================================================== #
+# https://github.com/koalaman/shellcheck
+# =========================================================================== #
+zinit \
+	id-as"shellcheck" \
+	from"gh-r" \
+	mv"shellcheck* -> shellcheck" \
+	pick"shellcheck/shellcheck" \
+	as"program" \
+	for @koalaman/shellcheck
+

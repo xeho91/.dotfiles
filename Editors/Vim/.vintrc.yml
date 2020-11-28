@@ -1,3 +1,7 @@
+# --------------------------------------------------------------------------- #
+# https://github.com/Vimjas/vint/wiki/Config
+# --------------------------------------------------------------------------- #
+
 cmdargs:
   verbose: yes
   severity: style_problem
@@ -7,7 +11,7 @@ cmdargs:
   json: no
   env:
     neovim: yes
-    stdin_display_name: stdin
+  stdin_display_name: stdin
 
 policies:
   # Experimental
@@ -15,4 +19,3 @@ policies:
     enabled: yes
   ProhibitImplicitScopeVariable:
     enabled: yes
-

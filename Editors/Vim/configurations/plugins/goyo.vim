@@ -8,6 +8,6 @@
 map <F10> :Goyo<CR>
 
 " Integrate with Limelight plugin
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
+autocmd! vimrc User GoyoEnter Limelight
+autocmd! vimrc User GoyoLeave Limelight!
 

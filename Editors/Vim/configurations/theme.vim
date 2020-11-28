@@ -13,7 +13,11 @@ endif
 syntax enable
 
 " Set theme
-colorscheme gruvbox
+try
+	colorscheme gruvbox
+catch
+	colorscheme slate
+endtry
 
 " Set mode (light/dark)
 set background=dark

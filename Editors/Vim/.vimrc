@@ -14,16 +14,14 @@ set viminfo+=n"$VIM_DIR[HOME]/.viminfo"
 " https://github.com/junegunn/vim-plug
 " =========================================================================== "
 
-augroup vimPlug
-	autocmd!
-augroup END
-
 " Install Vim-Plug if not found
 let g:vimPlugFilePath = fnameescape(expand('$VIM_DIR[HOME]') . '.vim/autoload/plug.vim')
 if empty(glob(g:vimPlugFilePath))
 	silent !curl -fLo vimPlugFilePath --create-dirs
 		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	autocmd vimPlug VimEnter * PlugInstall --sync | source '$VIMRC'
+	augroup vimPlug
+		autocmd vimPlug VimEnter * PlugInstall --sync | source '$VIMRC'
+	augroup END
 endif
 
 " Plugins will be downloaded under the specified directory
@@ -168,7 +166,12 @@ call plug#begin('$VIM_DIR[HOME]/.vim/plugged')
 	" Emmet
 	" -----
 	" https://github.com/mattn/emmet-vim
-	Plug 'mattn/emmet-vim'
+	Plug 'mattn/emmet-vim', { 'for': ['html'] }
+	"
+	" Help stop repeating the basic movement keys
+	" -------------------------------------------
+	" https://github.com/takac/vim-hardtime
+	Plug 'takac/vim-hardtime'
 
 	" ----------------------------------------------------------------------- "
 	"                                                               Git tools
@@ -279,7 +282,7 @@ call plug#begin('$VIM_DIR[HOME]/.vim/plugged')
 	" Syntax highlighting for JSONC files
 	" -----------------------------------
 	" https://github.com/kevinoid/vim-jsonc
-	Plug 'kevinoid/vim-jsonc'
+	Plug 'kevinoid/vim-jsonc', { 'for': ['jsonc', 'json'] }
 	"
 	" Range, pattern and substitute preview
 	" -------------------------------------
@@ -339,24 +342,24 @@ augroup END
 " =========================================================================== "
 " Load (Neo)Vim's configuration files
 " =========================================================================== "
-execute 'source' fnameescape(expand('$VIM_DIR[CONFIGS]') . '/options.vim')
-execute 'source' fnameescape(expand('$VIM_DIR[CONFIGS]') . '/commands.vim')
-execute 'source' fnameescape(expand('$VIM_DIR[CONFIGS]') . '/maps.vim')
-execute 'source' fnameescape(expand('$VIM_DIR[CONFIGS]') . '/theme.vim')
+execute 'source' fnameescape(expand('$VIM_DIR[CONFIGS]') . 'options.vim')
+execute 'source' fnameescape(expand('$VIM_DIR[CONFIGS]') . 'commands.vim')
+execute 'source' fnameescape(expand('$VIM_DIR[CONFIGS]') . 'mappings.vim')
+execute 'source' fnameescape(expand('$VIM_DIR[CONFIGS]') . 'theme.vim')
 
 " =========================================================================== "
 " Load plugin(s) configuration files
 " =========================================================================== "
 let g:loadedPluginsConfigs = {}
 for s:plugin in items(g:plugs)
-	" Fix the plugin names ending with filename
-	let s:pluginName = split(s:plugin[0], '\.')[0]
-	let s:pluginConfigPath = fnameescape(
-		\ expand('$VIM_DIR[PLUGINS]') . s:pluginName . '.vim'
-	\ )
-	if !empty(glob(s:pluginConfigPath))
-		execute 'source' s:pluginConfigPath
-		let g:loadedPluginsConfigs[s:pluginName] = s:pluginConfigPath
-	endif
+    " Fix the plugin names ending with filename
+    let s:pluginName = split(s:plugin[0], '\.')[0]
+    let s:pluginConfigPath = fnameescape(
+        \ expand('$VIM_DIR[PLUGINS]') . s:pluginName . '.vim'
+    \ )
+    if !empty(glob(s:pluginConfigPath))
+        execute 'source' s:pluginConfigPath
+        let g:loadedPluginsConfigs[s:pluginName] = s:pluginConfigPath
+    endif
 endfor
 

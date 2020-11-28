@@ -22,8 +22,8 @@ let g:fzf_tags_command = 'ctags -R'
 let g:fzf_commands_expect = 'alt-enter,ctrl-x'"
 
 if has('nvim') && !exists('g:fzf_layout')
-	autocmd! FileType fzf
-	autocmd  FileType fzf set laststatus=0 noshowmode noruler
+	autocmd! vimrc FileType fzf
+	autocmd vimrc FileType fzf set laststatus=0 noshowmode noruler
 		\ | autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 endif
 

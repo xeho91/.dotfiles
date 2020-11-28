@@ -13,6 +13,12 @@ map <F4> :EditConfig<CR>
 " Bind hotkey to toggle dark/light theme
 map <silent><F12> :let &background = ( &background == "dark"? "light" : "dark" )<CR>
 
+" Bind hotkey to toggle displaying hidden characters (tabs, eol, etc)
+" NOTE: To display the key number -> in insert mode press `Ctrl + k` then a
+" key combination
+" This is CTRL + F12
+map <silent><F36> :let &list = ( &list ? 0 : 1 )<CR>
+
 " Bind turning off highlighting to hotkey (":noh" alias)
 nnoremap <Leader><Space> :nohlsearch<CR>
 
