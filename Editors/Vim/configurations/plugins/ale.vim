@@ -18,13 +18,17 @@ let g:ale_sign_warning = ''
 " Enable highlights
 let g:ale_set_highlights = 1
 
+" Open the list with Location List (`:lopen`) or Quickfix List (`:copen`)
+let g:ale_open_list = 1
+let g:ale_keep_list_window_open = 0
+
 " Navigate between problems quickly
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " Highlight the problems
-highlight ALEError guibg=DarkRed
-highlight ALEWarning guibg=DarkYellow
+highlight ALEError guibg=Red guifg=Black
+highlight ALEWarning guibg=Yellow guifg=Black
 
 " --------------------------------------------------------------------------- "
 "                                                                   Lightline

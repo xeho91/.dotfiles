@@ -22,3 +22,29 @@ map <silent><F36> :let &list = ( &list ? 0 : 1 )<CR>
 " Bind turning off highlighting to hotkey (":noh" alias)
 nnoremap <Leader><Space> :nohlsearch<CR>
 
+" Bind toggling QuickFix List to hotkey
+nnoremap <silent><leader>qf :call QuickFixToggle()<cr>
+let g:quickFix_is_open = 0
+function! QuickFixToggle()
+	if g:quickFix_is_open
+		cclose
+		let g:quickFix_is_open = 0
+	else
+		copen
+		let g:quickFix_is_open = 1
+	endif
+endfunction
+
+" Bind toggling Location List to hotkey
+nnoremap <silent><leader>ll :call LocationListToggle()<cr>
+let g:locationList_is_open = 0
+function! LocationListToggle()
+	if g:locationList_is_open
+		lopen
+		let g:locationList_is_open = 0
+	else
+		lclose
+		let g:locationList_is_open = 1
+	endif
+endfunction
+

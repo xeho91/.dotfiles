@@ -4,9 +4,6 @@
 " https://vi.stackexchange.com/questions/11879/how-can-put-vimrc-and-viminfo-into-vim-directory
 " =========================================================================== "
 set viminfo+=n"$VIM_DIR[HOME]/.viminfo"
-" set runtimepath^=$VIM_DIR[HOME]/.vim
-" set runtimepath+=$VIM_DIR[HOME]/.vim/after
-" let &packpath = &runtimepath
 
 " =========================================================================== "
 " Vim-Plug settings
@@ -71,7 +68,7 @@ call plug#begin('$VIM_DIR[HOME]/.vim/plugged')
 	" https://github.com/ctrlpvim/ctrlp.vim
 	Plug 'ctrlpvim/ctrlp.vim', { 'on': 'CtrlP' }
 	"
-	" Efficient fuzzy finder that helps to locate files, buffers, mrus, etc.
+	" Efficient fuzzy finder that helps to locate files, buffers, mru, etc.
 	" ---------------------------------------------------------------------
 	" https://github.com/Yggdroot/LeaderF
 	Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
@@ -88,12 +85,16 @@ call plug#begin('$VIM_DIR[HOME]/.vim/plugged')
 	" NERDTree showing Git status
 	" ---------------------------
 	" https://github.com/Xuyuanp/nerdtree-git-plugin
-	Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
+	if has_key(g:plugs, 'nerdtree')
+		Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
+	endif
 	"
 	" Extra syntax and highlight for NERDTree files
 	" ---------------------------------------------
 	" https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
-	Plug 'tiagofumo/vim-nerdtree-syntax-highlight', { 'on': 'NERDTreeToggle' }
+	if has_key(g:plugs, 'nerdtree')
+		Plug 'tiagofumo/vim-nerdtree-syntax-highlight', { 'on': 'NERDTreeToggle' }
+	endif
 
 	" ----------------------------------------------------------------------- "
 	"                                                              Navigating
@@ -172,6 +173,12 @@ call plug#begin('$VIM_DIR[HOME]/.vim/plugged')
 	" -------------------------------------------
 	" https://github.com/takac/vim-hardtime
 	Plug 'takac/vim-hardtime'
+	"
+	" Visually select increasingly larger regions of text using the same key
+	" combination
+	" -----------
+	" https://github.com/terryma/vim-expand-region
+	Plug 'terryma/vim-expand-region'
 
 	" ----------------------------------------------------------------------- "
 	"                                                               Git tools
@@ -188,21 +195,92 @@ call plug#begin('$VIM_DIR[HOME]/.vim/plugged')
 	Plug 'airblade/vim-gitgutter'
 
 	" ----------------------------------------------------------------------- "
-	"                                                              Completion
+	"                                                                 Linters
 	" ----------------------------------------------------------------------- "
 	"
-	" Code completion engine
-	" ---
-	" https://github.com/ycm-core/YouCompleteMe
-	" Plug 'ycm-core/YouCompleteMe'
+	" Check syntax in Vim asynchronously and fix files, with Language Server
+	" Protocol (LSP) support
+	" ----------------------
+	" https://github.com/dense-analysis/ale
+	Plug 'dense-analysis/ale'
 	"
-	" CoC (Conquer of Completion) - intellisense engine for Vim
+	" ALE indicator for the Lightline Vim plugin
+	" ------------------------------------------
+	" https://github.com/maximbaz/lightline-ale
+	if has_key(g:plugs, 'ale')
+		Plug 'maximbaz/lightline-ale'
+	endif
+
+	" ----------------------------------------------------------------------- "
+	"                                          LSP (Language Server Protocol)
+	" ----------------------------------------------------------------------- "
+	"
+	" Async language server protocol plugin
+	" -------------------------------------
+	" https://github.com/prabirshrestha/vim-lsp
+	Plug 'prabirshrestha/vim-lsp'
+	"
+	" Auto configurations for Language Server for `vim-lsp`
+	" -----------------------------------------------------
+	" https://github.com/mattn/vim-lsp-settings
+	if has_key(g:plugs, 'vim-lsp')
+		Plug 'mattn/vim-lsp-settings'
+	endif
+	"
+	" Provide Language Server Protocol autocompletion source for
+	" `asyncomplete.vim` and `vim-lsp`
+	" --------------------------------
+	" https://github.com/prabirshrestha/asyncomplete-lsp.vim
+	if has_key(g:plugs, 'vim-lsp') && has_key(g:plugs, 'asyncomplete.vim')
+		Plug 'prabirshrestha/asyncomplete-lsp.vim'
+	endif
+
+	" ----------------------------------------------------------------------- "
+	"                                                             Completions
+	" ----------------------------------------------------------------------- "
+	"
+	" Async completion engine
+	" -----------------------
+	" https://github.com/prabirshrestha/asyncomplete.vim
+	Plug 'prabirshrestha/asyncomplete.vim'
+	"
+	" ALE
 	" ---
-	" https://github.com/neoclide/coc.nvim
-	" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+	" https://github.com/andreypopp/asyncomplete-ale.vim
+	if has_key(g:plugs, 'asyncomplete.vim') && has_key(g:plugs, 'ale')
+		Plug 'andreypopp/asyncomplete-ale.vim'
+	endif
+	"
+	" Buffer
+	" ------
+	" https://github.com/prabirshrestha/asyncomplete-buffer.vim
+	if has_key(g:plugs, 'asyncomplete.vim')
+		Plug 'prabirshrestha/asyncomplete-buffer.vim'
+	endif
+	"
+	" Emmet
+	" -----
+	" https://github.com/prabirshrestha/asyncomplete-emmet.vim
+	if has_key(g:plugs, 'asyncomplete.vim') && has_key(g:plugs, 'emmet-vim')
+		Plug 'prabirshrestha/asyncomplete-emmet.vim'
+	endif
+	"
+	" Perform all Vim insert mode completions with Tab
+	" ------------------------------------------------
+	" https://github.com/ervandew/supertab
+	" Plug 'ervandew/supertab'
+	"
+	" Emojis
+	" ---
+	" https://github.com/junegunn/vim-emoji
+	Plug 'junegunn/vim-emoji'
+
+	" ----------------------------------------------------------------------- "
+	"                                                                Snippets
+	" ----------------------------------------------------------------------- "
 	"
 	" Snippet engine
-	" ---
+	" --------------
 	" https://github.com/SirVer/ultisnips
 	" Plug 'SirVer/ultisnips'
 	"
@@ -210,16 +288,6 @@ call plug#begin('$VIM_DIR[HOME]/.vim/plugged')
 	" ---
 	" https://github.com/honza/vim-snippets
 	" Plug 'honza/vim-snippets'
-	"
-	" Perform all Vim insert mode completions with Tab
-	" ------------------------------------------------
-	" https://github.com/ervandew/supertab
-	Plug 'ervandew/supertab'
-	"
-	" Emojis
-	" ---
-	" https://github.com/junegunn/vim-emoji
-	Plug 'junegunn/vim-emoji'
 
 	" ----------------------------------------------------------------------- "
 	"                                                              Theme & UI
@@ -269,10 +337,10 @@ call plug#begin('$VIM_DIR[HOME]/.vim/plugged')
 	" https://github.com/luochen1990/rainbow
 	Plug 'luochen1990/rainbow'
 	"
-	" Colorize all text in the form of #rrggbb or #rgb
-	" ------------------------------------------------
-	" https://github.com/lilydjwg/colorizer
-	Plug 'lilydjwg/colorizer'
+	" Asynchronously displaying the colours in the file
+	" -------------------------------------------------
+	" https://github.com/RRethy/vim-hexokinase
+	Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
 	"
 	" Make the yanked region apparent
 	" -------------------------------
@@ -290,21 +358,6 @@ call plug#begin('$VIM_DIR[HOME]/.vim/plugged')
 	Plug 'markonm/traces.vim'
 
 	" ----------------------------------------------------------------------- "
-	"                                                                 Linters
-	" ----------------------------------------------------------------------- "
-	"
-	" Check syntax in Vim asynchronously and fix files, with Language Server
-	" Protocol (LSP) support
-	" ----------------------
-	" https://github.com/dense-analysis/ale
-	Plug 'dense-analysis/ale'
-	"
-	" ALE indicator for the Lightline Vim plugin
-	" ------------------------------------------
-	" https://github.com/maximbaz/lightline-ale
-	Plug 'maximbaz/lightline-ale'
-
-	" ----------------------------------------------------------------------- "
 	"                                                                   Other
 	" ----------------------------------------------------------------------- "
 	"
@@ -316,7 +369,7 @@ call plug#begin('$VIM_DIR[HOME]/.vim/plugged')
 	" The interactive scratchpad for hackers
 	" --------------------------------------
 	" https://github.com/metakirby5/codi.vim
-	Plug 'metakirby5/codi.vim'
+	Plug 'metakirby5/codi.vim', { 'on': 'Codi' }
 	"
 	" Automatic Window Resizing Plugin
 	" --------------------------------
@@ -328,8 +381,13 @@ call plug#begin('$VIM_DIR[HOME]/.vim/plugged')
 	" ----------------
 	" https://github.com/tpope/vim-eunuch
 	Plug 'tpope/vim-eunuch'
+	"
+	" The fancy start screen
+	" ----------------------
+	" https://github.com/mhinz/vim-startify
+	Plug 'mhinz/vim-startify'
 
-" List ends here and, plugins become visible to (Neo)Vim after this call
+	" List ends here and, plugins become visible to (Neo)Vim after this call
 call plug#end()
 
 " If defined autocmds are without a group, Vim registers the same autocmd

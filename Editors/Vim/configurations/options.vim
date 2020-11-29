@@ -26,7 +26,7 @@ set hlsearch
 set nowrap
 
 " Show invisible characters such spaces, tabs, etc
-set list
+" set list
 
 " Define the display of these invisible characters
 set listchars=
@@ -52,6 +52,10 @@ set colorcolumn=80
 
 " Show line number on the left
 set number
+
+" Show the line number relative to the line with the cursor in front of each
+" line
+set relativenumber
 
 " Set scroll offset
 set scrolloff=8
@@ -101,7 +105,7 @@ set foldlevel=0
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience
-set updatetime=300
+set updatetime=100
 
 " Improve scrolling speed
 set ttyfast
