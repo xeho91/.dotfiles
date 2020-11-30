@@ -27,8 +27,9 @@ let g:lightline = {
 		\ 'right': [
 			\ ['lineinfo'],
 			\ ['fileformat', 'fileencoding'],
-			\ ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok']
-		\ ],
+			\ ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok'],
+			\ ['gutentags']
+		\ ]
 	\ },
 	\ 'tabline': {
 		\ 'left': [['tabs']],
@@ -64,7 +65,8 @@ let g:lightline = {
 		\ 'mode': 'LightlineMode',
 		\ 'vista': 'LightlineVista',
 		\ 'gitfugitive': 'LightlineGitFugitive',
-		\ 'gitgutter': 'LightlineGitGutter'
+		\ 'gitgutter': 'LightlineGitGutter',
+		\ 'gutentags': 'gutentags#statusline'
 	\ },
 	\ 'component_expand': {
 		\ 'linter_checking': 'lightline#ale#checking',

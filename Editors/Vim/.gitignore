@@ -5,3 +5,5 @@
 # working on the last time
 .viminfo
 
+# Ignore generated log files
+*.log

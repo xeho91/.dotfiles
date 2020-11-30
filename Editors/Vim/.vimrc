@@ -40,6 +40,74 @@ call plug#begin('$VIM_DIR[HOME]/.vim/plugged')
 	Plug 'editorconfig/editorconfig-vim'
 
 	" ----------------------------------------------------------------------- "
+	"                                                              Theme & UI
+	" ----------------------------------------------------------------------- "
+	"
+	" Retro groove color theme
+	" ------------------------
+	" https://github.com/morhetz/gruvbox
+	Plug 'morhetz/gruvbox'
+	"
+	" File type icons
+	" ---------------
+	" https://github.com/ryanoasis/vim-devicons
+	Plug 'ryanoasis/vim-devicons'
+	"
+	" A light and configurable statusline/tabline
+	" -------------------------------------------
+	" https://github.com/itchyny/lightline.vim
+	Plug 'itchyny/lightline.vim'
+	"
+	" Hyperfocus-writing
+	" ------------------
+	" https://github.com/junegunn/limelight.vim
+	Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
+	"
+	" Distraction-free writing
+	" ------------------------
+	" https://github.com/junegunn/goyo.vim
+	Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+
+	" ----------------------------------------------------------------------- "
+	"                                                                  Syntax
+	" ----------------------------------------------------------------------- "
+	"
+	" A solid language pack
+	" ---------------------
+	" https://github.com/sheerun/vim-polyglot
+	Plug 'sheerun/vim-polyglot'
+	"
+	" Speed up (Neo)Vim by updating folds only when called
+	" ----------------------------------------------------
+	" https://github.com/Konfekt/FastFold
+	Plug 'Konfekt/FastFold'
+	"
+	" Rainbow parentheses/brackets
+	" ----------------------------
+	" https://github.com/luochen1990/rainbow
+	Plug 'luochen1990/rainbow'
+	"
+	" Asynchronously displaying the colours in the file
+	" -------------------------------------------------
+	" https://github.com/RRethy/vim-hexokinase
+	Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
+	"
+	" Make the yanked region apparent
+	" -------------------------------
+	" https://github.com/machakann/vim-highlightedyank
+	Plug 'machakann/vim-highlightedyank'
+	"
+	" Syntax highlighting for JSONC files
+	" -----------------------------------
+	" https://github.com/kevinoid/vim-jsonc
+	Plug 'kevinoid/vim-jsonc', { 'for': ['jsonc', 'json'] }
+	"
+	" Range, pattern and substitute preview
+	" -------------------------------------
+	" https://github.com/markonm/traces.vim
+	Plug 'markonm/traces.vim'
+
+	" ----------------------------------------------------------------------- "
 	"                                                               Searchers
 	" ----------------------------------------------------------------------- "
 	"
@@ -82,18 +150,18 @@ call plug#begin('$VIM_DIR[HOME]/.vim/plugged')
 	" https://github.com/preservim/nerdtree
 	Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 	"
-	" NERDTree showing Git status
-	" ---------------------------
-	" https://github.com/Xuyuanp/nerdtree-git-plugin
 	if has_key(g:plugs, 'nerdtree')
+		"
+		" NERDTree showing Git status
+		" ---------------------------
+		" https://github.com/Xuyuanp/nerdtree-git-plugin
 		Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
-	endif
-	"
-	" Extra syntax and highlight for NERDTree files
-	" ---------------------------------------------
-	" https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
-	if has_key(g:plugs, 'nerdtree')
+		"
+		" Extra syntax and highlight for NERDTree files
+		" ---------------------------------------------
+		" https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
 		Plug 'tiagofumo/vim-nerdtree-syntax-highlight', { 'on': 'NERDTreeToggle' }
+		"
 	endif
 
 	" ----------------------------------------------------------------------- "
@@ -183,16 +251,19 @@ call plug#begin('$VIM_DIR[HOME]/.vim/plugged')
 	" ----------------------------------------------------------------------- "
 	"                                                               Git tools
 	" ----------------------------------------------------------------------- "
-	"
-	" Git wrapper
-	" -----------
-	" https://github.com/tpope/vim-fugitive
-	Plug 'tpope/vim-fugitive'
-	"
-	" Shows git diff markers in the sign column and stages/previews/undoes
-	" --------------------------------------------------------------------
-	" https://github.com/airblade/vim-gitgutter
-	Plug 'airblade/vim-gitgutter'
+	if executable('git')
+		"
+		" Git wrapper
+		" -----------
+		" https://github.com/tpope/vim-fugitive
+		Plug 'tpope/vim-fugitive'
+		"
+		" Shows git diff markers in the sign column and stages/previews/undoes
+		" --------------------------------------------------------------------
+		" https://github.com/airblade/vim-gitgutter
+		Plug 'airblade/vim-gitgutter'
+		"
+	endif
 
 	" ----------------------------------------------------------------------- "
 	"                                                                 Linters
@@ -212,6 +283,33 @@ call plug#begin('$VIM_DIR[HOME]/.vim/plugged')
 	endif
 
 	" ----------------------------------------------------------------------- "
+	"                                                                Snippets
+	" ----------------------------------------------------------------------- "
+	"
+	" Snippet engine
+	" --------------
+	" https://github.com/SirVer/ultisnips
+	Plug 'SirVer/ultisnips'
+	"
+	" Default snippets
+	" ----------------
+	" https://github.com/honza/vim-snippets
+	if has_key(g:plugs, 'ultisnips')
+		Plug 'honza/vim-snippets'
+	endif
+
+	" ----------------------------------------------------------------------- "
+	"                                                Tags (Go to definitions)
+	" ----------------------------------------------------------------------- "
+	"
+	" Tag files manager
+	" -----------------
+	" https://github.com/ludovicchabant/vim-gutentags
+	" if executable('ctags')
+	"     Plug 'ludovicchabant/vim-gutentags'
+	" endif
+    "
+	" ----------------------------------------------------------------------- "
 	"                                          LSP (Language Server Protocol)
 	" ----------------------------------------------------------------------- "
 	"
@@ -220,19 +318,21 @@ call plug#begin('$VIM_DIR[HOME]/.vim/plugged')
 	" https://github.com/prabirshrestha/vim-lsp
 	Plug 'prabirshrestha/vim-lsp'
 	"
-	" Auto configurations for Language Server for `vim-lsp`
-	" -----------------------------------------------------
-	" https://github.com/mattn/vim-lsp-settings
 	if has_key(g:plugs, 'vim-lsp')
+		"
+		" Auto configurations for Language Server for `vim-lsp`
+		" -----------------------------------------------------
+		" https://github.com/mattn/vim-lsp-settings
 		Plug 'mattn/vim-lsp-settings'
-	endif
-	"
-	" Provide Language Server Protocol autocompletion source for
-	" `asyncomplete.vim` and `vim-lsp`
-	" --------------------------------
-	" https://github.com/prabirshrestha/asyncomplete-lsp.vim
-	if has_key(g:plugs, 'vim-lsp') && has_key(g:plugs, 'asyncomplete.vim')
-		Plug 'prabirshrestha/asyncomplete-lsp.vim'
+		"
+		" Provide Language Server Protocol autocompletion source for
+		" `asyncomplete.vim` and `vim-lsp`
+		" --------------------------------
+		" https://github.com/prabirshrestha/asyncomplete-lsp.vim
+		if has_key(g:plugs, 'asyncomplete.vim')
+			Plug 'prabirshrestha/asyncomplete-lsp.vim'
+		endif
+		"
 	endif
 
 	" ----------------------------------------------------------------------- "
@@ -244,118 +344,67 @@ call plug#begin('$VIM_DIR[HOME]/.vim/plugged')
 	" https://github.com/prabirshrestha/asyncomplete.vim
 	Plug 'prabirshrestha/asyncomplete.vim'
 	"
-	" ALE
-	" ---
-	" https://github.com/andreypopp/asyncomplete-ale.vim
-	if has_key(g:plugs, 'asyncomplete.vim') && has_key(g:plugs, 'ale')
-		Plug 'andreypopp/asyncomplete-ale.vim'
-	endif
-	"
-	" Buffer
-	" ------
-	" https://github.com/prabirshrestha/asyncomplete-buffer.vim
 	if has_key(g:plugs, 'asyncomplete.vim')
+		"
+		" Async (normalize job control API)
+		" ---------------------------------
+		" https://github.com/prabirshrestha/async.vim
+		Plug 'prabirshrestha/async.vim'
+		"
+		" ALE
+		" ---
+		" https://github.com/andreypopp/asyncomplete-ale.vim
+		if has_key(g:plugs, 'ale')
+			Plug 'andreypopp/asyncomplete-ale.vim'
+		endif
+		"
+		" Buffer
+		" ------
+		" https://github.com/prabirshrestha/asyncomplete-buffer.vim
 		Plug 'prabirshrestha/asyncomplete-buffer.vim'
+		"
+		" Dictionary (look)
+		" -----------------
+		" https://github.com/htlsne/asyncomplete-look
+		Plug 'htlsne/asyncomplete-look'
+		"
+		" Emmet
+		" -----
+		" https://github.com/prabirshrestha/asyncomplete-emmet.vim
+		if has_key(g:plugs, 'emmet-vim')
+			Plug 'prabirshrestha/asyncomplete-emmet.vim'
+		endif
+		"
+		" Emoji
+		" -----
+		" https://github.com/prabirshrestha/asyncomplete-emoji.vim
+		Plug 'prabirshrestha/asyncomplete-emoji.vim'
+		"
+		" Filenames / directories
+		" -----------------------
+		" https://github.com/prabirshrestha/asyncomplete-file.vim
+		Plug 'prabirshrestha/asyncomplete-file.vim'
+		"
+		" Git commit message
+		" ------------------
+		" https://github.com/laixintao/asyncomplete-gitcommit
+		if executable('git')
+			Plug 'laixintao/asyncomplete-gitcommit', { 'for': ['gitcommit'] }
+		endif
+		"
+		" UltiSnips
+		" ---------
+		" https://github.com/prabirshrestha/asyncomplete-ultisnips.vim
+		Plug 'prabirshrestha/asyncomplete-ultisnips.vim'
+		"
+		" GutenTags
+		" ---------
+		" Plug 'prabirshrestha/asyncomplete-tags.vim'
+		if has_key(g:plugs, 'vim-gutentags')
+			Plug 'prabirshrestha/asyncomplete-ntags.vim'
+		endif
+		"
 	endif
-	"
-	" Emmet
-	" -----
-	" https://github.com/prabirshrestha/asyncomplete-emmet.vim
-	if has_key(g:plugs, 'asyncomplete.vim') && has_key(g:plugs, 'emmet-vim')
-		Plug 'prabirshrestha/asyncomplete-emmet.vim'
-	endif
-	"
-	" Perform all Vim insert mode completions with Tab
-	" ------------------------------------------------
-	" https://github.com/ervandew/supertab
-	" Plug 'ervandew/supertab'
-	"
-	" Emojis
-	" ---
-	" https://github.com/junegunn/vim-emoji
-	Plug 'junegunn/vim-emoji'
-
-	" ----------------------------------------------------------------------- "
-	"                                                                Snippets
-	" ----------------------------------------------------------------------- "
-	"
-	" Snippet engine
-	" --------------
-	" https://github.com/SirVer/ultisnips
-	" Plug 'SirVer/ultisnips'
-	"
-	" Default snippets
-	" ---
-	" https://github.com/honza/vim-snippets
-	" Plug 'honza/vim-snippets'
-
-	" ----------------------------------------------------------------------- "
-	"                                                              Theme & UI
-	" ----------------------------------------------------------------------- "
-	"
-	" Retro groove color theme
-	" ------------------------
-	" https://github.com/morhetz/gruvbox
-	Plug 'morhetz/gruvbox'
-	"
-	" File type icons
-	" ---------------
-	" https://github.com/ryanoasis/vim-devicons
-	Plug 'ryanoasis/vim-devicons'
-	"
-	" A light and configurable statusline/tabline
-	" -------------------------------------------
-	" https://github.com/itchyny/lightline.vim
-	Plug 'itchyny/lightline.vim'
-	"
-	" Hyperfocus-writing
-	" ------------------
-	" https://github.com/junegunn/limelight.vim
-	Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
-	"
-	" Distraction-free writing
-	" ------------------------
-	" https://github.com/junegunn/goyo.vim
-	Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
-
-	" ----------------------------------------------------------------------- "
-	"                                                                  Syntax
-	" ----------------------------------------------------------------------- "
-	"
-	" A solid language pack
-	" ---------------------
-	" https://github.com/sheerun/vim-polyglot
-	Plug 'sheerun/vim-polyglot'
-	"
-	" Speed up (Neo)Vim by updating folds only when called
-	" ----------------------------------------------------
-	" https://github.com/Konfekt/FastFold
-	Plug 'Konfekt/FastFold'
-	"
-	" Rainbow parentheses/brackets
-	" ----------------------------
-	" https://github.com/luochen1990/rainbow
-	Plug 'luochen1990/rainbow'
-	"
-	" Asynchronously displaying the colours in the file
-	" -------------------------------------------------
-	" https://github.com/RRethy/vim-hexokinase
-	Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
-	"
-	" Make the yanked region apparent
-	" -------------------------------
-	" https://github.com/machakann/vim-highlightedyank
-	Plug 'machakann/vim-highlightedyank'
-	"
-	" Syntax highlighting for JSONC files
-	" -----------------------------------
-	" https://github.com/kevinoid/vim-jsonc
-	Plug 'kevinoid/vim-jsonc', { 'for': ['jsonc', 'json'] }
-	"
-	" Range, pattern and substitute preview
-	" -------------------------------------
-	" https://github.com/markonm/traces.vim
-	Plug 'markonm/traces.vim'
 
 	" ----------------------------------------------------------------------- "
 	"                                                                   Other

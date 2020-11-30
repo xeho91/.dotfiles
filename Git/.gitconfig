@@ -28,7 +28,7 @@
 # =========================================================================== #
 [core]
 	pager = delta
-	editor = vim
+	editor = $EDITOR
 	eol = lf
 	autocrlf = false
 	whitespace = trailing-space, space-before-tab
