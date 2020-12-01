@@ -50,17 +50,3 @@ let g:vista#renderer#enable_icon = 1
 "     \ 'variable': '\uf71b',
 " \ }
 
-" --------------------------------------------------------------------------- "
-"                                                                   Lightline
-" --------------------------------------------------------------------------- "
-
-" Show the nearest function in statusline automatically
-autocmd vimrc VimEnter * call vista#RunForNearestMethodOrFunction()
-
-" Show the nearest function or method in `lightline` statusline
-function! LightlineVista() abort
-	return !empty(get(b:, 'vista_nearest_method_or_function', ''))
-		\ ? ' ' . b:vista_nearest_method_or_function
-		\ : ''
-endfunction
-

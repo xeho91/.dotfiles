@@ -11,7 +11,7 @@ map <F5> :RefreshConfig<CR>
 map <F4> :EditConfig<CR>
 
 " Bind hotkey to toggle dark/light theme
-map <silent><F12> :let &background = ( &background == "dark"? "light" : "dark" )<CR>
+map <silent><F12> :ThemeToggle<CR>
 
 " Bind hotkey to toggle displaying hidden characters (tabs, eol, etc)
 " NOTE: To display the key number -> in insert mode press `Ctrl + k` then a
@@ -23,7 +23,7 @@ map <silent><F36> :let &list = ( &list ? 0 : 1 )<CR>
 nnoremap <Leader><Space> :nohlsearch<CR>
 
 " Bind toggling QuickFix List to hotkey
-nnoremap <silent><leader>qf :call QuickFixToggle()<cr>
+nnoremap <silent><leader>qf :call QuickFixToggle()<CR>
 let g:quickFix_is_open = 0
 function! QuickFixToggle()
 	if g:quickFix_is_open
@@ -36,7 +36,7 @@ function! QuickFixToggle()
 endfunction
 
 " Bind toggling Location List to hotkey
-nnoremap <silent><leader>ll :call LocationListToggle()<cr>
+nnoremap <silent><leader>ll :call LocationListToggle()<CR>
 let g:locationList_is_open = 0
 function! LocationListToggle()
 	if g:locationList_is_open

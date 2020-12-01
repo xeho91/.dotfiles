@@ -6,7 +6,9 @@ scriptencoding utf-8
 " https://github.com/dense-analysis/ale
 " =========================================================================== "
 
-let g:ale_disable_lsp = 0
+if has_key(g:plugs, 'aynscomplete-lsp.vim')
+	let g:ale_disable_lsp = 1
+endif
 
 " Keep the sign gutter open at all times
 let g:ale_sign_column_always = 1
@@ -23,8 +25,8 @@ let g:ale_open_list = 1
 let g:ale_keep_list_window_open = 0
 
 " Navigate between problems quickly
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
+" nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+" nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " Highlight the problems
 highlight ALEError guibg=Red guifg=Black
@@ -40,15 +42,14 @@ let g:lightline#ale#indicator_warnings = ' '
 let g:lightline#ale#indicator_errors = ' '
 let g:lightline#ale#indicator_ok = 'לּ'
 
-
 " --------------------------------------------------------------------------- "
 "                                                                      Fixers
 " --------------------------------------------------------------------------- "
 
 " Enable fixing on ...
 let g:ale_fix_on_save = 1
-let g:ale_lint_on_text_changed = 'always'
-let g:ale_lint_on_insert_leave = 1
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_insert_leave = 0
 let g:ale_lint_on_enter = 1
 
 " Specify fixing tools for programming languages

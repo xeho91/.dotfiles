@@ -18,16 +18,3 @@ let g:gitgutter_sign_removed_first_line = 'ﬢ'
 let g:gitgutter_sign_removed_above_and_below = ''
 let g:gitgutter_sign_modified_removed = ''
 
-" Show Git summary with `GitGutter` in the statusline with `lightline` plugin
-function! LightlineGitGutter()
-	if winwidth(0) > 160
-		let [l:added, l:modified, l:removed] = GitGutterGetHunkSummary()
-		if l:added == 0 && l:modified == 0 && l:removed == 0
-			return ''
-		endif
-		return printf('%d %d %d', l:added, l:modified, l:removed)
-	else
-		return ''
-	endif
-endfunction
-

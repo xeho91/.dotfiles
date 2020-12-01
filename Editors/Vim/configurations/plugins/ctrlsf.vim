@@ -14,3 +14,11 @@ nnoremap <C-F>o :CtrlSFOpen<CR>
 nnoremap <C-F>t :CtrlSFToggle<CR>
 inoremap <C-F>t <Esc>:CtrlSFToggle<CR>
 
+map <F2> :CtrlSFToggle<CR>
+
+let g:ctrlsf_default_view_mode = 'compact'
+
+let g:ctrlsf_auto_focus = {
+	\ 'at': 'done',
+	\ 'duration_less_than': 1000
+\ }

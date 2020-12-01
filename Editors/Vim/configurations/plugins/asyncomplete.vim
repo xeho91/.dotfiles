@@ -10,15 +10,20 @@ let g:asyncomplete_auto_popup = 1
 " Allow modifying the completeopt variable, or it will be overridden all the
 " time
 " let g:asyncomplete_auto_completeopt = 0
-" set completeopt=menuone,noinsert,noselect,preview
+set completeopt=menuone,noinsert,noselect,preview
 
-" Auto close preview window when completion is done
-" autocmd! Asyncomplete CompleteDone * if pumvisible() == 0 | pclose | endif
+" Tab completion
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
 
 " --------------------------------------------------------------------------- "
 "                                                 Languages/FileTypes/Sources
 " --------------------------------------------------------------------------- "
 augroup AsyncComplete
+
+	" Auto close preview window when completion is done
+	autocmd! completedone * if pumvisible() == 0 | pclose | endif
 
 	" ALE
 	" ---
@@ -84,7 +89,7 @@ augroup AsyncComplete
 	" Filenames / directories
 	" -----------------------
 	" https://github.com/prabirshrestha/asyncomplete-file.vim
-	if has_key(g:plugs, 'asyncomplete-emoji.vim')
+	if has_key(g:plugs, 'asyncomplete-file.vim')
 		autocmd User asyncomplete_setup call asyncomplete#register_source(
 			\ asyncomplete#sources#file#get_source_options({
 				\ 'name': 'file',

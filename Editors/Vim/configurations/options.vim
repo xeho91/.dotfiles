@@ -8,9 +8,9 @@ scriptencoding utf-8
 " NOTE: Is faster to just use `:help <query>`
 " =========================================================================== "
 
-" =========================================================================== "
-" Searching with typing `/<pattern>`
-" =========================================================================== "
+" --------------------------------------------------------------------------- "
+"                                           Searching with typing `/<pattern>`
+" --------------------------------------------------------------------------- "
 
 " Highlight matches as you type
 set incsearch
@@ -18,9 +18,9 @@ set incsearch
 " Highlight matches once a search is complete
 set hlsearch
 
-" =========================================================================== "
-" Invisible characters & wrapping
-" =========================================================================== "
+" --------------------------------------------------------------------------- "
+"                                             Invisible characters & wrapping
+" --------------------------------------------------------------------------- "
 
 " Disable line-wrap
 set nowrap
@@ -38,9 +38,9 @@ set listchars=
 	\space:·,
 	\nbsp:␣
 
-" =========================================================================== "
-" Navigation
-" =========================================================================== "
+" --------------------------------------------------------------------------- "
+"                                                                  Navigation
+" --------------------------------------------------------------------------- "
 "
 " Visual indicator to show where your cursor is (line and column)
 " NOTE: This slows down Vim
@@ -60,25 +60,27 @@ set relativenumber
 " Set scroll offset
 set scrolloff=8
 
-" =========================================================================== "
-" Indentation
-" =========================================================================== "
+" --------------------------------------------------------------------------- "
+"                                                                 Indentation
+" --------------------------------------------------------------------------- "
 "
-" Don't convert TAB to spaces
-set noexpandtab
+if has_key(g:plugs, 'vim-sleuth')
+	" Don't convert TAB to spaces
+	set noexpandtab
 
-" The width of the TAB
-set tabstop=4
+	" The width of the TAB
+	set tabstop=4
 
-" Make TAB working in the middle of line (text)
-set softtabstop=4
+	" Make TAB working in the middle of line (text)
+	set softtabstop=4
 
-" Indent width
-set shiftwidth=4
+	" Indent width
+	set shiftwidth=4
+endif
 
-" =========================================================================== "
-" Backup & swap
-" =========================================================================== "
+" --------------------------------------------------------------------------- "
+"                                                               Backup & swap
+" --------------------------------------------------------------------------- "
 "
 " Don't create a backup before overwriting a file
 set nobackup
@@ -89,9 +91,9 @@ set nowritebackup
 " Don't create swap files
 set noswapfile
 
-" =========================================================================== "
-" Folding
-" =========================================================================== "
+" --------------------------------------------------------------------------- "
+"                                                                     Folding
+" --------------------------------------------------------------------------- "
 
 " Enable folding method based on indent
 set foldmethod=indent
@@ -99,9 +101,9 @@ set foldmethod=indent
 " Close folds (0 - all, higher number will close fewer folds)
 set foldlevel=0
 
-" =========================================================================== "
-" Performance
-" =========================================================================== "
+" --------------------------------------------------------------------------- "
+"                                                                 Performance
+" --------------------------------------------------------------------------- "
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience
@@ -116,9 +118,9 @@ set lazyredraw
 " Use newer algorithm for RegExp engine
 set regexpengine=1
 
-" =========================================================================== "
-" Wild menu
-" =========================================================================== "
+" --------------------------------------------------------------------------- "
+"                                                                   Wild menu
+" --------------------------------------------------------------------------- "
 
 " Set completion mode for commands
 set wildmode=longest:full,full
