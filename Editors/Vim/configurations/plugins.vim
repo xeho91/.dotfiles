@@ -14,9 +14,12 @@ if empty(glob(g:vim_plug_dir_path))
 	augroup END
 endif
 
+" =========================================================================== "
+" List of plugins
+" =========================================================================== "
+"
 " Plugins will be downloaded under the specified directory
 call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
-" Declare the list of plugins
 
 	" ----------------------------------------------------------------------- "
 	"                                                              Essentials
@@ -199,13 +202,68 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 	Plug 'simnalamburt/mundo.vim', { 'on': 'MundoToggle' }
 
 	" ----------------------------------------------------------------------- "
-	"                                                   Motion & Productivity
+	"															 Productivity
 	" ----------------------------------------------------------------------- "
+	"
+	" Emmet
+	" -----
+	" https://github.com/mattn/emmet-vim
+	Plug 'mattn/emmet-vim'
+	"
+	" Insert or delete brackets, parens, quotes in pair
+	" -------------------------------------------------
+	" https://github.com/jiangmiao/auto-pairs
+	" Plug 'jiangmiao/auto-pairs'
+	"
+	" Auto close parentheses and repeat by dot dot dot...
+	" ---------------------------------------------------
+	" https://github.com/cohama/lexima.vim
+	Plug 'cohama/lexima.vim'
 	"
 	" Multiple cursors
 	" ----------------
 	" https://github.com/mg979/vim-visual-multi
 	Plug 'mg979/vim-visual-multi'
+	"
+	" Alignment
+	" ---------
+	" https://github.com/junegunn/vim-easy-align
+	Plug 'junegunn/vim-easy-align'
+	"
+	" Visually select increasingly larger regions of text using the same key
+	" combination
+	" -----------
+	" https://github.com/terryma/vim-expand-region
+	Plug 'terryma/vim-expand-region'
+	"
+	" Reoder delimted items
+	" ---------------------
+	" https://github.com/machakann/vim-swap
+	Plug 'machakann/vim-swap'
+	"
+	" Navigate and highlight matching words
+	" -------------------------------------
+	" https://github.com/andymass/vim-matchup
+	Plug 'andymass/vim-matchup'
+	"
+	" Wisely add `end` in `endfunction/endif/more`
+	" --------------------------------------------
+	" https://github.com/tpope/vim-endwise
+	Plug 'tpope/vim-endwise'
+	"
+	" Shows keybindings in popup
+	" --------------------------
+	" https://github.com/liuchengxu/vim-which-key
+	Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+	"
+	" Toggles between hybrid and absolute line numbers automatically
+	" --------------------------------------------------------------
+	" https://github.com/jeffkreeftmeijer/vim-numbertoggle
+	Plug 'jeffkreeftmeijer/vim-numbertoggle'
+
+	" ----------------------------------------------------------------------- "
+	"													              Motions
+	" ----------------------------------------------------------------------- "
 	"
 	" Motions on speed
 	" ----------------
@@ -225,9 +283,10 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 	" Pairs of handy bracket mappings
 	" -------------------------------
 	" https://github.com/tpope/vim-unimpaired
-	Plug 'tpope/vim-unimpaired'
+	" Plug 'tpope/vim-unimpaired'
 	"
 	" Quoting/parenthesizing made simple
+	"
 	" ----------------------------------
 	" https://github.com/tpope/vim-surround
 	Plug 'tpope/vim-surround'
@@ -242,42 +301,16 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 	" https://github.com/wellle/targets.vim
 	Plug 'wellle/targets.vim'
 	"
-	" Insert or delete brackets, parens, quotes in pair
-	" -------------------------------------------------
-	" https://github.com/jiangmiao/auto-pairs
-	Plug 'jiangmiao/auto-pairs'
-	"
-	" Alignment
-	" ---------
-	" https://github.com/junegunn/vim-easy-align
-	Plug 'junegunn/vim-easy-align'
-	"
-	" Emmet
-	" -----
-	" https://github.com/mattn/emmet-vim
-	Plug 'mattn/emmet-vim'
-	"
 	" Help stop repeating the basic movement keys
 	" -------------------------------------------
 	" https://github.com/takac/vim-hardtime
 	Plug 'takac/vim-hardtime'
-	"
-	" Visually select increasingly larger regions of text using the same key
-	" combination
-	" -----------
-	" https://github.com/terryma/vim-expand-region
-	Plug 'terryma/vim-expand-region'
 	"
 	" The set of operator and textobject plugins to search/select/edit
 	" sandwiched textobjects
 	" ----------------------
 	" https://github.com/machakann/vim-sandwich
 	Plug 'machakann/vim-sandwich'
-	"
-	" Reoder delimted items
-	" ---------------------
-	" https://github.com/machakann/vim-swap
-	Plug 'machakann/vim-swap'
 
 	" ----------------------------------------------------------------------- "
 	"                                                               Git tools
@@ -323,6 +356,7 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 	" ----------------------------------------------------------------------- "
 	"
 	" Snippet engine
+	" NOTE: Redundant in favor of **coc-snippets**
 	" --------------
 	" https://github.com/SirVer/ultisnips
 	" Plug 'SirVer/ultisnips'
@@ -330,9 +364,7 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 	" Default snippets
 	" ----------------
 	" https://github.com/honza/vim-snippets
-	if has_key(g:plugs, 'ultisnips')
-		Plug 'honza/vim-snippets'
-	endif
+	Plug 'honza/vim-snippets'
 
 	" ----------------------------------------------------------------------- "
 	"                                                                    Tags
@@ -442,6 +474,25 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 		"
 	endif
 	"
+	" Conquer of Completion - intellisense engine with full LSP support as
+	" VSCode
+	" ------
+	" https://github.com/neoclide/coc.nvim
+	Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+	"
+	if has_key(g:plugs, 'coc.nvim')
+		"
+		" Integration with `fzf-vim`
+		" -------------------------
+		" https://github.com/antoinemadec/coc-fzf
+		Plug 'antoinemadec/coc-fzf'
+		"
+		" VimL completion source
+		" ----------------------
+		"https://github.com/neoclide/coc-neco
+		Plug 'neoclide/coc-neco' | Plug 'Shougo/neco-vim'
+		"
+	endif
 
 	" ----------------------------------------------------------------------- "
 	"                                                                   Other
@@ -483,6 +534,10 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 	" List ends here and, plugins become visible to (Neo)Vim after this call
 call plug#end()
 
+" =========================================================================== "
+" Plugins helpers
+" =========================================================================== "
+"
 " If defined autocmds are without a group, Vim registers the same autocmd
 " each `:source ~/.vimrc`. And Vim executes the same autocmds each occurring a
 " Event(e.g. FileType). In one word, it's heavy.
@@ -490,19 +545,31 @@ augroup vimrc
 	autocmd!
 augroup END
 
+" Check if plugin is installed
+let g:plugin = { 'plugs': get(g:, 'plugs', {})  }
+function! g:plugin.is_installed(pluginName) abort
+	return has_key(l:self.plugs, a:pluginName)
+		\ ? isdirectory(l:self.plugs[a:pluginName].dir)
+		\ : 0
+endfunction
+
+
 " =========================================================================== "
 " Load plugin(s) configuration files
 " =========================================================================== "
+let g:vim_plugins_config_dir_path = expand('$VIM_DIR[PLUGINS]')
 let g:loaded_plugins_configs = {}
 for s:plugin in items(g:plugs)
-    " Fix the plugin names ending with filename
-    let s:plugin_name = split(s:plugin[0], '\.')[0]
-    let s:plugin_config_file_path = fnameescape(
-        \ expand('$VIM_DIR[PLUGINS]') . s:plugin_name . '.vim'
-    \ )
-    if !empty(glob(s:plugin_config_file_path))
-        execute 'source' s:plugin_config_file_path
-        let g:loaded_plugins_configs[s:plugin_name] = s:plugin_config_file_path
-    endif
+	if g:plugin.is_installed(s:plugin[0])
+		" Remove the `.vim` from the plugin names
+		let s:plugin_name = split(s:plugin[0], '\.')[0]
+		let s:plugin_config_file_path = fnameescape(
+			\ g:vim_plugins_config_dir_path . s:plugin_name . '.vim'
+		\ )
+		if !empty(glob(s:plugin_config_file_path))
+			execute 'source' s:plugin_config_file_path
+			let g:loaded_plugins_configs[s:plugin_name] = s:plugin_config_file_path
+		endif
+	endif
 endfor
 

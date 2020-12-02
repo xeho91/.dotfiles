@@ -60,11 +60,14 @@ set relativenumber
 " Set scroll offset
 set scrolloff=8
 
+" Allow scrolling with mouse scroll in all modes and copy
+set mouse=r
+
 " --------------------------------------------------------------------------- "
 "                                                                 Indentation
 " --------------------------------------------------------------------------- "
 "
-if has_key(g:plugs, 'vim-sleuth')
+if !g:plugin.is_installed('vim-sleuth')
 	" Don't convert TAB to spaces
 	set noexpandtab
 
@@ -122,9 +125,34 @@ set regexpengine=1
 "                                                                   Wild menu
 " --------------------------------------------------------------------------- "
 
+" Enable 'enhanced mode' of command-line completion
+set wildmenu
+
 " Set completion mode for commands
 set wildmode=longest:full,full
 
-" Enable 'enhanced mode' of command-line completion
-set wildmenu
+" --------------------------------------------------------------------------- "
+"                                   Sign column (before numbers, on the left)
+" --------------------------------------------------------------------------- "
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved (gitgutter, linters, etc)
+set signcolumn=yes
+
+" --------------------------------------------------------------------------- "
+"                               Command line (below the status bar at bottom)
+" --------------------------------------------------------------------------- "
+
+" Give more space for displaying messages
+set cmdheight=2
+
+
+" --------------------------------------------------------------------------- "
+"                                                                       Other
+" --------------------------------------------------------------------------- "
+" TextEdit might fail if hidden is not set
+set hidden
+
+" Don't pass messages to |ins-completion-menu|
+set shortmess+=c
 

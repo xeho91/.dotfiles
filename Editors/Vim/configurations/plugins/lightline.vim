@@ -32,25 +32,25 @@ let g:lightline = {
 		\ ]
 	\ },
 	\ 'tabline': {
-		\ 'left': [['tabs']],
+		\ 'left':  [['tabs']],
 		\ 'right': [['close']],
 	\ },
 	\ 'tab': {
-		\ 'active': ['tabicon', 'filename'],
+		\ 'active':   ['tabicon', 'filename'],
 		\ 'inactive': ['tabnum', 'tabicon', 'filename']
 	\ },
 	\ 'mode_map': {
-		\ 'n' : 'N',
-		\ 'i' : 'I',
-		\ 'R' : 'R',
-		\ 'v' : 'V',
-		\ 'V' : 'VL',
+		\ 'n':      'N',
+		\ 'i':      'I',
+		\ 'R':      'R',
+		\ 'v':      'V',
+		\ 'V':      'VL',
 		\ "\<C-v>": 'VB',
-		\ 'c' : 'C',
-		\ 's' : 'S',
-		\ 'S' : 'SL',
+		\ 'c':      'C',
+		\ 's':      'S',
+		\ 'S':      'SL',
 		\ "\<C-s>": 'SB',
-		\ 't': 'T',
+		\ 't':      'T',
 	\ },
 	\ 'component': {
 		\ 'filename': '%f%<',
@@ -59,13 +59,13 @@ let g:lightline = {
 	\ 'component_expand': {},
 	\ 'component_type': {},
 	\ 'component_function': {
-		\ 'readonly': 'LightlineReadOnly',
-		\ 'fileformat': 'LightlineFileFormat',
+		\ 'readonly':     'LightlineReadOnly',
+		\ 'fileformat':   'LightlineFileFormat',
 		\ 'fileencoding': 'LightlineFileEncoding',
-		\ 'filetype': 'LightlineFileType',
-		\ 'filename': 'LightlineFileName',
-		\ 'modified': 'LightlineModified',
-		\ 'mode': 'LightlineMode'
+		\ 'filetype':     'LightlineFileType',
+		\ 'filename':     'LightlineFileName',
+		\ 'modified':     'LightlineModified',
+		\ 'mode':         'LightlineMode'
 	\ },
 	\ 'tab_component_function': {
 		\ 'tabicon': 'LightlineTabIcon'
@@ -150,56 +150,77 @@ function! LightlineTabIcon(tabNumber)
 	return WebDevIconsGetFileTypeSymbol(bufname(l:bufferNumber))
 endfunction
 
-" --------------------------------------------------------------------------- "
-"                                                         Plugins integration
-" --------------------------------------------------------------------------- "
+" =========================================================================== "
+" Plugins integration
+" =========================================================================== "
 
-if has_key(g:plugs, 'vista.vim')
+
+" --------------------------------------------------------------------------- "
+"                                                                       Vista
+" https://github.com/liuchengxu/vista.vim
+" --------------------------------------------------------------------------- "
+if g:plugin.is_installed('vista.vim')
 	let g:lightline.active.left += [['vista']]
 	let g:lightline.component_function.vista = 'LightlineVista'
 	autocmd vimrc VimEnter * call vista#RunForNearestMethodOrFunction()
 	" Show the nearest function in statusline with vista.vim plugin
 	function! LightlineVista()
+		let l:icon = g:enable_icons ? g:icons.functionSymbol . ' ' : ''
 		return !empty(get(b:, 'vista_nearest_method_or_function', ''))
-			\ ? ' ' . b:vista_nearest_method_or_function
+			\ ? l:icon . b:vista_nearest_method_or_function
 			\ : ''
 	endfunction
 endif
 
-if has_key(g:plugs, 'vim-gitgutter')
+" --------------------------------------------------------------------------- "
+"                                                                   Gitgutter
+" https://github.com/airblade/vim-gitgutter
+" --------------------------------------------------------------------------- "
+if g:plugin.is_installed('vim-gitgutter')
 	let g:lightline.active.left[1] = ['gitgutter'] + g:lightline.active.left[1]
 	let g:lightline.component_function.gitgutter = 'LightlineGitgutter'
 	" Show Git summary with vim-gitgutter plugin
 	function! LightlineGitgutter()
+		let l:icons = g:enable_icons ? '%d %d %d' : '+%d ~%d -%d'
 		if winwidth(0) > 160
 			let [l:added, l:modified, l:removed] = GitGutterGetHunkSummary()
 			if l:added == 0 && l:modified == 0 && l:removed == 0
 				return ''
 			endif
-			return printf('%d %d %d', l:added, l:modified, l:removed)
+			return printf(l:icons, l:added, l:modified, l:removed)
 		else
 			return ''
 		endif
 	endfunction
 endif
 
-if has_key(g:plugs, 'vim-fugitive')
+" --------------------------------------------------------------------------- "
+"                                                                    Fugitive
+" https://github.com/tpope/vim-fugitive
+" --------------------------------------------------------------------------- "
+if g:plugin.is_installed('vim-fugitive')
 	let g:lightline.active.left[1] = ['fugitive'] + g:lightline.active.left[1]
 	let g:lightline.component_function.fugitive = 'LightlineFugitive'
 	" Show current Git branch name in Lightline statusline
 	function! LightlineFugitive()
+		let l:icon = g:enable_icons ? g:icons.git.branch . ' ' : ''
 		let l:branchName = FugitiveHead()
 		if l:branchName ==# ''
 			return ''
 		elseif winwidth(0) < 160 && len(l:branchName) > 10
-			return 'שׂ ' . l:branchName[:2] . '..' . l:branchName[(len(l:branchName) - 4):]
+			return l:icon . l:branchName[:2]
+				\ . '..'
+				\ . l:branchName[(len(l:branchName) - 4):]
 		else
-			return 'שׂ ' . l:branchName
+			return l:icon . l:branchName
 		endif
 	endfunction
 endif
 
-if has_key(g:plugs, 'lightline-ale')
+" --------------------------------------------------------------------------- "
+"                                                                         ALE
+" --------------------------------------------------------------------------- "
+if g:plugin.is_installed('lightline-ale')
 	let g:lightline.active.right += [[
 		\ 'linter_checking',
 		\ 'linter_errors',
@@ -209,22 +230,40 @@ if has_key(g:plugs, 'lightline-ale')
 	\ ]]
 	let g:lightline.component_expand = extend(g:lightline.component_expand, {
 		\ 'linter_checking': 'lightline#ale#checking',
-		\ 'linter_infos': 'lightline#ale#infos',
+		\ 'linter_infos':    'lightline#ale#infos',
 		\ 'linter_warnings': 'lightline#ale#warnings',
-		\ 'linter_errors': 'lightline#ale#errors',
-		\ 'linter_ok': 'lightline#ale#ok',
+		\ 'linter_errors':   'lightline#ale#errors',
+		\ 'linter_ok':       'lightline#ale#ok',
 	\ })
 	let g:lightline.component_type = extend(g:lightline.component_type, {
 		\ 'linter_checking': 'right',
-		\ 'linter_infos ': 'right',
+		\ 'linter_infos':    'right',
 		\ 'linter_warnings': 'warning',
-		\ 'linter_errors': 'error',
-		\ 'linter_ok': 'right'
+		\ 'linter_errors':   'error',
+		\ 'linter_ok':       'right'
 	\ })
+	if g:enable_icons
+		" Use icons as indicators
+		let g:lightline#ale#indicator_infos    = g:icons.info
+		let g:lightline#ale#indicator_warnings = g:icons.warning
+		let g:lightline#ale#indicator_errors   = g:icons.error
+		let g:lightline#ale#indicator_ok       = g:icons.ok
+	endif
 endif
 
-if has_key(g:plugs, 'vim-gutentags')
+" --------------------------------------------------------------------------- "
+"                                                                   Gutentags
+" --------------------------------------------------------------------------- "
+if g:plugin.is_installed('vim-gutentags')
 	let g:lightline.active.right += [['gutentags']]
 	let g:lightline.component_function.gutentags = 'gutentags#statusline'
+endif
+
+" --------------------------------------------------------------------------- "
+"                                                                         CoC
+" --------------------------------------------------------------------------- "
+if g:plugin.is_installed('coc.nvim')
+	let g:lightline.active.right += [['cocstatus']]
+	let g:lightline.component_function.cocstatus = 'coc#status'
 endif
 
