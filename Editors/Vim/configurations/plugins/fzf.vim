@@ -5,8 +5,8 @@
 " =========================================================================== "
 
 " This array is passed as arguments to fzf#vim#with_preview function.
-" To learn more about preview window options, see `--preview-window`
-" section of `man fzf`."
+" To learn more about preview window options, see '--preview-window'
+" section of `man fzf`
 let g:fzf_preview_window = ['down:50%']
 
 " [Buffers] Jump to the existing window if possible
@@ -21,16 +21,20 @@ let g:fzf_tags_command = 'ctags -R'
 " [Commands] --expect expression for directly executing the command
 let g:fzf_commands_expect = 'alt-enter,ctrl-x'"
 
-if has('nvim') && !exists('g:fzf_layout')
-	autocmd! vimrc FileType fzf
-	autocmd vimrc FileType fzf set laststatus=0 noshowmode noruler
-		\ | autocmd BufLeave <buffer> set laststatus=2 showmode ruler
-endif
-
 let g:fzf_layout = {
 	\ 'window': {
 		\ 'width': 0.9,
 		\ 'height': 0.9
 	\ }
 \ }
+
+nnoremap <C-p> :<C-u>FZF<CR>
+
+if has('nvim') && !exists('g:fzf_layout')
+	augroup Fzf
+		autocmd! FileType fzf
+		autocmd FileType fzf set laststatus=0 noshowmode noruler
+			\ | autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+	augroup END
+endif
 

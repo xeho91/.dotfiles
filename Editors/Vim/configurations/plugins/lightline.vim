@@ -6,10 +6,6 @@ scriptencoding utf-8
 " https://github.com/itchyny/lightline.vim
 " =========================================================================== "
 
-" Disable `-- INSERT --` as is unnecessary anymore because the mode information
-" is already displayed with this plugin
-set noshowmode
-
 " Force Lightline theme colors to update on background color change
 function! LightlineChangeColorscheme()
 	let l:theme_path = fnameescape('autoload/lightline/colorscheme/' . g:colors_name . '.vim')
@@ -17,7 +13,9 @@ function! LightlineChangeColorscheme()
 	call lightline#colorscheme()
 	call lightline#update()
 endfunction
-autocmd OptionSet background call LightlineChangeColorscheme()
+augroup Lightline
+	autocmd OptionSet background call LightlineChangeColorscheme()
+augroup END
 
 " Main configuration
 let g:lightline = {
@@ -162,7 +160,7 @@ endfunction
 if g:plugin.is_installed('vista.vim')
 	let g:lightline.active.left += [['vista']]
 	let g:lightline.component_function.vista = 'LightlineVista'
-	autocmd vimrc VimEnter * call vista#RunForNearestMethodOrFunction()
+	autocmd Lightline VimEnter * call vista#RunForNearestMethodOrFunction()
 	" Show the nearest function in statusline with vista.vim plugin
 	function! LightlineVista()
 		let l:icon = g:enable_icons ? g:icons.functionSymbol . ' ' : ''

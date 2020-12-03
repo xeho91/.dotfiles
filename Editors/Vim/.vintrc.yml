@@ -16,6 +16,7 @@ cmdargs:
 policies:
   # Experimental
   ProhibitUnusedVariable:
-    enabled: yes
+    # enabled: yes
+    ignore_patterns: "^s:"
   ProhibitImplicitScopeVariable:
     enabled: yes

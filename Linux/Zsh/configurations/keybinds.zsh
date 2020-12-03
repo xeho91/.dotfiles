@@ -1,4 +1,8 @@
+# =========================================================================== #
+# Custom keybindings
+# ------------------
 # http://zsh.sourceforge.net/Doc/Release/Zsh-Line-Editor.html#Keymaps
+# =========================================================================== #
 
 # Use vi key bindings
 bindkey -v

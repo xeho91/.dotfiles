@@ -8,6 +8,10 @@
 map <F10> :Goyo<CR>
 
 " Integrate with Limelight plugin
-autocmd! vimrc User GoyoEnter Limelight
-autocmd! vimrc User GoyoLeave Limelight!
+if g:plugin.is_installed('limelight')
+	augroup Goyo
+		autocmd! User GoyoEnter Limelight
+		autocmd! User GoyoLeave Limelight!
+	augroup END
+endif
 

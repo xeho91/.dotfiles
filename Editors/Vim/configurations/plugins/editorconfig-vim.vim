@@ -8,5 +8,7 @@
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 " Disable for specific filetype
-autocmd vimrc FileType gitcommit let b:EditorConfig_disable = 1
+augroup EditorConfig
+	autocmd FileType gitcommit let b:EditorConfig_disable = 1
+augroup END
 

@@ -11,6 +11,8 @@ set viminfo+=n"$VIM_DIR[HOME]/.viminfo"
 " =========================================================================== "
 let g:ale_disable_lsp = 1
 let g:enable_icons    = 1
+let g:mapleader = '\'
+let g:maplocalleader = ','
 
 " =========================================================================== "
 " Load (Neo)Vim's configuration files
@@ -20,9 +22,9 @@ let g:vim_configs_dir_path = expand('$VIM_DIR[CONFIGS]')
 if g:enable_icons
 	execute 'source' fnameescape(g:vim_configs_dir_path . 'icons.vim')
 endif
+execute 'source' fnameescape(g:vim_configs_dir_path . 'mappings.vim')
 execute 'source' fnameescape(g:vim_configs_dir_path . 'plugins.vim')
 execute 'source' fnameescape(g:vim_configs_dir_path . 'options.vim')
 execute 'source' fnameescape(g:vim_configs_dir_path . 'commands.vim')
-execute 'source' fnameescape(g:vim_configs_dir_path . 'mappings.vim')
 execute 'source' fnameescape(g:vim_configs_dir_path . 'themes.vim')
 

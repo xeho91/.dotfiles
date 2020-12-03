@@ -62,21 +62,26 @@ nmap <silent> ]g <Plug>(coc-diagnostic-next)
 "                                        Navigation on words under the cursor
 " --------------------------------------------------------------------------- "
 
-" GoTo code navigation
+" Go to code... navigation
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
+if g:plugin.is_installed('vim-which-key')
+	let g:which_key_g = extend(g:which_key_g, {
+		\ 'd': 'code defintion (under the cursor)',
+		\ 'y': 'code type definition (under the cursor)',
+		\ 'i': 'code implementation (under the cursor)',
+		\ 'r': 'code reference (under the cursor)',
+	\ })
+endif
+
 " --------------------------------------------------------------------------- "
 "														        Documentation
 " --------------------------------------------------------------------------- "
 
-nmap <silent> gr <Plug>()
-nmap <silent> gr <Plug>()
-nmap <silent> gr <Plug>()
-nmap <silent> gr <Plug>()
-nmap <silent> gr <Plug>( Use `K` to show documentation in preview window
+" Use `K` to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 function! s:show_documentation()
 	if (index(['vim','help'], &filetype) >= 0)
@@ -208,6 +213,9 @@ nnoremap <silent><nowait> <space>k :<C-u>CocPrev<CR>
 
 " Resume latest CoC list
 nnoremap <silent><nowait> <space>p :<C-u>CocListResume<CR>
+
+" Open all list options
+" nnoremap <silent> <space> :<C-u>CocList<CR>
 
 " =========================================================================== "
 " CoC Extensions settings

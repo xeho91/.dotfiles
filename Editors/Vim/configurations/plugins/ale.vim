@@ -42,10 +42,12 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 let g:ale_set_highlights = 1
 
 " Highlight the problems
-highlight! ALEError guibg=Red guifg=Black
-highlight! ALEErrorLine guibg=Red guifg=Black
-highlight! ALEWarning guibg=Yellow guifg=Black
-highlight! ALEWarningLine guibg=Yellow guifg=Black
+augroup UpdateALEhighlights
+	autocmd ColorScheme * highlight! ALEError guibg=Red guifg=Black
+	autocmd ColorScheme * highlight! ALEErrorLine guibg=Red guifg=Black
+	autocmd ColorScheme * highlight! ALEWarning guibg=Yellow guifg=Black
+	autocmd ColorScheme * highlight! ALEWarningLine guibg=Yellow guifg=Black
+augroup END
 
 " --------------------------------------------------------------------------- "
 "                                                                    Messages
@@ -68,9 +70,12 @@ let g:ale_echo_msg_format = '[%severity%] (%linter%) %s'
 let g:ale_fix_on_save = 1
 
 " Enable linting on...
-let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_text_changed = 'insert'
 let g:ale_lint_on_insert_leave = 1
 let g:ale_lint_on_enter = 1
+
+" Set lint delay in miliseconds
+let g:ale_lint_delay = 5000
 
 " --------------------------------------------------------------------------- "
 "                                                                      Fixers

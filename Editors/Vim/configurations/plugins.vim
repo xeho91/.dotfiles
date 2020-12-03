@@ -1,4 +1,5 @@
 " =========================================================================== "
+
 " Vim-Plug settings
 " -----------------
 " https://github.com/junegunn/vim-plug
@@ -17,63 +18,69 @@ endif
 " =========================================================================== "
 " List of plugins
 " =========================================================================== "
-"
+
 " Plugins will be downloaded under the specified directory
 call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 
 	" ----------------------------------------------------------------------- "
 	"                                                              Essentials
 	" ----------------------------------------------------------------------- "
-	"
+
 	" Vim defaults everyone can agree on
 	" ----------------------------------
 	" https://github.com/tpope/vim-sensible
 	Plug 'tpope/vim-sensible'
-	"
+
 	" EditorConfig
 	" ------------
 	" https://github.com/editorconfig/editorconfig-vim
 	Plug 'editorconfig/editorconfig-vim'
-	"
+
 	" Heuristically set buffer options
 	" --------------------------------
 	" https://github.com/tpope/vim-sleuth
 	Plug 'tpope/vim-sleuth'
 
+	" Shows key bidings (mappings) in a popup, is like a cheatsheet
+	" -------------------------------------------------------------
+	" https://github.com/liuchengxu/vim-which-key
+	" NOTE: At the moment it shows key binded to <Leader> and <LocalLeader>
+	Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+
 	" ----------------------------------------------------------------------- "
 	"                                                              Theme & UI
 	" ----------------------------------------------------------------------- "
-	"
+
 	" Retro groove color theme
 	" ------------------------
 	" https://github.com/morhetz/gruvbox
 	" Plug 'morhetz/gruvbox'
-	"
+
 	" Dark colorscheme with sharper colors than gruvbox
 	" -------------------------------------------------
 	" https://github.com/srcery-colors/srcery-vim
 	Plug 'srcery-colors/srcery-vim'
-	"
+
 	" Light theme inspired by Google's Material Design
 	" ------------------------------------------------
 	" https://github.com/NLKNguyen/papercolor-theme
 	Plug 'NLKNguyen/papercolor-theme'
-	"
+
 	" File type icons
 	" ---------------
 	" https://github.com/ryanoasis/vim-devicons
 	Plug 'ryanoasis/vim-devicons'
-	"
+
 	" A light and configurable statusline/tabline
 	" -------------------------------------------
 	" https://github.com/itchyny/lightline.vim
 	Plug 'itchyny/lightline.vim'
-	"
+
 	" Hyperfocus-writing
 	" ------------------
 	" https://github.com/junegunn/limelight.vim
 	Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
-	"
+
 	" Distraction-free writing
 	" ------------------------
 	" https://github.com/junegunn/goyo.vim
@@ -152,7 +159,8 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 	" Fuzzy file, buffer, mru, tag, etc finder
 	" ----------------------------------------
 	" https://github.com/ctrlpvim/ctrlp.vim
-	Plug 'ctrlpvim/ctrlp.vim', { 'on': 'CtrlP' }
+	" NOTE: It's obsolete, `fzf.vim` is never
+	" Plug 'ctrlpvim/ctrlp.vim', { 'on': 'CtrlP' }
 	"
 	" Efficient fuzzy finder that helps to locate files, buffers, mru, etc.
 	" ---------------------------------------------------------------------
@@ -162,7 +170,8 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 	" Modern performant generic finder and dispatcher
 	" -----------------------------------------------
 	" https://github.com/liuchengxu/vim-clap
-	Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
+	" NOTE: Frigging slow, still in BETA
+	" Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 
 	" ----------------------------------------------------------------------- "
 	"                                                NERDTree (file explorer)
@@ -251,11 +260,6 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 	" https://github.com/tpope/vim-endwise
 	Plug 'tpope/vim-endwise'
 	"
-	" Shows keybindings in popup
-	" --------------------------
-	" https://github.com/liuchengxu/vim-which-key
-	Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
-	"
 	" Toggles between hybrid and absolute line numbers automatically
 	" --------------------------------------------------------------
 	" https://github.com/jeffkreeftmeijer/vim-numbertoggle
@@ -332,6 +336,8 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 		" https://github.com/lambdalisue/gina.vim
 		Plug 'lambdalisue/gina.vim', { 'on': 'Gina' }
 		"
+	else
+		echoerr 'Git not found, hence some plugins wont be installed!'
 	endif
 
 	" ----------------------------------------------------------------------- "
@@ -478,7 +484,11 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 	" VSCode
 	" ------
 	" https://github.com/neoclide/coc.nvim
-	Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+	if executable('node')
+		Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+	else
+		echoerr 'Node.JS not found, hence some plugins will not be installed!'
+	endif
 	"
 	if has_key(g:plugs, 'coc.nvim')
 		"
@@ -537,13 +547,6 @@ call plug#end()
 " =========================================================================== "
 " Plugins helpers
 " =========================================================================== "
-"
-" If defined autocmds are without a group, Vim registers the same autocmd
-" each `:source ~/.vimrc`. And Vim executes the same autocmds each occurring a
-" Event(e.g. FileType). In one word, it's heavy.
-augroup vimrc
-	autocmd!
-augroup END
 
 " Check if plugin is installed
 let g:plugin = { 'plugs': get(g:, 'plugs', {})  }
@@ -553,16 +556,30 @@ function! g:plugin.is_installed(pluginName) abort
 		\ : 0
 endfunction
 
+" If defined autocmds are without a group, Vim registers the same autocmd
+" each `:source ~/.vimrc`. And Vim executes the same autocmds each occurring a
+" Event(e.g. FileType). In one word, it's heavy.
+" augroup vimrc
+"     autocmd!
+" augroup END
 
 " =========================================================================== "
 " Load plugin(s) configuration files
 " =========================================================================== "
 let g:vim_plugins_config_dir_path = expand('$VIM_DIR[PLUGINS]')
 let g:loaded_plugins_configs = {}
-for s:plugin in items(g:plugs)
-	if g:plugin.is_installed(s:plugin[0])
+let s:delay_plugins = ['vim-which-key']
+for s:plugin in s:delay_plugins
+	function! RemovePlugin(index, value)
+		return a:value != s:plugin
+	endfunction
+	call filter(g:plugs_order, function('RemovePlugin'))
+	call add(g:plugs_order, s:plugin)
+endfor
+for s:plugin in g:plugs_order
+	if g:plugin.is_installed(s:plugin)
 		" Remove the `.vim` from the plugin names
-		let s:plugin_name = split(s:plugin[0], '\.')[0]
+		let s:plugin_name = split(s:plugin, '\.')[0]
 		let s:plugin_config_file_path = fnameescape(
 			\ g:vim_plugins_config_dir_path . s:plugin_name . '.vim'
 		\ )

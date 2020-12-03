@@ -5,7 +5,7 @@ scriptencoding utf-8
 " -----------
 " http://vimdoc.sourceforge.net/htmldoc/options.html
 " ---
-" NOTE: Is faster to just use `:help <query>`
+" NOTE: Is faster to just use `:help <query>` OR `:h <query>`
 " =========================================================================== "
 
 " --------------------------------------------------------------------------- "
@@ -156,3 +156,8 @@ set hidden
 " Don't pass messages to |ins-completion-menu|
 set shortmess+=c
 
+if g:plugin.is_installed('lightline.vim')
+	" Disable `-- INSERT --` as is unnecessary anymore because the mode
+	" information is already displayed with this plugin
+	set noshowmode
+endif

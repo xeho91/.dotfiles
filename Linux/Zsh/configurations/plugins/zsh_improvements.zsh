@@ -30,7 +30,7 @@ zinit wait lucid \
 # --------------------------------------------------------
 # https://github.com/zdharma/history-search-multi-word
 # =========================================================================== #
-zinit wait lucid \
+zinit wait"3" lucid \
 	id-as"history-search-multi-word" \
 	for @zdharma/history-search-multi-word
 
