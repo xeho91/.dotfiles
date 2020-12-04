@@ -70,10 +70,10 @@ nmap <silent> gr <Plug>(coc-references)
 
 if g:plugin.is_installed('vim-which-key')
 	let g:which_key_g = extend(g:which_key_g, {
-		\ 'd': 'code defintion (under the cursor)',
-		\ 'y': 'code type definition (under the cursor)',
-		\ 'i': 'code implementation (under the cursor)',
-		\ 'r': 'code reference (under the cursor)',
+		\ 'd': '[CoC] code defintion (under the cursor)',
+		\ 'y': '[CoC] code type definition (under the cursor)',
+		\ 'i': '[CoC] code implementation (under the cursor)',
+		\ 'r': '[CoC] code reference (under the cursor)'
 	\ })
 endif
 

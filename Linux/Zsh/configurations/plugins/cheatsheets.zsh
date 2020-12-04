@@ -16,7 +16,7 @@ zinit wait"2" lucid \
 # https://github.com/tldr-pages/tldr
 # -------------------------------------------------------
 # https://github.com/dbrgn/tealdeer
-# TODO: Fix!
+# FIXME: not working properly
 # =========================================================================== #
 # zinit wait"0a" lucid \
 #     id-as"tldr" \

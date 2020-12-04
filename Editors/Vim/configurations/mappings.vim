@@ -11,6 +11,13 @@ nnoremap <silent> ? :<C-u>WhichKey '?'<CR>
 "                                                  Functional keys `<F1..12>`
 " --------------------------------------------------------------------------- "
 
+nnoremap <silent> <F1> :ToggleHelp<CR>
+imap <F1> <Esc><F1>
+let g:which_key_questionMark['<F1>'] = "Open help (editor's manual) in the split window"
+
+" let g:which_key_questionMark['<F2>'] = ''
+" let g:which_key_questionMark['<F3>'] = ''
+
 " Open configuration file
 map <silent> <F4> :EditConfig<CR>
 let g:which_key_questionMark['<F4>'] = 'Edit configuration'
@@ -30,27 +37,27 @@ let g:which_key_questionMark['<F12>'] = 'Toggle theme (dark/light)'
 " key combination
 
 " map <silent> <F25> <CR>
-let g:which_key_questionMark['<C-F1'] = ''
+" let g:which_key_questionMark['<C-F1'] = ''
 " map <silent> <F26> <CR>
-let g:which_key_questionMark['<C-F2'] = ''
+" let g:which_key_questionMark['<C-F2'] = ''
 " map <silent> <F27> <CR>
-let g:which_key_questionMark['<C-F3'] = ''
+" let g:which_key_questionMark['<C-F3'] = ''
 " map <silent> <F28> <CR>
-let g:which_key_questionMark['<C-F4'] = ''
+" let g:which_key_questionMark['<C-F4'] = ''
 " map <silent> <F29> <CR>
-let g:which_key_questionMark['<C-F5'] = ''
+" let g:which_key_questionMark['<C-F5'] = ''
 " map <silent> <F30> <CR>
-let g:which_key_questionMark['<C-F6'] = ''
+" let g:which_key_questionMark['<C-F6'] = ''
 " map <silent> <F31> <CR>
-let g:which_key_questionMark['<C-F7'] = ''
+" let g:which_key_questionMark['<C-F7'] = ''
 " map <silent> <F32> <CR>
-let g:which_key_questionMark['<C-F8'] = ''
+" let g:which_key_questionMark['<C-F8'] = ''
 " map <silent> <F33> <CR>
-let g:which_key_questionMark['<C-F9'] = ''
+" let g:which_key_questionMark['<C-F9'] = ''
 " map <silent> <F34> <CR>
-let g:which_key_questionMark['<C-F10'] = ''
+" let g:which_key_questionMark['<C-F10'] = ''
 " map <silent> <F35> <CR>
-let g:which_key_questionMark['<C-F11'] = ''
+" let g:which_key_questionMark['<C-F11'] = ''
 
 " Bind hotkey to toggle displaying hidden characters (tabs, eol, etc)
 map <silent> <F36> :ToggleList<CR>

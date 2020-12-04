@@ -146,3 +146,11 @@ function where_zsh() {
 #     return ${PIPESTATUS[0]}
 # }
 
+
+# =========================================================================== #
+# Open files with default editor `(n)vim` and interactively with `fzf`
+# =========================================================================== #
+function editor_open_file() {
+	command $EDITOR -o $(fzf)
+}
+

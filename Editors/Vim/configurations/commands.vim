@@ -20,8 +20,8 @@ command! ThemeToggle call ChangeTheme()
 " --------------------------------------------------------------------------- "
 "                                                    Toggle hidden characters
 " --------------------------------------------------------------------------- "
-command! ToggleList call Function_ToggleList()
-function! Function_ToggleList()
+command! ToggleList call <SID>toggleList()
+function! s:toggleList()
 	let &list = ( &list ? 0 : 1)
 	echomsg '-- Show hidden characters: ' . (&list ? 'ON' : 'OFF') . ' --'
 endfunction
@@ -29,9 +29,9 @@ endfunction
 " --------------------------------------------------------------------------- "
 "                                                        Toggle QuickFix list
 " --------------------------------------------------------------------------- "
-command! ToggleQuickFixList call Function_ToggleQuickFixList()
+command! ToggleQuickFixList call <SID>soggleQuickFixList()
 let g:quickFix_is_open = 0
-function Function_ToggleQuickFixList()
+function s:soggleQuickFixList()
 	if g:quickFix_is_open
 		cclose
 		let g:quickFix_is_open = 0
@@ -47,9 +47,9 @@ endfunction
 " --------------------------------------------------------------------------- "
 "                                                        Toggle location list
 " --------------------------------------------------------------------------- "
-command! ToggleLocationList call Function_ToggleLocationList()
+command! ToggleLocationList call <SID>ToggleLocationList()
 let g:locationList_is_open = 0
-function! Function_ToggleLocationList()
+function! s:soggleLocationList()
 	if g:locationList_is_open
 		lclose
 		let g:locationList_is_open = 0
@@ -69,5 +69,27 @@ command! TogglePatternSearchHighlight call <SID>togglePatternSearchHighlight()
 function! s:togglePatternSearchHighlight()
 	let &hlsearch = &hlsearch ? 0 : 1
 	echomsg '-- Search pattern highlight: ' . (&hlsearch ? 'ON' : 'OFF') . ' --'
+endfunction
+
+" --------------------------------------------------------------------------- "
+"                                               Toggle help (editor's manual)
+"                                         and search for key under the cursor
+"                                         -----------------------------------
+" Credits: https://vim.fandom.com/wiki/Disable_F1_built-in_help_key
+" --------------------------------------------------------------------------- "
+command! ToggleHelp call <SID>toggleHelp()
+function s:toggleHelp()
+	if &buftype ==# 'help'
+		\ && match(strpart(getline('.'), col('.') - 1, 1), '\\S') < 0
+		bwipeout
+	else
+		try
+			exec 'help ' . expand('<cWORD>')
+		catch /:E149:\|:E661:/
+			" E149 no help for <subject>
+			" E661 no <language> help for <subject>
+			exec 'help ' . expand('<cword>')
+		endtry
+	endif
 endfunction
 

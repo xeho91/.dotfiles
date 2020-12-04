@@ -28,3 +28,10 @@ for extension in $extensions; do
 done
 unset extensions extension
 
+# =========================================================================== #
+# Aliases for existing functions
+# =========================================================================== #
+if [[ editor_open_file && ($EDITOR -eq "vim" || $EDITOR -eq "nvim") ]]; then
+	alias vo="editor_open_file"
+fi
+

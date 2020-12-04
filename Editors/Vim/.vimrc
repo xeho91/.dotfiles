@@ -28,3 +28,12 @@ execute 'source' fnameescape(g:vim_configs_dir_path . 'options.vim')
 execute 'source' fnameescape(g:vim_configs_dir_path . 'commands.vim')
 execute 'source' fnameescape(g:vim_configs_dir_path . 'themes.vim')
 
+" =========================================================================== "
+" Other
+" =========================================================================== "
+
+" Close help faster with pressing `q`
+augroup vimrc
+	autocmd FileType help noremap <buffer> q :q<Cr>
+augroup END
+

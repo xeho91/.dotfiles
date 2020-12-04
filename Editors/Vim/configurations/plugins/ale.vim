@@ -16,6 +16,7 @@ let g:ale_sign_column_always = 1
 if g:enable_icons
 	let g:ale_sign_error   = ' ' . g:icons.error
 	let g:ale_sign_warning = ' ' . g:icons.warning
+	let g:ale_sign_info    = ' ' . g:icons.info
 endif
 
 " --------------------------------------------------------------------------- "
@@ -44,9 +45,9 @@ let g:ale_set_highlights = 1
 " Highlight the problems
 augroup UpdateALEhighlights
 	autocmd ColorScheme * highlight! ALEError guibg=Red guifg=Black
-	autocmd ColorScheme * highlight! ALEErrorLine guibg=Red guifg=Black
+	autocmd ColorScheme * highlight! ALEErrorLine guibg=#400c0a
 	autocmd ColorScheme * highlight! ALEWarning guibg=Yellow guifg=Black
-	autocmd ColorScheme * highlight! ALEWarningLine guibg=Yellow guifg=Black
+	autocmd ColorScheme * highlight! ALEWarningLine guibg=#402f0a
 augroup END
 
 " --------------------------------------------------------------------------- "
@@ -70,12 +71,12 @@ let g:ale_echo_msg_format = '[%severity%] (%linter%) %s'
 let g:ale_fix_on_save = 1
 
 " Enable linting on...
-let g:ale_lint_on_text_changed = 'insert'
+let g:ale_lint_on_text_changed = 'always'
 let g:ale_lint_on_insert_leave = 1
 let g:ale_lint_on_enter = 1
 
 " Set lint delay in miliseconds
-let g:ale_lint_delay = 5000
+let g:ale_lint_delay = 500
 
 " --------------------------------------------------------------------------- "
 "                                                                      Fixers
