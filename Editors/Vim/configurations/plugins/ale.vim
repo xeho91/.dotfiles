@@ -44,10 +44,12 @@ let g:ale_set_highlights = 1
 
 " Highlight the problems
 augroup UpdateALEhighlights
-	autocmd ColorScheme * highlight! ALEError guibg=Red guifg=Black
-	autocmd ColorScheme * highlight! ALEErrorLine guibg=#400c0a
-	autocmd ColorScheme * highlight! ALEWarning guibg=Yellow guifg=Black
+	autocmd ColorScheme * highlight! ALEError       guifg=#918175
+	autocmd ColorScheme * highlight! ALEErrorLine   guibg=#400c0a
+	autocmd ColorScheme * highlight! ALEWarning     guifg=#918175
 	autocmd ColorScheme * highlight! ALEWarningLine guibg=#402f0a
+	autocmd ColorScheme * highlight! ALEInfo        guifg=#918175
+	autocmd ColorScheme * highlight! ALEInfoLine    guibg=#0f2840
 augroup END
 
 " --------------------------------------------------------------------------- "
@@ -87,6 +89,10 @@ let g:ale_fixers = {
 	\ '*': ['trim_whitespace'],
 	\ 'json': ['prettier'],
 	\ 'yaml': ['prettier'],
-	\ 'javascript': ['prettier']
+	\ 'javascript': ['prettier'],
 \ }
 
+" let b:ale_linters = {
+"     \ 'vim': ['vint'],
+"     \ 'python': ['pylint'],
+" \ }

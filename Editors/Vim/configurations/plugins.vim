@@ -131,6 +131,11 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 			" Plug 'nvim-treesitter/nvim-treesitter', { 'do': 'TSUpdate' }
 		endif
 
+		" Visually displaying indent levels in code
+		" -----------------------------------------
+		" https://github.com/nathanaelkane/vim-indent-guides
+		Plug 'nathanaelkane/vim-indent-guides', { 'on': 'IndentGuidesToggle' }
+
 	" ----------------------------------------------------------------------- "
 	"                                                               Searchers
 	" ----------------------------------------------------------------------- "
