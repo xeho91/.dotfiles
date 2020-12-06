@@ -96,3 +96,6 @@ let g:ale_fixers = {
 "     \ 'vim': ['vint'],
 "     \ 'python': ['pylint'],
 " \ }
+
+let g:ale_javascript_prettier_options = '--config "$DOTFILES/Linters/.prettierrc.js"'
+
