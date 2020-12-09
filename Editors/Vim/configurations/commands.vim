@@ -29,9 +29,9 @@ endfunction
 " --------------------------------------------------------------------------- "
 "                                                        Toggle QuickFix list
 " --------------------------------------------------------------------------- "
-command! ToggleQuickFixList call <SID>soggleQuickFixList()
+command! ToggleQuickFixList call <SID>toggleQuickFixList()
 let g:quickFix_is_open = 0
-function s:soggleQuickFixList()
+function s:toggleQuickFixList()
 	if g:quickFix_is_open
 		cclose
 		let g:quickFix_is_open = 0
@@ -47,9 +47,9 @@ endfunction
 " --------------------------------------------------------------------------- "
 "                                                        Toggle location list
 " --------------------------------------------------------------------------- "
-command! ToggleLocationList call <SID>ToggleLocationList()
+command! ToggleLocationList call <SID>toggleLocationList()
 let g:locationList_is_open = 0
-function! s:soggleLocationList()
+function! s:toggleLocationList()
 	if g:locationList_is_open
 		lclose
 		let g:locationList_is_open = 0
@@ -91,5 +91,19 @@ function s:toggleHelp()
 			exec 'help ' . expand('<cword>')
 		endtry
 	endif
+endfunction
+
+" --------------------------------------------------------------------------- "
+"                                             Open file search with `fzf.vim`
+"        NOTE: It will start from the root path where `.git` directory exists
+" --------------------------------------------------------------------------- "
+command! OpenFileSearch call <SID>openFileSearch()
+function s:openFileSearch()
+	let l:Git_rootDirectory = finddir('.git/..', expand('%:p:h') . ';')
+	try
+		execute 'Files ' . l:Git_rootDirectory
+	catch
+		execute 'Files'
+	endtry
 endfunction
 

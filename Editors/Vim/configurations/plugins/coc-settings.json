@@ -1,5 +1,6 @@
 {
   "coc.preferences.extensionUpdateCheck": "daily",
-  // Let diagnostic be handled by ALE
-  "diagnostic.displayByAle": true
+  "diagnostic.displayByAle": true,
+  "codeLens.enable": true
 }
+
