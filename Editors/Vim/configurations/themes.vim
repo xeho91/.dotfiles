@@ -12,26 +12,20 @@ endif
 " Enable syntax highlight
 syntax enable
 
-" Set theme(s)
-let g:default_theme = 'slate'
-let g:dark_theme = 'srcery'
-let g:light_theme = 'PaperColor'
+" Define themes
+let g:theme = {
+	\ 'default': 'slate',
+	\ 'dark':    'srcery',
+	\ 'light':   'PaperColor'
+\ }
+
 try
-	colorscheme srcery
-	set background=dark
+	execute 'colorscheme ' . g:theme.dark
 catch
-	colorscheme slate
+	execute 'colorscheme ' . g:theme.light
 endtry
 
-function! ChangeTheme()
-	if g:colors_name ==# g:dark_theme
-		colorscheme PaperColor
-		set background=light
-	else
-		colorscheme srcery
-		set background=dark
-	endif
-endfunction
+set background=dark
 
 if g:plugins.is_installed('lightline')
 	let g:lightline.colorscheme = g:colors_name

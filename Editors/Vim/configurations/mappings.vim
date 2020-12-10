@@ -38,9 +38,9 @@ let g:which_key_questionMark['<F4>'] = 'Edit configuration'
 map <silent> <F5> :RefreshConfig<CR>
 let g:which_key_questionMark['<F5>'] = 'Refresh configuration'
 
-" Bind hotkey to toggle dark/light theme
-map <silent> <F12> :ThemeToggle<CR>
-let g:which_key_questionMark['<F12>'] = 'Toggle theme (dark/light)'
+" Change theme to dark/light
+map <silent> <F12> :ChangeTheme<CR>
+let g:which_key_questionMark['<F12>'] = 'Change theme (to dark/light)'
 
 " --------------------------------------------------------------------------- "
 "								            Functional keys `<Ctrl + F1..12>`

@@ -39,9 +39,18 @@ function! g:plugins.is_installed(pluginName)
 	return index(l:self.installed, a:pluginName) != -1
 endfunction
 
-" Get configuration path
-function! g:plugins.get_configurationPath(pluginName)
+" Get configuration path for plugin
+function! g:plugins.get_configurationFilePath(pluginName)
 	return fnameescape(l:self.configurations_dirPath . a:pluginName . '.vim')
+endfunction
+
+" Load plugin's configuration file
+function! g:plugins.load_configurationFile(pluginName)
+	let s:config_filePath = l:self.get_configurationFilePath(a:pluginName)
+	if !empty(glob(s:config_filePath))
+		execute 'source' s:config_filePath
+		call g:plugins.add_configurationLoaded(a:pluginName)
+	endif
 endfunction
 
 " Add loaded configurations of plugins
@@ -67,6 +76,14 @@ function! g:plugins.postpone_loading()
 		call filter(g:plugs_order, { index, value -> value !=# s:pluginName })
 		call add(g:plugs_order, s:pluginName)
 	endfor
+endfunction
+
+" Reload plugin's configuration file
+function! g:plugins.reload_configuration(pluginName)
+	execute 'source ' . l:self.get_configurationFilePath(a:pluginName)
+	echomsg 'Finished reloading configuration file for plugin: "'
+		\ . a:pluginName
+		\ . '"!'
 endfunction
 
 " =========================================================================== "
@@ -175,10 +192,10 @@ call plug#begin(fnameescape(g:vim_home_dirPath . '.vim/plugged'))
 		" Asynchronously displaying the colours in the file
 		" -------------------------------------------------
 		" https://github.com/RRethy/vim-hexokinase
-		"Plug 'RRethy/vim-hexokinase', {
-			"\ 'as': 'hexokinase',
-			"\ 'do': 'make hexokinase'
-		"\ }
+		Plug 'RRethy/vim-hexokinase', {
+			\ 'as': 'hexokinase',
+			\ 'do': 'make hexokinase'
+		\ }
 
 		" Make the yanked region apparent
 		" -------------------------------
@@ -236,7 +253,7 @@ call plug#begin(fnameescape(g:vim_home_dirPath . '.vim/plugged'))
 		" --------------------------------
 		" https://github.com/junegunn/fzf.vim
 		Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-		Plug 'junegunn/fzf.vim', { 'as': 'fzf' }
+		Plug 'junegunn/fzf.vim', { 'as': 'fzf-integration' }
 
 		" Fuzzy file, buffer, mru, tag, etc finder
 		" ----------------------------------------
@@ -648,10 +665,6 @@ call plug#end()
 " =========================================================================== "
 for s:pluginName in g:plugs_order
 	call g:plugins.add_installed(s:pluginName)
-	let s:configuration_path = g:plugins.get_configurationPath(s:pluginName)
-	if !empty(glob(s:configuration_path))
-		execute 'source' s:configuration_path
-		call g:plugins.add_configurationLoaded(s:pluginName)
-	endif
+	call g:plugins.load_configurationFile(s:pluginName)
 endfor
 

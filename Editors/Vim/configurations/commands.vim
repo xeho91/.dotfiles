@@ -6,16 +6,36 @@
 " NOTE: User-defined commands must start with a capital letter
 " =========================================================================== "
 
-" Refresh (Neo)Vim configuration file
-command! RefreshConfig source $VIMRC | echo "Refreshing config done!"
+" --------------------------------------------------------------------------- "
+"                                              Refresh (Neo)Vim configuration
+" --------------------------------------------------------------------------- "
+command! RefreshConfig source $VIMRC | echomsg 'Refresh completed!'
 
-" Open and edit(Neo)Vim configuration file in a new tab
+" --------------------------------------------------------------------------- "
+"                                 Reload plugin's specific configuration file
+" --------------------------------------------------------------------------- "
+command! -nargs=1 ReloadPluginConfiguration
+	\ call g:plugins.reload_configuration('<args>')
+
+" --------------------------------------------------------------------------- "
+"                                            Edit (Neo)Vim configuration file
+"                                                   (by opening in a new tab)
+" --------------------------------------------------------------------------- "
 command! EditConfig tabedit $VIMRC
 
 " --------------------------------------------------------------------------- "
-"                                                     Toggle Dark/Light theme
+"                                                  Change theme to Dark/Light
 " --------------------------------------------------------------------------- "
-command! ThemeToggle call ChangeTheme()
+command! ChangeTheme call <SID>changeTheme()
+function! s:changeTheme()
+	if g:colors_name ==# g:theme.dark
+		execute 'colorscheme ' . g:theme.light
+		set background=light
+	else
+		execute 'colorscheme ' . g:theme.dark
+		set background=dark
+	endif
+endfunction
 
 " --------------------------------------------------------------------------- "
 "                                                    Toggle hidden characters
