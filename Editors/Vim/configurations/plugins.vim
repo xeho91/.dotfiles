@@ -5,7 +5,9 @@
 " =========================================================================== "
 
 " Install Vim-Plug if not found
-let g:vim_plug_dir_path = fnameescape(g:vim_home_dir_path . '.vim/autoload/plug.vim')
+let g:vim_plug_dir_path = fnameescape(
+	\ g:vim_home_dirPath . '.vim/autoload/plug.vim'
+\ )
 if empty(glob(g:vim_plug_dir_path))
 	silent !curl -fLo vim_plug_dir_path --create-dirs
 		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -15,11 +17,64 @@ if empty(glob(g:vim_plug_dir_path))
 endif
 
 " =========================================================================== "
+" Helpers for plugins
+" =========================================================================== "
+
+let g:plugins = {
+	\ 'configurations_dirPath': expand('$VIM_DIR[PLUGINS]'),
+	\ 'installed': [],
+	\ 'configurations_loaded': [],
+	\ 'postponed': []
+\ }
+
+" Add loaded configurations of plugins
+function! g:plugins.add_installed(pluginName)
+	if has_key(g:plugs, a:pluginName) && isdirectory(g:plugs[a:pluginName].dir)
+		call add(l:self.installed, a:pluginName)
+	endif
+endfunction
+
+" Check if plugin is installed
+function! g:plugins.is_installed(pluginName)
+	return index(l:self.installed, a:pluginName) != -1
+endfunction
+
+" Get configuration path
+function! g:plugins.get_configurationPath(pluginName)
+	return fnameescape(l:self.configurations_dirPath . a:pluginName . '.vim')
+endfunction
+
+" Add loaded configurations of plugins
+function! g:plugins.add_configurationLoaded(pluginName)
+	if l:self.is_installed(a:pluginName)
+		call add(l:self.configurations_loaded, a:pluginName)
+	endif
+endfunction
+
+" Check if plugin's configuration file is loaded
+function! g:plugins.is_configurationLoaded(pluginName)
+	return index(l:self.configurations_loaded, a:pluginName) != -1
+endfunction
+
+" Add plugin to postponed list - to be loaded at the end of queue
+function! g:plugins.add_postponed(pluginName)
+	call add(l:self.postponed, a:pluginName)
+endfunction
+
+" Change the order, move the plugin to be installed/loaded at the end
+function! g:plugins.postpone_loading()
+	for s:pluginName in l:self.postponed
+		call filter(g:plugs_order, { index, value -> value !=# s:pluginName })
+		call add(g:plugs_order, s:pluginName)
+	endfor
+endfunction
+
+" =========================================================================== "
 " List of plugins
 " =========================================================================== "
 
 " Plugins will be downloaded under the specified directory
-call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
+call plug#begin(fnameescape(g:vim_home_dirPath . '.vim/plugged'))
 
 	" ----------------------------------------------------------------------- "
 	"                                                              Essentials
@@ -28,23 +83,29 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 		" Vim defaults everyone can agree on
 		" ----------------------------------
 		" https://github.com/tpope/vim-sensible
-		Plug 'tpope/vim-sensible'
+		Plug 'tpope/vim-sensible', { 'as': 'sensible' }
 
 		" EditorConfig
 		" ------------
 		" https://github.com/editorconfig/editorconfig-vim
-		Plug 'editorconfig/editorconfig-vim'
+		Plug 'editorconfig/editorconfig-vim', {
+			\ 'as': 'editorconfig'
+		\ }
 
 		" Heuristically set buffer options
 		" --------------------------------
 		" https://github.com/tpope/vim-sleuth
-		Plug 'tpope/vim-sleuth'
+		Plug 'tpope/vim-sleuth', { 'as': 'sleuth' }
 
 		" Shows key bidings (mappings) in a popup, is like a cheatsheet
 		" -------------------------------------------------------------
 		" https://github.com/liuchengxu/vim-which-key
 		" NOTE: At the moment it shows key binded to <Leader> and <LocalLeader>
-		Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+		Plug 'liuchengxu/vim-which-key', {
+			\ 'as': 'which-key',
+			\ 'on': ['WhichKey', 'WhichKey!']
+		\ }
+		call g:plugins.add_postponed('which-key')
 
 	" ----------------------------------------------------------------------- "
 	"                                                              Theme & UI
@@ -58,32 +119,38 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 		" Dark colorscheme with sharper colors than gruvbox
 		" -------------------------------------------------
 		" https://github.com/srcery-colors/srcery-vim
-		Plug 'srcery-colors/srcery-vim'
+		Plug 'srcery-colors/srcery-vim', { 'as': 'theme-srcery' }
 
 		" Light theme inspired by Google's Material Design
 		" ------------------------------------------------
 		" https://github.com/NLKNguyen/papercolor-theme
-		Plug 'NLKNguyen/papercolor-theme'
+		Plug 'NLKNguyen/papercolor-theme', { 'as': 'theme-papercolor' }
 
 		" File type icons
 		" ---------------
 		" https://github.com/ryanoasis/vim-devicons
-		Plug 'ryanoasis/vim-devicons'
+		Plug 'ryanoasis/vim-devicons', { 'as': 'devicons' }
 
 		" A light and configurable statusline/tabline
 		" -------------------------------------------
 		" https://github.com/itchyny/lightline.vim
-		Plug 'itchyny/lightline.vim'
+		Plug 'itchyny/lightline.vim', { 'as': 'lightline' }
 
 		" Hyperfocus-writing
 		" ------------------
 		" https://github.com/junegunn/limelight.vim
-		Plug 'junegunn/limelight.vim', { 'on': 'Limelight' }
+		Plug 'junegunn/limelight.vim', {
+			\ 'as': 'limelight',
+			\ 'on': 'Limelight'
+		\ }
 
 		" Distraction-free writing
 		" ------------------------
 		" https://github.com/junegunn/goyo.vim
-		Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+		Plug 'junegunn/goyo.vim', {
+			\ 'as': 'goyo',
+			\ 'on': 'Goyo'
+		\ }
 
 	" ----------------------------------------------------------------------- "
 	"                                                                  Syntax
@@ -92,32 +159,39 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 		" A solid language pack
 		" ---------------------
 		" https://github.com/sheerun/vim-polyglot
-		Plug 'sheerun/vim-polyglot'
+		Plug 'sheerun/vim-polyglot', { 'as': 'polyglot' }
 
 		" Speed up (Neo)Vim by updating folds only when called
 		" ----------------------------------------------------
 		" https://github.com/Konfekt/FastFold
-		Plug 'Konfekt/FastFold'
+		Plug 'Konfekt/FastFold', { 'as': 'fastfold' }
 
 		" Rainbow parentheses/brackets
 		" ----------------------------
 		" https://github.com/luochen1990/rainbow
 		Plug 'luochen1990/rainbow'
+		call g:plugins.add_postponed('rainbow')
 
 		" Asynchronously displaying the colours in the file
 		" -------------------------------------------------
 		" https://github.com/RRethy/vim-hexokinase
-		Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
+		"Plug 'RRethy/vim-hexokinase', {
+			"\ 'as': 'hexokinase',
+			"\ 'do': 'make hexokinase'
+		"\ }
 
 		" Make the yanked region apparent
 		" -------------------------------
 		" https://github.com/machakann/vim-highlightedyank
-		Plug 'machakann/vim-highlightedyank'
+		Plug 'machakann/vim-highlightedyank', { 'as': 'highlightedyank' }
 
 		" Syntax highlighting for JSONC files
 		" -----------------------------------
 		" https://github.com/kevinoid/vim-jsonc
-		Plug 'kevinoid/vim-jsonc', { 'for': ['jsonc', 'json'] }
+		Plug 'kevinoid/vim-jsonc', {
+			\ 'as': 'jsonc',
+			\ 'for': ['jsonc', 'json']
+		\ }
 
 		" Range, pattern and substitute preview
 		" -------------------------------------
@@ -134,7 +208,10 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 		" Visually displaying indent levels in code
 		" -----------------------------------------
 		" https://github.com/nathanaelkane/vim-indent-guides
-		Plug 'nathanaelkane/vim-indent-guides', { 'on': 'IndentGuidesToggle' }
+		Plug 'nathanaelkane/vim-indent-guides', {
+			\ 'as': 'indent-guides',
+			\ 'on': 'IndentGuidesToggle'
+		\ }
 
 	" ----------------------------------------------------------------------- "
 	"                                                               Searchers
@@ -149,7 +226,7 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 		" An `ack/ag/pt/rg` powered code search and view tool
 		" ---------------------------------------------------
 		" https://github.com/dyng/ctrlsf.vim
-		Plug 'dyng/ctrlsf.vim'
+		Plug 'dyng/ctrlsf.vim', { 'as': 'ctrlsf' }
 
 	" ----------------------------------------------------------------------- "
 	"                                                     Interactive filters
@@ -159,7 +236,7 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 		" --------------------------------
 		" https://github.com/junegunn/fzf.vim
 		Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-		Plug 'junegunn/fzf.vim'
+		Plug 'junegunn/fzf.vim', { 'as': 'fzf' }
 
 		" Fuzzy file, buffer, mru, tag, etc finder
 		" ----------------------------------------
@@ -198,7 +275,10 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 			" Extra syntax and highlight for NERDTree files
 			" ---------------------------------------------
 			" https://github.com/tiagofumo/vim-nerdtree-syntax-highlight
-			Plug 'tiagofumo/vim-nerdtree-syntax-highlight', { 'on': 'NERDTreeToggle' }
+			Plug 'tiagofumo/vim-nerdtree-syntax-highlight', {
+				\ 'as': 'nerdtree-syntax-highlight',
+				\ 'on': 'NERDTreeToggle'
+			\ }
 
 		endif
 
@@ -209,12 +289,15 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 		" Viewer & Finder for LSP (Language Server Protocol) symbols and tags
 		" -------------------------------------------------------------------
 		" https://github.com/liuchengxu/vista.vim
-		Plug 'liuchengxu/vista.vim'
+		Plug 'liuchengxu/vista.vim', { 'as': 'vista' }
 
 		" Graph Vim undo tree in style
 		" ----------------------------
 		" https://github.com/simnalamburt/vim-mundo
-		Plug 'simnalamburt/mundo.vim', { 'on': 'MundoToggle' }
+		Plug 'simnalamburt/mundo.vim', {
+			\ 'as': 'mundo',
+			\ 'on': 'MundoToggle'
+		\ }
 
 	" ----------------------------------------------------------------------- "
 	"															 Productivity
@@ -223,7 +306,7 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 		" Emmet
 		" -----
 		" https://github.com/mattn/emmet-vim
-		Plug 'mattn/emmet-vim'
+		Plug 'mattn/emmet-vim', { 'as': 'emmet' }
 
 		" Insert or delete brackets, parens, quotes in pair
 		" -------------------------------------------------
@@ -234,43 +317,43 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 		" Auto close parentheses and repeat by dot dot dot...
 		" ---------------------------------------------------
 		" https://github.com/cohama/lexima.vim
-		Plug 'cohama/lexima.vim'
+		Plug 'cohama/lexima.vim', { 'as': 'lexima' }
 
 		" Multiple cursors
 		" ----------------
 		" https://github.com/mg979/vim-visual-multi
-		Plug 'mg979/vim-visual-multi'
+		Plug 'mg979/vim-visual-multi', { 'as': 'visual-multi' }
 
 		" Alignment
 		" ---------
 		" https://github.com/junegunn/vim-easy-align
-		Plug 'junegunn/vim-easy-align'
+		Plug 'junegunn/vim-easy-align', { 'as': 'easy-align' }
 
 		" Visually select increasingly larger regions of text using the same key
 		" combination
 		" -----------
 		" https://github.com/terryma/vim-expand-region
-		Plug 'terryma/vim-expand-region'
+		Plug 'terryma/vim-expand-region', { 'as': 'expand-region' }
 
 		" Reoder delimted items
 		" ---------------------
 		" https://github.com/machakann/vim-swap
-		Plug 'machakann/vim-swap'
+		Plug 'machakann/vim-swap', { 'as': 'swap' }
 
 		" Navigate and highlight matching words
 		" -------------------------------------
 		" https://github.com/andymass/vim-matchup
-		Plug 'andymass/vim-matchup'
+		Plug 'andymass/vim-matchup', { 'as': 'matchup' }
 
 		" Wisely add `end` in `endfunction/endif/more`
 		" --------------------------------------------
 		" https://github.com/tpope/vim-endwise
-		Plug 'tpope/vim-endwise'
+		Plug 'tpope/vim-endwise', { 'as': 'endwise' }
 
 		" Toggles between hybrid and absolute line numbers automatically
 		" --------------------------------------------------------------
 		" https://github.com/jeffkreeftmeijer/vim-numbertoggle
-		Plug 'jeffkreeftmeijer/vim-numbertoggle'
+		Plug 'jeffkreeftmeijer/vim-numbertoggle', { 'as': 'numbertoggle' }
 
 	" ----------------------------------------------------------------------- "
 	"													              Motions
@@ -279,17 +362,17 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 		" Motions on speed
 		" ----------------
 		" https://github.com/easymotion/vim-easymotion
-		Plug 'easymotion/vim-easymotion'
+		Plug 'easymotion/vim-easymotion', { 'as': 'easymotion' }
 
 		" Jump to any location specified by two characters
 		" ------------------------------------------------
 		" https://github.com/justinmk/vim-sneak
-		Plug 'justinmk/vim-sneak'
+		Plug 'justinmk/vim-sneak', { 'as': 'sneak' }
 
 		" Enable repeating supported plugin maps with `.`
 		" -----------------------------------------------
 		" https://github.com/tpope/vim-repeat
-		Plug 'tpope/vim-repeat'
+		Plug 'tpope/vim-repeat', { 'as': 'repeat' }
 
 		" Pairs of handy bracket mappings
 		" -------------------------------
@@ -299,7 +382,7 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 		" Quoting/parenthesizing made simple
 		" ----------------------------------
 		" https://github.com/tpope/vim-surround
-		Plug 'tpope/vim-surround'
+		Plug 'tpope/vim-surround', { 'as': 'surround' }
 
 		" Intensely nerdy commenting powers
 		" ---------------------------------
@@ -309,18 +392,18 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 		" Provide additional text objects
 		" -------------------------------
 		" https://github.com/wellle/targets.vim
-		Plug 'wellle/targets.vim'
+		Plug 'wellle/targets.vim', { 'as': 'targets' }
 
 		" Help stop repeating the basic movement keys
 		" -------------------------------------------
 		" https://github.com/takac/vim-hardtime
-		Plug 'takac/vim-hardtime'
+		Plug 'takac/vim-hardtime', { 'as': 'hardtime' }
 
 		" The set of operator and textobject plugins to search/select/edit
 		" sandwiched textobjects
 		" ----------------------
 		" https://github.com/machakann/vim-sandwich
-		Plug 'machakann/vim-sandwich'
+		Plug 'machakann/vim-sandwich', { 'as': 'sandwich' }
 
 	" ----------------------------------------------------------------------- "
 	"                                                               Git tools
@@ -331,17 +414,20 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 			" Git wrapper
 			" -----------
 			" https://github.com/tpope/vim-fugitive
-			Plug 'tpope/vim-fugitive'
+			Plug 'tpope/vim-fugitive', { 'as': 'fugitive' }
 
 			" Shows git diff markers in the sign column and stages/previews/etc
 			" -----------------------------------------------------------------
 			" https://github.com/airblade/vim-gitgutter
-			Plug 'airblade/vim-gitgutter'
+			Plug 'airblade/vim-gitgutter', { 'as': 'gitgutter' }
 
 			" Asynchronously control Git repositories
 			" ---------------------------------------
 			" https://github.com/lambdalisue/gina.vim
-			Plug 'lambdalisue/gina.vim', { 'on': 'Gina' }
+			Plug 'lambdalisue/gina.vim', {
+				\ 'as': 'gina',
+				\ 'on': 'Gina'
+			\ }
 
 		else
 			echoerr 'Git not found, hence some plugins wont be installed!'
@@ -360,7 +446,7 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 		" ALE indicator for the Lightline Vim plugin
 		" ------------------------------------------
 		" https://github.com/maximbaz/lightline-ale
-		if has_key(g:plugs, 'ale')
+		if has_key(g:plugs, 'ale') && has_key(g:plugs, 'lightline')
 			Plug 'maximbaz/lightline-ale'
 		endif
 
@@ -377,7 +463,7 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 		" Default snippets
 		" ----------------
 		" https://github.com/honza/vim-snippets
-		Plug 'honza/vim-snippets'
+		Plug 'honza/vim-snippets', { 'as': 'snippets' }
 
 	" ----------------------------------------------------------------------- "
 	"                                                                    Tags
@@ -452,7 +538,7 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 			" Emmet
 			" -----
 			" https://github.com/prabirshrestha/asyncomplete-emmet.vim
-			if has_key(g:plugs, 'emmet-vim')
+			if has_key(g:plugs, 'emmet')
 				Plug 'prabirshrestha/asyncomplete-emmet.vim'
 			endif
 
@@ -492,12 +578,15 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 		" ------
 		" https://github.com/neoclide/coc.nvim
 		if executable('node')
-			Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+			Plug 'neoclide/coc.nvim', {
+				\ 'as':     'coc',
+				\ 'branch': 'release'
+				\ }
 		else
 			echoerr 'Node.JS not found, hence some plugins will not be installed!'
 		endif
 
-		if has_key(g:plugs, 'coc.nvim')
+		if has_key(g:plugs, 'coc')
 
 			" Integration with `fzf-vim`
 			" -------------------------
@@ -507,7 +596,7 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 			" VimL completion source
 			" ----------------------
 			"https://github.com/neoclide/coc-neco
-			Plug 'neoclide/coc-neco' | Plug 'Shougo/neco-vim'
+			Plug 'neoclide/coc-neco' | Plug 'Shougo/neco-vim', { 'as': 'neco' }
 
 		endif
 
@@ -534,59 +623,35 @@ call plug#begin(fnameescape(g:vim_home_dir_path . '.vim/plugged'))
 		" Helpers for UNIX
 		" ----------------
 		" https://github.com/tpope/vim-eunuch
-		Plug 'tpope/vim-eunuch'
+		Plug 'tpope/vim-eunuch', { 'as': 'eunuch' }
 
 		" The fancy start screen
 		" ----------------------
 		" https://github.com/mhinz/vim-startify
-		Plug 'mhinz/vim-startify'
+		Plug 'mhinz/vim-startify', { 'as': 'startify' }
 
 		" A markdown preview with `glow`
 		" ------------------------------
 		" https://github.com/npxbr/glow.nvim
 		if executable('glow')
-			Plug 'npxbr/glow.nvim', { 'on': 'Glow' }
+			Plug 'npxbr/glow.nvim', { 'as': 'glow', 'on': 'Glow' }
 		endif
 
-	" List ends here and, plugins become visible to (Neo)Vim after this call
+" Change plug_order with postponed plugins
+call g:plugins.postpone_loading()
+
+" List ends here and, plugins become visible to (Neo)Vim after this call
 call plug#end()
-
-" =========================================================================== "
-" Plugins helpers
-" =========================================================================== "
-
-" Check if plugin is installed
-let g:plugin = { 'plugs': get(g:, 'plugs', {})  }
-function! g:plugin.is_installed(pluginName) abort
-	return has_key(l:self.plugs, a:pluginName)
-		\ ? isdirectory(l:self.plugs[a:pluginName].dir)
-		\ : 0
-endfunction
 
 " =========================================================================== "
 " Load plugin(s) configuration files
 " =========================================================================== "
-let g:vim_plugins_config_dir_path = expand('$VIM_DIR[PLUGINS]')
-let g:loaded_plugins_configs = {}
-let s:delay_plugins = ['vim-which-key']
-for s:plugin in s:delay_plugins
-	function! RemovePlugin(index, value)
-		return a:value != s:plugin
-	endfunction
-	call filter(g:plugs_order, function('RemovePlugin'))
-	call add(g:plugs_order, s:plugin)
-endfor
-for s:plugin in g:plugs_order
-	if g:plugin.is_installed(s:plugin)
-		" Remove the `.vim` from the plugin names
-		let s:plugin_name = split(s:plugin, '\.')[0]
-		let s:plugin_config_file_path = fnameescape(
-			\ g:vim_plugins_config_dir_path . s:plugin_name . '.vim'
-		\ )
-		if !empty(glob(s:plugin_config_file_path))
-			execute 'source' s:plugin_config_file_path
-			let g:loaded_plugins_configs[s:plugin_name] = s:plugin_config_file_path
-		endif
+for s:pluginName in g:plugs_order
+	call g:plugins.add_installed(s:pluginName)
+	let s:configuration_path = g:plugins.get_configurationPath(s:pluginName)
+	if !empty(glob(s:configuration_path))
+		execute 'source' s:configuration_path
+		call g:plugins.add_configurationLoaded(s:pluginName)
 	endif
 endfor
 

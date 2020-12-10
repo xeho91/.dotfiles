@@ -12,16 +12,12 @@ nnoremap <silent> ? :<C-u>WhichKey '?'<CR>
 " --------------------------------------------------------------------------- "
 
 " Open file search with `Fzf.vim`
-if g:plugin.is_installed('fzf.vim')
 	nnoremap <C-p> :<C-u>OpenFileSearch<CR>
 	let g:which_key_questionMark['<C-p>'] = '[Plug] Open file search (`fzf.vim`)'
-endif
 
 " Toggle commenting line/selection
-if g:plugin.is_installed('fzf.vim')
 	nmap <C-_> <Plug>NERDCommenterToggle
 	vmap <C-_> <Plug>NERDCommenterToggle<CR>gv
-endif
 
 " --------------------------------------------------------------------------- "
 "                                                  Functional keys `<F1..12>`

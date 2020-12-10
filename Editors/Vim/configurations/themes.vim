@@ -33,7 +33,7 @@ function! ChangeTheme()
 	endif
 endfunction
 
-if has_key(g:plugs, 'lightline.vim')
+if g:plugins.is_installed('lightline')
 	let g:lightline.colorscheme = g:colors_name
 endif
 

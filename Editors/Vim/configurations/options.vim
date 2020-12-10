@@ -67,7 +67,7 @@ set mouse=r
 "                                                                 Indentation
 " --------------------------------------------------------------------------- "
 "
-if !g:plugin.is_installed('vim-sleuth')
+if !g:plugins.is_installed('vim-sleuth')
 	" Don't convert TAB to spaces
 	set noexpandtab
 
@@ -156,7 +156,7 @@ set hidden
 " Don't pass messages to |ins-completion-menu|
 set shortmess+=c
 
-if g:plugin.is_installed('lightline.vim')
+if g:plugins.is_installed('lightline.vim')
 	" Disable `-- INSERT --` as is unnecessary anymore because the mode
 	" information is already displayed with this plugin
 	set noshowmode

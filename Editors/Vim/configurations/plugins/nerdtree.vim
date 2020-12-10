@@ -36,5 +36,7 @@ augroup NERDTree
 augroup END
 
 " Set location for NERDtree bookmarks file
-let g:NERDTreeBookmarksFile = fnameescape(g:vim_home_dir_path . '.NERDtreeBookmarks')
+let g:NERDTreeBookmarksFile = fnameescape(
+	\ g:vim_home_dirPath . '.NERDtreeBookmarks'
+\ )
 

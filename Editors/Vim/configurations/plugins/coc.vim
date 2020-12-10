@@ -5,7 +5,7 @@
 " =========================================================================== "
 
 " The location of global configuration
-let g:coc_config_home = g:vim_plugins_config_dir_path
+let g:coc_config_home = g:plugins.configurations_dirPath
 
 " --------------------------------------------------------------------------- "
 "                                                           Snippet expansion
@@ -32,7 +32,7 @@ else
 	inoremap <silent><expr> <C-@> coc#refresh()
 endif
 
-if g:plugin.is_installed('lexima.vim')
+if g:plugins.is_installed('lexima.vim')
 	" Do not imap <CR> ! Otherwise endwise will not work
 else
 	if exists('*complete_info')
@@ -68,7 +68,7 @@ nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
-if g:plugin.is_installed('vim-which-key')
+if g:plugins.is_installed('vim-which-key')
 	let g:which_key_g = extend(g:which_key_g, {
 		\ 'd': '[CoC] code defintion (under the cursor)',
 		\ 'y': '[CoC] code type definition (under the cursor)',

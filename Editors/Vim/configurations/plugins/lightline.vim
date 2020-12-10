@@ -157,7 +157,7 @@ endfunction
 "                                                                       Vista
 " https://github.com/liuchengxu/vista.vim
 " --------------------------------------------------------------------------- "
-if g:plugin.is_installed('vista.vim')
+if g:plugins.is_installed('vista.vim')
 	let g:lightline.active.left += [['vista']]
 	let g:lightline.component_function.vista = 'LightlineVista'
 	autocmd Lightline VimEnter * call vista#RunForNearestMethodOrFunction()
@@ -174,7 +174,7 @@ endif
 "                                                                   Gitgutter
 " https://github.com/airblade/vim-gitgutter
 " --------------------------------------------------------------------------- "
-if g:plugin.is_installed('vim-gitgutter')
+if g:plugins.is_installed('vim-gitgutter')
 	let g:lightline.active.left[1] = ['gitgutter'] + g:lightline.active.left[1]
 	let g:lightline.component_function.gitgutter = 'LightlineGitgutter'
 	" Show Git summary with vim-gitgutter plugin
@@ -196,7 +196,7 @@ endif
 "                                                                    Fugitive
 " https://github.com/tpope/vim-fugitive
 " --------------------------------------------------------------------------- "
-if g:plugin.is_installed('vim-fugitive')
+if g:plugins.is_installed('vim-fugitive')
 	let g:lightline.active.left[1] = ['fugitive'] + g:lightline.active.left[1]
 	let g:lightline.component_function.fugitive = 'LightlineFugitive'
 	" Show current Git branch name in Lightline statusline
@@ -218,7 +218,7 @@ endif
 " --------------------------------------------------------------------------- "
 "                                                                         ALE
 " --------------------------------------------------------------------------- "
-if g:plugin.is_installed('lightline-ale')
+if g:plugins.is_installed('lightline-ale')
 	let g:lightline.active.right += [[
 		\ 'linter_checking',
 		\ 'linter_errors',
@@ -252,7 +252,7 @@ endif
 " --------------------------------------------------------------------------- "
 "                                                                   Gutentags
 " --------------------------------------------------------------------------- "
-if g:plugin.is_installed('vim-gutentags')
+if g:plugins.is_installed('vim-gutentags')
 	let g:lightline.active.right += [['gutentags']]
 	let g:lightline.component_function.gutentags = 'gutentags#statusline'
 endif
@@ -260,7 +260,7 @@ endif
 " --------------------------------------------------------------------------- "
 "                                                                         CoC
 " --------------------------------------------------------------------------- "
-if g:plugin.is_installed('coc.nvim')
+if g:plugins.is_installed('coc.nvim')
 	let g:lightline.active.right += [['cocstatus']]
 	let g:lightline.component_function.cocstatus = 'coc#status'
 endif
