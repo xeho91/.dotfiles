@@ -152,6 +152,7 @@ call plug#begin(fnameescape(g:vim_home_dirPath . '.vim/plugged'))
 		" -------------------------------------------
 		" https://github.com/itchyny/lightline.vim
 		Plug 'itchyny/lightline.vim', { 'as': 'lightline' }
+		call g:plugins.add_postponed('lightline')
 
 		" Hyperfocus-writing
 		" ------------------
@@ -629,7 +630,10 @@ call plug#begin(fnameescape(g:vim_home_dirPath . '.vim/plugged'))
 		" The interactive scratchpad for hackers
 		" --------------------------------------
 		" https://github.com/metakirby5/codi.vim
-		Plug 'metakirby5/codi.vim', { 'on': 'Codi' }
+		Plug 'metakirby5/codi.vim', {
+			\ 'as': 'codi',
+			\ 'on': 'Codi'
+		\ }
 
 		" Automatic Window Resizing Plugin
 		" --------------------------------

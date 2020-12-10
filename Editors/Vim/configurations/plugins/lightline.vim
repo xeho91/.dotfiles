@@ -22,11 +22,11 @@ let g:lightline = {
 	\ 'active': {
 		\ 'left': [
 			\ ['readonly', 'mode', 'paste'],
-			\ ['filetype', 'filename', 'modified']
+			\ ['filename','filetype', 'modified']
 		\ ],
 		\ 'right': [
 			\ ['lineinfo'],
-			\ ['fileformat', 'fileencoding']
+			\ ['indentation', 'fileencoding', 'fileformat']
 		\ ]
 	\ },
 	\ 'tabline': {
@@ -63,7 +63,8 @@ let g:lightline = {
 		\ 'filetype':     'LightlineFileType',
 		\ 'filename':     'LightlineFileName',
 		\ 'modified':     'LightlineModified',
-		\ 'mode':         'LightlineMode'
+		\ 'mode':         'LightlineMode',
+		\ 'indentation':  'LightlineIndentation'
 	\ },
 	\ 'tab_component_function': {
 		\ 'tabicon': 'LightlineTabIcon'
@@ -94,70 +95,102 @@ endfunction
 
 " Add a lock symbol if the file is readonly
 function! LightlineReadOnly()
-	return &readonly ? '' : ''
+	if g:enable_icons
+		return &readonly ? '' : ''
+	else
+		return &readonly ? 'RO' : ''
+	endif
 endfunction
 
-" Add a lock symbol if the file is readonly
+" Add information if the file is readonly
 function! LightlineFileFormat()
-	return &fileformat ==# 'unix' ? '' : &fileformat
+	if g:enable_icons
+		return &fileformat ==# 'unix' ? '' : &fileformat
+	else
+		return &fileformat
+	endif
 endfunction
 
-" Hide if pane (editor window) is too small
+" Hide if editor's window (or pane) is too small
 function! LightlineFileEncoding()
 	return winwidth(0) > 80 ? &fileencoding : ''
 endfunction
 
 " Add an icon to file type if exists
 function! LightlineFileType()
-	let l:fileTypeIcon = WebDevIconsGetFileTypeSymbol()
-	if l:fileTypeIcon !=# ''
-		if winwidth(0) > 160
-			return l:fileTypeIcon . ' ' . &filetype
+	if g:enable_icons && g:plugins.is_installed('devicons')
+		let l:fileTypeIcon = WebDevIconsGetFileTypeSymbol()
+		if l:fileTypeIcon !=# ''
+			if winwidth(0) > 120
+				return l:fileTypeIcon . ' ' . &filetype
+			else
+				return l:fileTypeIcon
+			endif
 		else
-			return l:fileTypeIcon
+			return &filetype
 		endif
 	else
-		return &filetype
+		return &filetipe
 	endif
 endfunction
 
 " Show an icon if the file is modified or not modifiable
 function! LightlineModified()
-	return &filetype =~# 'help'
-		\ ? ''
-		\ : &modified
-			\ ? ''
-			\ : &modifiable
-				\ ? ''
-				\ : ''
+	if &modifiable
+		if &modified
+			return g:enable_icons ? '' : '+'
+		else
+			return ''
+		endif
+	else
+		return g:enable_icons ? '' : '!'
+	endif
 endfunction
 
 " Shorten the filepath
 function! LightlineFileName()
 	let l:filePath = expand('%')
 	if winwidth(0) > 160
-		return ' ' . l:filePath
+		return (g:enable_icons ? ' ' : '') . l:filePath
 	else
-		return ' ' . pathshorten(l:filePath)
+		return (g:enable_icons ? ' ' : '') . pathshorten(l:filePath)
 	endif
 endfunction
 
 " Display filetype icon on the tab
 function! LightlineTabIcon(tabNumber)
-	let l:bufferNumber = tabpagebuflist(a:tabNumber)[tabpagewinnr(a:tabNumber) - 1]
-	return WebDevIconsGetFileTypeSymbol(bufname(l:bufferNumber))
+	if g:enable_icons && g:plugins.is_installed('devicons')
+		let l:bufferNumber = tabpagebuflist(a:tabNumber)[
+			\ tabpagewinnr(a:tabNumber) - 1
+		\ ]
+		return WebDevIconsGetFileTypeSymbol(bufname(l:bufferNumber))
+	else
+		return ''
+	endif
+endfunction
+
+" Display what indenation is set for current file
+function! LightlineIndentation()
+	if winwidth(0) > 80
+		if &expandtab
+			return 'Spaces: ' . &shiftwidth
+		else
+			return 'Tabs: ' . &tabstop
+		endif
+	else
+		return ''
+	endif
 endfunction
 
 " =========================================================================== "
 " Plugins integration
 " =========================================================================== "
 
-
 " --------------------------------------------------------------------------- "
 "                                                                       Vista
 " https://github.com/liuchengxu/vista.vim
 " --------------------------------------------------------------------------- "
-if g:plugins.is_installed('vista.vim')
+if g:plugins.is_installed('vista')
 	let g:lightline.active.left += [['vista']]
 	let g:lightline.component_function.vista = 'LightlineVista'
 	autocmd Lightline VimEnter * call vista#RunForNearestMethodOrFunction()
@@ -174,7 +207,7 @@ endif
 "                                                                   Gitgutter
 " https://github.com/airblade/vim-gitgutter
 " --------------------------------------------------------------------------- "
-if g:plugins.is_installed('vim-gitgutter')
+if g:plugins.is_installed('gitgutter')
 	let g:lightline.active.left[1] = ['gitgutter'] + g:lightline.active.left[1]
 	let g:lightline.component_function.gitgutter = 'LightlineGitgutter'
 	" Show Git summary with vim-gitgutter plugin
@@ -196,7 +229,7 @@ endif
 "                                                                    Fugitive
 " https://github.com/tpope/vim-fugitive
 " --------------------------------------------------------------------------- "
-if g:plugins.is_installed('vim-fugitive')
+if g:plugins.is_installed('fugitive')
 	let g:lightline.active.left[1] = ['fugitive'] + g:lightline.active.left[1]
 	let g:lightline.component_function.fugitive = 'LightlineFugitive'
 	" Show current Git branch name in Lightline statusline
@@ -252,7 +285,7 @@ endif
 " --------------------------------------------------------------------------- "
 "                                                                   Gutentags
 " --------------------------------------------------------------------------- "
-if g:plugins.is_installed('vim-gutentags')
+if g:plugins.is_installed('gutentags')
 	let g:lightline.active.right += [['gutentags']]
 	let g:lightline.component_function.gutentags = 'gutentags#statusline'
 endif
@@ -260,7 +293,7 @@ endif
 " --------------------------------------------------------------------------- "
 "                                                                         CoC
 " --------------------------------------------------------------------------- "
-if g:plugins.is_installed('coc.nvim')
+if g:plugins.is_installed('coc')
 	let g:lightline.active.right += [['cocstatus']]
 	let g:lightline.component_function.cocstatus = 'coc#status'
 endif
