@@ -35,6 +35,8 @@ function! s:changeTheme()
 		execute 'colorscheme ' . g:theme.dark
 		set background=dark
 	endif
+
+	echomsg '-- Changed theme to: ' . &background . ' --'
 endfunction
 
 " --------------------------------------------------------------------------- "

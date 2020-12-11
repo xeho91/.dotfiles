@@ -4,8 +4,10 @@
 " https://github.com/preservim/nerdtree
 " =========================================================================== "
 
-" Binding to hotkey toggling NERDTree
-map <F3> :NERDTreeToggle<CR>
+" Set location for NERDtree bookmarks file
+let g:NERDTreeBookmarksFile = fnameescape(
+	\ g:vim_home_dirPath . '.NERDtreeBookmarks'
+\ )
 
 " Move NERDTree to the right side
 let g:NERDTreeWinPos = 'right'
@@ -34,9 +36,4 @@ augroup NERDTree
 				\ && b:NERDTree.isTabTree()) | q
 				\ | endif
 augroup END
-
-" Set location for NERDtree bookmarks file
-let g:NERDTreeBookmarksFile = fnameescape(
-	\ g:vim_home_dirPath . '.NERDtreeBookmarks'
-\ )
 

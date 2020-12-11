@@ -6,9 +6,6 @@ scriptencoding utf-8
 " https://github.com/liuchengxu/vista.vim
 " =========================================================================== "
 
-" Bind toggle to hotkey
-nmap <F8> :Vista!!<CR>
-
 " How each level is indented and what to prepend
 " NOTE: this option only works the LSP executives,
 " doesn't work for `:Vista ctags`.

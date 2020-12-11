@@ -4,9 +4,6 @@
 " https://github.com/simnalamburt/vim-mundo
 " =========================================================================== "
 
-" Bind toggle to hotkey
-nnoremap <F6> :MundoToggle<CR>
-
 " Open on the right side instead of the left
 let g:mundo_right = 1
 

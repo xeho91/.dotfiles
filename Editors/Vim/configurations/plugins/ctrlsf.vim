@@ -16,8 +16,6 @@ nnoremap <C-f>o :CtrlSFOpen<CR>
 nnoremap <C-f>t :CtrlSFToggle<CR>
 inoremap <C-f>t <Esc>:CtrlSFToggle<CR>
 
-map <F2> :CtrlSFToggle<CR>
-" let g:which_key_questionMark['<F2>'] = 'Toggle search results with CtrlSF'
 
 let g:ctrlsf_position = 'right'
 

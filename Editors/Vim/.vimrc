@@ -34,6 +34,6 @@ execute 'source' fnameescape(g:vim_configurations_dirPath . 'themes.vim')
 
 " Close help faster with pressing `q`
 augroup vimrc
-	autocmd FileType help noremap <buffer> q :q<Cr>
+	autocmd FileType help noremap <buffer> q :quit<CR>
 augroup END
 

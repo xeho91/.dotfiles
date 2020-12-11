@@ -4,42 +4,86 @@
 " https://vim.fandom.com/wiki/Mapping_keys_in_Vim_-_Tutorial_(Part_1)
 " =========================================================================== "
 
-let g:which_key_questionMark = { 'name': 'Available mapped keys' }
+let g:which_key_questionMark = { 'name': 'Mapped keys for general usage' }
 nnoremap <silent> ? :<C-u>WhichKey '?'<CR>
 
 " --------------------------------------------------------------------------- "
 "                                                                  Ctrl + ...
 " --------------------------------------------------------------------------- "
 
-" Open file search with `Fzf.vim`
-	nnoremap <C-p> :<C-u>OpenFileSearch<CR>
-	let g:which_key_questionMark['<C-p>'] = '[Plug] Open file search (`fzf.vim`)'
+" Esc
+" ---
+let g:which_key_questionMark['Esc'] = 'Close this help'
 
-" Toggle commenting line/selection
+" Ctrl + p
+" --------
+if g:plugins.is_installed('fzf')
+	nnoremap <C-p> :<C-u>OpenFileSearch<CR>
+	let g:which_key_questionMark['<C-p>'] = '[Plugin] Open file search (`fzf.vim`)'
+endif
+
+" Ctrl + /
+" --------
+if g:plugins.is_installed('nerdcommenter')
 	nmap <C-_> <Plug>NERDCommenterToggle
 	vmap <C-_> <Plug>NERDCommenterToggle<CR>gv
+	let g:which_key_questionMark['<C-/>'] = '[Plugin] (Un)comment line (`NERDCommenter`)'
+endif
 
 " --------------------------------------------------------------------------- "
 "                                                  Functional keys `<F1..12>`
 " --------------------------------------------------------------------------- "
 
-nnoremap <silent> <F1> :ToggleHelp<CR>
+" F1
+" --
+nnoremap <F1> :ToggleHelp<CR>
 imap <F1> <Esc><F1>
 let g:which_key_questionMark['<F1>'] = "Open help (editor's manual) in the split window"
 
-" let g:which_key_questionMark['<F2>'] = ''
-" let g:which_key_questionMark['<F3>'] = ''
+" F2
+" --
+if g:plugins.is_installed('ctrlsf')
+	nnoremap <F2> :CtrlSFToggle<CR>
+	let g:which_key_questionMark['<F2>'] = '[Plugin] Toggle search results (`CtrlSF`)'
+endif
 
-" Open configuration file
-map <silent> <F4> :EditConfig<CR>
-let g:which_key_questionMark['<F4>'] = 'Edit configuration'
+" F3
+" --
+if g:plugins.is_installed('nerdtree')
+	nnoremap <F3> :NERDTreeToggle<CR>
+	let g:which_key_questionMark['<F3>'] = '[Plugin] Toggle file explorer (`NERDtree`)'
+endif
 
-" Refresh configuration files
-map <silent> <F5> :RefreshConfig<CR>
-let g:which_key_questionMark['<F5>'] = 'Refresh configuration'
+" F4
+" --
+nnoremap <F4> :EditConfig<CR>
+let g:which_key_questionMark['<F4>'] = "Edit editor's configuration"
 
-" Change theme to dark/light
-map <silent> <F12> :ChangeTheme<CR>
+" F5
+" --
+nnoremap <F5> :RefreshConfig<CR>
+let g:which_key_questionMark['<F5>'] = "Refresh editor's configuration"
+
+" F6
+" --
+if g:plugins.is_installed('mundo')
+	nnoremap <F6> :MundoToggle<CR>
+	let g:which_key_questionMark['<F6>'] = '[Plugin] Toggle edit history (`Mundo`)'
+endif
+
+" F7
+" --
+
+" F8
+" --
+if g:plugins.is_installed('vista')
+	nnoremap <F8> :Vista!!<CR>
+	let g:which_key_questionMark['<F8>'] = '[Plugin] Toggle tags & symbols viewer (`Vista`)'
+endif
+
+" F12
+" ---
+nnoremap <F12> :ChangeTheme<CR>
 let g:which_key_questionMark['<F12>'] = 'Change theme (to dark/light)'
 
 " --------------------------------------------------------------------------- "
@@ -85,15 +129,15 @@ let g:which_key_leader = {
 \ }
 
 " Turn off search pattern highlighting
-nnoremap <silent> <Leader>ts :TogglePatternSearchHighlight<CR>
+nnoremap <Leader>ts :TogglePatternSearchHighlight<CR>
 let g:which_key_leader.t['s'] = 'Search pattern highlight'
 
 " Toggling QuickFix List
-nnoremap <silent> <leader>tq :ToggleQuickFixList<CR>
+nnoremap <Leader>tq :ToggleQuickFixList<CR>
 let g:which_key_leader.t['q'] = 'QuickFix list'
 
 " Toggling Location List
-nnoremap <silent> <leader>tl :ToggleLocationList<CR>
+nnoremap <Leader>tl :ToggleLocationList<CR>
 let g:which_key_leader.t['l'] = 'Location list'
 
 nnoremap <Leader>      :<c-u>WhichKey g:mapleader<CR>
