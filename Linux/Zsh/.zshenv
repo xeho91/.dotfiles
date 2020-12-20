@@ -9,6 +9,24 @@ export DOTFILES="$HOME/.dotfiles"
 export ZDOTDIR="$DOTFILES/Linux/Zsh"
 
 # =========================================================================== #
+# Provide environment variables if currently used device is...
+# =========================================================================== #
+
+# `WSL` - Windows Subsystem for Linux
+if [[ -v WSL_DISTRO_NAME ]]; then
+	export IS_WSL=true
+else
+	export IS_WSL=false
+fi
+
+# Raspberry Pi
+if [[ $(cat /proc/cpuinfo | grep Model) =~ "Raspberry Pi"  ]]; then
+	export IS_RASPBERRYPI=true
+else
+	export IS_RASPBERRYPI=false
+fi
+
+# =========================================================================== #
 # XDG base directory
 # ------------------
 # https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html

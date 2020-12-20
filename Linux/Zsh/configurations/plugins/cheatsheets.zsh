@@ -3,31 +3,47 @@
 #          and application launchers
 # ---------------------------------------------------------
 # https://github.com/denisidoro/navi
+# FIXME: Completions not working?
 # =========================================================================== #
-zinit wait"2" lucid \
-	id-as"navi" \
-	has"cargo" \
-	make"SRC_DIR=$ZINIT[PLUGINS_DIR] BIN_DIR=$ZPFX/bin TMP_DIR=$XDG_CACHE_HOME install" \
-	atload'eval "$(navi widget zsh)";' \
-	for @denisidoro/navi
+if [[ "$IS_RASPBERRYPI" == true ]]; then
+	zinit wait"2" lucid \
+		id-as"navi" \
+		has"cargo" \
+		make"install \
+			SRC_DIR=$ZINIT[PLUGINS_DIR] \
+			BIN_DIR=$ZPFX/bin \
+			TMP_DIR=$XDG_CACHE_HOME" \
+		atload'eval "$(navi widget zsh)";' \
+		for @denisidoro/navi
+else
+	zinit wait"2" lucid \
+		id-as"navi" \
+		from"gh-r" \
+		pick"navi" \
+		as"program" \
+		atload'eval "$(navi widget zsh)";' \
+		for @denisidoro/navi
+fi
 
 # =========================================================================== #
 # `tldr` - collaborative cheatsheets for console commands
-# https://github.com/tldr-pages/tldr
 # -------------------------------------------------------
+# https://github.com/tldr-pages/tldr
 # https://github.com/dbrgn/tealdeer
-# FIXME: not working properly
 # =========================================================================== #
-# zinit wait"0a" lucid \
-#     id-as"tldr" \
-#     nocompile \
-#     atclone'cargo build --release' \
-#     atpull"%atclone" \
-#     for @dbrgn/tealdeer
-# zinit wait"0b" lucid \
-#     id-as"tldr-completions" \
-#     mv"zsh* -> _tldr" \
-#     for https://github.com/dbrgn/tealdeer/blob/master/zsh_tealdeer
+zinit wait"0a" lucid \
+	id-as"tldr" \
+	from"gh-r" \
+	mv"tldr* -> tldr" \
+	pick"tldr" \
+	as"program" \
+	for @dbrgn/tealdeer
+zinit wait"0b" lucid \
+	id-as"tldr-completion" \
+	has"tldr" \
+	mv"tldr* -> _tldr" \
+	as"completion" \
+	for https://github.com/dbrgn/tealdeer/blob/master/zsh_tealdeer
 
 # =========================================================================== #
 # `cht.sh` - (Cheat.sh) community driven cheat sheets repositories
