@@ -78,6 +78,7 @@ else
 	error "Sorry, the currently used distribution \"$distro_name\" is not recognized!"
 	exit 1
 fi
+
 info "You are on \"$distro_name\" Linux's distribution."
 note "The used package manager will be \`$package_manager\`."
 
@@ -89,11 +90,13 @@ if [ -x "$(command -v git)" ]; then
 	info "Command \`git\` exists."
 else
 	warning "Command \`git\` doesn't exits."
+
 	question "Do you want to install Git? (Yes/No)"
-	read -p "Decision: " user_wants_to_install_git
+	read -p "Decision: " user_wants_to_install_git < /dev/tty
 
 	if [[ $user_wants_to_install_git == [Yy]* ]]; then
 		info "Installing \`git\` with \`$package_manager\`..."
+
 		if [[ $package_manager == "apt" ]]; then
 			command sudo apt install git
 		elif [[ $package_manager == "pacman" ]]; then
