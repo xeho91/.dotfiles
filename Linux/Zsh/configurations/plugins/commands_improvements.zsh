@@ -49,15 +49,26 @@ zinit \
 # ---------------------------------------
 # https://github.com/dalance/procs
 # =========================================================================== #
-zinit \
-	id-as"procs" \
-	atclone"cargo build --release; \
-		procs --completion zsh" \
-	atpull"%atclone" \
-	pick"target/release/procs" \
-	as"program" \
-	atload'alias ps="procs"' \
-	for @dalance/procs
+if [[ "$IS_RASPBERRYPI" == true ]]; then
+	zinit \
+		id-as"procs" \
+		atclone"cargo build --release; \
+			procs --completion zsh" \
+		atpull"%atclone" \
+		pick"target/release/procs" \
+		as"program" \
+		atload'alias ps="procs"' \
+		for @dalance/procs
+else
+	zinit \
+		id-as"procs" \
+		from"gh-r" \
+		atclone"procs --completion zsh" \
+		pick"procs" \
+		as"program" \
+		atload'alias ps="procs"' \
+		for @dalance/procs
+fi
 
 # =========================================================================== #
 # package of completions for existing linux commands
@@ -68,7 +79,6 @@ zinit \
 	id-as"zsh-completions" \
 	blockf \
 	for @zsh-users/zsh-completions
-
 
 # =========================================================================== #
 # `colormake` - colorize the `make` output for better readability
