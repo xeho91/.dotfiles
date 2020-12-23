@@ -1,0 +1,10 @@
+{
+  "default": true,
+
+  "MD013": {
+    "line_length": 80,
+    "stern": true
+  },
+
+  "MD033": false
+}

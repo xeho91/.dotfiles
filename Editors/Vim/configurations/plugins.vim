@@ -231,6 +231,12 @@ call plug#begin(fnameescape(g:vim_home_dirPath . '.vim/plugged'))
 			\ 'on': 'IndentGuidesToggle'
 		\ }
 
+		" Syntax highlighting, matching rules and mappings for the original
+		" Markdown and extensions
+		" -----------------------
+		" https://github.com/plasticboy/vim-markdown
+		Plug 'plasticboy/vim-markdown', { 'as': 'markdown' }
+
 	" ----------------------------------------------------------------------- "
 	"                                                               Searchers
 	" ----------------------------------------------------------------------- "
@@ -373,6 +379,16 @@ call plug#begin(fnameescape(g:vim_home_dirPath . '.vim/plugged'))
 		" https://github.com/jeffkreeftmeijer/vim-numbertoggle
 		Plug 'jeffkreeftmeijer/vim-numbertoggle', { 'as': 'numbertoggle' }
 
+		" Help stop repeating the basic movement keys
+		" -------------------------------------------
+		" https://github.com/takac/vim-hardtime
+		Plug 'takac/vim-hardtime', { 'as': 'hardtime' }
+
+		" Configurable, flexible, intuitive text aligning
+		" -----------------------------------------------
+		" https://github.com/godlygeek/tabular
+		Plug 'godlygeek/tabular'
+
 	" ----------------------------------------------------------------------- "
 	"													              Motions
 	" ----------------------------------------------------------------------- "
@@ -411,11 +427,6 @@ call plug#begin(fnameescape(g:vim_home_dirPath . '.vim/plugged'))
 		" -------------------------------
 		" https://github.com/wellle/targets.vim
 		Plug 'wellle/targets.vim', { 'as': 'targets' }
-
-		" Help stop repeating the basic movement keys
-		" -------------------------------------------
-		" https://github.com/takac/vim-hardtime
-		Plug 'takac/vim-hardtime', { 'as': 'hardtime' }
 
 		" The set of operator and textobject plugins to search/select/edit
 		" sandwiched textobjects

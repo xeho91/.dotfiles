@@ -84,18 +84,27 @@ let g:ale_lint_delay = 500
 "                                                                      Fixers
 " --------------------------------------------------------------------------- "
 
-" Specify fixing tools for programming languages
 let g:ale_fixers = {
 	\ '*': ['trim_whitespace'],
-	\ 'json': ['prettier'],
-	\ 'yaml': ['prettier'],
 	\ 'javascript': ['prettier'],
+	\ 'json': ['prettier'],
+	\ 'markdown': ['prettier'],
+	\ 'yaml': ['prettier'],
 \ }
 
-" let b:ale_linters = {
-"     \ 'vim': ['vint'],
-"     \ 'python': ['pylint'],
-" \ }
+" --------------------------------------------------------------------------- "
+"                                                                     Linters
+" --------------------------------------------------------------------------- "
 
+let b:ale_linters = {
+	\ 'markdown': ['markdownlint', 'proselint'],
+	\ 'vim': ['vint'],
+	\ 'python': ['pylint'],
+\ }
+
+" https://prettier.io/docs/en/cli.html
 let g:ale_javascript_prettier_options = '--config "$DOTFILES/Linters/.prettierrc.js"'
+
+" https://github.com/igorshubovych/markdownlint-cli#usage
+let g:ale_markdown_markdownlint_options = '--config "$DOTFILES/Linters/.markdownlint.json"'
 
