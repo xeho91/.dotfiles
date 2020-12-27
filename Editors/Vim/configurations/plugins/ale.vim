@@ -85,11 +85,12 @@ let g:ale_lint_delay = 500
 " --------------------------------------------------------------------------- "
 
 let g:ale_fixers = {
-	\ '*': ['trim_whitespace'],
+	\ '*':          ['trim_whitespace'],
+	\ 'css':        ['prettier', 'stylelint'],
 	\ 'javascript': ['prettier'],
-	\ 'json': ['prettier'],
-	\ 'markdown': ['prettier'],
-	\ 'yaml': ['prettier'],
+	\ 'json':       ['prettier'],
+	\ 'markdown':   ['prettier'],
+	\ 'yaml':       ['prettier'],
 \ }
 
 " --------------------------------------------------------------------------- "
@@ -97,10 +98,14 @@ let g:ale_fixers = {
 " --------------------------------------------------------------------------- "
 
 let b:ale_linters = {
+	\ 'css':      ['stylelint'],
 	\ 'markdown': ['markdownlint', 'proselint'],
-	\ 'vim': ['vint'],
-	\ 'python': ['pylint'],
+	\ 'python':   ['pylint'],
+	\ 'vim':      ['vint'],
 \ }
+
+" https://stylelint.io/user-guide/usage/options
+let g:ale_css_stylelint_options = '--config "$DOTFILES/Linters/.stylelintrc.js"'
 
 " https://prettier.io/docs/en/cli.html
 let g:ale_javascript_prettier_options = '--config "$DOTFILES/Linters/.prettierrc.js"'
