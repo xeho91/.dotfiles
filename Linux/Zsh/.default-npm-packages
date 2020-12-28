@@ -1,0 +1,11 @@
+pnpm
+terminalizer
+prettier
+stylelint
+stylelint-config-rational-order
+stylelint-config-prettier
+stylelint-declaration-use-variable
+stylelint-a11y
+stylelint-8-point-grid
+markdownlint
+markdownlint-cli
