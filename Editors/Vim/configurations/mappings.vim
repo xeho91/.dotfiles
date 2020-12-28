@@ -8,12 +8,16 @@ let g:which_key_questionMark = { 'name': 'Mapped keys for general usage' }
 nnoremap <silent> ? :<C-u>WhichKey '?'<CR>
 
 " --------------------------------------------------------------------------- "
-"                                                                General keys
+"                                                       Defining default keys
 " --------------------------------------------------------------------------- "
 
 " Esc
 " ---
-let g:which_key_questionMark['Esc'] = 'Close this help'
+let g:which_key_questionMark['Esc'] = 'Close help'
+
+" g
+" -
+let g:which_key_questionMark['g']   = 'Goto... & other'
 
 " --------------------------------------------------------------------------- "
 "                                                                  Ctrl + ...
@@ -32,9 +36,9 @@ endif
 " --------
 if g:plugins.is_installed('ale')
 	nmap <silent> <C-j> <Plug>(ale_next_wrap)
-	let g:which_key_questionMark['<C-j>'] = '[Plugin] Go to next problem (`ALE`)'
+	let g:which_key_questionMark['<C-j>'] = '[Plugin] Next problem (`ALE`)'
 	nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-	let g:which_key_questionMark['<C-k>'] = '[Plugin] Go to previous problem (`ALE`)'
+	let g:which_key_questionMark['<C-k>'] = '[Plugin] Previous problem (`ALE`)'
 endif
 
 " Ctrl + p
@@ -129,7 +133,8 @@ let g:which_key_questionMark['<F12>'] = 'Change theme (to dark/light)'
 " map <silent> <F35> <CR>
 " let g:which_key_questionMark['<C-F11'] = ''
 
-" Bind hotkey to toggle displaying hidden characters (tabs, eol, etc)
+" Ctrl + F12
+" ----------
 map <silent> <F36> :ToggleList<CR>
 let g:which_key_questionMark['<C-F12>'] = 'Toggle displaying hidden characters'
 
@@ -154,7 +159,7 @@ let g:which_key_leader.t['q'] = 'QuickFix list'
 nnoremap <Leader>tl :ToggleLocationList<CR>
 let g:which_key_leader.t['l'] = 'Location list'
 
-nnoremap <Leader>      :<c-u>WhichKey g:mapleader<CR>
+nnoremap <Leader> :<c-u>WhichKey g:mapleader<CR>
 " nnoremap <LocalLeader> :<c-u>WhichKey g:maplocalleader<CR>
 
 " =========================================================================== "
@@ -162,103 +167,286 @@ nnoremap <Leader>      :<c-u>WhichKey g:mapleader<CR>
 " =========================================================================== "
 
 " --------------------------------------------------------------------------- "
-"													            `g` (Goto...)
+"                                                       `g` (Goto... & other)
 " --------------------------------------------------------------------------- "
-let g:which_key_g = { 'name': 'Goto...' }
+
+let g:which_key_g = { 'name': 'Goto... & other' }
+
 nnoremap <silent><nowait> [G] :<C-u>WhichKey 'g'<CR>
 nmap g [G]
 
-let g:which_key_g['<C-g>']  = 'show cursor info'
-nnoremap g<C-g> g<C-g>
-let g:which_key_g['&']      = 'repeat last ":s" on all lines'
-nnoremap g& g&
-let g:which_key_g["'"]      = 'jump to mark'
-nnoremap g' g'
-let g:which_key_g['`']      = 'jump to mark'
-nnoremap g` g`
-let g:which_key_g['+']      = 'newer text state'
-nnoremap g+ g+
-let g:which_key_g['-']      = 'older text state'
-nnoremap g- g-
-let g:which_key_g[',']      = 'newer position in change list'
-nnoremap g, g,
-let g:which_key_g[';']      = 'older position in change list'
-nnoremap g; g;
-let g:which_key_g['@']      = 'call operatorfunc'
-nnoremap g@ g@
-let g:which_key_g['#']      = 'search under cursor backward'
-let g:which_key_g['*']      = 'search under cursor forward'
-let g:which_key_g['/']      = 'stay incsearch'
-let g:which_key_g['$']      = 'go to rightmost character'
+" g + #
+" -----
+nnoremap g# g#
+let g:which_key_g['#'] = '... previous occurence of what is under the cursor (backward)'
+
+" g + $
+" -----
 nnoremap g$ g$
-let g:which_key_g['<End>']  = 'go to rightmost character'
-nnoremap g<End> g<End>
-let g:which_key_g['0']      = 'go to leftmost character'
+let g:which_key_g['$'] = '... rightmost (last) character on the line'
+
+" g + %
+" -----
+if g:plugins.is_installed('matchup')
+	nnoremap g% g%
+	let g:which_key_g['%'] = '[Plugin] ... matching text of what is under the cursor (`vim-matchup`)'
+endif
+
+" g + &
+" -----
+nmap g& g&
+let g:which_key_g['&'] = '[Other] Repeat last `:substitue` on ALL lines'
+
+" g + '
+" -----
+nnoremap g' g'
+let g:which_key_g["'"] = '... {count} mark from `:marks`'
+
+" g + +
+" -----
+nnoremap g+ g+
+let g:which_key_g['+'] = '... {count} newer text state (move forward in history)'
+
+" g + ,
+" -----
+nnoremap g, g,
+let g:which_key_g[','] = '... {count} newer position in change list'
+
+" g + `
+" -----
+nnoremap g` g`
+let g:which_key_g['`'] = '... {count} mark from `:marks`'
+
+" g + -
+" -----
+nnoremap g- g-
+let g:which_key_g['-'] = '... older text state (move backward in history)'
+
+" g + ;
+" -----
+nnoremap g; g;
+let g:which_key_g[';'] = '... {count} older position in change list'
+
+" g + 0
+" -----
 nnoremap g0 g0
-let g:which_key_g['<Home>'] = 'go to leftmost character'
-nnoremap g<Home> g<Home>
-let g:which_key_g['e']      = 'go to end of previous word'
-nnoremap ge ge
-let g:which_key_g['<']      = 'last page of previous command output'
-nnoremap g< g<
-let g:which_key_g['f']      = 'edit file under cursor'
-nnoremap gf gf
-let g:which_key_g['F']      = 'edit file under cursor(jump to line after name)'
-nnoremap gF gF
-let g:which_key_g['j']      = 'move cursor down screen line'
-nnoremap gj gj
-let g:which_key_g['k']      = 'move cursor up screen line'
-nnoremap gk gk
-let g:which_key_g['u']      = 'make motion text lowercase'
-nnoremap gu gu
-let g:which_key_g['E']      = 'end of previous word'
-nnoremap gE gE
-let g:which_key_g['U']      = 'make motion text uppercase'
-nnoremap gU gU
-let g:which_key_g['H']      = 'select line mode'
-nnoremap gH gH
-let g:which_key_g['h']      = 'select mode'
-nnoremap gh gh
-let g:which_key_g['I']      = 'insert text in column 1'
-nnoremap gI gI
-let g:which_key_g['i']      = "insert text after '^ mark"
-nnoremap gi gi
-let g:which_key_g['J']      = 'join lines without space'
-nnoremap gJ gJ
-let g:which_key_g['N']      = 'visually select previous match'
-nnoremap gN gN
-let g:which_key_g['n']      = 'visually select next match'
-nnoremap gn gn
-let g:which_key_g['Q']      = 'switch to Ex mode'
-nnoremap gQ gQ
-let g:which_key_g['q']      = 'format Nmove text'
-nnoremap gq gq
-let g:which_key_g['R']      = 'enter VREPLACE mode'
-nnoremap gR gR
-let g:which_key_g['T']      = 'previous tag page'
-nnoremap gT gT
-let g:which_key_g['t']      = 'next tag page'
-nnoremap gt gt
-let g:which_key_g[']']      = 'tselect cursor tag'
-nnoremap g] g]
-let g:which_key_g['^']      = 'go to leftmost no-white character'
-nnoremap g^ g^
-let g:which_key_g['_']      = 'go to last char'
-nnoremap g_ g_
-let g:which_key_g['~']      = 'swap case for Nmove text'
-nnoremap g~ g~
-let g:which_key_g['a']      = 'print ascii value of cursor character'
-nnoremap ga ga
-let g:which_key_g['g']      = 'go to line N'
-nnoremap gg gg
-let g:which_key_g['m']      = 'go to middle of screenline'
-nnoremap gm gm
-let g:which_key_g['o']      = 'goto byte N in the buffer'
-nnoremap go go
-let g:which_key_g['s']      = 'sleep N seconds'
-nnoremap gs gs
-let g:which_key_g['v']      = 'reselect the previous Visual area'
-nnoremap gv gv
-let g:which_key_g['<C-]>']  = 'jump to tag cursor under'
+let g:which_key_g['0'] = '... leftmost (first) character on the line'
+
+" g + <
+" -----
+if g:plugins.is_installed('swap')
+	nnoremap g< g<
+	let g:which_key_g['<'] = '[Plugin] Swap left delimited items (`vim-swap`)'
+endif
+
+" g + Ctrl + ]
+" ------------
 nnoremap g<C-]> g<C-]>
+let g:which_key_g['<C-]>'] = '... tag of what is under the cursor'
+
+" g + Ctrl + g
+" ------------
+nnoremap g<C-g> g<C-g>
+let g:which_key_g['<C-g>'] = '[Other] Show information under the cursor'
+
+" g + End
+" -------
+nnoremap g<End> g<End>
+let g:which_key_g['<End>'] = '... rightmost (last) character on the line'
+
+" g + Home
+" --------
+nnoremap g<Home> g<Home>
+let g:which_key_g['<Home>'] = '... leftmost (first) character on the line'
+
+" g + >
+" -----
+if g:plugins.is_installed('swap')
+	nnoremap g> g>
+	let g:which_key_g['>'] = '[Plugin] Swap right delimited items (`vim-swap`)'
+endif
+
+" g + @
+" -----
+nnoremap g@ g@
+let g:which_key_g['@'] = '[Other] Call operatorfunc'
+
+" g + ]
+" -----
+nnoremap g] g]
+let g:which_key_g[']'] = '... tag which matches name of what is under the cursor (`:tselect`)'
+
+" g + ^
+" -----
+nnoremap g^ g^
+let g:which_key_g['^'] = '... first non-blank character on the line'
+
+" g + _
+" -----
+nnoremap g_ g_
+let g:which_key_g['_'] = '... last non-blank character on the line'
+
+" g + a
+" -----
+nnoremap ga ga
+let g:which_key_g['a'] = '[Other] Print the ascii value of the character under the cursor'
+
+" g + d
+" -----
+if g:plugins.is_installed('coc')
+	nmap <silent> gd <Plug>(coc-definition)
+	let g:which_key_g['d'] = '[Plugin] ... code DEFINITION of what is under the cursor (`CoC`)'
+endif
+
+" g + e
+" -----
+nnoremap ge ge
+let g:which_key_g['e'] = '... {count} backward to the end of word'
+
+" g + F
+" -----
+nnoremap gF gF
+let g:which_key_g['F'] = '... file of path under the cursor (jump to line after name)'
+
+" g + f
+" -----
+nnoremap gf gf
+let g:which_key_g['f'] = '... file of path under the cursor'
+
+" g + g
+" -----
+nnoremap gg gg
+let g:which_key_g['g'] = '... {count} line number (default first line)'
+
+" g + H
+" -----
+nnoremap gH gH
+let g:which_key_g['H'] = '[Select mode] linewise'
+
+" g + h
+" -----
+nnoremap gh gh
+let g:which_key_g['h'] = '[Select mode] charwise'
+
+" g + I
+" -----
+nnoremap gI gI
+let g:which_key_g['I'] = '[Insert mode] add text to 1st column {count} times'
+
+" g + i
+" -----
+if g:plugins.is_installed('coc')
+	nmap <silent> gi <Plug>(coc-implementation)
+	let g:which_key_g['i'] = '[Plugin] ... code IMPLEMENTATION of what is under the cursor (`CoC`)'
+endif
+
+" g + J
+" -----
+nnoremap gJ gJ
+let g:which_key_g['J'] = '[Other] Join {count} lines without spaces'
+
+" g + j
+" -----
+nnoremap gj gj
+let g:which_key_g['j'] = '... {count} next lines (downward)'
+
+" g + k
+" -----
+nnoremap gk gk
+let g:which_key_g['k'] = '... {count} previous lines (upward)'
+
+" g + M
+" -----
+nnoremap gM gM
+let g:which_key_g['M'] = '... halfway the text of the line'
+
+" g + m
+" -----
+nnoremap gm gm
+let g:which_key_g['m'] = '... half a screenwidth to the right (or as much as possible)'
+
+" g + N
+" -----
+nnoremap gN gN
+let g:which_key_g['N'] = '... previous occurence (backward) of the last used search pattern'
+
+" g + n
+" -----
+nnoremap gn gn
+let g:which_key_g['n'] = '... next occurence (forward) of the last used search pattern'
+
+" g + o
+" -----
+nnoremap go go
+let g:which_key_g['o'] = '... {count} byte in the buffer'
+
+" g + Q
+" -----
+nnoremap gQ gQ
+let g:which_key_g['Q'] = '[Ex mode] Switch to command mode'
+
+" g + q
+" -----
+nnoremap gq gq
+let g:which_key_g['q'] = '[Other] Format the lines {motion} moves over'
+
+" g + R
+" -----
+nnoremap gR gR
+let g:which_key_g['R'] = '[VReplace mode] Switch to virtual replace mode'
+
+" g + r
+" -----
+if g:plugins.is_installed('coc')
+	nmap <silent> gr <Plug>(coc-references)
+	let g:which_key_g['r'] = '[Plugin] ... code REFERENCE of what is under the cursor (`CoC`)'
+endif
+
+" g + s
+" -----
+if g:plugins.is_installed('swap')
+	nnoremap gs gs
+	let g:which_key_g['s'] = '[Plugin] Start interactive swap mode (`vim-swap`)'
+endif
+
+" g + T
+" -----
+nnoremap gT gT
+let g:which_key_g['T'] = '... previous tab page (`:tabnext`)'
+
+" g + t
+" -----
+nnoremap gt gt
+let g:which_key_g['t'] = '... next tab page (`:tabprevious`)'
+
+" g + U
+" -----
+nnoremap gU gU
+let g:which_key_g['U'] = '[Other] Make {motion} text uppercase'
+
+" g + u
+" -----
+nnoremap gu gu
+let g:which_key_g['u'] = '[Other] Make {motion} text lowercase'
+
+" g + v
+" -----
+nnoremap gv gv
+let g:which_key_g['v'] = '[Visual mode] Start in the same area as the previous area'
+
+" g + x
+" -----
+" let g:which_key_g['x'] = ''
+
+" g + y
+" -----
+if g:plugins.is_installed('coc')
+	nmap <silent> gy <Plug>(coc-type-definition)
+	let g:which_key_g['y'] = '[Plugin] ... code TYPE definition of what is under the cursor (`CoC`)'
+endif
+
+" g + ~
+" -----
+nnoremap g~ g~
+let g:which_key_g['~'] = '[Other] Switch case of {motion} text'
 

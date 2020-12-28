@@ -58,24 +58,6 @@ endif
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
-" --------------------------------------------------------------------------- "
-"                                        Navigation on words under the cursor
-" --------------------------------------------------------------------------- "
-
-" Go to code... navigation
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-if g:plugins.is_installed('vim-which-key')
-	let g:which_key_g = extend(g:which_key_g, {
-		\ 'd': '[CoC] code defintion (under the cursor)',
-		\ 'y': '[CoC] code type definition (under the cursor)',
-		\ 'i': '[CoC] code implementation (under the cursor)',
-		\ 'r': '[CoC] code reference (under the cursor)'
-	\ })
-endif
 
 " --------------------------------------------------------------------------- "
 "														        Documentation
