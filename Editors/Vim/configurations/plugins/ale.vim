@@ -23,17 +23,9 @@ endif
 "                                                            Diagnostics list
 " --------------------------------------------------------------------------- "
 
-" Open the list with Location List (`:lopen`) or Quickfix List (`:copen`)
-let g:ale_open_list = 0
+" Open the list with 'Location List' (`:lopen`) or with 'Quickfix List' (`:copen`)
+let g:ale_open_list             = 0
 let g:ale_keep_list_window_open = 0
-
-" --------------------------------------------------------------------------- "
-"                                                                    Mappings
-" --------------------------------------------------------------------------- "
-
-" Navigate between problems quickly
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " --------------------------------------------------------------------------- "
 "                                                                  Highlights
@@ -58,7 +50,7 @@ augroup END
 
 if g:enable_icons
 	" `[%Severity%]` content
-	let g:ale_echo_msg_error_str = g:icons.error
+	let g:ale_echo_msg_error_str   = g:icons.error
 	let g:ale_echo_msg_warning_str = g:icons.warning
 endif
 
@@ -75,10 +67,10 @@ let g:ale_fix_on_save = 1
 " Enable linting on...
 let g:ale_lint_on_text_changed = 'always'
 let g:ale_lint_on_insert_leave = 1
-let g:ale_lint_on_enter = 1
+let g:ale_lint_on_enter        = 1
 
 " Set lint delay in miliseconds
-let g:ale_lint_delay = 500
+let g:ale_lint_delay = 400
 
 " --------------------------------------------------------------------------- "
 "                                                                      Fixers

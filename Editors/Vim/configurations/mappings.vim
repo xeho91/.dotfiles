@@ -8,19 +8,16 @@ let g:which_key_questionMark = { 'name': 'Mapped keys for general usage' }
 nnoremap <silent> ? :<C-u>WhichKey '?'<CR>
 
 " --------------------------------------------------------------------------- "
-"                                                                  Ctrl + ...
+"                                                                General keys
 " --------------------------------------------------------------------------- "
 
 " Esc
 " ---
 let g:which_key_questionMark['Esc'] = 'Close this help'
 
-" Ctrl + p
-" --------
-if g:plugins.is_installed('fzf')
-	nnoremap <C-p> :<C-u>OpenFileSearch<CR>
-	let g:which_key_questionMark['<C-p>'] = '[Plugin] Open file search (`fzf.vim`)'
-endif
+" --------------------------------------------------------------------------- "
+"                                                                  Ctrl + ...
+" --------------------------------------------------------------------------- "
 
 " Ctrl + /
 " --------
@@ -28,6 +25,23 @@ if g:plugins.is_installed('nerdcommenter')
 	nmap <C-_> <Plug>NERDCommenterToggle
 	vmap <C-_> <Plug>NERDCommenterToggle<CR>gv
 	let g:which_key_questionMark['<C-/>'] = '[Plugin] (Un)comment line (`NERDCommenter`)'
+endif
+
+" Ctrl + j
+" Ctrl + k
+" --------
+if g:plugins.is_installed('ale')
+	nmap <silent> <C-j> <Plug>(ale_next_wrap)
+	let g:which_key_questionMark['<C-j>'] = '[Plugin] Go to next problem (`ALE`)'
+	nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+	let g:which_key_questionMark['<C-k>'] = '[Plugin] Go to previous problem (`ALE`)'
+endif
+
+" Ctrl + p
+" --------
+if g:plugins.is_installed('fzf')
+	nnoremap <C-p> :<C-u>OpenFileSearch<CR>
+	let g:which_key_questionMark['<C-p>'] = '[Plugin] Open file search (`fzf.vim`)'
 endif
 
 " --------------------------------------------------------------------------- "
