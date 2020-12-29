@@ -79,6 +79,7 @@ let g:ale_lint_delay = 400
 let g:ale_fixers = {
 	\ '*':          ['trim_whitespace'],
 	\ 'css':        ['prettier', 'stylelint'],
+	\ 'html':       ['prettier'],
 	\ 'javascript': ['prettier'],
 	\ 'json':       ['prettier'],
 	\ 'markdown':   ['prettier'],
@@ -91,10 +92,14 @@ let g:ale_fixers = {
 
 let b:ale_linters = {
 	\ 'css':      ['stylelint'],
+	\ 'html':     ['htmlhint'],
 	\ 'markdown': ['markdownlint', 'proselint'],
 	\ 'python':   ['pylint'],
 	\ 'vim':      ['vint'],
 \ }
+
+" https://stylelint.io/user-guide/usage/options
+let g:ale_html_htmlhint_options = '--config "$DOTFILES/Linters/.htmlhintrc.js"'
 
 " https://stylelint.io/user-guide/usage/options
 let g:ale_css_stylelint_options = '--config "$DOTFILES/Linters/.stylelintrc.js"'

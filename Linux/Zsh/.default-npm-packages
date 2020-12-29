@@ -9,3 +9,4 @@ stylelint-a11y
 stylelint-8-point-grid
 markdownlint
 markdownlint-cli
+htmlhint
