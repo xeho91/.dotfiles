@@ -1,6 +1,6 @@
 # Dotfiles
 
-<img alt="Icon representing tools - wrench on the left, and screwdriver on the right"
+<img alt="Icon with tools - a wrench on the left and a screwdriver on the right"
      height="200"
      align="right"
      src="https://www.flaticon.com/svg/static/icons/svg/682/682028.svg"
@@ -16,10 +16,13 @@ _The icon is borrowed from [Freepik](http://www.freepik.com/)_
 > and by default are hidden in directory listings.
 > For power users, however, **they are a core tool belt**.
 
-_Quote borrowed from [this source](https://medium.com/@webprolific/getting-started-with-dotfiles-43c3602fd789)_
+_Quote borrowed from [this source]_
+
+[this source]: https://medium.com/@webprolific/getting-started-with-dotfiles-43c3602fd789
 
 So, in other words, this is a repository which contains my configurations for
 the programs in my core tool belt.
+
 :warning: Please be careful if you decide to play with my tools… :wink:
 
 ---
@@ -30,10 +33,24 @@ The goal is to be able to run the installation without any requirements.
 The installer is supposed to take care of everything in advance,
 to automate the processes.
 
+### Table of Contents
+
+- [<img alt="Linux logo" height="12"
+        src="https://upload.wikimedia.org/wikipedia/commons/3/3c/TuxFlat.svg"
+  /> Instructions for Linux](#instructions-for-linux)
+- [Instructions for Windows 10 _(WIP)_](#instructions-for-windows-10)
+
+---
+
 ### Instructions for Linux
 
-This is the [installer file].
-At the moment, it is optimized for the following Linux distributions:
+[Installer file code - `./install.sh`](./install.sh).
+
+<img alt="Linux logo"
+     height="100"
+     align="right"
+     src="https://upload.wikimedia.org/wikipedia/commons/3/3c/TuxFlat.svg"
+/>
 
 - <img alt="Debian logo" height="12"
        src="https://www.debian.org/logos/openlogo-nd.svg"
@@ -42,12 +59,21 @@ At the moment, it is optimized for the following Linux distributions:
        src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo-ubuntu_cof-orange-hex.svg"
   /> Ubuntu
 
-[installer file]: ./install.sh
-
 1. Download the installation file with typing the following command in your
    shell \
    `curl -O https://raw.githubusercontent.com/xeho91/.dotfiles/main/install.sh`
 2. Use `cat install.sh` to read and inspect the code if you have the knowledge
-3. Make the file **executable** by changing ownership with this command `chmod
-   700 install.sh`
+3. Make the file **executable** by changing ownership `chmod 700 install.sh`
 4. Run this installation file by typing `./install.sh` in your shell
+
+---
+
+### Instructions for Windows 10
+
+Work in progress…
+
+<img alt="Windows logo"
+     height="100"
+     align="right"
+     src="https://upload.wikimedia.org/wikipedia/commons/4/48/Windows_logo_-_2012_%28dark_blue%29.svg"
+/>
