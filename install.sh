@@ -9,60 +9,75 @@ set -eu
 # Helpers
 # =========================================================================== #
 
-# --------------------------------------------------------------------------- #
-#                                                                      Colors
-# --------------------------------------------------------------------------- #
-reset_format='\033[0m'
-declare -A colors
-colors[black]='\033[0;30m'
-colors[red]='\033[0;31m'
-colors[green]='\033[0;32m'
-colors[yellow]='\033[0;33m'
-colors[blue]='\033[0;34m'
-colors[purple]='\033[0;35m'
-colors[cyan]='\033[0;36m'
-colors[white]='\033[0;37m'
-declare -A bg_colors
-bg_colors[black]='\033[0;40m'
-bg_colors[red]='\033[0;41m'
-bg_colors[green]='\033[0;42m'
-bg_colors[yellow]='\033[0;43m'
-bg_colors[blue]='\033[0;44m'
-bg_colors[purple]='\033[0;45m'
-bg_colors[cyan]='\033[0;46m'
-bg_colors[white]='\033[0;47m'
+# Format the output
+# * fg {color} - set foreground color
+# * bg {color} - set background color
+# * u          - set underline
+# * reset      - clear formatting
+function format {
+	if [ -n "$1" ]; then
+		local action=$1
+	else
+		echo "Formatting action not specified! It can be 'bg', 'fg' or 'reset'."
+		exit 1
+	fi
 
-# --------------------------------------------------------------------------- #
-#                                                      Colored ouput wrappers
-# --------------------------------------------------------------------------- #
+	if [[ $action == reset ]]; then
+		command tput sgr0
+	elif [[ $action == "underline" || $action == "u" ]]; then
+		command tput smul
+	elif [ -n "$2" ]; then
+		declare -A colors=(
+			[black]=0
+			[red]=1
+			[green]=2
+			[yellow]=3
+			[blue]=4
+			[magenta]=5
+			[cyan]=6
+			[white]=7
+		)
 
-# NOTE: option (flag) `-e` - enable interpretation of backslash escapes
-function error {
-	echo -e "${bg_colors[red]}ERROR:${reset_format} ${colors[red]}$1${reset_format}"
+		local color=${colors[$2]}
+
+		if [[ $action == bg ]]; then
+			command tput setab "$color"
+		elif [[ $action == fg ]]; then
+			command tput setaf "$color"
+		fi
+	fi
 }
 
-function warning {
-	echo -e "${bg_colors[yellow]}WARNING:${reset_format} ${colors[yellow]}$1${reset_format}"
-}
+# Override the command `print`
+# with a function to print a specified type of output
+function print {
+	local type=$1
+	local message=$2
 
-function success {
-	echo -e "${bg_colors[green]}SUCCESS:${reset_format} ${colors[green]}$1${reset_format}"
-}
+	declare -A formats=(
+		[error]=red
+		[warning]=yellow
+		[success]=green
+		[info]=blue
+		[note]=magenta
+		[question]=cyan
+	)
 
-function info {
-	echo -e "${bg_colors[blue]}INFO:${reset_format} ${colors[blue]}$1${reset_format}"
-}
+	declare -A types=(
+		[error]="ERROR"
+		[warning]="WARNING"
+		[success]="SUCCESS"
+		[info]="INFO"
+		[note]="NOTE"
+		[question]="QUESTION"
+	)
 
-function note {
-	echo -e "${bg_colors[purple]}NOTE:${reset_format} ${colors[purple]}$1${reset_format}"
-}
-
-function question {
-	echo -e "${bg_colors[cyan]}QUESTION:${reset_format} ${colors[cyan]}$1${reset_format}"
+	printf "$(format bg "${formats[$type]}")${types[$type]}:$(format reset) $(format fg "${formats[$type]}")%s$(format reset)\n" \
+		"$message"
 }
 
 # =========================================================================== #
-# Definining currently used Linux's distribution
+# Define currently used Linux's distribution
 # =========================================================================== #
 
 distro_name=$( \
@@ -75,27 +90,27 @@ if [[ $distro_name == "Arch Linux" ]]; then
 elif [[ $distro_name =~ "Debian" || $distro_name =~ "Ubuntu" ]]; then
 	package_manager="apt"
 else
-	error "Sorry, the currently used distribution \"$distro_name\" is not recognized!"
+	print error "Sorry, the currently used distribution \"$distro_name\" is not recognized!"
 	exit 1
 fi
 
-info "You are on \"$distro_name\" Linux's distribution."
-note "The used package manager will be \`$package_manager\`."
+print info "You are on \"$distro_name\" Linux's distribution."
+print note "This installator will use \`$package_manager\` as package manager."
 
 # =========================================================================== #
-# Determining if Git is installed
+# Determine if Git program is installed
 # =========================================================================== #
 
 if [ -x "$(command -v git)" ]; then
-	info "Command \`git\` exists."
+	print info "Command \`git\` exists."
 else
-	warning "Command \`git\` doesn't exits."
+	print warning "Command \`git\` doesn't exits."
 
-	question "Do you want to install Git? (Yes/No)"
-	read -p "Decision: " user_wants_to_install_git < /dev/tty
+	print question "Do you want to install Git? (Yes/No)"
+	read -p "User's decision: " user_wants_to_install_git
 
 	if [[ $user_wants_to_install_git == [Yy]* ]]; then
-		info "Installing \`git\` with \`$package_manager\`..."
+		print info "Installing \`git\` with \`$package_manager\`..."
 
 		if [[ $package_manager == "apt" ]]; then
 			command sudo apt install git
@@ -103,7 +118,7 @@ else
 			command sudo pacman -S git
 		fi
 	else
-		error "Installation can't be continued without a Git program."
+		print error "Installation can't be continued without a Git program."
 		exit 1
 	fi
 fi
@@ -119,11 +134,11 @@ dotfiles_dir_name="$( \
 )"
 
 if [ -d "$dotfiles_dir_name" ]; then
-	error "The directory \"$dotfiles_dir_name\" already exists in the current working directory!"
+	print error "The directory \"$dotfiles_dir_name\" already exists in the current working directory!"
 	exit 1
 else
-	note "The dotfiles remote repository URL is: $dotfiles_remote_repository"
+	print note "The dotfiles remote repository URL is: $dotfiles_remote_repository"
 	command git clone $dotfiles_remote_repository
-	success "Successfully cloned the dotfiles from the remote repository!"
+	print success "Successfully cloned the dotfiles from the remote repository!"
 fi
 
