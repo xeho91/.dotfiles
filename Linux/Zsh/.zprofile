@@ -16,7 +16,12 @@ fi
 export GPG_TTY=$(tty)
 # Start the `gpg-agent` on session start
 if (( $+commands[keychain] )); then
-	eval "$(keychain --eval --agents gpg BE4F7A96)"
+	gpg_pubkey_id=$(command gpg --list-keys --keyid-format=short \
+		| grep pub \
+		| grep -o -P '(?<=/)[A-Z0-9]{8}'
+	)
+
+	eval "$(keychain --eval --agents gpg "$gpg_pubkey_id")"
 else
 	command gpg-connect-agent updatestartuptty /bye >/dev/null
 fi
