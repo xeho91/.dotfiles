@@ -6,8 +6,24 @@
 set -eu
 
 # =========================================================================== #
+# Settings to configure
+# =========================================================================== #
+dotfiles_remote_repository="https://github.com/xeho91/.dotfiles.git"
+declare -A config_files=(
+	[Git]="Git/.gitconfig"
+	[Bash]="Linux/Bash/.bash_profile"
+	[Zsh]="Linux/Zsh/.zhsenv"
+)
+
+# =========================================================================== #
 # Helpers
 # =========================================================================== #
+
+# Get the baseame of dotfiles directory
+dotfiles_dir_name="$( \
+	command basename "$dotfiles_remote_repository" \
+	| grep --only-matching --perl-regexp '.*(?=\.git)' \
+)"
 
 # Format the output
 # * fg {color} - set foreground color
@@ -18,7 +34,7 @@ function format {
 	if [ -n "$1" ]; then
 		local action=$1
 	else
-		echo "Formatting action not specified! It can be 'bg', 'fg' or 'reset'."
+		echo "Formatting action not specified!"
 		exit 1
 	fi
 
@@ -76,8 +92,49 @@ function print {
 		"$message"
 }
 
+# Install the desired program(s)
+function install_program {
+	local program=$1
+
+	read -p "User's decision: " user_wants_to_install_program
+
+	# ... install missing programs
+	if [[ $user_wants_to_install_program == [Yy]* ]]; then
+		print info "Installing \`$program\` with \`$package_manager\`..."
+
+		if [[ $package_manager == "apt" ]]; then
+			command sudo apt install "$program"
+		elif [[ $package_manager == "pacman" ]]; then
+			command sudo pacman -S "$program"
+		fi
+
+		print success "Installed \`$program\` with \`$package_manager\`."
+	else
+		print error "The installation can't be continued without this program!"
+		exit 1
+	fi
+}
+
+# Create symbolic link to a specific configuration file from the dotfiles
+function create_symlink {
+	local config_file_path=${config_files[$1]}
+	# shellcheck disable=SC2155
+	local file_name=$(command basename "$config_file_path")
+
+	if [ -e "$file_name" ]; then
+		print error "The Git's configuration \"$file_name\" already exists in your home directory!"
+		print note "To avoid problems, please backup your existing configurations and run this installation file again."
+		exit 1
+	else
+		print info "Creating a symbolic link for \"$file_name\" from dotfiles in your home directory..."
+
+		command ln --symbolic "$HOME/$dotfiles_dir_name/$config_file_path" "$HOME/$file_name"
+		print success "Created a symbolic link for \"$file_name\" configuration from the dotfiles."
+	fi
+}
+
 # =========================================================================== #
-# Define currently used Linux's distribution
+# Get the name of currently used Linux's distribution
 # =========================================================================== #
 
 distro_name=$( \
@@ -95,7 +152,7 @@ else
 fi
 
 print info "You are on \"$distro_name\" Linux's distribution."
-print note "This installation will use \`$package_manager\` as a package manager."
+print note "This installation will use \`$package_manager\` package manager."
 
 # =========================================================================== #
 # Move to the user's home directory (`$HOME`)
@@ -105,46 +162,38 @@ if [[ $PWD == "$HOME" ]]; then
 	print info "You are already in \$HOME=\"$PWD\" directory."
 else
 	cd "$HOME"
-	print info "Changed directory to \$HOME=\"$PWD\"."
+	print info "Changing current working directory to \$HOME=\"$PWD\"."
 fi
 
 # =========================================================================== #
-# Determine if Git program is installed
+# Check if required programs exists, and if not, install the missing ones
 # =========================================================================== #
 
-if [ -x "$(command -v git)" ]; then
-	print info "Command \`git\` exists."
-else
-	print warning "Command \`git\` doesn't exits."
+required_programs=(git which)
 
-	print question "Do you want to install Git? (Yes/No)"
-	read -p "User's decision: " user_wants_to_install_git
-
-	if [[ $user_wants_to_install_git == [Yy]* ]]; then
-		print info "Installing \`git\` with \`$package_manager\`..."
-
-		if [[ $package_manager == "apt" ]]; then
-			command sudo apt install git
-		elif [[ $package_manager == "pacman" ]]; then
-			command sudo pacman -S git
+# Determine a list of missing programs
+missing_programs=""
+for program in ${required_programs[*]}; do
+	if ! [ -x "$(command -v "$program")" ]; then
+		if [ -z "$missing_programs" ]; then
+			missing_programs+="${program}"
+		else
+			missing_programs+=" ${program}"
 		fi
-
-		print success "Installed \`git\` with \`$package_manager\`."
-	else
-		print error "Installation can't be continued without a Git program!"
-		exit 1
 	fi
+done
+
+# Check if there are missing programs...
+if [ -n "$missing_programs" ]; then
+	print warning "The following programs required for this installation are missing: \"$missing_programs\"."
+
+	print question "Do you want to install them with \`$package_manager\` package manager? (Yes/No)"
+	install_program "$missing_programs"
 fi
 
 # =========================================================================== #
-# Cloning dotfiles from the remote repository
+# Clone dotfiles from the remote repository
 # =========================================================================== #
-
-dotfiles_remote_repository="https://github.com/xeho91/.dotfiles.git"
-dotfiles_dir_name="$( \
-	basename "$dotfiles_remote_repository" \
-	| grep --only-matching --perl-regexp '.*(?=\.git)' \
-)"
 
 if [ -d "$dotfiles_dir_name" ]; then
 	print error "The directory \"$dotfiles_dir_name\" already exists in your \$HOME directory!"
@@ -161,16 +210,7 @@ fi
 # Creating a symbolic link to the Git's configuration
 # =========================================================================== #
 
-if [ -e ".gitconfig" ]; then
-	print error "The Git's configuration \".gitconfig\" already exists in your home directory!"
-	print note "To avoid problems, please backup your existing configurations and run this installation file again."
-	exit 1
-else
-	print info "Creating a symbolic link for \"./gitconfig\" from dotfiles in your home directory..."
-
-	command ln --symbolic "./$dotfiles_dir_name/Git/.gitconfig" "./.gitconfig"
-	print success "Successfully linked Git's configuration from the dotfiles."
-fi
+create_symlink "Git"
 
 # =========================================================================== #
 # Determine which shell to be set as default
@@ -207,24 +247,9 @@ if ! [ -x "$(command -v $default_shell)" ]; then
 	print warning "The shell \"$default_shell\" is not installed in this system."
 
 	print question "Do you want to install this shell with \`$package_manager\` package manager? (Yes/No)"
-	read -p "User's decision: " user_wants_to_install_shell
-
-	if [[ $user_wants_to_install_shell == [Yy]* ]]; then
-		print info "Installing \`$default_shell\` with \`$package_manager\`..."
-
-		if [[ "$package_manager" == "apt" ]]; then
-			command sudo apt install $default_shell
-		elif [[ "$package_manager" == "pacman" ]]; then
-			command sudo pacman -S $default_shell
-		fi
-
-		print success "Installed \`$default_shell\` with \`$package_manager\`."
-	else
-		print error "Cannot set \"$default_shell\" as your default shell, because it is not installed."
-		exit 1
-	fi
+	install_program "$default_shell"
 else
-	print info "Shell \"$default_shell\" program exists in this system."
+	print info "Shell \"$default_shell\" program already exists in this system."
 fi
 
 # Set the default shell to be run on start
@@ -233,10 +258,9 @@ if [[ $(basename "$SHELL") == "$default_shell" ]]; then
 else
 	print note "The installation is going to set this program path \"$(which $default_shell)\" as your default shell."
 
-	print warning "This is an admin operation and you will need to type your user password!"
 	command chsh -s "$(which $default_shell)"
 
-	print success "Successfully set \"$default_shell\" as your default shell."
+	print success "Set \"$default_shell\" as your default shell."
 fi
 
 print info "Printing shell's version information..."
@@ -246,24 +270,5 @@ command $default_shell --version
 # Create symbolic link to the default shell's file with environment variables
 # =========================================================================== #
 
-if [[ "$default_shell" == "bash" ]]; then
-	default_shell_config_file=".bash_profile"
-elif [[ "$default_shell" == "zsh" ]]; then
-	default_shell_config_file=".zshenv"
-else
-	print error "Something went wrong with determining default shell configuration file."
-	exit 1
-fi
-
-if [ -e "$default_shell_config_file" ]; then
-	print error "The \"$default_shell\" configuration file \"$default_shell_config_file\" already exists in your home directory!"
-	print note "To avoid problems, please backup your existing configurations and run this installation file again."
-	exit 1
-else
-	print info "Creating a symbolic link for \"$default_shell_config_file\" from dotfiles in your home directory..."
-
-	# NOTE: https://wiki.bash-hackers.org/syntax/pe?s[]=length#case_modification
-	command ln --symbolic "./$dotfiles_dir_name/Linux/${default_shell^}/$default_shell_config_file" "./$default_shell_config_file"
-	print success "Successfully linked \"$default_shell\" configuration from the dotfiles."
-fi
+create_symlink "${default_shell^}"
 
