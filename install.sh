@@ -34,7 +34,7 @@ function format {
 	if [ -n "$1" ]; then
 		local action=$1
 	else
-		echo "Formatting action not specified!"
+		printf "Formatting action not specified!"
 		exit 1
 	fi
 
@@ -89,7 +89,7 @@ function print {
 	)
 
 	printf "$(format bg "${formats[$type]}")${types[$type]}:$(format reset) $(format fg "${formats[$type]}")%s$(format reset)\n" \
-		"$message"
+		"$message" | fold -sw 80
 }
 
 # Install the desired program(s)
