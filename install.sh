@@ -110,7 +110,7 @@ function install_program {
 
 		print success "Installed \`$program\` with \`$package_manager\`."
 	else
-		print error "The installation can't be continued without this program!"
+		print error "The installation can't be continued without these program(s)!"
 		exit 1
 	fi
 }
@@ -133,8 +133,63 @@ function create_symlink {
 	fi
 }
 
+# Install a specific program if it doesn't exist
+function install_program_if_doesnt_exist {
+	local program=$1
+
+	if ! [ -x "$(command -v "$program")" ]; then
+		print warning "The program \"$program\" is not installed in this system."
+
+		print question "Do you want to install this program with \`$package_manager\` package manager? (Yes/No)"
+		install_program "$program"
+	else
+		print info "The program \"$program\" already exists in this system."
+	fi
+}
+
+# Pick an option from the provided list
+function pick_option () {
+	local -n options=$1
+	local result_variable_name=$2
+	local max_tries=5
+	local attempts=0
+	local user_pick=0
+
+	printf "%sAvailable options (pick one from the list below)\n" "$(format fg cyan)"
+	for index in "${!options[@]}"; do
+		printf "(%d) ${options[$index]}\n" "$((index + 1))"
+	done
+	printf "%s" "$(format reset)"
+
+	while ! [[ $user_pick -gt 0 && $user_pick -le "${#options[@]}" ]]; do
+		read -p "Pick option: " user_pick
+
+		if [[ $user_pick -gt 0 && $user_pick -le "${#options[@]}" ]]; then
+			export "$result_variable_name"="${options[$((user_pick - 1))]}"
+		else
+			attempts=$((attempts + 1))
+
+			if [ "$attempts" -eq "$max_tries" ]; then
+				print error "Eh? This is pointless. Bye."
+				exit 1
+			else
+				print error "This option is not available! Lets try again (Attempt $((attempts + 1)) of $max_tries)"
+			fi
+		fi
+	done
+}
+
+# Print the short output of the program version
+function print_version {
+	local program=$1
+
+	print info "Printing $program's version information..."
+	command "$program" --version | head --lines -1
+}
+
 # =========================================================================== #
 # Get the name of currently used Linux's distribution
+# and determine its package manager
 # =========================================================================== #
 
 distro_name=$( \
@@ -206,69 +261,58 @@ else
 	print success "Successfully cloned the dotfiles from the remote repository!"
 fi
 
-# =========================================================================== #
-# Creating a symbolic link to the Git's configuration
-# =========================================================================== #
-
+# Create a symbolic link to the Git's configuration
 create_symlink "Git"
 
 # =========================================================================== #
 # Determine which shell to be set as default
 # =========================================================================== #
 
+# shellcheck disable=SC2034
+shell_options=("zsh" "bash")
 default_shell=""
-max_tries=5
-attempts=0
-
-print question "Which shell do you want to use as the default one? (Pick option)
-          (1 - bash)
-          (2 - zsh)"
-while [ "$default_shell" != "bash" ] && [ "$default_shell" != "zsh" ]; do
-	read -p "User's decision: " user_default_shell_pick
-
-	if [[ $user_default_shell_pick == 1 || $user_default_shell_pick == bash ]]; then
-		default_shell="bash"
-	elif [[ $user_default_shell_pick == 2 || $user_default_shell_pick == zsh ]]; then
-		default_shell="zsh"
-	else
-		attempts=$((attempts + 1))
-
-		if [ "$attempts" -eq "$max_tries" ]; then
-			print error "Eh? This is pointless. Bye."
-			exit 1
-		else
-			print error "This option is not available!"
-		fi
-	fi
-done
+print question "Which shell do you want to use as the default one?"
+pick_option shell_options "default_shell"
 
 # Install the shell if it doesn't exist in the system
-if ! [ -x "$(command -v $default_shell)" ]; then
-	print warning "The shell \"$default_shell\" is not installed in this system."
-
-	print question "Do you want to install this shell with \`$package_manager\` package manager? (Yes/No)"
-	install_program "$default_shell"
-else
-	print info "Shell \"$default_shell\" program already exists in this system."
-fi
+install_program_if_doesnt_exist "$default_shell"
 
 # Set the default shell to be run on start
 if [[ $(basename "$SHELL") == "$default_shell" ]]; then
 	print info "You already are using \"$default_shell\" as your default shell."
 else
-	print note "The installation is going to set this program path \"$(which $default_shell)\" as your default shell."
+	print note "This program path \"$(which "$default_shell")\" will be set as your default shell."
 
-	command chsh -s "$(which $default_shell)"
+	command sudo usermod --shell "$(which "$default_shell")" "$(whoami)"
 
 	print success "Set \"$default_shell\" as your default shell."
 fi
 
-print info "Printing shell's version information..."
-command $default_shell --version
+# Print version
+print_version "$default_shell"
 
-# =========================================================================== #
-# Create symbolic link to the default shell's file with environment variables
-# =========================================================================== #
-
+# Create symbolic link to the default shell's configuration file
 create_symlink "${default_shell^}"
+
+# =========================================================================== #
+# Determine the default editor to install
+# =========================================================================== #
+
+# shellcheck disable=SC2034
+editor_options=("nvim" "vim")
+default_editor=""
+print question "Which editor do you want to set as the default one?"
+pick_option editor_options "default_editor"
+
+# Install the default editor if it doesn't exist in the system
+install_program_if_doesnt_exist "$default_editor"
+
+# Print version
+print_version "$default_editor"
+
+# =========================================================================== #
+# Finish the installation by starting the set default shell
+# =========================================================================== #
+
+exec "$default_shell"
 
