@@ -12,7 +12,7 @@ dotfiles_remote_repository="https://github.com/xeho91/.dotfiles.git"
 declare -A config_files=(
 	[Git]="Git/.gitconfig"
 	[Bash]="Linux/Bash/.bash_profile"
-	[Zsh]="Linux/Zsh/.zhsenv"
+	[Zsh]="Linux/Zsh/.zshenv"
 )
 
 # =========================================================================== #
@@ -89,7 +89,7 @@ function print {
 	)
 
 	printf "$(format bg "${formats[$type]}")${types[$type]}:$(format reset) $(format fg "${formats[$type]}")%s$(format reset)\n" \
-		"$message" | fold -sw 80
+		"$message" | fold -s
 }
 
 # Install the desired program(s)
@@ -140,7 +140,11 @@ function install_program_if_doesnt_exist {
 	if ! [ -x "$(command -v "$program")" ]; then
 		print warning "The program \"$program\" is not installed in this system."
 
-		print question "Do you want to install this program with \`$package_manager\` package manager? (Yes/No)"
+		if [ "$program" == "nvim" ]; then
+			program="neovim"
+		fi
+
+		print question "Do you want to install \"$program\" with \`$package_manager\` package manager? (Yes/No)"
 		install_program "$program"
 	else
 		print info "The program \"$program\" already exists in this system."
@@ -184,7 +188,7 @@ function print_version {
 	local program=$1
 
 	print info "Printing $program's version information..."
-	command "$program" --version | head --lines -1
+	command "$program" --version | head --lines 1
 }
 
 # =========================================================================== #
@@ -314,5 +318,7 @@ print_version "$default_editor"
 # Finish the installation by starting the set default shell
 # =========================================================================== #
 
+print note "The installation is finished."
+print info "Executing default shell and loading it's configuration..."
 exec "$default_shell"
 
