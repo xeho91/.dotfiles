@@ -38,13 +38,15 @@ to automate the processes.
 - [<img alt="Linux logo" height="12"
         src="https://upload.wikimedia.org/wikipedia/commons/3/3c/TuxFlat.svg"
   /> Instructions for Linux](#instructions-for-linux)
-- [Instructions for Windows 10 _(WIP)_](#instructions-for-windows-10)
+- [<img alt="Linux logo" height="12"
+        src="https://upload.wikimedia.org/wikipedia/commons/4/48/Windows_logo_-_2012_%28dark_blue%29.svg"
+  /> Instructions for Windows 10 _(WIP)_](#instructions-for-windows-10)
 
 ---
 
 ### Instructions for Linux
 
-[Installer file code - `./install.sh`](./install.sh).
+[Installer file code - `./Linux/install.sh`](./Linux/install.sh).
 
 <img alt="Linux logo"
      height="100"
@@ -52,19 +54,50 @@ to automate the processes.
      src="https://upload.wikimedia.org/wikipedia/commons/3/3c/TuxFlat.svg"
 />
 
+Currently optimized for these distributions:
+
 - <img alt="Debian logo" height="12"
        src="https://www.debian.org/logos/openlogo-nd.svg"
   /> Debian
 - <img alt="Ubuntu logo" height="12"
        src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo-ubuntu_cof-orange-hex.svg"
   /> Ubuntu
+- [<img alt="ArchLinux logo" height="12"
+        src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Archlinux-icon-crystal-64.svg"
+  /> Arch Linux
 
 1. Download the installation file with typing the following command in your
-   shell \
-   `curl -O https://raw.githubusercontent.com/xeho91/.dotfiles/main/install.sh`
-2. Use `cat install.sh` to read and inspect the code if you have the knowledge
-3. Make the file **executable** by changing ownership `chmod 700 install.sh`
-4. Run this installation file by typing `./install.sh` in your shell
+   shell:
+
+   ```sh
+   curl -O https://raw.githubusercontent.com/xeho91/.dotfiles/main/Linux/install.sh
+   ```
+
+2. Read and inspect the code. For example with this command:
+
+   ```sh
+   cat install.sh
+   ```
+
+   You can modify the configuration with any text editor, if you have the
+   knowledge.
+
+3. Make the file **executable** by changing ownership:
+
+   ```sh
+   chmod 700 install.sh
+   # or
+   chmod +x install.sh
+   ```
+
+4. Run this installation file by typing in your shell:
+
+   ```sh
+   ./install.sh
+   ```
+
+   NOTE: Don't forget the `./` at the beginning. That's how you run executable
+   files in Linux.
 
 ---
 
