@@ -40,7 +40,7 @@ to automate the processes.
   /> Instructions for Linux](#instructions-for-linux)
 - [<img alt="Linux logo" height="12"
         src="https://upload.wikimedia.org/wikipedia/commons/4/48/Windows_logo_-_2012_%28dark_blue%29.svg"
-  /> Instructions for Windows 10 _(WIP)_](#instructions-for-windows-10)
+  /> Instructions for Windows 10 (WIP)](#instructions-for-windows-10)
 
 ---
 
@@ -54,7 +54,7 @@ to automate the processes.
      src="https://upload.wikimedia.org/wikipedia/commons/3/3c/TuxFlat.svg"
 />
 
-Currently optimized for these distributions:
+:information_source: Currently optimized for these distributions:
 
 - <img alt="Debian logo" height="12"
        src="https://www.debian.org/logos/openlogo-nd.svg"
@@ -62,27 +62,48 @@ Currently optimized for these distributions:
 - <img alt="Ubuntu logo" height="12"
        src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo-ubuntu_cof-orange-hex.svg"
   /> Ubuntu
-- [<img alt="ArchLinux logo" height="12"
-        src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Archlinux-icon-crystal-64.svg"
+- <img alt="ArchLinux logo" height="12"
+       src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Archlinux-icon-crystal-64.svg"
   /> Arch Linux
 
-1. Download the installation file with typing the following command in your
-   shell:
+<details>
+  <summary>:scroll: Installer features</summary>
+
+- Use the package manager based on Linux's distributon name
+- Stop the installation if the dotfiles or configuration files already exists
+- Set up the default shell _(`bash` or `zsh`)_ and editor _(`nvim` or `vim`)_
+- Create symlinks to the program's configuration file
+- Set up the environment variables in the default shell's configuration file:
+  - `$DOTFILES`
+  - `$EDITOR`
+  - `$BUILD_FROM_SOURCE`
+  - `$MODE`
+
+</details>
+
+### Step by step guide
+
+1. **Download the installation file.**\
+   Type in your shell:
 
    ```sh
-   curl -O https://raw.githubusercontent.com/xeho91/.dotfiles/main/Linux/install.sh
+   curl -O "https://raw.githubusercontent.com/xeho91/.dotfiles/main/Linux/install.sh"
    ```
 
-2. Read and inspect the code. For example with this command:
+2. **Read and inspect the code.**\
+   For example with this command:
 
    ```sh
    cat install.sh
    ```
 
-   You can modify the configuration with any text editor, if you have the
-   knowledge.
+   :exclamation: **NOTE**: You can modify the configuration with any text
+   editor, if you have the knowledge.\
+   _(See the `Variables for installation configuration` section in the
+   installer's code, near the beginning of file)_
 
-3. Make the file **executable** by changing ownership:
+3. **Make the file executable**.\
+   Change the file permissions with one of these two commands:
 
    ```sh
    chmod 700 install.sh
@@ -90,14 +111,15 @@ Currently optimized for these distributions:
    chmod +x install.sh
    ```
 
-4. Run this installation file by typing in your shell:
+4. **Run this installation file.**\
+   Type in your shell:
 
    ```sh
    ./install.sh
    ```
 
-   NOTE: Don't forget the `./` at the beginning. That's how you run executable
-   files in Linux.
+   :exclamation: **NOTE**: Don't forget the `./` at the beginning.
+   That's how you run executable files in Linux.
 
 ---
 
