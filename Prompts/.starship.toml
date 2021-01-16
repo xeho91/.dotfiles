@@ -1,0 +1,193 @@
+# NOTE: Nerd fonts are required!
+# This configuration is works with "FiraCode NF" font
+# Download: https://www.nerdfonts.com/
+
+# =========================================================================== #
+# Default configuration
+# =========================================================================== #
+
+# The newline at the start of the prompt
+add_newline = false
+
+# Wait 10 milliseconds for starship to check files under the current directory.
+scan_timeout = 10
+
+# Overwrite the default format
+format = """
+┌$username\
+$hostname---\
+$time \
+$cmd_duration\
+$battery\
+$memory_usage \
+$status\
+$line_break\
+├$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$line_break\
+└$character"""
+
+# =========================================================================== #
+# Modules
+# =========================================================================== #
+
+# --------------------------------------------------------------------------- #
+#                                                                   Line nr 1
+#                                                     Environment information
+# --------------------------------------------------------------------------- #
+
+# https://starship.rs/config/#username
+[username]
+	disabled    = false
+	style_user  = "bg:purple fg:bright-white"
+	format      = "[](fg:purple)[ $user]($style)"
+	show_always = true
+
+# https://starship.rs/config/#hostname
+[hostname]
+	disabled = false
+	style    = "bg:purple fg:bright-white"
+	format   = "[@$hostname]($style)[](fg:purple)"
+	trim_at  = "."
+	ssh_only = false
+
+# https://starship.rs/config/#time
+[time]
+	disabled        = false
+	style           = "fg:black bg:white"
+	format          = "[](fg:white)[ $time]($style)[](fg:white)"
+	utc_time_offset = "local"
+	time_range      = "-"
+	use_12hr        = true
+
+# https://starship.rs/config/#command-duration
+[cmd_duration]
+	disabled           = false
+	style              = "fg:blue"
+	format             = "[祥 $duration]($style)"
+	min_time           = 100
+	show_milliseconds  = true
+	show_notifications = true
+	min_time_to_notify = 10_000
+
+# https://starship.rs/config/#battery
+[battery]
+	disabled           = false
+	format             = "[$symbol][$percentage]($style)[]"
+	full_symbol        = ""
+	charging_symbol    = ""
+	discharging_symbol = ""
+	unknown_symbol     = ""
+	[[battery.display]]
+		threshold = 50
+		style     = "bg:red"
+	[[battery.display]]
+		threshold = 75
+		style     = "bg:yellow"
+	[[battery.display]]
+		threshold = 90
+		style     = "bg:green"
+
+# https://starship.rs/config/#memory-usage
+[memory_usage]
+	disabled        = false
+	style           = "bg:yellow fg:bright-white"
+	format          = "[](fg:yellow)[$symbol ${ram_pct}|${swap_pct}]($style)[](fg:yellow)"
+	symbol          = ""
+	threshold       = 30
+
+# https://starship.rs/config/#status
+[status]
+	disabled              = false
+	style                 = "bg:red"
+	format                = "[ﰵ](fg:red)[$symbol $status]($style)[](fg:red)"
+	symbol                = ""
+	# not_executable_symbol = "e"
+	# not_found_symbol      = "🔍"
+	# sigint_symbol         = "s"
+	# signal_symbol         = "o"
+	recognize_signal_code = true
+	map_symbol            = true
+
+# --------------------------------------------------------------------------- #
+#                                                                   Line nr 2
+#                                                 Directory & Git information
+# --------------------------------------------------------------------------- #
+
+# https://starship.rs/config/#directory
+[directory]
+	disabled          = false
+	style             = "bg:cyan fg:bright-white"
+	format            = "[](fg:cyan)[ﱮ $path]($style)[$read_only]($read_only_style)[](fg:cyan)"
+	truncation_length = 5
+	truncate_to_repo  = true
+	truncation_symbol = ".../"
+	read_only         = ""
+	read_only_style   = "red"
+
+# https://starship.rs/config/#git-branch
+[git_branch]
+	disabled           = false
+	style              = "bg:blue fg:bright-white"
+	format             = " ﰲ [](fg:blue)[$symbol $branch]($style)[](fg:blue)"
+	symbol             = ""
+	always_show_remote = false
+	truncation_length  = "2^63 - 1"
+	truncation_symbol  = "..."
+	only_attached      = true
+
+# https://starship.rs/config/#git-commit
+[git_commit]
+	disabled           = false
+	format             = " ﰲ [](fg:bright-red)[ﰖ $hash$tag]($style)[](fg:bright-red)"
+	style              = "bg:bright-red fg:bright-white"
+	only_detached      = true
+	commit_hash_length = 8
+	tag_disabled       = false
+	tag_symbol         = "笠 "
+
+# https://starship.rs/config/#git-state
+[git_state]
+	disabled         = false
+	style            = "red"
+	format           = '\([$state( $progress_current/$progress_total)]($style)\) '
+	rebase           = " REBASING"
+	merge            = " MERGING"
+	revert           = " REVERTING"
+	cherry_pick      = " PICKING"
+	bisect           = " BISECTING"
+	am               = "APPLY-MAILBOX"
+	am_or_rebase     = "APPLY-MAILBOX / REBASE"
+
+# https://starship.rs/config/#git-status
+[git_status]
+	disabled   = false
+	style      = "fg:blue"
+	format     = "$all_status"
+	conflicted = "[](fg:red)[-C ${count}](bg:red fg:white)[](fg:red)"
+	ahead      = "[](fg:green)[⇣-B ${count}](bg:green fg:white)[](fg:green)"
+	behind     = "[](fg:yellow)[⇡-A ${count}](bg:yellow fg:white)[](fg:yellow)"
+	diverged   = "[](fg:red)[-D \\(⇡-A ${ahead_count} | ⇣-B ${count}\\)](bg:red fg:white)[](fg:red)"
+	untracked  = "[ ${count}](fg:bright-yellow)"
+	stashed    = "[ ${count}](fg:bright-white)"
+	modified   = "[ ${count}](fg:bright-purple)"
+	staged     = "[ ${count}](fg:bright-green)"
+	renamed    = "[ ${count}](fg:bright-cyan)"
+	deleted    = "[ ${count}](fg:bright-red)"
+
+# --------------------------------------------------------------------------- #
+#                                                                   Line nr 3
+#                                                                Command line
+# --------------------------------------------------------------------------- #
+
+# https://starship.rs/config/#character
+[character]
+	disabled              = false
+	format                = "$symbol "
+	success_symbol        = "[❯](fg:green)"
+	error_symbol          = "[✗](fg:red)"
+	use_symbol_for_status = true
+	vicmd_symbol          = "[](fg:green)"
