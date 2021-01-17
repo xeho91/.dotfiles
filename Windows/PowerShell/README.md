@@ -1,12 +1,12 @@
 # PowerShell
 
-<p style="text-align: center">
+<div align="center">
   <img
     alt="PowerShell logo"
     width="200px"
     src="https://raw.githubusercontent.com/PowerShell/PowerShell/master/assets/ps_black_128.svg"
   />
-</p>
+</div>
 
 > [PowerShell] is a cross-platform **task automation and configuration
 > management framework, consisting of a command-line shell and scripting
@@ -52,7 +52,7 @@
 
 ## Tools for development
 
-- **[PSScriptAnalyzer]** - statick code checker
+- **[PSScriptAnalyzer]** - static code checker
 - **[Pester]** - testing & mocking framework
 - **[Plaster]** - project generator
 
@@ -73,8 +73,8 @@
 
 Available default hotkeys to use within PowerShell shell.
 
-<span style="width: 135px; display: block">Hotkey</span> | Explanation
-:------------------------------------------------------: | :----------
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hotkey&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Explanation
+:----------------------------------------------------------------------------: | :----------
 <kbd>Esc</kbd> | Clear the current line.
 <kbd>Ctrl</kbd> + <kbd>End</kbd> | Deletes characters from (and including) the current cursor position to the end of the current command line.
 <kbd>Tab</kbd> | Use the completion.
@@ -142,6 +142,8 @@ And to print information about specific cmdlet _(like `man` on Linux)_:
 Get-Help "Get-Command"
 ```
 
+---
+
 ### Q: What are "modules" in PowerShell?
 
 A: A self-contained reusable unit that allows you to partition, organize,
@@ -153,3 +155,27 @@ and other types of resources that can be imported as a single unit**.
 
 **NOTE:**
 Modules are saved with `*.psm1` extension.
+
+---
+
+### Q: What is the file extension "psd1" about?
+
+A: The file extension `*.psd1` are for **PowerShell data files**.
+
+**More information**: <https://docs.microsoft.com/powershell/scripting/learn/ps101/10-script-modules#module-manifests/>
+
+---
+
+### Q: How to list all environment variables?
+
+A: Use these commands:
+
+```powershell
+Get-ChildItem "Env:*"
+```
+
+Or, shorter _(with alias)_
+
+```powershell
+gci Env:*
+```
