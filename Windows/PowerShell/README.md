@@ -13,7 +13,7 @@
 > language**. \
 > Unlike most shells, which accept and return text,
 > **PowerShell is built on top of the `.NET`** _(also known as `dotnet`)_
-> **C**ommon **L**anguage **R**untime _(CLR)_, and accepts and returns .NET
+> **Common Language Runtime** _(CLR)_, and accepts and returns .NET
 > objects.
 
 [_Modified from this source_](https://docs.microsoft.com/powershell/scripting/overview)
@@ -73,16 +73,16 @@
 
 Available default hotkeys to use within PowerShell shell.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hotkey&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Explanation
-:----------------------------------------------------------------------------: | :----------
+Hotkey | Explanation
+:----: | :----------
 <kbd>Esc</kbd> | Clear the current line.
 <kbd>Ctrl</kbd> + <kbd>End</kbd> | Deletes characters from (and including) the current cursor position to the end of the current command line.
 <kbd>Tab</kbd> | Use the completion.
-<kbd>&uarr; (Up arrow)</kbd> | Scan backward through your command history.
-<kbd>&darr; (Down arrow)</kbd> | Scan forward through your command history.
-<kbd>&larr; (Left arrow)</kbd> | Move cursor one character to the left on your command line.
+<kbd>&uarr;</kbd> | Scan backward through your command history.
+<kbd>&darr;</kbd> | Scan forward through your command history.
+<kbd>&larr;</kbd> | Move cursor one character to the left on your command line.
 <kbd>Ctrl</kbd> + <kbd>&larr;</kbd> | Move the cursor one word to the left on your command line.
-<kbd>&rarr; (Right arrow)</kbd> | Move cursor one character to the right on your command line.\If at the end of the line, inserts a character from the text of your last command at that position.
+<kbd>&rarr;</kbd> | Move cursor one character to the right on your command line.\If at the end of the line, inserts a character from the text of your last command at that position.
 <kbd>Ctrl</kbd> + <kbd>&rarr;</kbd> | Move the cursor one word to the right on your command line.
 <kbd>Page up</kbd> | Display the first command in your command history.
 <kbd>Page down</kbd> | Display the last command in your command history.
@@ -107,7 +107,7 @@ Available default hotkeys to use within PowerShell shell.
 
 ## Learning notes
 
-### NOTE: NOT case-sensitive
+### :exclamation:NOTE: NOT case-sensitive
 
 You can write any commands, options, variables in **any case**.
 Example:
@@ -119,17 +119,61 @@ wRite-hoSt "$exampleVARIABLE" # output: Hello World!
 
 ---
 
-### Q: How to expand Windows Environment Variables?
+### :exclamation:NOTE: Output returns an object
 
-A: The variables we know from Windows command line _(`cmd`)_ surrounded by
+When you see an example output like this:
+
+```log
+PS > Get-ChildItem
+
+    Directory: C:\Users\xeho91\.dotfiles
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d----          18/01/2021  2:34 PM                .vscode
+d----          17/01/2021 10:04 AM                Editors
+d----          18/01/2021 12:41 AM                Git
+d----          16/01/2021 11:00 PM                Linters
+d----          15/01/2021  7:28 PM                Linux
+d----          16/01/2021 12:55 PM                Media
+d----          16/01/2021 11:00 PM                Prompts
+d----          17/01/2021 11:38 AM                Tools
+d----          18/01/2021  3:14 PM                Windows
+-a---          15/01/2021  7:28 PM              5 .gitignore
+-a---          15/01/2021  7:28 PM           1211 LICENSE
+-a---          15/01/2021  7:28 PM           3925 README.md
+```
+
+**This is an object**. \
+The desired column _(property)_ can be accessed by wrapping the command with
+parentheses, dot and its property name.\
+Example:
+
+```powershell
+(Get-ChildItem).Name
+```
+
+**The results will be an array** _(list)_.\
+Each row _(item)_ can be accessed with its index number.\
+Example:
+
+```powershell
+ (get-ChildItem).Name[5]
+ ```
+
+ ---
+
+### :question:Q: How to expand Windows Environment Variables?
+
+:books:A: The variables we know from Windows command line _(`cmd`)_ surrounded by
 percentages `%ENVIRONMENT_VARIABLE%`,\
 **in PowerShell can be expanded by using `$Env:ENVIRONMENT_VARIABLE`**.
 
 ---
 
-### Q: What is a "cmdlet"?
+### :question:Q: What is a "cmdlet"?
 
-A:
+:books:A:
 > `cmdlet` _(command let)_ is a **special type of command provided in the
 > PowerShell command line environment**.
 > They allow users to put certain enhanced operating system functions into
@@ -141,9 +185,9 @@ A:
 
 [_Credits & modified from this source_](https://www.computerhope.com/jargon/c/cmdlet)
 
-**More information**: <https://docs.microsoft.com/en-us/powershell/scripting/developer/cmdlet/cmdlet-overview/>
+[**More information about cmdlets**](https://docs.microsoft.com/en-us/powershell/scripting/developer/cmdlet/cmdlet-overview/)
 
-**NOTE:**
+**:exclamation: NOTE:**\
 To list all of the available **cmdlets**, use the following command:
 
 ```powershell
@@ -166,31 +210,31 @@ Get-Help "Get-Command"
 
 ---
 
-### Q: What are "modules" in PowerShell?
+### :question:Q: What are "modules" in PowerShell?
 
-A: A self-contained reusable unit that allows you to partition, organize,
+:books:A: A self-contained reusable unit that allows you to partition, organize,
 and abstract your PowerShell code. \
 **A module can contain cmdlets, providers, functions, variables,
 and other types of resources that can be imported as a single unit**.
 
-**More information**: <https://docs.microsoft.com/en-us/powershell/scripting/developer/module/writing-a-windows-powershell-module/>
+[**More information**](https://docs.microsoft.com/en-us/powershell/scripting/developer/module/writing-a-windows-powershell-module/)
 
-**NOTE:**
+**:exclamation:NOTE:**\
 Modules are saved with `*.psm1` extension.
 
 ---
 
-### Q: What is the file extension "psd1" about?
+### :question:Q: What is the file extension "psd1" about?
 
-A: The file extension `*.psd1` are for **PowerShell data files**.
+:books:A: The file extension `*.psd1` are for **PowerShell data files**.
 
-**More information**: <https://docs.microsoft.com/powershell/scripting/learn/ps101/10-script-modules#module-manifests/>
+[**More information**](https://docs.microsoft.com/powershell/scripting/learn/ps101/10-script-modules#module-manifests/)
 
 ---
 
-### Q: How to list all environment variables?
+### :question:Q: How to list all environment variables?
 
-A: Use these commands:
+:books:A: Use these following command(s):
 
 ```powershell
 Get-ChildItem "Env:*"
