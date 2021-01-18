@@ -1,0 +1,32 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+    {
+        "key": "ctrl+alt+oem_comma",
+        "command": "workbench.action.openSettings2"
+    },
+    {
+        "key": "alt+b",
+        "command": "workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "ctrl+b",
+        "command": "-workbench.action.toggleSidebarVisibility"
+    },
+    {
+        "key": "ctrl+shift+up",
+        "command": "editor.emmet.action.balanceIn"
+    },
+    {
+        "key": "ctrl+shift+down",
+        "command": "editor.emmet.action.balanceOut"
+    },
+    {
+        "key": "alt+b",
+        "command": "-extension.openInDefaultBrowser"
+    },
+    {
+        "key": "alt+b",
+        "command": "-gitlens.toggleFileBlame",
+        "when": "editorTextFocus && config.gitlens.keymap == 'alternate' && gitlens:activeFileStatus =~ /blameable/"
+    }
+]

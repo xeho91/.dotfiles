@@ -1,0 +1,327 @@
+{
+  /* ======================================================================== */
+  /* Editor */
+  /* ======================================================================== */
+  "editor.smoothScrolling": true,
+  "editor.unfoldOnClickAfterEndOfLine": true,
+  /* ------------------------------------------------------------------------ */
+  /*                                                                Selection */
+  /* ------------------------------------------------------------------------ */
+  "editor.suggestSelection": "first",
+  "editor.columnSelection": true,
+  /* ------------------------------------------------------------------------ */
+  /*                                                                Rendering */
+  /* ------------------------------------------------------------------------ */
+  "editor.renderWhitespace": "all",
+  "editor.renderControlCharacters": true,
+  "editor.renderLineHighlight": "all",
+  /* ------------------------------------------------------------------------ */
+  /*                                                              Indentation */
+  /* ------------------------------------------------------------------------ */
+  "editor.detectIndentation": true,
+  "editor.insertSpaces": false,
+  "editor.tabSize": 4,
+  /* ------------------------------------------------------------------------ */
+  /*                                                               Formatting */
+  /* ------------------------------------------------------------------------ */
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": false,
+  "editor.formatOnType": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "modifications",
+  /* ------------------------------------------------------------------------ */
+  /*                                                                   Cursor */
+  /* ------------------------------------------------------------------------ */
+  "editor.cursorBlinking": "phase",
+  "editor.cursorSmoothCaretAnimation": true,
+  /* ------------------------------------------------------------------------ */
+  /*                                                            Word wrapping */
+  /* ------------------------------------------------------------------------ */
+  "editor.wordWrap": "off",
+  "editor.wordWrapColumn": 100,
+  /* ------------------------------------------------------------------------ */
+  /*                                                                  Minimap */
+  /* ------------------------------------------------------------------------ */
+  "editor.minimap.enabled": true,
+  "editor.minimap.renderCharacters": false,
+  "editor.minimap.maxColumn": 100,
+  /* ------------------------------------------------------------------------ */
+  /*                                                                   Rulers */
+  /* ------------------------------------------------------------------------ */
+  "editor.hideCursorInOverviewRuler": false,
+  "editor.rulers": [
+    // Recommended column
+    {
+      "column": 80,
+      "color": "#9E9E9E50"
+    },
+    // Max column
+    {
+      "column": 100,
+      "color": "#ff000050"
+    }
+  ],
+  /* ------------------------------------------------------------------------ */
+  /*                                                                    Fonts */
+  /* ------------------------------------------------------------------------ */
+  "editor.fontFamily": "'FiraCode NF', 'Courier New', monospace",
+  "editor.fontLigatures": true,
+  /* ======================================================================== */
+  /* Window */
+  /* ======================================================================== */
+  "window.title": "${dirty}${separator}${folderName}",
+  "window.zoomLevel": 0,
+  /* ======================================================================== */
+  /* Workbench */
+  /* ======================================================================== */
+  "workbench.settings.editor": "json",
+  "workbench.enableExperiments": false,
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "workbench.startupEditor": "welcomePage",
+  /* ------------------------------------------------------------------------ */
+  /*                                                                  Sidebar */
+  /* ------------------------------------------------------------------------ */
+  "workbench.sideBar.location": "right",
+  "workbench.tree.indent": 18,
+  // Bar with icons such as: Explorer, Source control, Debugger etc.
+  "workbench.activityBar.visible": true,
+  /* ------------------------------------------------------------------------ */
+  /*                                                                    Icons */
+  /* ------------------------------------------------------------------------ */
+  "workbench.iconTheme": "material-icon-theme",
+  /* ------------------------------------------------------------------------ */
+  /*                                                                    Theme */
+  /* ------------------------------------------------------------------------ */
+  "workbench.colorTheme": "Srcery",
+  "workbench.preferredDarkColorTheme": "Srcery",
+  "workbench.preferredLightColorTheme": "Night Owl Light",
+  /* ------------------------------------------------------------------------ */
+  /*                                                                 Terminal */
+  /* ------------------------------------------------------------------------ */
+  "workbench.colorCustomizations": {
+    "terminalCursor.background": "#300a24",
+    "terminalCursor.foreground": "#eeeeec",
+    "terminal.background": "#300a24",
+    "terminal.foreground": "#eeeeec",
+    "terminal.ansiBlack": "#2e3436",
+    "terminal.ansiRed": "#cc0000",
+    "terminal.ansiGreen": "#4e9a06",
+    "terminal.ansiYellow": "#c4a000",
+    "terminal.ansiBlue": "#3465a4",
+    "terminal.ansiMagenta": "#75507b",
+    "terminal.ansiCyan": "#06989a",
+    "terminal.ansiWhite": "#d3d7cf",
+    "terminal.ansiBrightBlack": "#555753",
+    "terminal.ansiBrightRed": "#ef2929",
+    "terminal.ansiBrightGreen": "#8ae234",
+    "terminal.ansiBrightYellow": "#fce94f",
+    "terminal.ansiBrightBlue": "#729fcf",
+    "terminal.ansiBrightMagenta": "#ad7fa8",
+    "terminal.ansiBrightCyan": "#34e2e2",
+    "terminal.ansiBrightWhite": "#eeeeec",
+  },
+  "terminal.integrated.confirmOnExit": true,
+  "terminal.integrated.experimentalUseTitleEvent": false,
+  "terminal.integrated.enableBell": false,
+  "terminal.integrated.copyOnSelection": true,
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.shell.linux": "/bin/zsh",
+  "terminal.integrated.shell.windows": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+  /* ======================================================================== */
+  /* Explorer */
+  /* ======================================================================== */
+  "explorer.openEditors.visible": 0,
+  "explorer.incrementalNaming": "smart",
+  /* ======================================================================== */
+  /* Files */
+  /* ======================================================================== */
+  "files.eol": "\n",
+  "files.exclude": {
+    "**/.git": false
+  },
+  "javascript.validate.enable": true,
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  /* ======================================================================== */
+  /* Git */
+  /* ======================================================================== */
+  "git.enableCommitSigning": true,
+  "git.suggestSmartCommit": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  /* ======================================================================== */
+  /* Git extensions */
+  /* ======================================================================== */
+  /* ------------------------------------------------------------------------ */
+  /*                                                                Git Graph */
+  /* ------------------------------------------------------------------------ */
+  "git-graph.commitDetailsView.autoCenter": true,
+  "git-graph.commitDetailsView.fileView.type": "File Tree",
+  "git-graph.dialog.addTag.pushToRemote": true,
+  /* ------------------------------------------------------------------------ */
+  /*                                                                 Git Lens */
+  /* ------------------------------------------------------------------------ */
+  "gitlens.views.repositories.files.layout": "tree",
+  // "gitlens.advanced.messages": {
+  //   "suppressFileNotUnderSourceControlWarning": true
+  // },
+  /* ======================================================================== */
+  /* Linters */
+  /* ======================================================================== */
+  /* ------------------------------------------------------------------------ */
+  /*                                                                 Prettier */
+  /* ------------------------------------------------------------------------ */
+  "prettier.configPath": "$HOME/.dotfiles/Linters/.prettierrc.js",
+  "prettier.ignorePath": "$HOME/.dotfiles/Linters/.prettierignore",
+  "prettier.useEditorConfig": true,
+  "prettier.withNodeModules": false,
+  "prettier.packageManager": "pnpm",
+  /* ------------------------------------------------------------------------ */
+  /*                                                                   cSpell */
+  /* ------------------------------------------------------------------------ */
+  "cSpell.enabled": true,
+  "cSpell.language": "en,en-GB,en-US",
+  "cSpell.showStatus": true,
+  /* ------------------------------------------------------------------------ */
+  /*                                                                   ESLint */
+  /* ------------------------------------------------------------------------ */
+  "eslint.run": "onType",
+  "eslint.packageManager": "pnpm",
+  "eslint.probe": [
+    "javascript"
+  ],
+  "eslint.options": {
+    "configFile": "$HOME/.dotfiles/Linters/.eslintrc.js",
+    "ignorePath": "$HOME/.dotfiles/Linters/.eslintignore",
+  },
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  },
+  /* ------------------------------------------------------------------------ */
+  /*                                                             MarkdownLint */
+  /* ------------------------------------------------------------------------ */
+  "markdownlint.config": {
+    "extends": ".dotfiles/Linters/.markdownlint.json",
+    "MD013": {
+      "line_length": 80,
+      "stern": false,
+      "tables": false
+    }
+  },
+  /* ======================================================================== */
+  /* Extensions */
+  /* ======================================================================== */
+  /* ------------------------------------------------------------------------ */
+  /*                                                                   Rewrap */
+  /* ------------------------------------------------------------------------ */
+  "rewrap.wrappingColumn": 80,
+  "rewrap.wholeComment": true,
+  "rewrap.autoWrap.enabled": true,
+  /* ------------------------------------------------------------------------ */
+  /*                                                                Liveshare */
+  /* ------------------------------------------------------------------------ */
+  "liveshare.presence": true,
+  "liveshare.allowGuestTaskControl": true,
+  "liveshare.publishWorkspaceInfo": true,
+  "liveshare.increasedGuestLimit": false,
+  "liveshare.guestApprovalRequired": true,
+  "liveshare.connectionMode": "direct",
+  "liveshare.diagnosticLogging": true,
+  "liveshare.allowGuestDebugControl": true,
+  /* ------------------------------------------------------------------------ */
+  /*                                                                 Tab Nine */
+  /* ------------------------------------------------------------------------ */
+  "tabnine.experimentalAutoImports": true,
+  /* ------------------------------------------------------------------------ */
+  /*                                                              IntelliCode */
+  /* ------------------------------------------------------------------------ */
+  "vsintellicode.typescript.completionsEnabled": true,
+  /* ------------------------------------------------------------------------ */
+  /*                                                             Version Lens */
+  /* ------------------------------------------------------------------------ */
+  "versionlens.suggestions.showOnStartup": true,
+  /* ------------------------------------------------------------------------ */
+  /*                                                 Bracket Pair Colorizer 2 */
+  /* ------------------------------------------------------------------------ */
+  "bracket-pair-colorizer-2.forceUniqueOpeningColor": true,
+  "bracket-pair-colorizer-2.forceIterationColorCycle": true,
+  "bracket-pair-colorizer-2.colorMode": "Consecutive",
+  "bracket-pair-colorizer-2.showBracketsInGutter": true,
+  "bracket-pair-colorizer-2.showBracketsInRuler": true,
+  "bracket-pair-colorizer-2.rulerPosition": "Full",
+  "bracket-pair-colorizer-2.showVerticalScopeLine": true,
+  "bracket-pair-colorizer-2.showHorizontalScopeLine": true,
+  "bracket-pair-colorizer-2.scopeLineRelativePosition": true,
+  /* ------------------------------------------------------------------------ */
+  /*                                                              Code runner */
+  /* ------------------------------------------------------------------------ */
+  // "code-runner.executorMap": {
+  //   "javascript": "babel-node --config-file \"$DOTFILES/Linters/.babelrc.js\"",
+  // },
+  "code-runner.runInTerminal": false,
+  /* ------------------------------------------------------------------------ */
+  /*                                                                Telemetry */
+  /* ------------------------------------------------------------------------ */
+  "telemetry.enableCrashReporter": false,
+  "telemetry.enableTelemetry": false,
+  /* ------------------------------------------------------------------------ */
+  /*                                                                      Vim */
+  /* ------------------------------------------------------------------------ */
+  "vim.cursorStylePerMode.insert": "block-outline",
+  "vim.cursorStylePerMode.normal": "block",
+  "vim.cursorStylePerMode.visual": "block",
+  "vim.cursorStylePerMode.replace": "block",
+  "vim.cursorStylePerMode.visualblock": "block",
+  "vim.cursorStylePerMode.visualline": "block",
+  "vim.sneak": true,
+  "vim.sneakReplacesF": true,
+  "vim.highlightedyank.enable": true,
+  "vim.highlightedyank.duration": 400,
+  "vim.useSystemClipboard": true,
+  "vim.foldfix": true,
+  "vim.ignorecase": false,
+  "vim.textwidth": 80,
+  "vim.easymotion": true,
+  /* ------------------------------------------------------------------------ */
+  /*                                                              Import cost */
+  /* ------------------------------------------------------------------------ */
+  "importCost.debug": true,
+  "importCost.timeout": 60000,
+  /* ------------------------------------------------------------------------ */
+  /*                                                           TODO highlight */
+  /* ------------------------------------------------------------------------ */
+  "todohighlight.isEnable": true,
+  "todohighlight.defaultStyle": {
+    "color": "#F5F5F5",
+    "backgroundColor": "",
+    "overviewRulerColor": "#ffab00",
+    "cursor": "pointer",
+    "borderWidth": "1px",
+    "borderStyle": "solid",
+    "borderColor": "#212121",
+    "borderRadius": "5px",
+    "isWholeLine": false
+  },
+  "todohighlight.keywords": [
+    {
+      "text": "NOTE:",
+      "backgroundColor": "#9E9E9E"
+    },
+    {
+      "text": "TODO:",
+      "backgroundColor": "#FFAB40"
+    },
+    {
+      "text": "FIXME:",
+      "backgroundColor": "#D32F2F"
+    },
+  ],
+  /* ======================================================================== */
+  /* Other & random */
+  /* ======================================================================== */
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+  "breadcrumbs.enabled": true,
+  "search.searchOnType": true,
+  "remote.SSH.showLoginTerminal": true,
+  "debug.javascript.usePreview": true,
+}

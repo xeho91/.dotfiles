@@ -1,0 +1,51 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=827846 to learn about
+	// workspace recommendations.
+	// Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
+	// List of extensions which should be recommended for users of this
+	// workspace.
+	"recommendations": [
+		// Linters
+		"streetsidesoftware.code-spell-checker",
+		"dbaeumer.vscode-eslint",
+		"davidanson.vscode-markdownlint",
+    "timonwong.shellcheck",
+		// Formatters
+		"editorconfig.editorconfig",
+		"tombonnike.vscode-status-bar-format-toggle",
+		"esbenp.prettier-vscode",
+		"stkb.rewrap",
+		// Git utilities
+		"mhutchie.git-graph",
+		"donjayamanne.githistory",
+		"codezombiech.gitignore",
+		"eamodio.gitlens",
+		// Collaboration
+		"ms-vsliveshare.vsliveshare",
+		// Productivity
+		"tabnine.tabnine-vscode",
+		"visualstudioexptteam.vscodeintellicode",
+		"xabikos.javascriptsnippets",
+		"yzhang.markdown-all-in-one",
+		// Node.JS tools
+		"pflannery.vscode-versionlens",
+    "wix.vscode-import-cost",
+		// Syntax improvements
+		"mgmcdermott.vscode-language-babel",
+		"coenraads.bracket-pair-colorizer-2",
+		"bierner.emojisense",
+		// UX
+		"pkief.material-icon-theme",
+		"panzerstadt.light-dark-toggle",
+		"techer.open-in-browser",
+		// Other
+		"formulahendry.code-runner",
+		"mkxml.vscode-filesize"
+	],
+	// List of extensions recommended by VS Code that should not be recommended
+	// for users of this workspace.
+	"unwantedRecommendations": [
+		"hookyqr.beautify",
+		"dbaeumer.jshint",
+	]
+}
