@@ -2,6 +2,8 @@
 # This configuration is works with "FiraCode NF" font
 # Download: https://www.nerdfonts.com/
 
+# FIXME: Warning, the module "battery" lags terribly in PowerShell.
+
 # =========================================================================== #
 # Default configuration
 # =========================================================================== #
@@ -15,10 +17,9 @@ scan_timeout = 10
 # Overwrite the default format
 format = """
 ┌$username\
-$hostname---\
+$hostname\
 $time \
 $cmd_duration\
-$battery\
 $memory_usage \
 $status\
 $line_break\
@@ -121,12 +122,12 @@ $line_break\
 [directory]
 	disabled          = false
 	style             = "bg:cyan fg:bright-white"
-	format            = "[](fg:cyan)[ﱮ $path]($style)[$read_only]($read_only_style)[](fg:cyan)"
+	format            = "[](fg:cyan)[ﱮ]($style)[$read_only]($read_only_style)[ $path]($style)[](fg:cyan)"
 	truncation_length = 5
 	truncate_to_repo  = true
 	truncation_symbol = ".../"
 	read_only         = ""
-	read_only_style   = "red"
+	read_only_style   = "bg:cyan fg:bright-red"
 
 # https://starship.rs/config/#git-branch
 [git_branch]
@@ -166,11 +167,11 @@ $line_break\
 [git_status]
 	disabled   = false
 	style      = "fg:blue"
-	format     = "$all_status"
-	conflicted = "[](fg:red)[-C ${count}](bg:red fg:white)[](fg:red)"
-	ahead      = "[](fg:green)[⇣-B ${count}](bg:green fg:white)[](fg:green)"
-	behind     = "[](fg:yellow)[⇡-A ${count}](bg:yellow fg:white)[](fg:yellow)"
-	diverged   = "[](fg:red)[-D \\(⇡-A ${ahead_count} | ⇣-B ${count}\\)](bg:red fg:white)[](fg:red)"
+	format     = "$ahead_behind$all_status"
+	conflicted = "[](fg:red)[ Conflicted ${count}](bg:red fg:white)[](fg:red)"
+	ahead      = "[](fg:green)[⇡ﰛ Ahead ${count}](bg:green fg:white)[](fg:green)"
+	behind     = "[](fg:yellow)[⇣ﰚ Behind ${count}](bg:yellow fg:white)[](fg:yellow)"
+	diverged   = "[](fg:red)[ Diverged \\(⇡ﰛ A ${ahead_count} | ⇣ﰚ B ${count}\\)](bg:red fg:white)[](fg:red)"
 	untracked  = "[ ${count}](fg:bright-yellow)"
 	stashed    = "[ ${count}](fg:bright-white)"
 	modified   = "[ ${count}](fg:bright-purple)"
