@@ -82,7 +82,7 @@ Hotkey | Explanation
 <kbd>&darr;</kbd> | Scan forward through your command history.
 <kbd>&larr;</kbd> | Move cursor one character to the left on your command line.
 <kbd>Ctrl</kbd> + <kbd>&larr;</kbd> | Move the cursor one word to the left on your command line.
-<kbd>&rarr;</kbd> | Move cursor one character to the right on your command line.\If at the end of the line, inserts a character from the text of your last command at that position.
+<kbd>&rarr;</kbd> | Move cursor one character to the right on your command line. If at the end of the line, inserts a character from the text of your last command at that position.
 <kbd>Ctrl</kbd> + <kbd>&rarr;</kbd> | Move the cursor one word to the right on your command line.
 <kbd>Page up</kbd> | Display the first command in your command history.
 <kbd>Page down</kbd> | Display the last command in your command history.
@@ -114,8 +114,16 @@ Example:
 
 ```powershell
 $eXamPleVarIabLe = "Hello World!"
-wRite-hoSt "$exampleVARIABLE" # output: Hello World!
+wRite-hoSt "$exampleVARIABLE" # Output: "Hello World!"
 ```
+
+---
+
+### :exclamation:NOTE: Paths format in Windows environment
+
+In Windows environment, unlike in UNIX, any path needs to have a **forward
+slash**.\
+For example: `C:/Users/xeho91/.dotfiles`.
 
 ---
 
@@ -150,7 +158,7 @@ parentheses, dot and its property name.\
 Example:
 
 ```powershell
-(Get-ChildItem).Name
+(Get-ChildItem).Name # Returns a list of items separated by row
 ```
 
 **The results will be an array** _(list)_.\
@@ -158,7 +166,7 @@ Each row _(item)_ can be accessed with its index number.\
 Example:
 
 ```powershell
- (get-ChildItem).Name[5]
+ (get-ChildItem).Name[5] # From the example, the output is: "Media"
  ```
 
  ---
