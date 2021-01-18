@@ -107,6 +107,26 @@ Available default hotkeys to use within PowerShell shell.
 
 ## Learning notes
 
+### NOTE: NOT case-sensitive
+
+You can write any commands, options, variables in **any case**.
+Example:
+
+```powershell
+$eXamPleVarIabLe = "Hello World!"
+wRite-hoSt "$exampleVARIABLE" # output: Hello World!
+```
+
+---
+
+### Q: How to expand Windows Environment Variables?
+
+A: The variables we know from Windows command line _(`cmd`)_ surrounded by
+percentages `%ENVIRONMENT_VARIABLE%`,\
+**in PowerShell can be expanded by using `$Env:ENVIRONMENT_VARIABLE`**.
+
+---
+
 ### Q: What is a "cmdlet"?
 
 A:
@@ -128,12 +148,14 @@ To list all of the available **cmdlets**, use the following command:
 
 ```powershell
 Get-Command
+# or, shorter with alias
+gcm
 ```
 
 Or, find by name, like this:
 
 ```powershell
-Get-Command -Name New*
+Get-Command -Name "New*"
 ```
 
 And to print information about specific cmdlet _(like `man` on Linux)_:
@@ -172,10 +194,6 @@ A: Use these commands:
 
 ```powershell
 Get-ChildItem "Env:*"
-```
-
-Or, shorter _(with alias)_
-
-```powershell
+# Or, shorter, with alias, you can omit quotes as well
 gci Env:*
 ```
