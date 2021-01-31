@@ -1,7 +1,20 @@
-var rulesFrom_Stylelint = {
+var rules_stylelint = {
 	// https://stylelint.io/user-guide/rules/list
+};
 
-	"no-duplicate-selectors": [true, { except: [":root"] }],
+var rules_plugins = {
+	"order/properties-order": [
+		[],
+		{ severity: "warning" },
+	],
+	"plugin/rational-order": [
+		true,
+		{
+			"border-in-box-model": false,
+			"empty-line-between-groups": true,
+			"severity": "warning",
+		}
+	],
 };
 
 module.exports = {
@@ -20,6 +33,9 @@ module.exports = {
 	],
 
 	plugins: [
+		// https://github.com/constverum/stylelint-config-rational-order
+		"stylelint-config-rational-order/plugin",
+
 		// https://github.com/sh-waqar/stylelint-declaration-use-variable
 		"stylelint-declaration-use-variable",
 
@@ -31,6 +47,7 @@ module.exports = {
 	],
 
 	rules: {
-		...rulesFrom_Stylelint,
+		...rules_stylelint,
+		...rules_plugins,
 	},
 };
