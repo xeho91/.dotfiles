@@ -39,10 +39,6 @@
   /* ------------------------------------------------------------------------ */
   "editor.wordWrap": "off",
   "editor.wordWrapColumn": 100,
-  /* ------------------------------------------------------------------------ */
-  /*                                                                  Minimap */
-  /* ------------------------------------------------------------------------ */
-  "editor.minimap.enabled": true,
   "editor.minimap.renderCharacters": false,
   "editor.minimap.maxColumn": 100,
   /* ------------------------------------------------------------------------ */
@@ -70,7 +66,6 @@
   /* Window */
   /* ======================================================================== */
   "window.title": "${dirty}${separator}${folderName}",
-  "window.zoomLevel": 0,
   /* ======================================================================== */
   /* Workbench */
   /* ======================================================================== */
@@ -86,15 +81,12 @@
   // Bar with icons such as: Explorer, Source control, Debugger etc.
   "workbench.activityBar.visible": true,
   /* ------------------------------------------------------------------------ */
-  /*                                                                    Icons */
-  /* ------------------------------------------------------------------------ */
-  "workbench.iconTheme": "material-icon-theme",
-  /* ------------------------------------------------------------------------ */
   /*                                                                    Theme */
   /* ------------------------------------------------------------------------ */
   "workbench.colorTheme": "Srcery",
   "workbench.preferredDarkColorTheme": "Srcery",
   "workbench.preferredLightColorTheme": "Night Owl Light",
+  "workbench.iconTheme": "material-icon-theme",
   /* ------------------------------------------------------------------------ */
   /*                                                                 Terminal */
   /* ------------------------------------------------------------------------ */
@@ -171,28 +163,27 @@
   /* ------------------------------------------------------------------------ */
   /*                                                                 Prettier */
   /* ------------------------------------------------------------------------ */
-  "prettier.configPath": "$HOME/.dotfiles/Linters/.prettierrc.js",
-  "prettier.ignorePath": "$HOME/.dotfiles/Linters/.prettierignore",
+  "prettier.enable": true,
+  "prettier.configPath": "C:\\Users\\xeho91\\.dotfiles\\Linters\\.prettierrc.js",
+  "prettier.ignorePath": "C:\\Users\\xeho91\\.dotfiles\\Linters\\.prettierignore",
   "prettier.useEditorConfig": true,
   "prettier.withNodeModules": false,
-  "prettier.packageManager": "pnpm",
   /* ------------------------------------------------------------------------ */
   /*                                                                   cSpell */
   /* ------------------------------------------------------------------------ */
   "cSpell.enabled": true,
-  "cSpell.language": "en,en-GB,en-US",
+  "cSpell.import": ["C:\\Users\\xeho91\\.dotfiles\\Linters\\cspell.json"],
   "cSpell.showStatus": true,
+  "cSpell.fixSpellingWithRenameProvider": true,
   /* ------------------------------------------------------------------------ */
   /*                                                                   ESLint */
   /* ------------------------------------------------------------------------ */
+  "eslint.debug": true,
   "eslint.run": "onType",
-  "eslint.packageManager": "pnpm",
-  "eslint.probe": [
-    "javascript"
-  ],
+  "eslint.trace.server": "verbose",
   "eslint.options": {
-    "configFile": "$HOME/.dotfiles/Linters/.eslintrc.js",
-    "ignorePath": "$HOME/.dotfiles/Linters/.eslintignore",
+    "configFile": "C:\\Users\\xeho91\\.dotfiles\\Linters\\.eslintrc.js",
+    "ignorePath": "C:\\Users\\xeho91\\.dotfiles\\Linters\\.eslintignore",
   },
   "eslint.codeAction.showDocumentation": {
     "enable": true
@@ -201,22 +192,37 @@
   /*                                                             MarkdownLint */
   /* ------------------------------------------------------------------------ */
   "markdownlint.config": {
-    "extends": ".dotfiles/Linters/.markdownlint.json",
+    "extends": ".dotfiles\\Linters\\.markdownlint.json",
     "MD013": {
       "line_length": 80,
       "stern": false,
       "tables": false
     }
   },
+  /* ------------------------------------------------------------------------ */
+  /*                                                                Stylelint */
+  /* ------------------------------------------------------------------------ */
+  "stylelint.packageManager": "pnpm",
+  "stylelint.config": {
+    "extends": "C:\\Users\\xeho91\\.dotfiles\\Linters\\.stylelintrc.js",
+  },
+  /* ------------------------------------------------------------------------ */
+  /*                                                                 Htmlhint */
+  /* ------------------------------------------------------------------------ */
+  "htmlhint.enable": true,
+  "htmlhint.optionsFile": "C:\\Users\\xeho91\\.dotfiles\\Linters\\.htmlhintrc.js",
+  // "htmlhint.options": {
+  //   "doctype-first": true,
+  // },
   /* ======================================================================== */
   /* Extensions */
   /* ======================================================================== */
   /* ------------------------------------------------------------------------ */
   /*                                                                   Rewrap */
   /* ------------------------------------------------------------------------ */
-  "rewrap.wrappingColumn": 80,
-  "rewrap.wholeComment": true,
-  "rewrap.autoWrap.enabled": true,
+  // "rewrap.wrappingColumn": 100,
+  // "rewrap.wholeComment": true,
+  // "rewrap.autoWrap.enabled": true,
   /* ------------------------------------------------------------------------ */
   /*                                                                Liveshare */
   /* ------------------------------------------------------------------------ */
@@ -319,9 +325,25 @@
   /* ======================================================================== */
   /* Other & random */
   /* ======================================================================== */
-  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
   "breadcrumbs.enabled": true,
   "search.searchOnType": true,
   "remote.SSH.showLoginTerminal": true,
   "debug.javascript.usePreview": true,
+  "css.validate": false,
+  "svg.preview.mode": "svg",
+  "html.format.enable": false,
+  "html.format.wrapLineLength": 100,
+  "svg.completion.emmet": true,
+  "svg.completion.showAdvanced": true,
+  // "svg.minify.addAttributesToSVGElement": true,
+  // "svg.minify.addClassesToSVGElement": true,
+  "svg.preview.showRuler": true,
+  "svg.preview.showCrossLine": true,
+  "html.trace.server": "verbose",
+  "emmet.triggerExpansionOnTab": true,
+  "emmet.showSuggestionsAsSnippets": true,
+  "emmet.includeLanguages": {
+    "postcss": "css"
+  },
+  "window.zoomLevel": -1,
 }

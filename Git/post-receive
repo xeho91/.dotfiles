@@ -1,0 +1,14 @@
+#!/bin/sh
+
+website_name=""
+
+website_directory="/var/www/html/$website_name"
+repository_directory="/var/repo/$website_name.git"
+
+# `-d` means include untracked directories
+command git --work-tree="$website_directory" clean --force -d
+
+command git \
+	--work-tree="$website_directory" \
+	--git-dir="$repository_directory" \
+	checkout --force release
