@@ -1,6 +1,7 @@
 #!/bin/sh
 
 website_name=""
+branch_name=""
 
 website_directory="/var/www/html/$website_name"
 repository_directory="/var/repo/$website_name.git"
@@ -11,4 +12,4 @@ command git --work-tree="$website_directory" clean --force -d
 command git \
 	--work-tree="$website_directory" \
 	--git-dir="$repository_directory" \
-	checkout --force release
+	checkout --force "$branch_name"
