@@ -1,0 +1,5 @@
+<svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+	<path id="Left---green" d="m9.1111 13.98 1.3858-1.4002 6.8234 10.169v21.503l-8.2093-8.1986z" fill="#3c92d2" style="fill-rule:evenodd"/>
+	<path id="Right---blue" d="m40.833 14.059-8.312-8.3636v21.413l6.9538 10.471c0-1e-6 1.4144-1.5374 1.4144-1.5374z" fill="#57a143" style="fill-rule:evenodd"/>
+	<path id="Cross---blue" d="m17.32 5.748 21.345 32.582-5.9729 5.9748-21.356-32.51z" fill="#57a143" style="fill-rule:evenodd"/>
+</svg>
