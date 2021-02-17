@@ -23,8 +23,6 @@ _Quote borrowed from [this source]_
 So, in other words, this is a repository which contains my configurations for
 the programs in my core tool belt.
 
-:warning: Please be careful if you decide to play with my tools… :wink:
-
 ---
 
 ## Getting started
@@ -40,18 +38,18 @@ to automate the processes.
   /> Instructions for Linux](#instructions-for-linux)
 - [<img alt="Linux logo" height="12"
         src="https://upload.wikimedia.org/wikipedia/commons/4/48/Windows_logo_-_2012_%28dark_blue%29.svg"
-  /> Instructions for Windows 10 (WIP)](#instructions-for-windows-10)
+  /> Instructions for Windows 10](#instructions-for-windows-10)
 
 ---
 
 ### Instructions for Linux
 
-[Installer file code - `./Linux/install.sh`](./Linux/install.sh).
+[Installer file code - `./Linux/install.sh`](./Linux/install.sh)
 
-<img alt="Linux logo"
+<img alt="linux logo"
      height="100"
      align="right"
-     src="https://upload.wikimedia.org/wikipedia/commons/3/3c/TuxFlat.svg"
+     src="https://upload.wikimedia.org/wikipedia/commons/3/3c/tuxflat.svg"
 />
 
 :information_source: Currently optimized for these distributions:
@@ -66,28 +64,13 @@ to automate the processes.
        src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Archlinux-icon-crystal-64.svg"
   /> Arch Linux
 
-<details>
-  <summary>:scroll: Installer features</summary>
-
-- Use the package manager based on Linux's distributon name
-- Stop the installation if the dotfiles or configuration files already exists
-- Set up the default shell _(`bash` or `zsh`)_ and editor _(`nvim` or `vim`)_
-- Create symlinks to the program's configuration file
-- Set up the environment variables in the default shell's configuration file:
-  - `$DOTFILES`
-  - `$EDITOR`
-  - `$BUILD_FROM_SOURCE`
-  - `$MODE`
-
-</details>
-
-### Step by step guide
+### Step by step guide for Linux
 
 1. **Download the installation file.**\
    Type in your shell:
 
    ```sh
-   curl -O "https://raw.githubusercontent.com/xeho91/.dotfiles/main/Linux/install.sh"
+   curl --remote-name "https://raw.githubusercontent.com/xeho91/.dotfiles/main/Linux/install.sh"
    ```
 
 2. **Read and inspect the code.**\
@@ -125,10 +108,43 @@ to automate the processes.
 
 ### Instructions for Windows 10
 
-Work in progress…
+[Installer file code - `./Windows/install.ps1`](./Windows/install.ps1)
 
 <img alt="Windows logo"
      height="100"
      align="right"
      src="https://upload.wikimedia.org/wikipedia/commons/4/48/Windows_logo_-_2012_%28dark_blue%29.svg"
 />
+
+### Step by step guide for Windows 10
+
+1. **Run the PowerShell `as administrator`.**
+ 
+2. **Download the installation file.**\
+   Type in your shell:
+
+   ```powershell
+   curl --remote-name "https://raw.githubusercontent.com/xeho91/.dotfiles/main/Windows/install.ps1"
+   ```
+
+3. **Read and inspect the code.**\
+   For example with this command:
+
+   ```powershell
+   Get-Content install.ps1
+   ```
+
+   :exclamation: **NOTE**: You can modify the configuration with any text
+   editor, if you have the knowledge.\
+   _(See the `Variables for installation configuration` section in the
+   installer's code, near the beginning of file)_
+
+4. **Run this installation file.**\
+   Type in your shell:
+
+   ```powershell
+   .\install.ps1
+   ```
+
+   :exclamation: **NOTE**: Don't forget the `.\` at the beginning.
+   That's how you run executable files in Windows.

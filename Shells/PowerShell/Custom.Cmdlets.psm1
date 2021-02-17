@@ -96,6 +96,8 @@ New-Module -Name "Custom.Cmdlets" -ScriptBlock {
 		Author:  xeho91
 		Website: https://github.com/xeho91
 	#>
+
+		[CmdletBinding()]
 		param(
 			[string[]]$ThemeName
 		)

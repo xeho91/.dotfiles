@@ -11,9 +11,8 @@ set -eu
 
 # URL to the remote repository to the dotfiles
 dotfiles_remote_repository="https://github.com/xeho91/.dotfiles.git"
-declare dotfiles_dir_name=""
 
-# List of configuration files for programs to be used/installed
+# List of configuration files for programs to be used/installedl
 declare -A config_files=(
 	["git"]="Git/.gitconfig"
 	["bash"]="Linux/Bash/.bash_profile"
@@ -29,38 +28,44 @@ declare -A package_managers=(
 
 required_programs=( "git" "which" )
 
+declare new_hostname
+declare old_username
+declare new_username
+
 # shellcheck disable=SC2034
 shell_options=( "zsh" "bash" )
-declare default_shell=""
 
 # shellcheck disable=SC2034
 editor_options=( "nvim" "vim" )
-declare default_editor=""
 
 # shellcheck disable=SC2034
 mode_options=( "developer" "administrator" )
-declare user_mode=""
-
-declare build_from_source=""
 
 # List of environment variables to be edited
 # and their values to be determined
-declare -A environment_variables=(
-	["DOTFILES"]="\$HOME/$dotfiles_dir_name"
-	["EDITOR"]="$default_editor"
-	["MODE"]="$user_mode"
-	["BUILD_FROM_SOURCE"]="$build_from_source"
-)
+declare -A environment_variables=()
+# 	["DOTFILES"]="\$HOME/$dotfiles_dir_name"
+# 	["EDITOR"]="$default_editor"
+# 	["USER_MODE"]="$user_mode"
+# 	["BUILD_FROM_SOURCE"]="$build_from_source"
+# )
 
 # =========================================================================== #
 # Helpers
 # =========================================================================== #
 
 # Get the basename of dotfiles directory
-dotfiles_dir_name="$( \
-	command basename "$dotfiles_remote_repository" \
-	| command grep --only-matching --perl-regexp '.*(?=\.git)' \
-)"
+function get_dotfiles_basename {
+	local dotfiles_dir_name
+
+	dotfiles_dir_name="$( \
+		command basename "$dotfiles_remote_repository" \
+		| command grep --only-matching --perl-regexp '.*(?=\.git)' \
+	)"
+
+	environment_variables["DOTFILES"]="$HOME/$dotfiles_dir_name"
+}
+get_dotfiles_basename
 
 # Associative array with colors for `tput` program
 declare -A colors=(
@@ -367,12 +372,13 @@ function link_exists {
 # --------------------------------------------------------------------------- #
 function create_symlink {
 	local program_name=$1
+	local dotfiles_path="${environment_variables[DOTFILES]}"
 	local config_file_path=${config_files["$program_name"]}
 	local file_name
 	file_name=$(command basename "$config_file_path")
 
 	print info "Creating a symbolic link for \"$file_name\" from the dotfiles in your home directory..."
-	command ln --symbolic "$dotfiles_dir_name/$config_file_path" "$file_name"
+	command ln --symbolic "$dotfiles_path/$config_file_path" "$file_name"
 
 	if ! link_exists "$file_name"; then
 		print error "Something went wrong with creating a symbolic for the \"$program_name\" configuration file!"
@@ -538,21 +544,140 @@ function check_required_programs {
 }
 
 # --------------------------------------------------------------------------- #
-#                                 Move to the user's home directory (`$HOME`)
+#                               switch to the user's home directory (`$HOME`)
 # --------------------------------------------------------------------------- #
 function go_to_home_directory {
 	start_installation_part \
-		"Current working directory" \
-		"Checking current working directory"
+		"current working directory" \
+		"checking current working directory"
 
 	if [[ $PWD == "$HOME" ]]; then
-		print note "You are already in \$HOME=\"$PWD\" directory."
+		print note "you are already in \$home=\"$PWD\" directory."
 	else
 		cd "$HOME"
-		print note "Changed working directory to \$HOME=\"$PWD\"."
+		print note "changed working directory to \$home=\"$HOME\"."
 	fi
 
-	end_installation_part "Checking completed."
+	end_installation_part "checking completed."
+}
+
+# --------------------------------------------------------------------------- #
+#                                                         Change the hostname
+# --------------------------------------------------------------------------- #
+function change_hostname {
+	start_installation_part \
+		"Device hostname" \
+		"Changing the device's hostname"
+
+	print question "Do you want to set this device's \"\$HOSTNAME\"?"
+
+	if confirm; then
+		print question "What is going to be a new name of this device?"
+		read -r -p "Hostname: " new_hostname
+
+		command sudo hostnamectl set-hostname "$new_hostname"
+
+		print note "Changed device's \$HOSTNAME from \"$HOSTNAME\" to \"$new_hostname\"."
+		print note "The change will take an effect after restarting the device."
+
+		end_installation_part "Device's \$HOSTNAME configured."
+	else
+		print warning "Skipped configuring device's \$HOSTNAME."
+		printf -- "---------\n"
+	fi
+}
+
+# --------------------------------------------------------------------------- #
+#                                                            Add the new user
+# --------------------------------------------------------------------------- #
+function add_new_user {
+	start_installation_part \
+		"New user" \
+		"Attempting to add the new user"
+
+	print question "Do you want to add the new user to this device's system?"
+
+	old_username="$(whoami)"
+
+	if confirm; then
+		print question "What is going to be a name of this new user?"
+		read -r -p "User: " new_username
+
+		command sudo adduser "$new_username"
+
+		print note "Added the new user \"$new_username\"."
+
+		print question "Do you want this user to be able to perform administrative tasks (add to sudo group)?"
+
+		if confirm; then
+			command sudo usermod --append --groups "sudo" "$new_username"
+		else
+			print warning "This new user is not going to be able to able to perform administrative tasks!"
+			printf -- "---------\n"
+		fi
+
+		print info "Moving to the new user's home directory..."
+
+		command cd "/home/$new_username"
+
+		print note "Changed directory to \"/home/\$new_username\"."
+
+		end_installation_part "Finished adding new user."
+	else
+		print note "Skipped adding new user."
+		printf -- "---------\n"
+	fi
+}
+
+# --------------------------------------------------------------------------- #
+#                                                     Delete the default user
+# --------------------------------------------------------------------------- #
+function delete_default_user {
+	start_installation_part \
+		"Delete the default user" \
+		"Attempting to remove the default user"
+
+	print question "Do you want to remove the default user \"$old_username\"?"
+
+	if confirm; then
+		print question "Do you want to keep the files from old user in the directory: \"/home/$old_username\"?"
+
+		if confirm; then
+			command sudo deluser "$old_username"
+			print warning "The default user's files still exists in: \"/home/$old_username\"."
+		else
+			command sudo deluser "$old_username" --remove-home
+		fi
+
+		print note "Deleted the default user \"$old_username\"."
+
+		end_installation_part "Finished removing the default user."
+	else
+		print note "Skipped removing the default user."
+		printf -- "---------\n"
+	fi
+}
+
+# --------------------------------------------------------------------------- #
+#                                                        Disable root account
+# --------------------------------------------------------------------------- #
+function disable_root_account {
+	start_installation_part \
+		"Disable root" \
+		"Attempting to disable root account"
+
+	print question "Do you want to disable the root account?"
+
+	if confirm; then
+		command sudo -s passwd --lock "root"
+
+		print note "Disabled the root account, from now no one can login as \"root\"."
+
+		end_installation_part "Finished disabling root account."
+	else
+		print warning "The \"root\" account is still enabled, this could be a potential security risk!"
+		printf -- "---------\n"
+	fi
 }
 
 # --------------------------------------------------------------------------- #
@@ -575,8 +700,10 @@ function check_for_existing_files {
 		fi
 	done
 
-	if directory_exists "$dotfiles_dir_name" || (( ${#existing_config_files[@]} )); then
-		if directory_exists "$dotfiles_dir_name"; then
+	local dotfiles_path="${environment_variables[DOTFILES]}"
+
+	if directory_exists "$dotfiles_path" || (( ${#existing_config_files[@]} )); then
+		if directory_exists "$dotfiles_path"; then
 			print error "The dotfiles directory \"$dotfiles_dir_name\" exists in home directory!"
 		fi
 
@@ -611,6 +738,8 @@ function clone_dotfiles {
 
 	command git clone $dotfiles_remote_repository
 
+	local dotfiles_dir_name="${environment_variables[DOTFILES]}"
+
 	if ! directory_exists "$dotfiles_dir_name"; then
 		print error "Something went wrong with cloning the dotfiles!"
 		terminate
@@ -639,8 +768,11 @@ function configure_default_shell {
 		"Default shell" \
 		"Configuring the default shell"
 
+	local default_shell
 	print question "Which shell do you want to use as the default one?"
 	pick_option "default_shell" "shell_options"
+
+	environment_variables["SHELL"]="$default_shell"
 
 	function get_current_default_shell {
 		# shellcheck disable=SC2016
@@ -707,7 +839,7 @@ function link_default_shell_configuration {
 	start_installation_part \
 		"Shell's configuration file"
 
-	create_symlink "$default_shell"
+	create_symlink "${environment_variables[SHELL]}"
 
 	end_installation_part "Default shell's configuration file is ready."
 }
@@ -720,8 +852,11 @@ function configure_default_editor {
 		"Default editor" \
 		"Configure the default editor"
 
+	local default_editor
 	print question "Which text editor do you want to set as the default one?"
 	pick_option "default_editor" "editor_options"
+
+	environment_variables["EDITOR"]="$default_editor"
 
 	local skipped_installation="false"
 
@@ -759,8 +894,11 @@ function set_user_mode {
 		"User mode" \
 		"Determining the user mode for this system"
 
+	local user_mode
 	print question "Which user mode do you want to set for this system?"
 	pick_option "user_mode" "mode_options"
+
+	environment_variables["USER_MODE"]="$user_mode"
 
 	end_installation_part "User mode determined."
 }
@@ -773,13 +911,17 @@ function determine_if_build_from_source {
 		"Build from source" \
 		"Determine if programs should be built from their source"
 
+	local build_from_source
 	print warning "They will take a while to build and the latest versions could be not stable!"
 	print question "Do you want to build the tools programs from their source?"
+
 	if confirm; then
 		build_from_source=true
 	else
 		build_from_source=false
 	fi
+
+	environment_variables["BUILD_FROM_SOURCE"]="$build_from_source"
 
 	end_installation_part "Decision about building programs from their source is done."
 }
@@ -792,12 +934,15 @@ function configure_environment_variables {
 		"Environment variables" \
 		"Setting up the environment variables in the default shell \`$default_shell\` configuration file"
 
-
+	local dotfiles_path="${environment_variables[DOTFILES]}"
 	# Path to the default shell's configuration file
-	local shell_config_file_path="$HOME/$dotfiles_dir_name/${config_files[$default_shell]}"
+	local shell_config_file_path="$dotfiles_path/${config_files[$default_shell]}"
 	print note "The path of \`$default_shell\` configuration file is: \"$shell_config_file_path\"."
 
 	function replace_env_variable {
+		local variable_name=$1
+		local variable_value=$2
+
 		print warning "This environment variable already existed in the file!"
 
 		# Escape the `/` characters if they exists for the `sed` substituting
@@ -813,6 +958,9 @@ function configure_environment_variables {
 	}
 
 	function append_env_variable {
+		local variable_name=$1
+		local variable_value=$2
+
 		print info "Adding the environment variable to the file..."
 
 		echo "export $variable_name=\"$variable_value\"" >> "$shell_config_file_path"
@@ -835,7 +983,7 @@ function configure_environment_variables {
 	}
 
 	for key in "${!environment_variables[@]}"; do
-		change_env_variable "$key" "${environment_variables["$key"]}"
+		change_env_variable "$key" "${environment_variables[$key]}"
 	done
 
 	end_installation_part "Finished setting up environment variables."
@@ -844,29 +992,37 @@ function configure_environment_variables {
 # =========================================================================== #
 # Main runtime
 # =========================================================================== #
-print info "Starting the installation..."
+function main {
+	print info "Starting the installation..."
 
-# Start the installation parts
-check_if_distribution_is_supported
-determine_package_manager
-check_required_programs
-go_to_home_directory
-check_for_existing_files
-clone_dotfiles
-link_git_configuration
-configure_default_shell
-link_default_shell_configuration
-configure_default_editor
-set_user_mode
-determine_if_build_from_source
-configure_environment_variables
+	# Start the installation parts
+	check_if_distribution_is_supported
+	determine_package_manager
+	check_required_programs
+	go_to_home_directory
+	change_hostname
+	add_new_user
+	# delete_default_user
+	disable_root_account
+	check_for_existing_files
+	clone_dotfiles
+	link_git_configuration
+	configure_default_shell
+	link_default_shell_configuration
+	configure_default_editor
+	set_user_mode
+	determine_if_build_from_source
+	configure_environment_variables
 
-# Finish the installation by starting the set default shell if user wants to
-print success "Installation finished!"
-print question "Do you want to start the default shell now?"
-if confirm; then
-	print info "Executing default shell and loading its configuration..."
-	exec "$default_shell"
-else
-	exit 0
-fi
+	# Finish the installation by starting the set default shell if user wants to
+	print success "Installation finished!"
+	print question "Do you want to start the default shell now?"
+	if confirm; then
+		print info "Executing default shell and loading its configuration..."
+		exec "$default_shell"
+	else
+		exit 0
+	fi
+}
+
+main

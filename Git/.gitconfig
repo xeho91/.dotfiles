@@ -9,6 +9,7 @@
 [user]
 	name = xeho91
 	email = xeho91@pm.me
+	signingkey = EFE941BB
 
 # =========================================================================== #
 # Options for GPG - GnuPrivacy Guard
@@ -18,6 +19,7 @@
 # https://help.github.com/articles/signing-commits-using-gpg/
 # =========================================================================== #
 [gpg]
+	# program = C:\\Program Files (x86)\\Gpg4win\\..\\GnuPG\\bin\\gpg.exe
 	program = gpg
 
 [commit]
@@ -28,7 +30,7 @@
 # =========================================================================== #
 [core]
 	pager = delta
-	editor = $EDITOR
+	editor = nvim
 	eol = lf
 	autocrlf = false
 	whitespace = trailing-space, space-before-tab
@@ -39,6 +41,18 @@
 # =========================================================================== #
 [color]
 	ui = true
+
+# =========================================================================== #
+# Defaults
+# =========================================================================== #
+[init]
+	defaultBranch = main
+
+# =========================================================================== #
+# Credential settings
+# =========================================================================== #
+[credential]
+	helper = manager-core
 
 # =========================================================================== #
 # Reuse recorded resolution of conflicted merges
@@ -303,4 +317,3 @@
 	unignore = update-index --no-assume-unchanged
 	# Whatchanged
 	wch      = whatchanged -p --abbrev-commit --pretty=medium
-

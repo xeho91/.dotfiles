@@ -10,11 +10,10 @@
 
 > [PowerShell] is a cross-platform **task automation and configuration
 > management framework, consisting of a command-line shell and scripting
-> language**. \
+> language**.
 > Unlike most shells, which accept and return text,
 > **PowerShell is built on top of the `.NET`** _(also known as `dotnet`)_
-> **Common Language Runtime** _(CLR)_, and accepts and returns .NET
-> objects.
+> **Common Language Runtime** _(CLR)_, and accepts and returns .NET objects.
 
 [_Modified from this source_](https://docs.microsoft.com/powershell/scripting/overview)
 
@@ -123,7 +122,7 @@ wRite-hoSt "$exampleVARIABLE" # Output: "Hello World!"
 
 In Windows environment, unlike in UNIX, any path needs to have a **forward
 slash**.\
-For example: `C:/Users/xeho91/.dotfiles`.
+For example: `C:\Users\xeho91\.dotfiles`.
 
 ---
 
@@ -249,3 +248,18 @@ Get-ChildItem "Env:*"
 # Or, shorter, with alias, you can omit quotes as well
 gci Env:*
 ```
+
+---
+
+### :question:Q: How to escape special characters in PowerShell?
+
+:books:A: Use the backtick (**`**).
+
+Example:
+
+```powershell
+"Some string with `$variable which will not be parsed, because it was escaped.".
+```
+
+:exclamation:**NOTE**: Variables in strings wrapped with single quote
+characters (`'`) will not be parsed. Only with double quotes (`"`).

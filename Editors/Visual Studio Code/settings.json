@@ -24,7 +24,6 @@
   /* ------------------------------------------------------------------------ */
   /*                                                               Formatting */
   /* ------------------------------------------------------------------------ */
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnPaste": false,
   "editor.formatOnType": true,
   "editor.formatOnSave": true,
@@ -135,15 +134,13 @@
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
+
   /* ======================================================================== */
-  /* Git */
+  /* Git & related extensions */
   /* ======================================================================== */
   "git.enableCommitSigning": true,
   "git.suggestSmartCommit": false,
   "diffEditor.ignoreTrimWhitespace": false,
-  /* ======================================================================== */
-  /* Git extensions */
-  /* ======================================================================== */
   /* ------------------------------------------------------------------------ */
   /*                                                                Git Graph */
   /* ------------------------------------------------------------------------ */
@@ -157,9 +154,11 @@
   // "gitlens.advanced.messages": {
   //   "suppressFileNotUnderSourceControlWarning": true
   // },
+
   /* ======================================================================== */
   /* Linters */
   /* ======================================================================== */
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   /* ------------------------------------------------------------------------ */
   /*                                                                 Prettier */
   /* ------------------------------------------------------------------------ */
@@ -202,7 +201,7 @@
   /* ------------------------------------------------------------------------ */
   /*                                                                Stylelint */
   /* ------------------------------------------------------------------------ */
-  "stylelint.packageManager": "pnpm",
+  // "stylelint.packageManager": "npm",
   "stylelint.config": {
     "extends": "C:\\Users\\xeho91\\.dotfiles\\Linters\\.stylelintrc.js",
   },
@@ -293,35 +292,6 @@
   /* ------------------------------------------------------------------------ */
   "importCost.debug": true,
   "importCost.timeout": 60000,
-  /* ------------------------------------------------------------------------ */
-  /*                                                           TODO highlight */
-  /* ------------------------------------------------------------------------ */
-  "todohighlight.isEnable": true,
-  "todohighlight.defaultStyle": {
-    "color": "#F5F5F5",
-    "backgroundColor": "",
-    "overviewRulerColor": "#ffab00",
-    "cursor": "pointer",
-    "borderWidth": "1px",
-    "borderStyle": "solid",
-    "borderColor": "#212121",
-    "borderRadius": "5px",
-    "isWholeLine": false
-  },
-  "todohighlight.keywords": [
-    {
-      "text": "NOTE:",
-      "backgroundColor": "#9E9E9E"
-    },
-    {
-      "text": "TODO:",
-      "backgroundColor": "#FFAB40"
-    },
-    {
-      "text": "FIXME:",
-      "backgroundColor": "#D32F2F"
-    },
-  ],
   /* ======================================================================== */
   /* Other & random */
   /* ======================================================================== */
@@ -345,5 +315,13 @@
   "emmet.includeLanguages": {
     "postcss": "css"
   },
-  "window.zoomLevel": -1,
+  "terminal.integrated.cursorStyle": "line",
+  "npm.packageManager": "pnpm",
+  "cSpell.userWords": [
+    "Bitwarden",
+    "Deno",
+    "Neovim",
+    "Nextcloud",
+    "Photoshop"
+  ],
 }
