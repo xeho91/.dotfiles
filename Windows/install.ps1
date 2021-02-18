@@ -24,6 +24,7 @@ $ProgramsToInstall = @(
 	"powershell-core",
 	"pyenv-win",
 	"nvm.portable",
+	"rustup.install",
 	# Productivity tools
 	"powertoys",
 	"bitwarden",

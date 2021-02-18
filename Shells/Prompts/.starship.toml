@@ -23,6 +23,7 @@ format = """
 	$cmd_duration\
 	$nodejs\
 	$python\
+	$rust\
 	$memory_usage\
 	$line_break\
 ├\
@@ -117,6 +118,13 @@ format = """
 	format            = " [](fg:green)[$symbol $version]($style)[](fg:green)"
 	symbol            = ""
 
+# https://starship.rs/config/#rust
+[rust]
+	disabled          = false
+	style             = "bg:bright-black fg:bright-white"
+	format            = " [](fg:bright-black)[$symbol $version]($style)[](fg:bright-black)"
+	symbol            = ""
+
 # https://starship.rs/config/#memory-usage
 [memory_usage]
 	disabled        = false
@@ -182,7 +190,7 @@ format = """
 	format     = "$ahead_behind$all_status"
 	conflicted = "[](fg:red)[ Conflicted ${count}](bg:red fg:white)[](fg:red)"
 	ahead      = "[](fg:green)[⇡ﰛ Ahead ${count}](bg:green fg:white)[](fg:green)"
-	behind     = "[](fg:yellow)[⇣ﰚ Behind ${count}](bg:yellow fg:white)[](fg:yellow)"
+	behind     = "[](fg:yellow)[⇣ﰚ Behind ${count}](bg:yellow fg:red)[](fg:yellow)"
 	diverged   = "[](fg:red)[ Diverged \\(⇡ﰛ A ${ahead_count} | ⇣ﰚ B ${count}\\)](bg:red fg:white)[](fg:red)"
 	untracked  = "[ ${count}](fg:bright-yellow)"
 	stashed    = "[ ${count}](fg:bright-white)"
