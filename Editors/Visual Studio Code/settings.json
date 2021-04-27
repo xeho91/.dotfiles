@@ -79,13 +79,10 @@
   "workbench.tree.indent": 18,
   // Bar with icons such as: Explorer, Source control, Debugger etc.
   "workbench.activityBar.visible": true,
-  /* ------------------------------------------------------------------------ */
-  /*                                                                    Theme */
-  /* ------------------------------------------------------------------------ */
-  "workbench.colorTheme": "Srcery",
-  "workbench.preferredDarkColorTheme": "Srcery",
-  "workbench.preferredLightColorTheme": "Night Owl Light",
+  "workbench.preferredDarkColorTheme": "Tokyo Night Storm",
+  "workbench.preferredLightColorTheme": "Tokyo Night Light",
   "workbench.iconTheme": "material-icon-theme",
+  "window.autoDetectColorScheme": true,
   /* ------------------------------------------------------------------------ */
   /*                                                                 Terminal */
   /* ------------------------------------------------------------------------ */
@@ -151,9 +148,6 @@
   /*                                                                 Git Lens */
   /* ------------------------------------------------------------------------ */
   "gitlens.views.repositories.files.layout": "tree",
-  // "gitlens.advanced.messages": {
-  //   "suppressFileNotUnderSourceControlWarning": true
-  // },
 
   /* ======================================================================== */
   /* Linters */
@@ -163,15 +157,16 @@
   /*                                                                 Prettier */
   /* ------------------------------------------------------------------------ */
   "prettier.enable": true,
-  "prettier.configPath": "C:\\Users\\xeho91\\.dotfiles\\Linters\\.prettierrc.js",
-  "prettier.ignorePath": "C:\\Users\\xeho91\\.dotfiles\\Linters\\.prettierignore",
+  // "prettier.packageManager": "pnpm",
+  "prettier.configPath": "/home/xeho91/.dotfiles/Linters/.prettierrc.js",
+  "prettier.ignorePath": "/home/xeho91/.dotfiles/Linters/.prettierignore",
   "prettier.useEditorConfig": true,
   "prettier.withNodeModules": false,
   /* ------------------------------------------------------------------------ */
   /*                                                                   cSpell */
   /* ------------------------------------------------------------------------ */
   "cSpell.enabled": true,
-  "cSpell.import": ["C:\\Users\\xeho91\\.dotfiles\\Linters\\cspell.json"],
+  "cSpell.import": ["/home/xeho91/.dotfiles/Linters/cspell.json"],
   "cSpell.showStatus": true,
   "cSpell.fixSpellingWithRenameProvider": true,
   /* ------------------------------------------------------------------------ */
@@ -180,9 +175,10 @@
   "eslint.debug": true,
   "eslint.run": "onType",
   "eslint.trace.server": "verbose",
+  "eslint.packageManager": "pnpm",
   "eslint.options": {
-    "configFile": "C:\\Users\\xeho91\\.dotfiles\\Linters\\.eslintrc.js",
-    "ignorePath": "C:\\Users\\xeho91\\.dotfiles\\Linters\\.eslintignore",
+    "configFile": "/home/xeho91/.dotfiles/Linters/.eslintrc.js",
+    "ignorePath": "/home/xeho91/.dotfiles/Linters/.eslintignore.js",
   },
   "eslint.codeAction.showDocumentation": {
     "enable": true
@@ -191,7 +187,7 @@
   /*                                                             MarkdownLint */
   /* ------------------------------------------------------------------------ */
   "markdownlint.config": {
-    "extends": ".dotfiles\\Linters\\.markdownlint.json",
+    "extends": "/home/xeho91/.dotfiles/Linters/.markdownlint.json",
     "MD013": {
       "line_length": 80,
       "stern": false,
@@ -201,15 +197,15 @@
   /* ------------------------------------------------------------------------ */
   /*                                                                Stylelint */
   /* ------------------------------------------------------------------------ */
-  // "stylelint.packageManager": "npm",
+  "stylelint.packageManager": "pnpm",
   "stylelint.config": {
-    "extends": "C:\\Users\\xeho91\\.dotfiles\\Linters\\.stylelintrc.js",
+    "extends": "/home/xeho91/.dotfiles/Linters/.stylelintrc.js",
   },
   /* ------------------------------------------------------------------------ */
   /*                                                                 Htmlhint */
   /* ------------------------------------------------------------------------ */
   "htmlhint.enable": true,
-  "htmlhint.optionsFile": "C:\\Users\\xeho91\\.dotfiles\\Linters\\.htmlhintrc.js",
+  "htmlhint.optionsFile": "/home/xeho91/.dotfiles/Linters/.htmlhintrc.js",
   // "htmlhint.options": {
   //   "doctype-first": true,
   // },
@@ -261,7 +257,7 @@
   /*                                                              Code runner */
   /* ------------------------------------------------------------------------ */
   // "code-runner.executorMap": {
-  //   "javascript": "babel-node --config-file \"$DOTFILES/Linters/.babelrc.js\"",
+  //   "javascript": "babel-node --config-file \"/home/xeho91/.dotfiles/Linters/.babelrc.js\"",
   // },
   "code-runner.runInTerminal": false,
   /* ------------------------------------------------------------------------ */
@@ -324,4 +320,8 @@
     "Nextcloud",
     "Photoshop"
   ],
+  "todo-tree.tree.showScanModeButton": false,
+  "workbench.colorTheme": "Tokyo Night Storm",
+  "editor.acceptSuggestionOnEnter": "off",
+  "vim.camelCaseMotion.enable": true,
 }
