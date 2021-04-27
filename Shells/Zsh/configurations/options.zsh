@@ -46,6 +46,30 @@ unsetopt FLOW_CONTROL
 # This option prevents the completion menu from showing
 # even if AUTO_MENU is set
 unsetopt MENU_COMPLETE
+#
+# Turn off the f**... beep!
+setopt NO_BEEP
+
+# =========================================================================== #
+# Expansion and Globbing options
+# ----------------
+# http://zsh.sourceforge.net/Doc/Release/Options.html#Expansion_and_Globbing
+# =========================================================================== #
+#
+# Treat the ‘#’, ‘~’ and ‘^’ characters as part of patterns for filename
+# generation, etc.
+# (An initial unquoted ‘~’ always produces named directory expansion)
+setopt EXTENDED_GLOB
+#
+# Make globbing (filename generation) sensitive to case
+setopt CASE_GLOB
+#
+# Array expansions of the form `foo${xx}bar`
+setopt RC_EXPAND_PARAM
+#
+# If numeric filenames are matched by a filename generation pattern,
+# sort the filenames numerically rather than lexicographically 
+setopt NUMERIC_GLOB_SORT
 
 # =========================================================================== #
 # History options
@@ -157,4 +181,6 @@ setopt NO_BG_NICE
 # Don't send HUP signals to running jobs when the shell exists
 setopt NO_HUP
 #
-#
+# Report the status of background and suspended jobs before exiting a shell
+setopt CHECK_JOBS
+

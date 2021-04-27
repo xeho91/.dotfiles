@@ -1,8 +1,8 @@
 # NOTE: Nerd fonts are required!
-# This configuration is works with "FiraCode NF" font
-# Download: https://www.nerdfonts.com/
+# This configuration is works well with "FiraCode NF" font
+# Download from: https://www.nerdfonts.com/
 
-# FIXME: Warning, the module "battery" lags terribly in PowerShell.
+# NOTE: Warning, the module "battery" lags terribly in PowerShell
 
 # ============================================================================ #
 # Default configuration
@@ -24,6 +24,7 @@ format = """
 	$nodejs\
 	$python\
 	$rust\
+	$golang\
 	$memory_usage\
 	$line_break\
 ├\
@@ -35,6 +36,7 @@ format = """
 	$package\
 	$line_break\
 └\
+	$jobs\
 	$status\
 	$character\
 """
@@ -76,7 +78,7 @@ format = """
 [cmd_duration]
 	disabled           = false
 	style              = "fg:blue"
-	format             = "[ 祥 $duration]($style)"
+	format             = "[ 祥$duration]($style)"
 	min_time           = 100
 	show_milliseconds  = true
 	show_notifications = true
@@ -125,6 +127,13 @@ format = """
 	format            = " [](fg:bright-black)[$symbol $version]($style)[](fg:bright-black)"
 	symbol            = ""
 
+# https://starship.rs/config/#golang
+[golang]
+	disabled          = false
+	style             = "bg:cyan fg:bright-white"
+	format            = " [](fg:cyan)[$symbol $version]($style)[](fg:cyan)"
+	symbol            = ""
+
 # https://starship.rs/config/#memory-usage
 [memory_usage]
 	disabled        = false
@@ -141,20 +150,20 @@ format = """
 # https://starship.rs/config/#directory
 [directory]
 	disabled          = false
-	style             = "bg:cyan fg:bright-white"
-	format            = "[](fg:cyan)[ﱮ]($style)[$read_only]($read_only_style)[ $path]($style)[](fg:cyan)"
+	style             = "bg:black fg:bright-white"
+	format            = "[](fg:black)[ﱮ]($style)[$read_only]($read_only_style)[ $path]($style)[](fg:black)"
 	truncation_length = 5
 	truncate_to_repo  = true
 	truncation_symbol = ".../"
-	read_only         = ""
-	read_only_style   = "bg:cyan fg:bright-red"
+	read_only         = " "
+	read_only_style   = "fg:bright-red"
 
 # https://starship.rs/config/#git-branch
 [git_branch]
 	disabled           = false
 	style              = "bg:blue fg:bright-white"
 	format             = " ﰲ [](fg:blue)[$symbol $branch]($style)[](fg:blue)"
-	symbol             = ""
+	symbol             = ""
 	always_show_remote = false
 	truncation_length  = "2^63 - 1"
 	truncation_symbol  = "..."
@@ -212,6 +221,14 @@ format = """
 #                                                                Command line
 # ---------------------------------------------------------------------------- #
 
+# https://starship.rs/config/#jobs
+[jobs]
+	disabled  = false
+	style     = "bg:green"
+	format    = "[](fg:green)[$symbol $number]($style)[](fg:green)"
+	symbol    = ""
+	threshold = 1
+
 # https://starship.rs/config/#status
 [status]
 	disabled              = false
@@ -231,5 +248,5 @@ format = """
 	format                = "$symbol "
 	success_symbol        = "[❯](fg:green)"
 	error_symbol          = "[❯](fg:red)"
-	use_symbol_for_status = true
-	vicmd_symbol          = "[](fg:green)"
+	vicmd_symbol          = "[❮](fg:yellow)"
+

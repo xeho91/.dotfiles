@@ -1,11 +1,31 @@
-# =========================================================================== #
+# ------------------------------------------------------------------ #
+# Starship - cross-platform minimal, configurable prompt
+# ------------------------------------------------------
+# https://github.com/starship/starship
+# -----
+# USES:
+# Rust
+# ------------------------------------------------------------------ #
+zinit id-as"starship" \
+	from"gh-r" \
+	if'[[ "$USE_PROMPT" == "starship" ]]' \
+	pick"starship" \
+	as"program" \
+	atload'export STARSHIP_CONFIG="$DOTFILES/Shells/Prompts/.starship.toml"; \
+		eval "$(starship init zsh)"' \
+	lucid \
+	for @starship/starship
+# ------------------------------------------------------------------ #
 # Powerlevel10k - prompt theme with lots of features
 # --------------------------------------------------
 # https://github.com/romkatv/powerlevel10k
-# =========================================================================== #
-zinit \
-	id-as"powerlevel10k" \
+# -----
+# USES:
+# Shell
+# ------------------------------------------------------------------ #
+zinit id-as"powerlevel10k" \
 	depth=1 \
+	if'[[ "$USE_PROMPT" == "p10k" ]]' \
 	for @romkatv/powerlevel10k
 
 # To customize prompt, run `p10k configure`

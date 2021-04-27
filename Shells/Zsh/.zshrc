@@ -1,19 +1,32 @@
-# Declare Zsh config associative array with paths to directories
-declare -A ZSH_CONFIG
+ZSH_CONFIG_DIR="$ZDOTDIR/configurations"
 
-ZSH_CONFIG[HOME_DIR]="$ZDOTDIR/configurations"
-ZSH_CONFIG[PLUGINS_DIR]="$ZSH_CONFIG[HOME_DIR]/plugins"
-ZSH_CONFIG[PROMPTS_DIR]="$ZSH_CONFIG[HOME_DIR]/prompts"
+# =========================================================================== #
+# Load Zsh configurations
+# -----------------------
+# NOTE: Order matters.
+# Don't make it dynamic with loop, because there's no prioritization.
+# =========================================================================== #
+source "$ZSH_CONFIG_DIR/options.zsh"
+source "$ZSH_CONFIG_DIR/keybindings.zsh"
+source "$ZSH_CONFIG_DIR/manager.zsh"
+source "$ZSH_CONFIG_DIR/runtimes.zsh"
+source "$ZSH_CONFIG_DIR/programs.zsh"
+source "$ZSH_CONFIG_DIR/plugins.zsh"
+source "$ZSH_CONFIG_DIR/variables.zsh"
+source "$ZSH_CONFIG_DIR/functions.zsh"
+source "$ZSH_CONFIG_DIR/aliases.zsh"
+source "$ZSH_CONFIG_DIR/completions.zsh"
+source "$ZSH_CONFIG_DIR/prompt.zsh"
 
-# Load configurations
-source "$ZSH_CONFIG[HOME_DIR]/options.zsh"
-source "$ZSH_CONFIG[HOME_DIR]/completions.zsh"
-source "$ZSH_CONFIG[HOME_DIR]/plugins.zsh"
-source "$ZSH_CONFIG[HOME_DIR]/functions.zsh"
-source "$ZSH_CONFIG[HOME_DIR]/aliases.zsh"
-source "$ZSH_CONFIG[HOME_DIR]/keybinds.zsh"
-source "$ZSH_CONFIG[HOME_DIR]/prompt.zsh"
+# =========================================================================== #
+# Other
+# =========================================================================== #
 
 # Remove duplicates
 typeset -aU path dpath fpath manpath module_path
+
+# Appending additional path for manpages, because some plugins install it under
+# `share` directory
+unset MANPATH # Disables warning when reloading
+export MANPATH=:"$(manpath):$ZPFX/share/man"
 
