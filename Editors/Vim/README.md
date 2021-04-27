@@ -1,26 +1,13 @@
-# Vi configuration files
+# Vim configuration files
 
 This directory contains configuration for editors related to UNIX text editor `vi`.
 
-## Editors
-
-Editors I have used so far:
-
-### Vim
-
-<img alt="Vim logo" height="50" src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Vimlogo.svg" />
-
-**Vi** i**M**proved - `vim`
-
-### Neovim
-
-<img alt="Neovim logo" height="50" src="https://upload.wikimedia.org/wikipedia/commons/0/07/Neovim-mark-flat.svg" />
-
-**N**eo**vim** - `nvim`
+**WARNING** I have switched to Neovim recently, I am keeping this folder as
+backup of my old Vim configuration.
 
 ---
 
-## How to profile/inspect what slows down (Neo)Vim?
+## How to profile/inspect what slows down Vim?
 
 Inspect startup log file by starting (Neo)Vim with this flag `--startuptime`
 ```sh

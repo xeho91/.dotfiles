@@ -6,6 +6,9 @@
 
 " Expand colors in terminal using GUI
 if (has('termguicolors'))
+	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
 	set termguicolors
 endif
 
@@ -14,9 +17,8 @@ syntax enable
 
 " Define themes
 let g:theme = {
-	\ 'default': 'slate',
-	\ 'dark':    'srcery',
-	\ 'light':   'PaperColor'
+	\ 'dark': 'spaceduck',
+	\ 'light': ''
 \ }
 
 try
@@ -31,3 +33,6 @@ if g:plugins.is_installed('lightline')
 	let g:lightline.colorscheme = g:colors_name
 endif
 
+if g:plugins.is_installed('lualine')
+	let g:lualine.options.theme = g:colors_name
+endif

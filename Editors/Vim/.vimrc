@@ -3,8 +3,11 @@
 " --------------------------------------------
 " https://vi.stackexchange.com/questions/11879/how-can-put-vimrc-and-viminfo-into-vim-directory
 " =========================================================================== "
-let g:vim_home_dirPath = expand('$VIM_DIR')
-set viminfo+=n"$VIM_DIR/.viminfo"
+let g:vim_home_dirPath = fnameescape(expand('$DOTFILES') . '/Editors/Vim')
+let g:vim_config_dirPath = g:vim_home_dirPath . '/configs'
+
+" https://stackoverflow.com/questions/23012391/how-and-where-is-my-viminfo-option-set
+" set viminfo+=n/.viminfo"
 
 " =========================================================================== "
 " Important
@@ -17,16 +20,15 @@ let g:maplocalleader  = ','
 " =========================================================================== "
 " Load configuration files for (Neo)Vim
 " =========================================================================== "
-let g:vim_configurations_dirPath = expand('$HOME') . '\.dotfiles\Editors\Vim'
 
 if g:enable_icons
-	execute 'source' fnameescape(g:vim_configurations_dirPath . '\icons.vim')
+	execute 'source' fnameescape(g:vim_config_dirPath . '/icons.vim')
 endif
-execute 'source' fnameescape(g:vim_configurations_dirPath . '\plugins.vim')
-execute 'source' fnameescape(g:vim_configurations_dirPath . '\mappings.vim')
-execute 'source' fnameescape(g:vim_configurations_dirPath . '\options.vim')
-execute 'source' fnameescape(g:vim_configurations_dirPath . '\commands.vim')
-execute 'source' fnameescape(g:vim_configurations_dirPath . '\themes.vim')
+execute 'source' fnameescape(g:vim_config_dirPath . '/plugins.vim')
+execute 'source' fnameescape(g:vim_config_dirPath . '/mappings.vim')
+execute 'source' fnameescape(g:vim_config_dirPath . '/options.vim')
+execute 'source' fnameescape(g:vim_config_dirPath . '/commands.vim')
+execute 'source' fnameescape(g:vim_config_dirPath . '/themes.vim')
 
 " =========================================================================== "
 " Other
@@ -36,4 +38,3 @@ execute 'source' fnameescape(g:vim_configurations_dirPath . '\themes.vim')
 augroup vimrc
 	autocmd FileType help noremap <buffer> q :quit<CR>
 augroup END
-
