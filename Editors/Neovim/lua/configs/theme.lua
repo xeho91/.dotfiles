@@ -1,5 +1,4 @@
 -- https://github.com/folke/tokyonight.nvim
-
 local g = vim.g
 
 g.tokyonight_style = "storm"
@@ -15,13 +14,9 @@ g.tokyonight_transparent = false
 
 g.tokyonight_hide_inactive_statusline = true
 
-g.tokyonight_sidebars = {
-	"help",
-	"qf", -- quick fix list
-	"dashboard",
-	"packer"
-}
+g.tokyonight_sidebars = { "help", "qf", "terminal", "packer" }
 g.tokyonight_dark_sidebar = true
 g.tokyonight_dark_float = true
 
-vim.cmd [[ colorscheme tokyonight ]]
+vim.cmd("colorscheme tokyonight")
+

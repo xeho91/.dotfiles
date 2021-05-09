@@ -1,6 +1,6 @@
 -- https://github.com/TimUntersberger/neogit
 
-require("neogit").setup {
+require("neogit").setup({
 	disable_signs = false,
 	disable_context_highlighting = false,
 	-- customize displayed signs
@@ -15,4 +15,4 @@ require("neogit").setup {
 		-- modify status buffer mappings
 		status = {}
 	}
-}
+})

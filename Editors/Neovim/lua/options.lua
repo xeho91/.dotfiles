@@ -2,18 +2,15 @@
 -- https://neovim.io/doc/user/api.html#API
 
 local cmd = vim.cmd
-local api = vim.api
 local g = vim.g
 local o, wo, bo = vim.o, vim.wo, vim.bo
 
 local utils = require("utils")
 local opt = utils.opt
-local autocmd = utils.autocmd
-
-local buffer = {o, bo}
-local window = {o, wo}
 
 -- https://neovim.io/doc/user/options.html#options
+local buffer = {o, bo}
+local window = {o, wo}
 
 -- Searching with typing `/<pattern>`
 opt("incsearch", true) -- Highlight matches as you type
@@ -22,7 +19,7 @@ opt("ignorecase", true) -- Ignore case while searching
 opt("showmatch", true)
 
 -- Invisible characters & wrapping
-opt("wrap", true) -- Disable line wrap
+opt("wrap", false, window) -- Disable line wrap
 opt("list", false) -- Show hidden characters
 opt("listchars", [[eol:¬,tab:┆ ,trail:·,extends:»,precedes:«,space:·,nbsp:␣]])
 
@@ -47,9 +44,9 @@ opt("previewheight", 5)
 opt("undofile", true, buffer)
 opt("synmaxcol", 500, buffer)
 opt("display", "msgsep")
-opt("cursorline", true, window)
 opt("modeline", false, buffer)
 opt("mouse", "nivh")
+opt("keywordprg", ":vertical help")
 
 -- Conceal
 opt("conceallevel", 2, window)
@@ -80,7 +77,7 @@ opt("swapfile", false)
 opt("updatetime", 100) -- Default is 4000ms and leads to noticable delays
 opt("ttyfast", true) -- Improve scrolling speed
 opt("lazyredraw", true) -- Stop redrawing screen while executing macros
-opt("regexpengine", 1) -- Use newer algorithm for RegExp engine
+opt("regexpengine", 0) -- Use newer algorithm for RegExp engine
 
 -- Wild menu
 opt("wildmenu", true) -- Enable "enhanced mode" of CLI completion
@@ -116,60 +113,12 @@ opt("guifont", "FiraCode Nerd Font:h18")
 -- ----------------------------------------------------------------------------
 -- Other
 -- ----------------------------------------------------------------------------
-cmd [[ filetype plugin indent on ]]
-cmd [[ syntax enable ]]
+cmd("filetype plugin indent on")
+cmd("syntax enable")
 
--- api.nvim_exec([[
--- augroup auto_spellcheck
---     autocmd!
---     autocmd BufNewFile,BufRead *.md setlocal spell
---     autocmd BufNewFile,BufRead *.org setfiletype markdown
---     autocmd BufNewFile,BufRead *.org setlocal spell
--- augroup END
--- ]], false)
-
--- api.nvim_exec([[
--- augroup auto_term
---     autocmd!
---     autocmd TermOpen * setlocal nonumber norelativenumber
---     autocmd TermOpen * startinsert
--- augroup END
--- ]], false)
-
--- Trim whitespace on Buffer save
-function TrimWhitespace()
-	local save = vim.fn.winsaveview()
-
-	vim.cmd([[keeppatterns %s/\s\+$//e]])
-	vim.fn.winrestview(save)
-end
-
-autocmd("TrimWhiteSpaceOnSave", "BufWritePre * lua TrimWhitespace()", true)
-
--- ----------------------------------------------------------------------------
--- Autocommands
--- ----------------------------------------------------------------------------
-
--- Highlight the TODO, FIXME, etc
-autocmd(
-	"HighlightComments",
-	{
-		[[Syntax * syn match extTodo '\<\(NOTE\|INFO\|BAD\):\?' containedin=.*Comment.* | highlight! link extTodo Todo"]],
-	},
-	true
-)
-
--- Highlight on yank
-autocmd(
-	"HighlightYank",
-	{
-		"BufWinEnter * checktime",
-		"TextYankPost * silent! lua vim.highlight.on_yank()"
-	},
-	true
-)
 -- ----------------------------------------------------------------------------
 -- Neovide settings
+--
 -- https://github.com/Kethku/neovide/wiki/Configuration#global-vim-settings
 -- ----------------------------------------------------------------------------
 if g.neovide then

@@ -20,14 +20,14 @@ local function autocmd(group, cmds, clear)
 	cmd("augroup " .. group)
 
 	if clear then
-		cmd [[ autocmd! ]]
+		cmd("autocmd!")
 	end
 
 	for _, c in ipairs(cmds) do
 		cmd("autocmd " .. c)
 	end
 
-	cmd [[ augroup END ]]
+	cmd("augroup END")
 end
 
 local function map(modes, lhs, rhs, opts)
@@ -43,3 +43,4 @@ local function map(modes, lhs, rhs, opts)
 end
 
 return {opt = opt, autocmd = autocmd, map = map}
+

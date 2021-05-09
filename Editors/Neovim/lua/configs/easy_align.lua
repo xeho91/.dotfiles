@@ -1,4 +1,5 @@
-local map = require("utils").map
+local vimp = require("vimp")
 
 -- Keybindings
-map({"x", "n"}, "ga", "<Plug>(EasyAlign)", {silent = true, noremap = false})
+vimp.nmap("ga", "<Plug>(EasyAlign)")
+vimp.xmap("ga", "<Plug>(EasyAlign)")

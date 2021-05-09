@@ -4,12 +4,12 @@ local fn = vim.fn
 local map = require("utils").map
 local npairs = require("nvim-autopairs")
 
-npairs.setup {
+npairs.setup({
 	disable_filetype = {"TelescopePrompt"},
 	ignored_next_char = string.gsub([[ [%w%%%'%[%"%.] ]], "%s+", ""),
 	enable_moveright = true,
 	check_ts = true
-}
+})
 
 _G.MUtils = {}
 

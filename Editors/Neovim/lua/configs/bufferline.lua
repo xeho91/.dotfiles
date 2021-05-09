@@ -1,9 +1,9 @@
 -- https://github.com/akinsho/nvim-bufferline.lua
 
-local map = require("utils").map
+local vimp = require("vimp")
 local get_icon = require("icons").get_icon
 
-require("bufferline").setup {
+require("bufferline").setup({
 	options = {
 		view = "multiwindow",
 		numbers = "both",
@@ -33,23 +33,23 @@ require("bufferline").setup {
 		always_show_bufferline = true,
 		sort_by = "extension"
 	}
-}
+})
 
-local opts = {noremap = true}
+-- Mappings
 
 -- These commands will navigate through buffers in order regardless of which
 -- mode you are using e.g. if you change the order of buffers :bnext and
 -- :previous will not respect the custom ordering
-map("n", "]b", "<cmd>BufferLineCycleNext<CR>", opts)
-map("n", "b]", "<cmd>BufferLineCyclePrev<CR>", opts)
+vimp.nmap("]b", "<cmd>BufferLineCycleNext<CR>")
+vimp.nmap("b]", "<cmd>BufferLineCyclePrev<CR>")
 
 -- These commands will move the current buffer backwards
 -- or forwards in the bufferline
-map("n", "<leader>bn", "<cmd>BufferLineCycleNext<CR>", opts)
-map("n", "<leader>bp", "<cmd>BufferLineCyclePrev<CR>", opts)
+vimp.nmap("<leader>bn", "<cmd>BufferLineCycleNext<CR>")
+vimp.nmap("<leader>bp", "<cmd>BufferLineCyclePrev<CR>")
 
 -- These commands will sort buffers by directory, language,
 -- or a custom criteria
-map("n", "<leader>be", "<cmd>BufferLineSortByExtension<CR>", opts)
-map("n", "<leader>bd", "<cmd>BufferLineSortByDirectory<CR>", opts)
--- nnoremap <silent><mymap> :lua require'bufferline'.sort_buffers_by(function (buf_a, buf_b) return buf_a.id < buf_b.id end)<CR>
+vimp.nmap("<leader>be", "<cmd>BufferLineSortByExtension<CR>")
+vimp.nmap("<leader>bd", "<cmd>BufferLineSortByDirectory<CR>")
+-- nnorevimp.nmap <silent><myvimp.nmap> :lua require'bufferline'.sort_buffers_by(function (buf_a, buf_b) return buf_a.id < buf_b.id end)<CR>

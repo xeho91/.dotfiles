@@ -1,30 +1,32 @@
 local fn = vim.fn
 local execute = vim.api.nvim_command
-local cmd = vim.cmd
-local utils = require("utils")
-local autocmd = utils.autocmd
+local autocmd = require("utils").autocmd
 
--- Load default options
+-- load default options
 require("options")
 
 -- Auto install packer.nvim if not exists
-local packer_filePath =
-	fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
+local packer_filePath = fn.stdpath("data") ..
+                            "/site/pack/packer/opt/packer.nvim"
 
 if fn.empty(fn.glob(packer_filePath)) > 0 then
-	execute(
-		"!git clone https://github.com/wbthomason/packer.nvim " .. packer_filePath
-	)
+    execute(
+        "!git clone https://github.com/wbthomason/packer.nvim " ..
+            packer_filePath
+    )
 end
 
-cmd [[ packadd packer.nvim ]]
+-- Add packer to Neovim's native package manager
+vim.cmd("packadd packer.nvim")
+-- Auto compile when there are changes in `plugins.lua` file
+autocmd("PackerAutoCompile", "BufWritePost plugins.lua PackerCompile", true)
 
--- -- Auto compile when there are changes in plugins.lua
--- -- cmd [[autocmd BufWritePost plugins.lua PackerCompile]]
--- autocmd("Packer", {[[ BufWritePost plugins.lua PackerCompile ]]}, true)
+-- load custom commands
+require("commands")
 
 -- Load custom mappings (keybinds)
 require("mappings")
 
 -- Install/Load plugins
 require("plugins")
+

@@ -1,8 +1,8 @@
 -- https://github.com/glepnir/dashboard-nvim
 
 local g = vim.g
+local vimp = require("vimp")
 local utils = require("utils")
-local map = utils.map
 local autocmd = utils.autocmd
 
 -- Settings
@@ -28,7 +28,7 @@ g.dashboard_custom_shortcut_icon = {
 	last_session = "菱"
 }
 
-g.dashboard_custom_header = {
+--[[ g.dashboard_custom_header = {
 	"                                                                                                         ....",
 	"                                                                                     . ....            ..:lc..",
 	"                           .........               ...'''..                    ...,;,...,:;'..        ..:dxxxc.",
@@ -49,7 +49,7 @@ g.dashboard_custom_header = {
 	"                                                                            .;oddc.",
 	"                                                                            .,lo:.",
 	"                                                                            ..,,."
-}
+} ]]
 
 g.dashboard_custom_footer = {
 	"With ♥ for TUI and Neovim from xeho91"
@@ -58,53 +58,22 @@ g.dashboard_custom_footer = {
 -- Disable Tabs (on top)
 autocmd(
 	"Dashboard_HideStatusline",
-	[[ FileType dashboard set showtabline=0 ]],
-	[[ WinLeave <buffer> set showtabline=2 ]],
+	{
+		"FileType dashboard set showtabline=0",
+		"WinLeave <buffer> set showtabline=2"
+	},
 	false
 )
 
 -- Mappings
-map("n", "<Leader>ss", "<cmd><C-u>SessionSave<CR>", {})
-map("n", "<Leader>sl", "<cmd><C-u>SessionLoad<CR>", {})
-
-local options = {silent = true, noremap = true}
-
-map(
-	"n",
-	g.dashboard_custom_shortcut.new_file,
-	"<cmd>DashboardNewFile<CR>",
-	options
-)
-map(
-	"n",
-	g.dashboard_custom_shortcut.find_file,
-	"<cmd>DashboardFindFile<CR>",
-	options
-)
-map(
-	"n",
-	g.dashboard_custom_shortcut.find_word,
-	"<cmd>DashboardFindWord<CR>",
-	options
-)
-map(
-	"n",
-	g.dashboard_custom_shortcut.find_history,
-	"<cmd>DashboardFindHistory<CR>",
-	options
-)
-map(
-	"n",
-	g.dashboard_custom_shortcut.book_marks,
-	"<cmd>DashboardJumpMark<CR>",
-	options
-)
-map(
-	"n",
-	g.dashboard_custom_shortcut.change_colorscheme,
-	"<cmd>DashboardChangeColorscheme<CR>",
-	options
-)
+vimp.nnoremap("<Leader>ss", "<cmd><C-u>SessionSave<CR>")
+vimp.nnoremap("<Leader>sl", "<cmd><C-u>SessionLoad<CR>")
+vimp.nnoremap(g.dashboard_custom_shortcut.new_file, "<cmd>DashboardNewFile<CR>")
+vimp.nnoremap(g.dashboard_custom_shortcut.find_file, "<cmd>DashboardFindFile<CR>")
+vimp.nnoremap(g.dashboard_custom_shortcut.find_word, "<cmd>DashboardFindWord<CR>")
+vimp.nnoremap(g.dashboard_custom_shortcut.find_history, "<cmd>DashboardFindHistory<CR>")
+vimp.nnoremap(g.dashboard_custom_shortcut.book_marks, "<cmd>DashboardJumpMark<CR>")
+vimp.nnoremap(g.dashboard_custom_shortcut.change_colorscheme, "<cmd>DashboardChangeColorscheme<CR>")
 
 -- g.dashboard_preview_command = "cat"
 -- g.dashboard_preview_pipeline = "lolcat"

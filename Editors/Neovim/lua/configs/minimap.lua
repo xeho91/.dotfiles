@@ -1,11 +1,9 @@
 -- https://github.com/wfxr/minimap.vim
 
 local g = vim.g
+local vimp = require("vimp")
 
-local utils = require("utils")
-local map = utils.map
-
-map("n", "<F8>", "<cmd>MinimapToggle<CR>", {})
+vimp.nmap("<F8>", "<cmd>MinimapToggle<CR>")
 
 g.minimap_auto_start = 1
 g.minimap_auto_start_win_enter = 1

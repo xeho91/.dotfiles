@@ -1,8 +1,9 @@
-local utils = require("utils")
-local map = utils.map
-local autocmd = utils.autocmd
+-- https://github.com/mhartington/formatter.nvim
 
-map("n", "<leader>ff", "<cmd>Format<CR>", { noremap = false })
+local vimp = require("vimp")
+-- local autocmd = utils.autocmd
+
+vimp.nmap("<leader>ff", "<cmd>Format<CR>")
 
 require("formatter").setup(
 	{
@@ -47,24 +48,14 @@ require("formatter").setup(
 					}
 				end
 			}
-			-- Rustfmt
-			-- rust = {
-			-- 	function()
-			-- 		return {
-			-- 			exe = "rustfmt",
-			-- 			args = {"--emit=stdout"},
-			-- 			stdin = true,
-			-- 		}
-			-- 	end
-			-- },
 		}
 	}
 )
 
 -- autocmd(
-	-- "Format",
-	-- {
-		-- [[ BufWritePost *.js,*.rs,*.lua FormatWrite ]]
-	-- },
-	-- true
+-- "Format",
+-- {
+-- [[ BufWritePost *.js,*.rs,*.lua FormatWrite ]]
+-- },
+-- true
 -- )
