@@ -22,9 +22,9 @@ format = """
 	$time\
 	$cmd_duration\
 	$nodejs\
+	$deno\
 	$python\
-	$rust\
-	$golang\
+	$rustgolang\
 	$memory_usage\
 	$line_break\
 ├\
@@ -113,12 +113,24 @@ format = """
 	symbol             = ""
 
 # https://starship.rs/config/#nodejs
+
 [nodejs]
 	disabled          = false
 	style             = "bg:green fg:bright-white"
 	not_capable_style = "bold red"
 	format            = " [](fg:green)[$symbol $version]($style)[](fg:green)"
 	symbol            = ""
+
+# https://starship.rs/config/#nodejs
+[deno]
+	disabled          = false
+	style             = "bg:white fg:black"
+	format            = " [](fg:white)[$symbol$version]($style)[](fg:white)"
+	version_format    = "v${raw}"
+	detect_extensions = []
+	detect_files      = ["mod.ts", "mod.js", "deps.ts", "deps.js"]
+	detect_folders    = []
+	symbol            = "硫"
 
 # https://starship.rs/config/#rust
 [rust]
@@ -197,10 +209,10 @@ format = """
 	disabled   = false
 	style      = "fg:blue"
 	format     = "$ahead_behind$all_status"
-	conflicted = "[](fg:red)[ Conflicted ${count}](bg:red fg:white)[](fg:red)"
-	ahead      = "[](fg:green)[⇡ﰛ Ahead ${count}](bg:green fg:white)[](fg:green)"
-	behind     = "[](fg:yellow)[⇣ﰚ Behind ${count}](bg:yellow fg:red)[](fg:yellow)"
-	diverged   = "[](fg:red)[ Diverged \\(⇡ﰛ A ${ahead_count} | ⇣ﰚ B ${count}\\)](bg:red fg:white)[](fg:red)"
+	conflicted = "[ Conflicted ${count}](fg:red)"
+	ahead      = "[⇡ﰛ Ahead ${count}](fg:blue)"
+	behind     = "[⇣ﰛ Behind ${count}](fg:yello)"
+	diverged   = "[ Diverged - ⇡ﰛ A ${ahead_count} | ⇣ﰚ B ${count}](fg:red)"
 	untracked  = "[ ${count}](fg:bright-yellow)"
 	stashed    = "[ ${count}](fg:bright-white)"
 	modified   = "[ ${count}](fg:bright-purple)"
