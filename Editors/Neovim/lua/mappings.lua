@@ -7,7 +7,7 @@ g.mapleader = [[\]]
 g.maplocalleader = [[,]]
 
 -- if g.neovide then
-    --[[ local function toggle_fullScreen()
+--[[ local function toggle_fullScreen()
         if g.neovide_fullscreen then
             return false
         else
@@ -24,8 +24,8 @@ vimp.nmap("<F1>", "<cmd>ToggleHelp<CR>")
 autocmd(
     "Help_Mappings", {
         "FileType help noremap <buffer> q <cmd>quit<CR>",
-        [[FileType help nnoremap <buffer> <CR> <C-]>]],
-        [[FileType help nnoremap <buffer> <BS> <C-T>]],
+        "FileType help nnoremap <buffer> <CR> <C-]>",
+        "FileType help nnoremap <buffer> <BS> <C-T>",
         [[FileType help nnoremap <buffer> o /'\l\{2,\}'<CR>]],
         [[FileType help nnoremap <buffer> O ?'\l\{2,\}'<CR>]],
         [[FileType help nnoremap <buffer> s /\|\zs\S\+\ze\|<CR>]],

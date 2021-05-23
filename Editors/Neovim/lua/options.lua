@@ -1,6 +1,5 @@
 -- https://neovim.io/doc/user/lua.html
 -- https://neovim.io/doc/user/api.html#API
-
 local cmd = vim.cmd
 local g = vim.g
 local o, wo, bo = vim.o, vim.wo, vim.bo
@@ -9,8 +8,8 @@ local utils = require("utils")
 local opt = utils.opt
 
 -- https://neovim.io/doc/user/options.html#options
-local buffer = {o, bo}
-local window = {o, wo}
+local buffer = { o, bo }
+local window = { o, wo }
 
 -- Searching with typing `/<pattern>`
 opt("incsearch", true) -- Highlight matches as you type
@@ -21,7 +20,7 @@ opt("showmatch", true)
 -- Invisible characters & wrapping
 opt("wrap", false, window) -- Disable line wrap
 opt("list", false) -- Show hidden characters
-opt("listchars", [[eol:¬,tab:┆ ,trail:·,extends:»,precedes:«,space:·,nbsp:␣]])
+-- opt( "listchars", "eol:¬,tab:┆ ,trail:·,extends:»,precedes:«,space:·,nbsp:␣")
 
 -- Enable italics
 opt("t_ZH", "[[3m")
@@ -97,7 +96,7 @@ opt("softtabstop", indent, buffer) -- Make TAB work in the middle of line (text)
 opt("smartindent", true, buffer) -- ?
 
 -- Folding
-opt("foldmethod", "indent", window) -- Enable folding method based on indent
+-- opt("foldmethod", "indent", window) -- Enable folding method based on indent
 opt("foldlevel", 2, window) -- Close fold level(s) (0 - all)
 
 -- Sign column
@@ -122,18 +121,18 @@ cmd("syntax enable")
 -- https://github.com/Kethku/neovide/wiki/Configuration#global-vim-settings
 -- ----------------------------------------------------------------------------
 if g.neovide then
-	g.neovide_refresh_rate = 60
-	g.neovide_transparency = 0.95
-	g.neovide_no_idle = false
-	g.neovide_fullscreen = false
-	g.neovide_cursor_animation_length = 0.13
-	g.neovide_cursor_trail_length = 0.8
-	g.neovide_cursor_antialiasing = true
-	g.neovide_cursor_vfx_mode = "sonicboom"
-	g.neovide_cursor_vfx_opacity = 200.0
-	g.neovide_cursor_vfx_particle_lifetime = 1.2
-	g.neovide_cursor_vfx_particle_density = 7.0
-	g.neovide_cursor_vfx_particle_speed = 10.0
-	g.neovide_cursor_vfx_particle_phase = 1.5
-	g.neovide_cursor_vfx_particle_curl = 1.0
+    g.neovide_refresh_rate = 60
+    g.neovide_transparency = 0.95
+    g.neovide_no_idle = false
+    g.neovide_fullscreen = false
+    g.neovide_cursor_animation_length = 0.13
+    g.neovide_cursor_trail_length = 0.8
+    g.neovide_cursor_antialiasing = true
+    g.neovide_cursor_vfx_mode = "sonicboom"
+    g.neovide_cursor_vfx_opacity = 200.0
+    g.neovide_cursor_vfx_particle_lifetime = 1.2
+    g.neovide_cursor_vfx_particle_density = 7.0
+    g.neovide_cursor_vfx_particle_speed = 10.0
+    g.neovide_cursor_vfx_particle_phase = 1.5
+    g.neovide_cursor_vfx_particle_curl = 1.0
 end

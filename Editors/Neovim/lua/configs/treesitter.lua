@@ -25,13 +25,13 @@ require("nvim-treesitter.configs").setup(
         -- https://github.com/nvim-treesitter/nvim-treesitter#indentation
         indent = { enable = true },
         -- https://github.com/andymass/vim-matchup
-        -- matchup = { enable = true },
+        matchup = { enable = true },
         -- https://github.com/nvim-treesitter/nvim-treesitter-refactor
         refactor = {
             smart_rename = { enable = true, keymaps = { smart_rename = "grr" } },
             highlight_definitions = { enable = true },
             highlight_current_scope = { enable = true },
-            navigation = { enable = true },
+            navigation = { enable = true, test = {} },
         },
         -- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
         textobjects = {
@@ -130,7 +130,10 @@ require("nvim-treesitter.configs").setup(
             max_file_lines = 1000,
         },
         -- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
-        context_commentstring = { enable = true },
-
+        context_commentstring = {
+            enable = true,
+            enable_autocmd = false,
+            config = { dotenv = "# %s" },
+        },
     }
 )

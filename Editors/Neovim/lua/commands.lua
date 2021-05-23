@@ -13,7 +13,8 @@ vimp.map_command(
         if vim.bo.buftype == "help" then
             vim.cmd("bwipeout")
         else
-            vim.cmd([[
+            vim.cmd(
+                [[
 				try
 					exec 'vertical help ' . expand('<cWORD>')
 				catch /:E149:\|:E661:/
@@ -21,7 +22,8 @@ vimp.map_command(
 					" E661 no <language> help for <subject>
 					exec 'vertical help ' . expand('<cword>')
 				endtry
-			]])
+			]]
+            )
         end
     end
 )
@@ -43,11 +45,11 @@ function TrimWhitespace()
     vim.fn.winrestview(save)
 end
 
-autocmd("TrimWhiteSpaceOnSave", "BufWritePre * lua TrimWhitespace()", true)
-
 -- ----------------------------------------------------------------------------
 -- Autocommands
 -- ----------------------------------------------------------------------------
+
+autocmd("TrimWhiteSpaceOnSave", "BufWritePre * lua TrimWhitespace()", true)
 
 -- Set mappings for the Help
 autocmd(
@@ -60,20 +62,6 @@ autocmd(
         [[FileType help nnoremap <buffer> s /\|\zs\S\+\ze\|<CR>]],
         [[FileType help nnoremap <buffer> S ?\|\zs\S\+\ze\|<CR>]],
     }
-)
-
-autocmd(
-    "Terminal", {
-        "TermOpen * setlocal nonumber norelativenumber",
-        "TermOpen * startinsert",
-    }, true
-)
-
--- Highlight the TODO, FIXME, etc
-autocmd(
-    "HighlightComments", {
-        [[Syntax * syn match extTodo '\<\(NOTE\|INFO\|BAD\):\?' containedin=.*Comment.* | highlight! link extTodo Todo"]],
-    }, true
 )
 
 -- Highlight on yank
@@ -91,3 +79,28 @@ autocmd(
         "WinLeave,BufLeave * setlocal nocursorline cursorcolumn",
     }, true
 )
+
+autocmd(
+    "Terminal", {
+        "TermOpen * setlocal nonumber norelativenumber",
+        "TermOpen * startinsert",
+    }, true
+)
+
+-- ----------------------------------------------------------------------------
+-- Filetypes & Syntaxes
+-- ----------------------------------------------------------------------------
+
+-- Dotenv
+autocmd(
+    "Dotenv_Filetype",
+    "BufNewFile,BufRead *.env,*.env.me,*.env.project set filetype=dotenv", true
+)
+autocmd(
+    "Dotenv_Syntax",
+    "BufNewFile,BufRead *.env,*.env.me,*.env.project set syntax=sh", true
+)
+
+-- MDsveX
+autocmd("MDsveX_Filetype", "BufNewFile,BufRead *.svx set filetype=mdsvex", true)
+autocmd("MDsveX_Syntax", "BufNewFile,BufRead *.svx set syntax=markdown", true)

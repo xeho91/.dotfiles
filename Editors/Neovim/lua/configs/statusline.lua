@@ -88,9 +88,7 @@ section.left[3] = {
 
 section.left[4] = {
     GitBranch = {
-        condition = function()
-            return vim.bo.modifiable
-        end,
+        condition = function() return vim.bo.modifiable end,
         provider = vcs.get_git_branch,
         icon = get_icon("branch"),
         highlight = { colors.fg, "NONE", "bold" },
@@ -175,7 +173,7 @@ section.mid[1] = {
 section.right[1] = {
     FileType = {
         condition = function()
-            return condition.hide_in_width() and vim.o.readonly
+            return condition.hide_in_width() and not vim.o.readonly
         end,
         provider = function()
             return fileinfo.get_file_icon() .. buffer.get_buffer_filetype() ..

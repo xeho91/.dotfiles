@@ -1,0 +1,14 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 error pnpm": {
+    "code": "ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND",
+    "err": {
+      "name": "Error",
+      "message": "No package.json (or package.yaml, or package.json5) was found in \"/home/xeho91/.dotfiles/Editors/Neovim/lua/configs\".",
+      "code": "ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND",
+      "stack": "Error: No package.json (or package.yaml, or package.json5) was found in \"/home/xeho91/.dotfiles/Editors/Neovim/lua/configs\".\n    at readProjectManifest (/home/xeho91/.config/.asdf/installs/nodejs/15.14.0/.npm/lib/node_modules/pnpm/dist/pnpm.cjs:43384:11)\n    at async Object.readProjectManifestOnly (/home/xeho91/.config/.asdf/installs/nodejs/15.14.0/.npm/lib/node_modules/pnpm/dist/pnpm.cjs:43388:24)\n    at async Object.readProjectManifestOnly (/home/xeho91/.config/.asdf/installs/nodejs/15.14.0/.npm/lib/node_modules/pnpm/dist/pnpm.cjs:43603:22)\n    at async Object.handler (/home/xeho91/.config/.asdf/installs/nodejs/15.14.0/.npm/lib/node_modules/pnpm/dist/pnpm.cjs:117110:22)\n    at async Timeout._onTimeout (/home/xeho91/.config/.asdf/installs/nodejs/15.14.0/.npm/lib/node_modules/pnpm/dist/pnpm.cjs:121000:22)"
+    }
+  }
+}

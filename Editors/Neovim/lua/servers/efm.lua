@@ -8,7 +8,7 @@ local luaFormat = {
 }
 
 -- https://github.com/fsouza/prettierd
--- local prettier = { formatCommand = "prettierd ${INPUT}", formatStdin = true }
+local prettier = { formatCommand = "prettierd ${INPUT}", formatStdin = true }
 
 -- https://github.com/mvdan/sh
 local shfmt = {
@@ -20,6 +20,7 @@ local shfmt = {
 local dprint = {
     formatStdin = true,
     formatCommand = "dprint fmt --stdin ${INPUT}",
+    -- formatCommand = "dprint fmt --st",
 }
 
 -- ----------------------------------------------------------------------------
@@ -42,7 +43,7 @@ local eslint = {
     lintCommand = "eslint_d --format=visualstudio --stdin --stdin-filename=${INPUT}",
     lintFormats = { "%f(%l,%c): %tarning %m", "%f(%l,%c): %rror %m" },
     lintIgnoreExitCode = true,
-    formatCommand = "eslint_d --fix-to-studiout --stdin --stdin-filename=${INPUT}",
+    formatCommand = "eslint_d --fix-to-stdout --stdin --stdin-filename=${INPUT}",
     formatStdin = true,
 }
 
@@ -63,6 +64,16 @@ local shellcheck = {
         "%f:%l:%c: %tarning: %m",
         "%f:%l:%c: %tote: %m",
     },
+}
+
+-- https://github.com/koalaman/shellcheck
+local dotenvLinter = {
+    -- lintStdin = true,
+    lintCommand = "dotenv-linter",
+    lintSource = "dotenv-linter",
+    lintFormats = { "%f:%l %m" },
+    --[[ formatStdin = true,
+    formatCommand = "dotenv-linter fix", ]]
 }
 
 -- ----------------------------------------------------------------------------
@@ -88,22 +99,25 @@ return {
         "javascript",
         "typescript",
         "json",
+        "yaml",
         "svelte",
+        "dotenv",
     },
     rootMarkers = { "package.json", ".git" },
     settings = {
         languages = {
             lua = { luaFormat },
-            javascript = { dprint },
-            typescript = { dprint },
-            svelte = { eslint, stylelint, dprint },
+            javascript = { eslint, dprint },
+            typescript = { eslint, dprint },
+            svelte = { eslint, stylelint, prettier },
             json = { dprint },
-            yaml = { dprint },
+            yaml = { prettier },
             css = { stylelint, dprint },
             pcss = { stylelint, dprint },
             markdown = { markdownlint, dprint },
             html = { stylelint, eslint, dprint },
             sh = { shellcheck, shfmt },
+            dotenv = { dotenvLinter },
         },
     },
 }

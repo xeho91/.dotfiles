@@ -230,12 +230,6 @@ local on_attach = function(client, bufnr)
     -- Scroll Hover Doc FIXME: Conflicts with vim-smoothie
     -- map("n", "<C-d>", "<cmd>lua require('lspsaga/action').smart_scroll_with_saga(1)<CR>", m_opts)
     -- map("n", "<C-u>", "<cmd>lua require('lspsaga/action').smart_scroll_with_saga(-1)<CR>", m_opts)
-    if client.resolved_capabilities.hover then
-        autocmd(
-            "LSP_Cursor_HoverDoc", "CursorHold <buffer> Lspsaga hover_doc",
-            false
-        )
-    end
 
     -- Signature help
     vimp.nnoremap({ "override" }, "<leader>S", "<cmd>Lspsaga signature_help<CR>")
@@ -247,6 +241,13 @@ local on_attach = function(client, bufnr)
 
     -- Formatting
     local format_key = "<leader>F"
+
+    -- HACK: Exclude servers from formatting, except EFM
+    -- FIXME: Find a better way to disable it
+    if client.name ~= "efm" then
+        client.resolved_capabilities.document_formatting = false
+    end
+
     if client.resolved_capabilities.document_formatting then
         vimp.nnoremap(
             { "override" }, format_key, function()
@@ -258,7 +259,8 @@ local on_attach = function(client, bufnr)
         -- Enable formatting on save
         autocmd(
             "FormatOnSave", {
-                "BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 500)",
+                [[BufWritePre <buffer> lua vim.lsp.buf.formatting_sync(nil, 200)]],
+                [[BufWritePost <buffer> lua print("Formatting on save done!")]],
             }, false
         )
     end
@@ -268,7 +270,7 @@ local on_attach = function(client, bufnr)
         vimp.vnoremap(
             { "override" }, format_key, function()
                 vim.cmd("lua vim.lsp.buf.range_formatting()")
-                print("Formatting done!")
+                print("Range formatting done!")
             end
         )
     end
@@ -289,17 +291,22 @@ local on_attach = function(client, bufnr)
             { "CursorHold <buffer> Lspsaga show_cursor_diagnostics" }, false
         )
     end
+
 end
+
+-- FLoat term
+vimp.nnoremap("<A-d>", "<cmd>Lspsaga open_floaterm<CR>")
+vimp.tnoremap("<A-d>", "<cmd>Lspsaga close_floaterm<CR>")
 
 local servers = {
     -- General purpose (Linting & Fixing)
     efm = require("servers/efm"),
     -- Lua
     sumneko_lua = require("servers/sumneko_lua"),
-    -- Bash
+    -- ash
     bashls = require("servers/bashls"),
     -- JavaScript / TypeScript
-    -- tsserver = require("servers/tsserver"),
+    tsserver = require("servers/tsserver"),
     -- (Deno) JavaScript / TypeScript
     denols = require("servers/denols"),
     -- JSON
