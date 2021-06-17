@@ -1,11 +1,9 @@
 -- https://github.com/nvim-treesitter/nvim-treesitter
-local opt = require("utils").opt
-
-local window = { vim.o, vim.wo }
+local wo = vim.wo
 
 -- Folding
-opt("foldmethod", "expr", window) -- Enable folding method based on indent
-opt("foldexpr", "nvim_treesitter#foldexpr()", window)
+wo.foldmethod = "expr"
+wo.foldexpr = "nvim_treesitter#foldexpr()"
 
 require("nvim-treesitter.configs").setup(
     {
@@ -126,13 +124,13 @@ require("nvim-treesitter.configs").setup(
         -- https://github.com/p00f/nvim-ts-rainbow
         rainbow = {
             enable = true,
-            extended_mode = true, -- Highlight also non-parentheses delimiters
+            iextended_mode = true, -- Highlight also non-parentheses delimiters
             max_file_lines = 1000,
         },
         -- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
         context_commentstring = {
             enable = true,
-            enable_autocmd = false,
+            enable_autocmd = true,
             config = { dotenv = "# %s" },
         },
     }

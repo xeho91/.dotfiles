@@ -20,18 +20,17 @@ if [[ -d ".ssh" && -d ".gnupg" ]]; then
 	export GPG_TTY=$(tty)
 
 	# Start the `gpg-agent` on session start
-	if (( $+commands[keychain] )); then
-		# FIXME: This is not perfect as in this scenario it expects only one
-		# existing key
-		gpg_pubkey_id=$(command gpg --list-keys --keyid-format=short \
-			| grep pub \
-			| grep -o -P '(?<=/)[A-Z0-9]{8}'
-		)
+	# if (( $+commands[keychain] )); then
+	# 	# FIXME: This is not perfect as in this scenario it expects only one existing key
+	# 	gpg_pubkey_id=$(command gpg --list-keys --keyid-format=short \
+	# 		| grep pub \
+	# 		| grep -o -P '(?<=/)[A-Z0-9]{8}'
+	# 	)
 
-		eval "$(keychain --eval --agents gpg "$gpg_pubkey_id")"
-	else
+	# 	eval "$(keychain --eval --agents gpg "$gpg_pubkey_id")"
+	# else
 		command gpg-connect-agent updatestartuptty /bye >/dev/null
-	fi
+	# fi
 else
 	print -P "%K{yellow}Warning\!%k %F{yellow}There is no GPG or SSH configured!%f"
 fi

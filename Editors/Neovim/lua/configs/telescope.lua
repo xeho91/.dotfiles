@@ -11,7 +11,8 @@ vimp.nmap(
     "<cmd>Telescope buffers show_all_buffers=true sort_lastused=true<CR>"
 )
 vimp.nmap(
-    "<C-p>", "<cmd>Telescope find_files theme=get_dropdown previewer=false<CR>"
+    "<C-p>",
+    [[<cmd>Telescope find_files theme=get_dropdown previewer=false find_command=rg,--files,--hidden prompt_prefix=🔍<CR>]]
 )
 vimp.nmap("<C-g>", "<cmd>Telescope git_files<CR>")
 vimp.nmap("<C-f>", "<cmd>Telescope live_grep<CR>")
@@ -39,6 +40,11 @@ telescope.setup {
                 ["Project"] = "/home/xeho91/Projects",
                 ["Dotfiles"] = "/home/xeho91/.dotfiles",
             },
+        },
+    },
+    mappings = {
+        n = {
+            -- ["CR"] = actions.select_default + actions.center
         },
     },
 }

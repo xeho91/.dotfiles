@@ -335,6 +335,17 @@ zinit \
 	for OMZP::urltools
 
 # =========================================================================== #
+# `web_search` add aliases for searching popular services
+# ---------------------------
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/web-search
+# =========================================================================== #
+zinit \
+	if'[[ "$USER_MODE" == "developer" ]]' \
+	atinit'ZSH_WEB_SEARCH_ENGINES=(reddit "https://www.reddit.com/search/?q=")' \
+	wait lucid \
+	for OMZP::web-search
+
+# =========================================================================== #
 # `encode64` and `decode64`
 # -------------------------
 # https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/encode64/
@@ -368,6 +379,28 @@ zinit \
 zinit \
 	wait lucid \
 	for OMZP::fancy-ctrl-z
+
+# =========================================================================== #
+# Completions for `npm` - Node Package Manager
+# ----------------------------------------------------------
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/npm
+# =========================================================================== #
+zinit \
+	has"npm" \
+	if'[[ "$USER_MODE" == "developer" ]]' \
+	wait lucid \
+	for OMZP::npm
+
+# =========================================================================== #
+# `node-docs` - Quickly search Node documentation
+# ----------------------------------------------------------------
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/node
+# =========================================================================== #
+zinit \
+	has"node" \
+	if'[[ "$USER_MODE" == "developer" ]]' \
+	wait lucid \
+	for OMZP::node
 
 # =========================================================================== #
 # Completions & functions for `pip` - Python package manager

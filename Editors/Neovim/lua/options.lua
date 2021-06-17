@@ -1,117 +1,111 @@
 -- https://neovim.io/doc/user/lua.html
 -- https://neovim.io/doc/user/api.html#API
+-- https://neovim.io/doc/user/options.html#options
 local cmd = vim.cmd
 local g = vim.g
 local o, wo, bo = vim.o, vim.wo, vim.bo
 
-local utils = require("utils")
-local opt = utils.opt
-
--- https://neovim.io/doc/user/options.html#options
-local buffer = { o, bo }
-local window = { o, wo }
-
 -- Searching with typing `/<pattern>`
-opt("incsearch", true) -- Highlight matches as you type
-opt("hlsearch", true) -- Highlight matches once a search is complete
-opt("ignorecase", true) -- Ignore case while searching
-opt("showmatch", true)
+o.incsearch = true -- Highlight matches as you type
+o.hlsearch = true -- Highlight matches once a search is complete
+o.ignorecase = true -- Ignore case while searching
+o.showmatch = true
 
 -- Invisible characters & wrapping
-opt("wrap", false, window) -- Disable line wrap
-opt("list", false) -- Show hidden characters
+wo.wrap = false -- Disable line wrap
+o.list = false -- Show hidden characters
 -- opt( "listchars", "eol:¬,tab:┆ ,trail:·,extends:»,precedes:«,space:·,nbsp:␣")
 
 -- Enable italics
-opt("t_ZH", "[[3m")
-opt("t_ZR", "^[[23m")
+wo.t_ZH = "[[3m";
+wo.t_ZR = "^[[23m";
 
 -- ?
-opt("hidden", true)
-opt("scrolloff", 5)
-opt("shiftround", true)
-opt("shortmess", o.shortmess .. "c")
-opt("shada", [['20,<50,s10,h,/100]])
--- opt("completetopt", "menuone,noselect")
-opt("whichwrap", o.whichwrap .. "<,>,h,l")
-opt("laststatus", 2)
-opt("showmode", false)
-opt("joinspaces", false)
-opt("guicursor", [[n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50]])
-opt("inccommand", "nosplit")
-opt("previewheight", 5)
-opt("undofile", true, buffer)
-opt("synmaxcol", 500, buffer)
-opt("display", "msgsep")
-opt("modeline", false, buffer)
-opt("mouse", "nivh")
-opt("keywordprg", ":vertical help")
+o.hidden = true
+o.scrolloff = 5
+o.shiftround = true
+o.shortmess = o.shortmess .. "c"
+o.shada = [['20,<50,s10,h,/100]]
+-- o.completetopt = "menuone,noselect"
+o.whichwrap = o.whichwrap .. "<,>,h,l"
+o.laststatus = 2
+o.showmode = false
+o.joinspaces = false
+o.guicursor = [[n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50]]
+o.inccommand = "nosplit"
+o.previewheight = 5
+bo.undofile = true
+bo.synmaxcol = 500
+o.display = "msgsep"
+bo.modeline = false
+o.mouse = "nivh"
+o.keywordprg = ":vertical help"
 
 -- Conceal
-opt("conceallevel", 2, window)
-opt("concealcursor", "nc", window)
+wo.conceallevel = 2
+wo.concealcursor = "nc"
 
 -- Width of the buffer/window
-opt("textwidth", 79, buffer)
-opt("colorcolumn", "80", window)
-opt("number", true, window)
-opt("relativenumber", true, window)
+bo.textwidth = 79
+wo.colorcolumn = "80"
+wo.number = true
+wo.relativenumber = true
 
 -- Indentation
-opt("smartcase", true)
+o.smartcase = true
 
 -- Window splitting
-opt("splitbelow", true)
-opt("splitright", true)
+o.splitbelow = true
+o.splitright = true
 
 -- Clipboard
-opt("clipboard", "unnamed,unnamedplus")
+o.clipboard = "unnamed,unnamedplus"
 
 -- Backup & swap
-opt("backup", false)
-opt("writebackup", false)
-opt("swapfile", false)
+o.backup = false
+o.writebackup = false
+o.swapfile = false
 
 -- Performance
-opt("updatetime", 100) -- Default is 4000ms and leads to noticable delays
-opt("ttyfast", true) -- Improve scrolling speed
-opt("lazyredraw", true) -- Stop redrawing screen while executing macros
-opt("regexpengine", 0) -- Use newer algorithm for RegExp engine
+o.updatetime = 100 -- Default is 4000ms and leads to noticable delays
+o.ttyfast = true -- Improve scrolling speed
+o.lazyredraw = true -- Stop redrawing screen while executing macros
+o.regexpengine = 0 -- Use newer algorithm for RegExp engine
 
 -- Wild menu
-opt("wildmenu", true) -- Enable "enhanced mode" of CLI completion
-opt("wildmode", "longest:full,full") -- Set completion mode for commands
-opt("wildignore", "*.o,*~,*.pyc")
+o.wildmenu = true -- Enable "enhanced mode" of CLI completion
+o.wildmode = "longest:full,full" -- Set completion mode for commands
+o.wildignore = "*.o,*~,*.pyc"
 
 -- Command line
-opt("cmdheight", 2) -- Give more space for displaying messages
+o.cmdheight = 2 -- Give more space for displaying messages
 
 -- Indentation
 local indent = 4
 
-opt("expandtab", false, buffer) -- Don't convert TAB(s) to SPACE(s)
-opt("tabstop", indent, buffer) -- Width of the TAB
-opt("shiftwidth", indent, buffer) -- Width of the indent
-opt("softtabstop", indent, buffer) -- Make TAB work in the middle of line (text)
-opt("smartindent", true, buffer) -- ?
+bo.expandtab = false -- Don't convert TAB(s) to SPACE(s)
+bo.tabstop = indent -- Width of the TAB
+bo.shiftwidth = indent -- Width of the indent
+bo.softtabstop = indent -- Make TAB work in the middle of line (text
+bo.smartindent = true -- ?
 
 -- Folding
--- opt("foldmethod", "indent", window) -- Enable folding method based on indent
-opt("foldlevel", 2, window) -- Close fold level(s) (0 - all)
+-- wo.foldmethod = "indent" -- Enable folding method based on indent
+-- wo.foldlevel = 2 -- Close fold level(s (0 - all)
 
 -- Sign column
-opt("signcolumn", "yes:1", window) -- Always show, so there's no shifting
+wo.signcolumn = "yes:1" -- Always show, so there's no shifting
 
 -- Theme
-opt("termguicolors", true)
-opt("background", "dark")
+o.termguicolors = true
+o.background = "dark"
 
 -- Font
-opt("guifont", "FiraCode Nerd Font:h18")
+o.guifont = "JetBrainsMono Nerd Font:h18"
 
--- ----------------------------------------------------------------------------
--- Other
--- ----------------------------------------------------------------------------
+---- ----------------------------------------------------------------------------
+---- Other
+---- ----------------------------------------------------------------------------
 cmd("filetype plugin indent on")
 cmd("syntax enable")
 

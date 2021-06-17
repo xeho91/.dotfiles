@@ -2,5 +2,7 @@
 sd
 # Binary files not avaiable
 rmesg
+# Linting dotenv files
+dotenv-linter
 
 

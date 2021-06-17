@@ -5,10 +5,15 @@
 local luaFormat = {
     formatStdin = true,
     formatCommand = "lua-format --config=$DOTFILES/Formatters/.lua-format -i",
+    env = { [[PRETTIERD_DEFAULT_CONFIG="$DOTFILES/Formatters/prettier.json"]] },
 }
 
 -- https://github.com/fsouza/prettierd
-local prettier = { formatCommand = "prettierd ${INPUT}", formatStdin = true }
+-- https://github.com/mikew/prettier_d_slim
+local prettier = {
+    formatCommand = "prettier_d_slim --stdin --stdin-filepath=${INPUT}",
+    formatStdin = true,
+}
 
 -- https://github.com/mvdan/sh
 local shfmt = {
@@ -20,7 +25,6 @@ local shfmt = {
 local dprint = {
     formatStdin = true,
     formatCommand = "dprint fmt --stdin ${INPUT}",
-    -- formatCommand = "dprint fmt --st",
 }
 
 -- ----------------------------------------------------------------------------
@@ -67,14 +71,15 @@ local shellcheck = {
 }
 
 -- https://github.com/koalaman/shellcheck
-local dotenvLinter = {
-    -- lintStdin = true,
-    lintCommand = "dotenv-linter",
-    lintSource = "dotenv-linter",
-    lintFormats = { "%f:%l %m" },
-    --[[ formatStdin = true,
-    formatCommand = "dotenv-linter fix", ]]
-}
+-- FIXME: Is there a way to format stdin?
+-- local dotenvLinter = {
+--    -- lintStdin = true,
+--    lintCommand = "dotenv-linter",
+--    lintSource = "dotenv-linter",
+--    lintFormats = { "%f:%l %m" },
+--    --[[ formatStdin = true,
+--    formatCommand = "dotenv-linter fix", ]]
+-- }
 
 -- ----------------------------------------------------------------------------
 -- EFM-LANGSERVER
@@ -95,13 +100,12 @@ return {
         "html",
         "markdown",
         "css",
-        "pcss",
         "javascript",
         "typescript",
         "json",
         "yaml",
         "svelte",
-        "dotenv",
+        -- "dotenv",
     },
     rootMarkers = { "package.json", ".git" },
     settings = {
@@ -117,7 +121,8 @@ return {
             markdown = { markdownlint, dprint },
             html = { stylelint, eslint, dprint },
             sh = { shellcheck, shfmt },
-            dotenv = { dotenvLinter },
+            -- FIXME: Doesn't work yet.
+            -- dotenv = { dotenvLinter },
         },
     },
 }

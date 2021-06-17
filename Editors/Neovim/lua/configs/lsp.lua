@@ -174,7 +174,6 @@ local on_attach = function(client, bufnr)
             hint_prefix = "🐼 ",
             hint_scheme = "Markdown",
             handler_opts = { border = "single" },
-            decorator = { "`", "`" },
         }
     )
 
@@ -294,13 +293,11 @@ local on_attach = function(client, bufnr)
 
 end
 
--- FLoat term
+-- Float term
 vimp.nnoremap("<A-d>", "<cmd>Lspsaga open_floaterm<CR>")
 vimp.tnoremap("<A-d>", "<cmd>Lspsaga close_floaterm<CR>")
 
 local servers = {
-    -- General purpose (Linting & Fixing)
-    efm = require("servers/efm"),
     -- Lua
     sumneko_lua = require("servers/sumneko_lua"),
     -- ash
@@ -319,6 +316,8 @@ local servers = {
     svelte = require("servers/svelte"),
     -- YAML
     yamlls = require("servers/yamlls"),
+    -- General purpose (Linting & Fixing)
+    efm = require("servers/efm"),
 }
 
 local snippet_capabilities = {

@@ -1,4 +1,4 @@
-/** @type {import("@types/prettier").Options} */
+/** @type { import("@types/prettier").Options } */
 module.exports = {
 	// https://prettier.io/docs/en/options.html
 	printWidth: 80,
@@ -28,5 +28,18 @@ module.exports = {
 				useTabs: false,
 			},
 		},
+		{
+			files: "*.svelte",
+			options: { parser: "svelte" },
+		},
 	],
+
+	plugins: ["prettier-plugin-svelte"],
+
+	// https://github.com/sveltejs/prettier-plugin-svelte
+	svelteSortOrder: "options-scripts-markup-styles",
+	svelteStrictMode: false,
+	svelteBracketNewLine: true,
+	svelteAllowShorthand: true,
+	svelteIndentScriptAndStyle: true,
 };

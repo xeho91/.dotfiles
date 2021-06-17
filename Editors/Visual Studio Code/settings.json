@@ -8,7 +8,6 @@
   /*                                                                Selection */
   /* ------------------------------------------------------------------------ */
   "editor.suggestSelection": "first",
-  "editor.columnSelection": true,
   /* ------------------------------------------------------------------------ */
   /*                                                                Rendering */
   /* ------------------------------------------------------------------------ */
@@ -20,7 +19,7 @@
   /* ------------------------------------------------------------------------ */
   "editor.detectIndentation": true,
   "editor.insertSpaces": false,
-  "editor.tabSize": 4,
+  "editor.tabSize": 8,
   /* ------------------------------------------------------------------------ */
   /*                                                               Formatting */
   /* ------------------------------------------------------------------------ */
@@ -172,13 +171,13 @@
   /* ------------------------------------------------------------------------ */
   /*                                                                   ESLint */
   /* ------------------------------------------------------------------------ */
-  "eslint.debug": true,
+  "eslint.debug": false,
   "eslint.run": "onType",
-  "eslint.trace.server": "verbose",
+  "eslint.trace.server": "messages",
   "eslint.packageManager": "pnpm",
   "eslint.options": {
     "configFile": "/home/xeho91/.dotfiles/Linters/.eslintrc.js",
-    "ignorePath": "/home/xeho91/.dotfiles/Linters/.eslintignore.js",
+    // "ignorePath": "/home/xeho91/.dotfiles/Linters/.eslintignore.js",
   },
   "eslint.codeAction.showDocumentation": {
     "enable": true
@@ -321,7 +320,22 @@
     "Photoshop"
   ],
   "todo-tree.tree.showScanModeButton": false,
-  "workbench.colorTheme": "Tokyo Night Storm",
+  "workbench.colorTheme": "Tokyo Night Light",
   "editor.acceptSuggestionOnEnter": "off",
   "vim.camelCaseMotion.enable": true,
+  "conventionalCommits.emojiFormat": "emoji",
+  "redhat.telemetry.enabled": false,
+  "editor.cursorStyle": "line",
+  "editor.lineNumbers": "on",
+  "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+  "todo-tree.general.tags": [
+    "BUG",
+    "HACK",
+    "FIXME",
+    "TODO",
+    "XXX",
+    "[ ]",
+    "[x]"
+  ],
+  "todo-tree.regex.regex": "(//|#|<!--|;|/\\*|^|^\\s*(-|\\d+.))\\s*($TAGS)",
 }

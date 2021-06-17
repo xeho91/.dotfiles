@@ -290,7 +290,7 @@ local plugins_list = function()
             -- Highlight, list and search todo comments in your projects
             -- Lua: Yes
             -- https://github.com/folke/todo-comments.nvim
-            config = [[require("configs/todo_comments")]],
+            config = "require('configs/todo_comments')",
         }
     )
 
@@ -503,15 +503,26 @@ local plugins_list = function()
 
     use(
         {
-            "b3nj5m1n/kommentary",
+            "terrortylor/nvim-comment",
             -- Comment stuff out
             -- Lua: Yes
-            -- https://github.com/b3nj5m1n/kommentary
+            -- https://github.com/terrortylor/nvim-comment
             opt = true,
             keys = "gc",
-            config = "require('configs/kommentary')",
+            config = "require('configs/commenting')",
         }
     )
+    -- use(
+    -- {
+    -- "b3nj5m1n/kommentary",
+    -- Comment stuff out
+    -- Lua: Yes
+    -- https://github.com/b3nj5m1n/kommentary
+    -- opt = true,
+    -- keys = "gc",
+    -- config = "require('configs/commenting')",
+    -- }
+    -- )
 
     use(
         {

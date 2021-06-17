@@ -19,8 +19,8 @@
 # https://help.github.com/articles/signing-commits-using-gpg/
 # =========================================================================== #
 [gpg]
-	# program = C:\\Program Files (x86)\\Gpg4win\\..\\GnuPG\\bin\\gpg.exe
 	program = gpg
+	# program = C:\\Program Files (x86)\\Gpg4win\\..\\GnuPG\\bin\\gpg.exe
 
 [commit]
 	gpgsign = true
@@ -52,7 +52,7 @@
 # Credential settings
 # =========================================================================== #
 [credential]
-	helper = manager-core
+	helper = cache
 
 # =========================================================================== #
 # Reuse recorded resolution of conflicted merges

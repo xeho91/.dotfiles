@@ -8,7 +8,7 @@
 function open_command() {
 	if [[ -n "$DISPLAY" ]]; then
 		local open_cmd
-		
+
 		# define the open command
 		case "$OSTYPE" in
 			darwin*) open_cmd='open' ;;
@@ -140,7 +140,6 @@ function where-zsh() {
 # `palette` - print palette and color codes (for percentage expansion)
 # =========================================================================== #
 function palette() {
-
 	local colors
 
 	if [[ $1 == "background" || $1 == "bg" ]]; then
@@ -172,7 +171,7 @@ function palette() {
 # =========================================================================== #
 # Open files with default editor and interactively with `fzf`
 # =========================================================================== #
-function editor_open_file() {
+function editor-open-file() {
 	command $EDITOR -o $(fzf)
 }
 

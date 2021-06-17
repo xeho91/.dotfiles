@@ -2,13 +2,7 @@
 var rulesFromESLint = {
 	// https://eslint.org/docs/rules
 
-	"indent": [
-		"warn",
-		"tab",
-		{
-			SwitchCase: 1,
-		},
-	],
+	indent: ["warn", "tab", { SwitchCase: 1 }],
 
 	"max-len": [
 		"error",
@@ -21,9 +15,9 @@ var rulesFromESLint = {
 		},
 	],
 
-	"quotes": ["warn", "double", { avoidEscape: true }],
+	quotes: ["warn", "double", { avoidEscape: true }],
 
-	"no-console": ["warn"],
+	"no-console": ["error"],
 
 	"no-alert": ["error"],
 
@@ -42,10 +36,7 @@ var rulesFromPlugins = {
 	"node/no-missing-import": "off",
 	"node/no-missing-require": "off",
 
-	"node/no-unsupported-features/es-syntax": [
-		"error",
-		{ version: ">=12.0.0" },
-	],
+	"node/no-unsupported-features/es-syntax": ["error", { version: ">=12.0.0" }],
 
 	// https://github.com/benmosher/eslint-plugin-import#rules
 
@@ -84,6 +75,8 @@ module.exports = {
 		"security",
 		// https://github.com/xjamundx/eslint-plugin-promise
 		"promise",
+		// https://github.com/xjamundx/eslint-plugin-html
+		"html",
 	],
 
 	env: {

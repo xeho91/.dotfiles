@@ -18,13 +18,13 @@ require("gitsigns").setup(
             },
             delete = {
                 hl = "GitSignsDelete",
-                text = "▄",
+                text = "▁",
                 numhl = "GitSignsDelete",
                 linehl = "GitSignsDelete",
             },
             topdelete = {
                 hl = "GitSignsDelete",
-                text = "▀",
+                text = "▔",
                 numhl = "GitSignsDelete",
                 linehl = "GitSignsDelete",
             },

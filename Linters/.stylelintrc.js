@@ -19,6 +19,7 @@ var rules_plugins = {
 
 module.exports = {
 	extends: [
+		"styelint-config-recommended",
 		// https://github.com/constverum/stylelint-config-rational-order
 		"stylelint-config-rational-order",
 

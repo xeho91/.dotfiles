@@ -30,3 +30,9 @@ typeset -aU path dpath fpath manpath module_path
 unset MANPATH # Disables warning when reloading
 export MANPATH=:"$(manpath):$ZPFX/share/man"
 
+# Add binaries installed by deno
+export PATH="$HOME/.deno/bin:$PATH"
+
+# tabtab source for pnpm packages
+# uninstall by removing these lines
+[[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true

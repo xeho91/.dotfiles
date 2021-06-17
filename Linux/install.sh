@@ -15,57 +15,55 @@ dotfiles_remote_repository="https://github.com/xeho91/.dotfiles.git"
 # List of configuration files for programs to be used/installedl
 declare -A config_files=(
 	["git"]="Git/.gitconfig"
-	["bash"]="Linux/Bash/.bash_profile"
-	["zsh"]="Linux/Zsh/.zshenv"
+	["bash"]="Shells/Bash/.bash_profile"
+	["zsh"]="Shells/Zsh/.zshenv"
+	["editorconfig"]="Editors/.editorconfig"
+	["neovim"]="Editors/Neovim/init.lua"
 )
 
+declare package_manager
 # List supported distributions with their package managers to use
 declare -A package_managers=(
 	["Arch Linux"]="pacman"
+	["Manjaro Linux"]="pacman"
 	["Debian"]="apt"
 	["Ubuntu"]="apt"
 )
 
-required_programs=( "git" "which" )
+required_packages=("git" "which" "gcc" "cmake")
 
-declare new_hostname
-declare old_username
-declare new_username
+declare user_mode
+user_mode_options=("developer" "administrator")
 
-# shellcheck disable=SC2034
-shell_options=( "zsh" "bash" )
+# declare new_hostname
+# declare old_username
+# declare new_username
 
-# shellcheck disable=SC2034
-editor_options=( "nvim" "vim" )
+declare default_shell
+shell_options=("zsh" "bash" "ksh")
 
-# shellcheck disable=SC2034
-mode_options=( "developer" "administrator" )
+declare default_editor
+editor_options=("neovim" "vim")
 
-# List of environment variables to be edited
-# and their values to be determined
+# List of environment variables to be determined
 declare -A environment_variables=()
-# 	["DOTFILES"]="\$HOME/$dotfiles_dir_name"
-# 	["EDITOR"]="$default_editor"
-# 	["USER_MODE"]="$user_mode"
-# 	["BUILD_FROM_SOURCE"]="$build_from_source"
-# )
 
 # =========================================================================== #
 # Helpers
 # =========================================================================== #
 
 # Get the basename of dotfiles directory
-function get_dotfiles_basename {
+function get_dotfiles_baseName() {
 	local dotfiles_dir_name
 
-	dotfiles_dir_name="$( \
+	dotfiles_dirName="$(
 		command basename "$dotfiles_remote_repository" \
-		| command grep --only-matching --perl-regexp '.*(?=\.git)' \
+			| command grep --only-matching --perl-regexp '.*(?=\.git)'
 	)"
 
-	environment_variables["DOTFILES"]="$HOME/$dotfiles_dir_name"
+	environment_variables["DOTFILES"]="$HOME/$dotfiles_dirName"
 }
-get_dotfiles_basename
+get_dotfiles_baseName
 
 # Associative array with colors for `tput` program
 declare -A colors=(
@@ -100,26 +98,34 @@ declare -A prefixes=(
 )
 
 # --------------------------------------------------------------------------- #
-#                                         Formatting the output (with `tput`)
+# Formatting the output (with `tput`)
 # --------------------------------------------------------------------------- #
 # Available effect options:
-# * fg {color} - set foreground color
-# * bg {color} - set background color
-# * u          - set underline
-# * reset      - clear formatting
-function format {
+# * fg {color}   - set foreground color
+# * bg {color}   - set background color
+# * (/)underline - (un)set underline
+# * (/)bold      - (un)set underline
+# * reset        - clear formatting
+function format() {
 	# Verify if any format option was given
 	if [ -n "$1" ]; then
 		local effect=$1
 	else
 		printf "Formatting effect not specified!"
+		exit 1
 	fi
 
 	# Determine format based on the option
 	if [[ $effect == reset ]]; then
 		command tput sgr0
-	elif [[ $effect == "u" ]]; then
+	elif [[ $effect == "underline" ]]; then
 		command tput smul
+	elif [[ $effect == "/underline" ]]; then
+		command tput rmul
+	elif [[ $effect == "bold" ]]; then
+		command tput smso
+	elif [[ $effect == "/bold" ]]; then
+		command tput rmso
 	elif [[ $effect == "bg" || $effect == "fg" ]]; then
 		#  Check if color was given as second argument
 		if [ -n "$2" ]; then
@@ -128,9 +134,11 @@ function format {
 				local color=${colors[$2]}
 			else
 				printf "Specifed color is not recognized!"
+				exit 1
 			fi
 		else
 			printf "No color name was given as argument!"
+			exit 1
 		fi
 
 		# Return desired formatting
@@ -141,14 +149,15 @@ function format {
 		fi
 	else
 		printf "Unknown format option was given!"
+		exit 1
 	fi
 }
 
 # --------------------------------------------------------------------------- #
-#                                                Override the command `print`
-#                         with a function to print a specified type of output
+#  Override the command `print`
+#  with a function to print a specified type of output
 # --------------------------------------------------------------------------- #
-function print {
+function print() {
 	# Check if any type was passed as argument
 	if [ -n "$1" ]; then
 		# Verify if the given type exists
@@ -156,7 +165,7 @@ function print {
 			local type=$1
 		else
 			printf "Specified output type is not recognized!"
-			return 1
+			exit 1
 		fi
 	else
 		printf "No type was passed as a argument!"
@@ -164,49 +173,51 @@ function print {
 
 	# Check if a message was passed as argument
 	if [ -z "$2" ]; then
-		printf "No message was given as a argument!"
+		printf "No message was passed as a argument!"
+		exit 1
 	fi
 
-	local -a messages=()
-	local arguments=( "$@" )
+	local arguments=("$@")
 
 	# Loop from the second argument
-	for (( index=1; index < "$#"; index++ )); do
-		messages+=( "${arguments[$index]}" )
+	local -a messages=()
+	for ((index = 1; index < "$#"; index++)); do
+		messages+=("${arguments[$index]}")
 	done
 
 	# Return formatted output and fold it by spaces if is too long
-	fold --spaces --width 100 <<< "$( \
-		format bg "${formats[$type]}"; \
-		printf "%s:" "${prefixes[$type]}"; \
-		format reset; \
-		format fg "${formats[$type]}"; \
-		printf " %s" "${messages[@]}"; \
-		format reset; \
+	fold --spaces --width 100 <<< "$(
+		printf "$(format bg "${formats[$type]}")%s:$(format reset)" \
+			"${prefixes[$type]}"
+		printf "$(format fg "${formats[$type]}") %s$(format reset)" \
+			"${messages[@]}"
 	)"
 }
 
 # --------------------------------------------------------------------------- #
 #                                                        Confirm the decision
 # --------------------------------------------------------------------------- #
-function confirm {
-	local valid_output="false"
+function confirm() {
+	local valid_output=false
 	local attempt=1
 	local max_tries=5
 
-	while [[ "$valid_output" == "false" ]]; do
+	while [[ $valid_output == false ]]; do
 		format fg cyan
-		printf "%s\n" "(Y)yes / (N)no"
+		printf -- "---\n$(format underline)%s$(format /underline)\n" \
+			"Possible decisions:"
+		printf "%s\n" \
+			"$(format bold)(Y)$(format /bold)yes / $(format bold)(N)$(format /bold)no"
 		format reset
-		read -r -p "User's decision: " decision
+		read -r -p "Decision: " decision
 
 		case "$decision" in
-			[yY][eE][sS]|[yY])
+			[yY][eE][sS] | [yY])
 				valid_output="true"
 				return 0
 				;;
 
-			[nN][oO]|[nN])
+			[nN][oO] | [nN])
 				valid_output="true"
 				return 1
 				;;
@@ -221,25 +232,27 @@ function confirm {
 # --------------------------------------------------------------------------- #
 #                            Pick an option from the provided list of options
 # --------------------------------------------------------------------------- #
-function pick_option () {
-	local result_variable_name=$1
-	local -n options=$2
-	local user_pick=0
+function pick_option() {
+	local options=("$@")
 
-	function print_available_options {
+
+	function print_options() {
 		format fg cyan
 		printf -- "---\n%s\n" \
-			"Available options: (pick the number from the list below)"
+			"$(format underline)Available options$(format /underline): (pick the number from the list below)"
 		for index in "${!options[@]}"; do
-			printf "(%d) %s\n" "$((index + 1))" "${options[$index]}"
+			printf "$(format bold)(%d)$(format /bold) %s\n" \
+				"$((index + 1))" \
+				"${options[$index]}"
 		done
 		format reset
 	}
 
-	function is_option_available {
+	local user_pick=0
+	function is_available() {
 		# Check if user's pick is > 0
 		# and less or equal to the length of options array
-		if [[ $user_pick -gt 0 && $user_pick -le "${#options[@]}" ]]; then
+		if [[ $user_pick -gt 0 && $user_pick -le ${#options[@]} ]]; then
 			return 0
 		else
 			return 1
@@ -248,15 +261,14 @@ function pick_option () {
 
 	local max_tries=5
 	local attempt=1
+	while ! is_available; do
+		print_options
+		read -r -p "Option: " user_pick
 
-	while ! is_option_available; do
-		print_available_options
-		read -r -p "$result_variable_name: " user_pick
-
-		if is_option_available; then
+		if is_available; then
 			# list starts from 0,
-		    # so the number of user pick has to be deducted by 1
-			export "$result_variable_name"="${options[$((user_pick - 1))]}"
+			# so the number of user pick has to be deducted by 1
+			option_pick="${options[$user_pick - 1]}"
 		else
 			limit_attempts
 		fi
@@ -264,13 +276,13 @@ function pick_option () {
 }
 
 # --------------------------------------------------------------------------- #
-#                    Limit attempts for the user input to prevent endlessness
+# Limit attempts for the user input to prevent endlessness
 # --------------------------------------------------------------------------- #
-function limit_attempts {
+function limit_attempts() {
 	attempt=$((attempt + 1))
 
 	if [ "$attempt" -le "$max_tries" ]; then
-		print error "Invalid output!"
+		print error "Invalid input!"
 		format fg red
 		printf "%s (Attempt %d of %d)\n" \
 			"Lets try again" \
@@ -286,10 +298,10 @@ function limit_attempts {
 # --------------------------------------------------------------------------- #
 #                                        Check if the program(s) is installed
 # --------------------------------------------------------------------------- #
-function is_installed {
-	local program_name=$1
+function is_installed() {
+	local package_name=$1
 
-	if [ -x "$(command -v "$program_name")" ]; then
+	if [ -x "$(command -v "$package_name")" ]; then
 		return 0
 	else
 		return 1
@@ -299,39 +311,50 @@ function is_installed {
 # --------------------------------------------------------------------------- #
 #                                                      Install the program(s)
 # --------------------------------------------------------------------------- #
-function install_program {
-	local program_name=$1
+function install_package() {
+	local package_name=$1
 
-	if is_installed "$program_name"; then
-		print note "The program \"$program_name\" is already installed."
+	if is_installed "$package_name"; then
+		print note "The package" \
+			"$(format bold)$package_name$(format /bold)" \
+			"is already installed."
 		return 0
 	fi
 
-	print question "Do you want to install program \"$program_name\" with \`$package_manager\` package manager?"
+	print question "Do you want to install package" \
+		"$(format bold)$package_name$(format /bold)?"
 
 	if confirm; then
-		print info "Executing \`$package_manager\` command to install \"$program_name\"..."
+		print info "Using \`$package_manager\` to install" \
+			"$(format bold)$package_name$(format /bold)..."
 
+		local install_command
 		# Debian & Ubuntu
 		if [[ $package_manager == "apt" ]]; then
-			command sudo apt install "$program_name"
+			install_command="install"
 		# Arch Linux
 		elif [[ $package_manager == "pacman" ]]; then
-			command sudo pacman -S "$program_name"
+			install_command="--sync"
 		fi
 
-		print note "Installed \"$program_name\" with \`$package_manager\`."
-		return 0
+		if command sudo "$package_manager" "$install_command" "$package_name"; then
+			print note "Installed" \
+				"$(format bold)$package_name$(format /bold) with a success."
+			return 0
+		else
+			print error "Something went wrong with installation!"
+			terminate
+		fi
 	else
-		print note "Skipped installing \"$program_name\"."
+		print note "Skipped installing this package."
 		return 1
 	fi
 }
 
 # --------------------------------------------------------------------------- #
-#                                Check if given path or directory name exists
+# Check if given path or directory name exists
 # --------------------------------------------------------------------------- #
-function directory_exists {
+function directory_exists() {
 	local dir_path=$1
 
 	if [ -d "$dir_path" ]; then
@@ -342,9 +365,9 @@ function directory_exists {
 }
 
 # --------------------------------------------------------------------------- #
-#                                     Check if given path or file name exists
+# Check if given path or file name exists
 # --------------------------------------------------------------------------- #
-function file_exists {
+function file_exists() {
 	local file_path=$1
 
 	if [ -e "$file_path" ]; then
@@ -355,12 +378,12 @@ function file_exists {
 }
 
 # --------------------------------------------------------------------------- #
-#     Check if given symbolic link file to specific configuration file exists
+# Check if given symbolic link file to specific configuration file exists
 # --------------------------------------------------------------------------- #
-function link_exists {
-	local link_path=$1
+function symlink_exists() {
+	local symlink_path=$1
 
-	if [ -L "$link_path" ]; then
+	if [ -L "$symlink_path" ]; then
 		return 0
 	else
 		return 1
@@ -370,8 +393,9 @@ function link_exists {
 # --------------------------------------------------------------------------- #
 #     Create symbolic link to a specific configuration file from the dotfiles
 # --------------------------------------------------------------------------- #
-function create_symlink {
+function create_symlink() {
 	local program_name=$1
+
 	local dotfiles_path="${environment_variables[DOTFILES]}"
 	local config_file_path=${config_files["$program_name"]}
 	local file_name
@@ -389,25 +413,26 @@ function create_symlink {
 }
 
 # --------------------------------------------------------------------------- #
-#                               Print the short output of the program version
+# Print the short output of the program version
 # --------------------------------------------------------------------------- #
-function print_version {
+function print_version() {
 	local program=$1
-	local program_version_info
-	program_version_info=$(command "$program" --version | head --lines 1)
 
-	print info "Printing \`$program\` version information..."
-	print note "$program_version_info"
+	local version_info
+	version_info=$(command "$program" --version | head --lines 1)
+
+	print info "Printing version information..."
+	print note "$version_info"
 }
 
 # --------------------------------------------------------------------------- #
-#                                   Wrappers for printing the readable output
-#                                    for a specified part of the installation
+# Wrappers for printing the readable output
+# for a specified part of the installation
 # --------------------------------------------------------------------------- #
-function start_installation_part {
-	local part_title=$1
+function start_part() {
+	local title=$1
 
-	printf -- "\n--------- [ %s ] \n" "$part_title"
+	printf -- "\n--------- [ %s ] \n" "$(format underline)$title$(format reset)"
 
 	if [ -n "${2-}" ]; then
 		local info_message=$2
@@ -416,7 +441,7 @@ function start_installation_part {
 	fi
 }
 
-function end_installation_part {
+function end_part() {
 	if [ -n "${1-}" ]; then
 		local success_message=$1
 
@@ -429,143 +454,114 @@ function end_installation_part {
 	return 0
 }
 
-# --------------------------------------------------------------------------- #
-#                                    Wrapper for terminating the installation
-# --------------------------------------------------------------------------- #
-function terminate {
-	printf -- "---------\n"
-	format fg red
-	printf "\n%s\n" "Installation terminated."
-	format reset
+function terminate() {
+	printf "\n%s\n\n" "$(format fg red)Installation terminated.$(format reset)"
 	exit 1
 }
 
 # =========================================================================== #
-# Function wrappers for the main features
+# Main features
 # =========================================================================== #
 
 # --------------------------------------------------------------------------- #
-#                         Get the name of currently used Linux's distribution
-#                                                 and check if it's supported
+# Get the name of currently used Linux's distribution
+# and check if it's supported
 # --------------------------------------------------------------------------- #
-function check_if_distribution_is_supported {
-	start_installation_part \
-		"Linux's distribution" \
-		"Determining if the current Linux's distribution is supported"
+function check_distribution() {
+	start_part "Linux distribution" \
+		"Determining if the current Linux distribution is supported"
 
-	function get_distribution_name {
+	function get_name() {
 		command cat /etc/*-release \
-		| command grep --only-matching --perl-regexp '(?<=^NAME=\").*(?=\")'
+			| command grep --only-matching --perl-regexp '(?<=^NAME=\").*(?=\")'
 	}
 
-	distribution_name=$(get_distribution_name)
-	print note "You are on \"$distribution_name\" Linux's distribution."
+	distribution_name=$(get_name)
+	print note "You are on" \
+		"$(format bold)$distribution_name$(format /bold) distribution."
 
-	function is_distribution_supported {
+	function is_supported() {
 		for supported_distribution in "${!package_managers[@]}"; do
 			if [[ $distribution_name =~ $supported_distribution ]]; then
-				distribution_name="$supported_distribution"
+				package_manager=${package_managers[$distribution_name]}
+
 				return 0
 			fi
 		done
 
+		# Fail if not found
 		return 1
 	}
 
-	if ! is_distribution_supported; then
+	if is_supported; then
+		print note "This installation will use the" \
+			"$(format bold)$package_manager$(format /bold) package manager."
+		end_part "This distribution is supported."
+	else
 		print error "Sorry, this distribution is not supported!"
 		terminate
-	else
-		end_installation_part "This distribution is supported."
 	fi
 }
 
 # --------------------------------------------------------------------------- #
-#                                       Determine the package manager program
+# Check if required programs exists,
+# and if not, install the missing ones
 # --------------------------------------------------------------------------- #
-function determine_package_manager {
-	start_installation_part \
-		"Package manager program" \
-		"Determining the package manager program"
+function check_required_packages() {
+	start_part "Required packages" \
+		"Checking if the required packages are installed"
 
-	for key in "${!package_managers[@]}"; do
-		if [ "$distribution_name" == "$key" ]; then
-			package_manager="${package_managers["$key"]}"
-			break
-		fi
-	done
-
-	if [ -z "$package_manager" ]; then
-		print error "Something went wrong with determining the package manager!"
-		terminate
-	else
-		print note "This installation will use the \`$package_manager\` package manager."
-		end_installation_part "The package manager is determined."
-	fi
-}
-
-# --------------------------------------------------------------------------- #
-#                                          Check if required programs exists,
-#                                        and if not, install the missing ones
-# --------------------------------------------------------------------------- #
-function check_required_programs {
-	start_installation_part \
-		"Required programs" \
-		"Checking if the required programs are installed"
-
-	# Determine a list of missing programs
-	local missing_programs=()
-
-	for program_name in ${required_programs[*]}; do
-		if ! is_installed "$program_name"; then
-			missing_programs+=( "$program_name" )
+	# Determine a list of missing packages
+	local missing_packages=()
+	for package_name in ${required_packages[*]}; do
+		if ! is_installed "$package_name"; then
+			missing_packages+=("$package_name")
 		else
-			print note "The program \"$program_name\" is already installed."
+			print note "The package $(format bold)$package_name$(format /bold) is already installed."
 		fi
 	done
 
-	if  ! [ ${#missing_programs[*]} -eq 0 ]; then
+	if ! [ ${#missing_packages[*]} -eq 0 ]; then
 		print warning "These following missing programs are required for this installation to continue:"
 		format fg yellow
-		printf -- "- %s\n" "${missing_programs[@]}"
+		printf -- "- $(format bold)%s$(format /bold)\n" "${missing_packages[@]}"
 		format reset
 	fi
 
-	for program_name in "${missing_programs[@]}"; do
-		install_program "$program_name"
+	for package_name in "${missing_packages[@]}"; do
+		install_package "$package_name"
 
-		if ! is_installed "$program_name"; then
+		if ! is_installed "$package_name"; then
 			print error "This installation can't be continued without the required programs!"
 			terminate
 		fi
 	done
 
-	end_installation_part "The required programs are installed."
+	end_part "The required programs are installed."
 }
 
 # --------------------------------------------------------------------------- #
 #                               switch to the user's home directory (`$HOME`)
 # --------------------------------------------------------------------------- #
-function go_to_home_directory {
-	start_installation_part \
-		"current working directory" \
+function goto_home_directory() {
+	start_part "Current working directory" \
 		"checking current working directory"
 
 	if [[ $PWD == "$HOME" ]]; then
-		print note "you are already in \$home=\"$PWD\" directory."
+		print note "you are already in \$HOME=\"$PWD\" directory."
 	else
-		cd "$HOME"
-		print note "changed working directory to \$home=\"$HOME\"."
+		command cd "$HOME"
+		print note "changed working directory to \$HOME=\"$HOME\"."
 	fi
 
-	end_installation_part "checking completed."
+	end_part "checking completed."
 }
 
 # --------------------------------------------------------------------------- #
 #                                                         Change the hostname
 # --------------------------------------------------------------------------- #
 function change_hostname {
-	start_installation_part \
+	start_part \
 		"Device hostname" \
 		"Changing the device's hostname"
 
@@ -580,7 +576,7 @@ function change_hostname {
 		print note "Changed device's \$HOSTNAME from \"$HOSTNAME\" to \"$new_hostname\"."
 		print note "The change will take an effect after restarting the device."
 
-		end_installation_part "Device's \$HOSTNAME configured."
+		end_part "Device's \$HOSTNAME configured."
 	else
 		print warning "Skipped configuring device's \$HOSTNAME."
 		printf -- "---------\n"
@@ -591,7 +587,7 @@ function change_hostname {
 #                                                            Add the new user
 # --------------------------------------------------------------------------- #
 function add_new_user {
-	start_installation_part \
+	start_part \
 		"New user" \
 		"Attempting to add the new user"
 
@@ -620,9 +616,9 @@ function add_new_user {
 
 		command cd "/home/$new_username"
 
-		print note "Changed directory to \"/home/\$new_username\"."
+		print note "Changed directory to: /home/$new_username."
 
-		end_installation_part "Finished adding new user."
+		end_part "Finished adding new user."
 	else
 		print note "Skipped adding new user."
 		printf -- "---------\n"
@@ -633,7 +629,7 @@ function add_new_user {
 #                                                     Delete the default user
 # --------------------------------------------------------------------------- #
 function delete_default_user {
-	start_installation_part \
+	start_part \
 		"Delete the default user" \
 		"Attempting to remove the default user"
 
@@ -651,7 +647,7 @@ function delete_default_user {
 
 		print note "Deleted the default user \"$old_username\"."
 
-		end_installation_part "Finished removing the default user."
+		end_part "Finished removing the default user."
 	else
 		print note "Skipped removing the default user."
 		printf -- "---------\n"
@@ -662,7 +658,7 @@ function delete_default_user {
 #                                                        Disable root account
 # --------------------------------------------------------------------------- #
 function disable_root_account {
-	start_installation_part \
+	start_part \
 		"Disable root" \
 		"Attempting to disable root account"
 
@@ -671,11 +667,11 @@ function disable_root_account {
 	if confirm; then
 		command sudo -s passwd --lock "root"
 
-		print note "Disabled the root account, from now no one can login as \"root\"."
+		print note 'Disabled the root account, from now no one can login as "root".'
 
-		end_installation_part "Finished disabling root account."
+		end_part "Finished disabling root account."
 	else
-		print warning "The \"root\" account is still enabled, this could be a potential security risk!"
+		print warning 'The "root" account is still enabled, this could be a potential security risk!'
 		printf -- "---------\n"
 	fi
 }
@@ -684,9 +680,8 @@ function disable_root_account {
 #                          Checking if dotfiles and other configuration files
 #                                            already exists in home directory
 # --------------------------------------------------------------------------- #
-function check_for_existing_files {
-	start_installation_part \
-		"Checking dotfiles & configs" \
+function check_for_existing_files() {
+	start_part "Existing files" \
 		"Checking for existing dotfiles or configuration files in home directory"
 
 	local existing_config_files=()
@@ -696,18 +691,18 @@ function check_for_existing_files {
 		file_name=$(command basename "$config_file_path")
 
 		if file_exists "$file_name"; then
-			existing_config_files+=( "$file_name" )
+			existing_config_files+=("$file_name")
 		fi
 	done
 
 	local dotfiles_path="${environment_variables[DOTFILES]}"
 
-	if directory_exists "$dotfiles_path" || (( ${#existing_config_files[@]} )); then
+	if directory_exists "$dotfiles_path" || ((${#existing_config_files[@]})); then
 		if directory_exists "$dotfiles_path"; then
 			print error "The dotfiles directory \"$dotfiles_dir_name\" exists in home directory!"
 		fi
 
-		if (( ${#existing_config_files[@]} )); then
+		if ((${#existing_config_files[@]})); then
 			print error "These following configuration files exists in home directory!"
 			format fg red
 			printf -- "- \"%s\"\n" "${existing_config_files[@]}"
@@ -715,14 +710,15 @@ function check_for_existing_files {
 		fi
 
 		format fg red
-		fold --spaces --width 80 <<< "$(printf "\n%s\n" \
-			"To avoid problems, please backup your existing dotfiles and configurations, then run this installation file again." \
+		fold --spaces --width 80 <<< "$(
+			printf "\n%s\n" \
+				"To avoid problems, please backup your existing dotfiles and configurations, then run this installation file again."
 		)"
 		format reset
 
 		terminate
 	else
-		end_installation_part "There are no existing dotfiles or configuration files."
+		end_part "There are no existing dotfiles or configuration files."
 	fi
 }
 
@@ -730,11 +726,11 @@ function check_for_existing_files {
 #                                   Clone dotfiles from the remote repository
 # --------------------------------------------------------------------------- #
 function clone_dotfiles {
-	start_installation_part \
+	start_part \
 		"Cloning dotfiles" \
-		"Using \`git\` to clone the dotfiles from the remote repository"
+		"Using git to clone the dotfiles from the remote repository"
 
-	print note "The dotfiles remote repository URL is: \"$dotfiles_remote_repository\"."
+	print note "The dotfiles remote repository URL is: $dotfiles_remote_repository"
 
 	command git clone $dotfiles_remote_repository
 
@@ -744,7 +740,7 @@ function clone_dotfiles {
 		print error "Something went wrong with cloning the dotfiles!"
 		terminate
 	else
-		end_installation_part "Successfully cloned the dotfiles from the remote repository."
+		end_part "Successfully cloned the dotfiles from the remote repository."
 	fi
 }
 
@@ -752,83 +748,79 @@ function clone_dotfiles {
 #                             Create a symbolic link to the Git configuration
 # --------------------------------------------------------------------------- #
 function link_git_configuration {
-	start_installation_part \
+	start_part \
 		"Git's configuration file"
 
 	create_symlink "git"
 
-	end_installation_part "Git's configuration file is ready."
+	end_part "Git's configuration file is ready."
 }
 
 # --------------------------------------------------------------------------- #
 #                                      Configure the default shell to be used
 # --------------------------------------------------------------------------- #
-function configure_default_shell {
-	start_installation_part \
-		"Default shell" \
+function set_default_shell() {
+	start_part "Default shell" \
 		"Configuring the default shell"
 
-	local default_shell
 	print question "Which shell do you want to use as the default one?"
-	pick_option "default_shell" "shell_options"
+	pick_option "${shell_options[@]}"
+	default_shell=$option_pick
 
 	environment_variables["SHELL"]="$default_shell"
 
-	function get_current_default_shell {
-		# shellcheck disable=SC2016
-		command basename "$( \
+	function get_current_default_shell() {
+		command basename "$(
 			command awk \
 				--field-separator : \
 				-v user="$USER" '$1 == user {print $NF}' \
-				/etc/passwd \
-			)"
+				/etc/passwd
+		)"
 	}
 
-	function set_default_shell {
+	print info "Checking if this $(format bold)$default_shell$(format /bold) is installed..."
+
+	local skipped_installation=false
+	if ! is_installed "$default_shell"; then
+		print warning "This shell is not installed."
+
+		if ! install_package "$default_shell"; then
+			skipped_installation=true
+		fi
+	else
+		print success "This shell is already installed."
+		print_version "$default_shell"
+	fi
+
+	function configure_default_shell() {
 		if [ "$(get_current_default_shell)" != "$default_shell" ]; then
-			local shell_executable_file_path
-			shell_executable_file_path=$(command which "$default_shell")
+			local shell_executable_filePath
+			shell_executable_filePath=$(command which "$default_shell")
 
-			print note "This program executable file path \"$shell_executable_file_path\" will be set as your default shell."
+			print note "This shell executable file path will be set as your default shell: $shell_executable_filePath"
 
-			command sudo usermod --shell \
-				"$shell_executable_file_path" \
-				"$USER"
+			command sudo usermod --shell "$shell_executable_filePath" "$USER"
 		else
 			print note "This shell is already set as the default one."
 		fi
 	}
 
-	local skipped_installation="false"
-
-	print info "Checking if this default shell is installed..."
-
-	if ! is_installed "$default_shell"; then
-		print warning "This default shell is not installed."
-		if ! install_program "$default_shell"; then
-			skipped_installation="true"
-		fi
-	else
-		print note "The default shell is installed."
-		print_version "$default_shell"
-
-		print info "Configuring this default shell to be run at login..."
-		set_default_shell
-	fi
-
-	if [ "$skipped_installation" == "true" ]; then
-		print warning "You refused to install this default shell!"
+	if [ "$skipped_installation" == true ]; then
+		print warning "You refused to install this shell!"
 		format fg yellow
 		printf -- "---\n"
 		printf "%s\n" \
 			"This is not mandatory for this installation." \
 			"You can install it later by yourself," \
-			"but the installation will not configure" \
-			"the default shell to be run at login."
+			"however the installation will not configure" \
+			"the picked shell to be set as default one."
 		format reset
 		printf -- "---------\n"
 	else
-		end_installation_part "Finished default shell configuration."
+		print info "Configuring this shell to be the default one..."
+		configure_default_shell
+
+		end_part "Finished default shell configuration."
 	fi
 }
 
@@ -836,43 +828,42 @@ function configure_default_shell {
 #              Create symbolic link to the default shell's configuration file
 # --------------------------------------------------------------------------- #
 function link_default_shell_configuration {
-	start_installation_part \
+	start_part \
 		"Shell's configuration file"
 
 	create_symlink "${environment_variables[SHELL]}"
 
-	end_installation_part "Default shell's configuration file is ready."
+	end_part "Default shell's configuration file is ready."
 }
 
 # --------------------------------------------------------------------------- #
 #                                     Determine the default editor to install
 # --------------------------------------------------------------------------- #
-function configure_default_editor {
-	start_installation_part \
-		"Default editor" \
+function set_default_editor {
+	start_part "Default editor" \
 		"Configure the default editor"
 
-	local default_editor
-	print question "Which text editor do you want to set as the default one?"
-	pick_option "default_editor" "editor_options"
+	print question "Which $(format bold)editor$(format /bold)" \
+		"do you want to set as the default one?"
+	pick_option "${editor_options[@]}"
 
 	environment_variables["EDITOR"]="$default_editor"
 
-	local skipped_installation="false"
+	local skipped_installation=false
 
 	print info "Checking if \"$default_editor\" is installed..."
 
 	if ! is_installed "$default_editor"; then
 		print warning "This default editor \"$default_editor\" is not installed!"
-		if ! install_program "$default_editor"; then
-			skipped_installation="true"
+		if ! install_package "$default_editor"; then
+			skipped_installation=true
 		fi
 	else
 		print note "This default program is already installed."
 		print_version "$default_editor"
 	fi
 
-	if [[ "$skipped_installation" == "true" ]]; then
+	if [[ $skipped_installation == true ]]; then
 		print warning "You refused to install this default shell!"
 		format fg yellow
 		printf -- "---\n"
@@ -882,32 +873,32 @@ function configure_default_editor {
 		format reset
 		printf -- "---------\n"
 	else
-		end_installation_part "Finished configuring the default text editor."
+		end_part "Finished configuring the default text editor."
 	fi
 }
 
 # --------------------------------------------------------------------------- #
 #                                     Determine the user mode for this system
 # --------------------------------------------------------------------------- #
-function set_user_mode {
-	start_installation_part \
-		"User mode" \
-		"Determining the user mode for this system"
+function set_user_mode() {
+	start_part "User mode" \
+		"Determining the user mode for this device's system"
 
-	local user_mode
-	print question "Which user mode do you want to set for this system?"
-	pick_option "user_mode" "mode_options"
+	print question "Which $(format bold)user mode$(format /bold)" \
+		"do you want to set?"
+	pick_option "${user_mode_options[@]}"
+	user_mode=$option_pick
 
 	environment_variables["USER_MODE"]="$user_mode"
 
-	end_installation_part "User mode determined."
+	end_part "User mode set to $(format bold)$user_mode$(format /bold)."
 }
 
 # --------------------------------------------------------------------------- #
 #                    Determine if the user want to build program from sources
 # --------------------------------------------------------------------------- #
 function determine_if_build_from_source {
-	start_installation_part \
+	start_part \
 		"Build from source" \
 		"Determine if programs should be built from their source"
 
@@ -923,14 +914,14 @@ function determine_if_build_from_source {
 
 	environment_variables["BUILD_FROM_SOURCE"]="$build_from_source"
 
-	end_installation_part "Decision about building programs from their source is done."
+	end_part "Decision about building programs from their source is done."
 }
 
 # --------------------------------------------------------------------------- #
 #                             Configure default shell's environment variables
 # --------------------------------------------------------------------------- #
 function configure_environment_variables {
-	start_installation_part \
+	start_part \
 		"Environment variables" \
 		"Setting up the environment variables in the default shell \`$default_shell\` configuration file"
 
@@ -986,43 +977,41 @@ function configure_environment_variables {
 		change_env_variable "$key" "${environment_variables[$key]}"
 	done
 
-	end_installation_part "Finished setting up environment variables."
+	end_part "Finished setting up environment variables."
 }
 
 # =========================================================================== #
 # Main runtime
 # =========================================================================== #
-function main {
-	print info "Starting the installation..."
+function main() {
+	printf "%s\n" "$(format fg blue)Starting the installation...$(format reset)"
 
-	# Start the installation parts
-	check_if_distribution_is_supported
-	determine_package_manager
-	check_required_programs
-	go_to_home_directory
-	change_hostname
-	add_new_user
-	# delete_default_user
-	disable_root_account
-	check_for_existing_files
-	clone_dotfiles
-	link_git_configuration
-	configure_default_shell
-	link_default_shell_configuration
-	configure_default_editor
+	check_distribution
+	check_required_packages
+	goto_home_directory
 	set_user_mode
-	determine_if_build_from_source
-	configure_environment_variables
+	set_default_shell
+	set_default_editor
+	# change_hostname
+	# add_new_user
+	# delete_default_user
+	# disable_root_account
+	# check_for_existing_files
+	# clone_dotfiles
+	# link_git_configuration
+	# link_default_shell_configuration
+	# determine_if_build_from_source
+	# configure_environment_variables
 
 	# Finish the installation by starting the set default shell if user wants to
-	print success "Installation finished!"
-	print question "Do you want to start the default shell now?"
-	if confirm; then
-		print info "Executing default shell and loading its configuration..."
-		exec "$default_shell"
-	else
-		exit 0
-	fi
+	printf "\n%s\n" "$(format fg green)Installation finished!$(format reset)"
+	# print question "Do you want to start the default shell now?"
+	# if confirm; then
+	# 	print info "Executing default shell and loading its configuration..."
+	# 	exec "$default_shell"
+	# else
+	# 	exit 0
+	# fi
 }
 
 main

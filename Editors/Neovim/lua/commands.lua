@@ -92,14 +92,14 @@ autocmd(
 -- ----------------------------------------------------------------------------
 
 -- Dotenv
-autocmd(
-    "Dotenv_Filetype",
-    "BufNewFile,BufRead *.env,*.env.me,*.env.project set filetype=dotenv", true
-)
-autocmd(
-    "Dotenv_Syntax",
-    "BufNewFile,BufRead *.env,*.env.me,*.env.project set syntax=sh", true
-)
+-- autocmd(
+--     "Dotenv_Filetype",
+--     "BufNewFile,BufRead *.env,*.env.me,*.env.project set filetype=dotenv", true
+-- )
+-- autocmd(
+--     "Dotenv_Syntax",
+--     "BufNewFile,BufRead *.env,*.env.me,*.env.project set syntax=sh", true
+-- )
 
 -- MDsveX
 autocmd("MDsveX_Filetype", "BufNewFile,BufRead *.svx set filetype=mdsvex", true)

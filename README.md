@@ -42,7 +42,7 @@ to automate the processes.
 
 ---
 
-### Instructions for Linux
+### Instructions for Linux (CURENNTLY OUTDATED)
 
 [Installer file code - `./Linux/install.sh`](./Linux/install.sh)
 
@@ -119,7 +119,7 @@ to automate the processes.
 ### Step by step guide for Windows 10
 
 1. **Run the PowerShell `as administrator`.**
- 
+
 2. **Download the installation file.**\
    Type in your shell:
 

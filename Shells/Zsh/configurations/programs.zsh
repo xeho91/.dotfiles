@@ -264,7 +264,7 @@ zinit id-as"tre" \
 	for @dduan/tre
 
 # =========================================================================== #
-# `sd` - Intuitive find & replace CLI (sed alternative) 
+# `sd` - Intuitive find & replace CLI (sed alternative)
 # -----------------------------------------------------
 # https://github.com/chmln/sd
 # -----
@@ -297,7 +297,7 @@ zinit id-as"dust" \
 	pick"dust/dust" \
 	as"program" \
 	for @bootandy/dust
- 
+
 
 # =========================================================================== #
 # `btm` - cross-platform graphical process/system monitor alternative to `top`
@@ -314,7 +314,7 @@ zinit id-as"btm" \
 	pick"btm" \
 	as"program" \
 	for @ClementTsang/bottom
- 
+
 
 # =========================================================================== #
 # `nnn` (n³) -the unorthodox terminal file manager
@@ -507,9 +507,9 @@ zinit id-as"glow" \
 zinit id-as"zoxide" \
 	from"gh-r" \
 	mv"zoxide* -> zoxide" \
-	pick"zoxide" \
+	pick"zoxide/zoxide" \
 	as"program" \
-	atload'eval $(zoxide init zsh --cmd j)' \
+	atload'eval "$(zoxide init zsh --cmd j)"' \
 	for @ajeetdsouza/zoxide
 
 # ======================================================================== #
@@ -645,4 +645,20 @@ zinit id-as"delta-completions" \
 	as"completion" \
 	wait"1b" lucid \
 	for https://github.com/dandavison/delta/blob/master/etc/completion/completion.zsh
+
+# ======================================================================== #
+# `dprint` - Pluggable and configurable code formatting platform
+# --------------------------------------------------------------
+# https://github.com/dprint/dprint
+# -----
+# USES: Rust
+# MANPAGE(s): No
+# Completion: No
+# ======================================================================== #
+zinit id-as"dprint" \
+	if'[[ "$USER_MODE" == "developer" ]]' \
+	from"gh-r" \
+	pick"dprint" \
+	as"program" \
+	for @dprint/dprint
 

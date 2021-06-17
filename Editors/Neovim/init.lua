@@ -8,7 +8,6 @@ require("options")
 -- Auto install packer.nvim if not exists
 local packer_filePath = fn.stdpath("data") ..
                             "/site/pack/packer/opt/packer.nvim"
-
 if fn.empty(fn.glob(packer_filePath)) > 0 then
     execute(
         "!git clone https://github.com/wbthomason/packer.nvim " ..
@@ -20,13 +19,9 @@ end
 vim.cmd("packadd packer.nvim")
 -- Auto compile when there are changes in `plugins.lua` file
 autocmd("PackerAutoCompile", "BufWritePost plugins.lua PackerCompile", true)
-
 -- load custom commands
 require("commands")
-
 -- Load custom mappings (keybinds)
 require("mappings")
-
 -- Install/Load plugins
 require("plugins")
-

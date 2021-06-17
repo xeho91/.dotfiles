@@ -38,3 +38,4 @@ zstyle ':completion:*:descriptions' format '[%d]'
 # NOTE: This is handled by Zinit package "ls-colors"
 # zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
+source $ZDOTDIR/configurations/completions/npm.zsh
