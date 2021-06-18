@@ -304,6 +304,15 @@ local plugins_list = function()
         }
     ) ]]
 
+    use(
+        {
+            "neoclide/jsonc.vim",
+            -- Syntax for JSON with comments
+            -- Lua: No
+            -- https://github.com/neoclide/jsonc.vim
+        }
+    )
+
     -- --------------------------------------------------------------------
     -- Navigations & Previews
     -- --------------------------------------------------------------------

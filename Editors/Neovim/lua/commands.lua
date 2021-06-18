@@ -104,3 +104,6 @@ autocmd(
 -- MDsveX
 autocmd("MDsveX_Filetype", "BufNewFile,BufRead *.svx set filetype=mdsvex", true)
 autocmd("MDsveX_Syntax", "BufNewFile,BufRead *.svx set syntax=markdown", true)
+
+-- JSONC
+autocmd("JSONC_Syntax", "BufRead,BufNewFile *.json set filetype=jsonc", true)
