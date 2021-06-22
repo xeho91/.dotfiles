@@ -313,6 +313,15 @@ local plugins_list = function()
         }
     )
 
+    use(
+        {
+            "antonk52/vim-browserslist",
+            -- Syntax for browserslist
+            -- Lua: No
+            -- https://github.com/browserslist/vim-browserslist
+        }
+    )
+
     -- --------------------------------------------------------------------
     -- Navigations & Previews
     -- --------------------------------------------------------------------

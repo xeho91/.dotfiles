@@ -8,7 +8,7 @@ return {
     cmd = { "vscode-css-language-server", "--stdio" },
     filetypes = { "css", "pcss", "scss", "less" },
     settings = {
-        css = { validate = true },
+        css = { validate = false },
         pcss = { validate = true },
         less = { validate = true },
         scss = { validate = true },
