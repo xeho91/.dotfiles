@@ -119,7 +119,7 @@ return {
             css = { stylelint, dprint },
             pcss = { stylelint, dprint },
             markdown = { markdownlint, dprint },
-            html = { stylelint, eslint, dprint },
+            html = { stylelint, eslint, prettier },
             sh = { shellcheck, shfmt },
             -- FIXME: Doesn't work yet.
             -- dotenv = { dotenvLinter },

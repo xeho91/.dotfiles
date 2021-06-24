@@ -37,19 +37,11 @@ vimp.map_command(
 -- augroup END
 -- ]], false)
 
--- Trim whitespace on Buffer save
-function TrimWhitespace()
-    local save = vim.fn.winsaveview()
-
-    vim.cmd([[keeppatterns %s/\s\+$//e]])
-    vim.fn.winrestview(save)
-end
-
 -- ----------------------------------------------------------------------------
 -- Autocommands
 -- ----------------------------------------------------------------------------
 
-autocmd("TrimWhiteSpaceOnSave", "BufWritePre * lua TrimWhitespace()", true)
+-- autocmd("TrimWhiteSpaceOnSave", [[BufWritePre * lua :%s/\s\+$//e]], true)
 
 -- Set mappings for the Help
 autocmd(

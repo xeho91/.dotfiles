@@ -405,6 +405,15 @@ local plugins_list = function()
 
     use(
         {
+            "axelf4/vim-strip-trailing-whitespace",
+            -- Lua: No
+            -- Better whitespace trimming
+            -- https://github.com/axelf4/vim-strip-trailing-whitespace
+        }
+    )
+
+    use(
+        {
             "voldikss/vim-floaterm",
             -- Terminal manager
             -- Lua: No
