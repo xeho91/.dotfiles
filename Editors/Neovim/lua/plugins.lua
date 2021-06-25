@@ -484,16 +484,16 @@ local plugins_list = function()
     -- Motions
     -- --------------------------------------------------------------------
 
-    --[[ use(
+    use(
         {
-            "psliwka/vim-smoothie",
+            "karb94/neoscroll.nvim",
             -- Smooth scrolling
-            -- Lua: No
-            -- https://github.com/psliwka/vim-smoothie
-            opt = true,
-            keys = { "<C-d>", "<C-u>" },
+            -- Lua: Yes
+            -- https://github.com/karb94/neoscroll.nvim
+            config = "require('configs/scrolling')",
+
         }
-    ) ]]
+    )
 
     --[[ use(
         {
