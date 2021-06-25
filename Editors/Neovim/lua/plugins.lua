@@ -905,7 +905,8 @@ local plugins_list = function()
             -- https://github.com/heavenshell/vim-jsdoc
             run = "make install",
             opt = true,
-            keys = "<C-d>",
+            keys = "<Leader>dt",
+            language = { "javascript", "typescript" },
             cmd = { "JsDoc" },
             config = "require('configs/jsdoc')",
         }
