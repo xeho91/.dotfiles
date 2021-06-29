@@ -646,19 +646,3 @@ zinit id-as"delta-completions" \
 	wait"1b" lucid \
 	for https://github.com/dandavison/delta/blob/master/etc/completion/completion.zsh
 
-# ======================================================================== #
-# `dprint` - Pluggable and configurable code formatting platform
-# --------------------------------------------------------------
-# https://github.com/dprint/dprint
-# -----
-# USES: Rust
-# MANPAGE(s): No
-# Completion: No
-# ======================================================================== #
-zinit id-as"dprint" \
-	if'[[ "$USER_MODE" == "developer" ]]' \
-	from"gh-r" \
-	pick"dprint" \
-	as"program" \
-	for @dprint/dprint
-
