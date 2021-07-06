@@ -24,7 +24,7 @@ telescope.setup {
         scroll_strategy = "cycle",
         winblend = 15,
         selection_caret = get_icon("caret_right"),
-        layout_defaults = {
+        layout_configs = {
             horizontal = { mirror = false },
             vertical = { mirror = true },
         },

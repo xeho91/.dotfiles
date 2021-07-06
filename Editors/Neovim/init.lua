@@ -6,12 +6,10 @@ local autocmd = require("utils").autocmd
 require("options")
 
 -- Auto install packer.nvim if not exists
-local packer_filePath = fn.stdpath("data") ..
-                            "/site/pack/packer/opt/packer.nvim"
-if fn.empty(fn.glob(packer_filePath)) > 0 then
+local packer_file = fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
+if fn.empty(fn.glob(packer_file)) > 0 then
     execute(
-        "!git clone https://github.com/wbthomason/packer.nvim " ..
-            packer_filePath
+        "!git clone https://github.com/wbthomason/packer.nvim " .. packer_file
     )
 end
 

@@ -1,3 +1,6 @@
+local autocmd = require("utils").autocmd
+
+-- https://github.com/karb94/neoscroll.nvim
 require("neoscroll").setup(
     {
         -- All these keys will be mapped to their corresponding default scrolling animation
@@ -20,3 +23,13 @@ require("neoscroll").setup(
         easing_function = nil, -- Default easing function
     }
 )
+
+-- https://github.com/Xuyuanp/scrollbar.nvim
+autocmd(
+    "ScrollbarInit", {
+        "CursorMoved,VimResized,QuitPre * silent! lua require('scrollbar').show()",
+        "WinEnter,FocusGained * silent! lua require('scrollbar').show()",
+        "WinLeave,FocusLost * silent! lua require('scrollbar').clear()",
+    }, true
+)
+vim.g.scrollbar_shape = { head = "▎", body = "▎", tail = "▎" }

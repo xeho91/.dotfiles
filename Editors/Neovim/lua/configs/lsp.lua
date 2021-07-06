@@ -118,10 +118,7 @@ lsp_saga.init_lsp_saga(
             scroll_up = "<C-d>",
         },
         code_action_keys = { quit = "q", exec = "<CR>" },
-        rename_action_keys = {
-            quit = "<Esc>",
-            exec = "<CR>", -- quit can be a table
-        },
+        rename_action_keys = { quit = "<Esc>", exec = "<CR>" },
         definition_preview_icon = get_icon("preview"),
         border_style = "round",
         rename_prompt_prefix = get_icon("rename") .. "Rename:",
@@ -207,10 +204,7 @@ local on_attach = function(client, bufnr)
     )
 
     -- Type Definition
-    vimp.nnoremap(
-        { "override" }, "<leader>gt",
-        "<cmd>lua vim.lsp.buf.type_definition()<CR>"
-    )
+    vimp.nnoremap({ "override" }, "<leader>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
 
     -- Rename
     vimp.nnoremap({ "override" }, "<leader>rn", "<cmd>Lspsaga rename<CR>")
@@ -220,13 +214,10 @@ local on_attach = function(client, bufnr)
 
     -- Code action
     vimp.nnoremap({ "override" }, "<leader>ca", "<cmd>Lspsaga code_action<CR>")
-    vimp.vnoremap(
-        { "override" }, "<leader>ca", "<cmd><C-U>Lspsaga range_code_action<CR>"
-    )
+    vimp.vnoremap({ "override" }, "<leader>ca", "<cmd><C-U>Lspsaga range_code_action<CR>")
 
     -- Hover doc
     vimp.nnoremap({ "override" }, "<leader>H", "<cmd>Lspsaga hover_doc<CR>")
-    -- Scroll Hover Doc FIXME: Conflicts with vim-smoothie
     -- map("n", "<C-d>", "<cmd>lua require('lspsaga/action').smart_scroll_with_saga(1)<CR>", m_opts)
     -- map("n", "<C-u>", "<cmd>lua require('lspsaga/action').smart_scroll_with_saga(-1)<CR>", m_opts)
 

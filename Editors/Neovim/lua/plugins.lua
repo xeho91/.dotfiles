@@ -181,7 +181,7 @@ local plugins_list = function()
                             "hrsh7th/vim-vsnip-integ",
                             -- Integration with other plugins
                             -- Lua: No
-                            -- https://github.com/hrsh7th/vim-vsnip-integ
+                            -- https://github.com/hsh7th/vim-vsnip-integ
                         },
                     },
                 },
@@ -262,7 +262,6 @@ local plugins_list = function()
             -- Indent guides
             -- Lua: Yes
             -- https://github.com/lukas-reineke/indent-blankline.nvim
-            branch = "lua",
             config = "require('configs/indentline')",
         }
     )
@@ -347,7 +346,6 @@ local plugins_list = function()
             -- https://github.com/nvim-telescope/telescope.nvim
             --[[ opt = true,
             cmd = "Telescope", ]]
-            -- setup = "require('setups/telescope')",
             config = "require('configs/telescope')",
             requires = {
                 {
@@ -481,7 +479,7 @@ local plugins_list = function()
     )
 
     -- --------------------------------------------------------------------
-    -- Motions
+    -- Scrolling
     -- --------------------------------------------------------------------
 
     use(
@@ -491,9 +489,22 @@ local plugins_list = function()
             -- Lua: Yes
             -- https://github.com/karb94/neoscroll.nvim
             config = "require('configs/scrolling')",
-
         }
     )
+
+    use(
+        {
+            "Xuyuanp/scrollbar.nvim",
+            -- Scrollbar
+            -- Lua: Yes
+            -- https://github.com/Xuyuanp/scrollbar.nvim
+            config = "require('configs/scrolling')",
+        }
+    )
+
+    -- --------------------------------------------------------------------
+    -- Motions
+    -- --------------------------------------------------------------------
 
     --[[ use(
         {
@@ -848,14 +859,6 @@ local plugins_list = function()
         }
     )
 
-    -- use({
-    -- 	"Xuyuanp/scrollbar.nvim",
-    -- 	-- Scrollbar
-    -- 	-- Lua: Yes
-    -- 	-- https://github.com/Xuyuanp/scrollbar.nvim
-    -- 	config = [[ require("configs/scrollbar") ]]
-    -- }
-
     use(
         {
             "kdav5758/TrueZen.nvim",
@@ -915,36 +918,3 @@ local plugins_list = function()
 end
 
 packer.startup(plugins_list)
-
--- Testing
--- use({"vim-test/vim-test"}
--- use({ "rcarriga/vim-ultest", run = ":UpdateRemotePlugins" }
-
--- use({"nvim-telescope/telescope-symbols.nvim"}
--- -- use({
--- --     "nvim-telescope/telescope-arecibo.nvim",
--- --     rocks = {"openssl", "lua-http-parser"}
--- -- }
--- -- use({ "nvim-telescope/telescope-media-files.nvim" }
--- -- use({ "nvim-telescope/telescope-packer.nvim " }
-
--- -- Better LSP experience
--- use({"sbdchd/neoformat"}
--- use({"szw/vim-maximizer"}
--- use({"dyng/ctrlsf.vim"}
--- use({"dbeniamine/cheat.sh-vim"}
-
--- use({"wellle/context.vim"}
--- use({ "beauwilliams/focus.nvim" }
--- use({ "RRethy/vim-illuminate" }
-
--- use({ "nvim-telescope/telescope-snippets.nvim" }
-
--- Lua development
--- use({"tjdevries/nlua.nvim"}
-
--- Project
--- use({"nvim-telescope/telescope-project.nvim"}
--- use({"airblade/vim-rooter"}
--- use({"tpope/vim-projectionist"}
-
