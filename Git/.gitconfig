@@ -92,6 +92,7 @@
 
 [diff]
 	colorMoved = default
+	tool = nvimdiff
 
 [interactive]
 	diffFilter = delta --color-only

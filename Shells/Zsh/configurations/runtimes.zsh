@@ -1,13 +1,13 @@
 function install_asdf_plugins() {
 	local plugins_to_install=( \
 		# https://github.com/asdf-vm/asdf-nodejs
-		nodejs \
+		# nodejs \
 		# https://github.com/danhper/asdf-python
-		python \
+		# python \
 		# https://github.com/code-lever/asdf-rust
-		rust \
+		# rust \
 		# https://github.com/kennyp/asdf-golang
-		golang \
+		# golang \
 	)
 	local installed_plugins=$(asdf plugin list)
 	for plugin in $plugins_to_install; do
@@ -45,4 +45,3 @@ zinit id-as"asdf" \
 	atload'install_asdf_plugins; unfunction install_asdf_plugins' \
 	for @asdf-vm/asdf
 fi
-

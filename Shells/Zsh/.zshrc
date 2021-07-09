@@ -12,7 +12,6 @@ source "$ZSH_CONFIG_DIR/manager.zsh"
 source "$ZSH_CONFIG_DIR/runtimes.zsh"
 source "$ZSH_CONFIG_DIR/programs.zsh"
 source "$ZSH_CONFIG_DIR/plugins.zsh"
-source "$ZSH_CONFIG_DIR/variables.zsh"
 source "$ZSH_CONFIG_DIR/functions.zsh"
 source "$ZSH_CONFIG_DIR/aliases.zsh"
 source "$ZSH_CONFIG_DIR/completions.zsh"
@@ -32,7 +31,9 @@ export MANPATH=:"$(manpath):$ZPFX/share/man"
 
 # Add binaries installed by deno
 export PATH="$HOME/.deno/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # tabtab source for pnpm packages
 # uninstall by removing these lines
 [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
+

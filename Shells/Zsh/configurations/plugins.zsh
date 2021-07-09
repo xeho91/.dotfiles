@@ -159,23 +159,23 @@ zinit id-as"forgit" \
 	as"program" \
 	for https://github.com/wfxr/forgit/blob/master/forgit.plugin.zsh
 
-# =========================================================================== #
-# Spotify for the terminal
-# ------------------------
-# https://github.com/Rigellute/spotify-tui
-# -----
-# USES: Rust
-# MANPAGE(s): No
-# COMPLETIONS: Yes
-# =========================================================================== #
-zinit id-as"spotify-tui" \
-	from"gh-r" \
-	if'[[ "$USER_MODE" == "developer" ]]' \
-	atclone"./spt --completions zsh > _spt" \
-	pick"spt" \
-	as"program" \
-	wait"1" lucid \
-	for @Rigellute/spotify-tui
+# # =========================================================================== #
+# # Spotify for the terminal
+# # ------------------------
+# # https://github.com/Rigellute/spotify-tui
+# # -----
+# # USES: Rust
+# # MANPAGE(s): No
+# # COMPLETIONS: Yes
+# # =========================================================================== #
+# zinit id-as"spotify-tui" \
+# 	from"gh-r" \
+# 	if'[[ "$USER_MODE" == "developer" ]]' \
+# 	atclone"./spt --completions zsh > _spt" \
+# 	pick"spt" \
+# 	as"program" \
+# 	wait"1" lucid \
+# 	for @Rigellute/spotify-tui
 
 # =========================================================================== #
 # `lolcat` - rainbow and unicorns
@@ -727,3 +727,42 @@ zinit id-as"fzf-tab" \
 #	wait lucid \
 #	for @marlonrichert/zsh-autocomplete
 
+# =========================================================================== #
+# A next-generation 'cd' command with installed interactive filter
+# ----------------------------------------------------------------
+# https://github.com/b4b4r07/enhancd
+# -----
+# USES: Shell
+# MANPAGE(s): No
+# COMPLETIONS: No
+# =========================================================================== #
+# zinit id-as"enhancd" \
+# 	has"fzf" \
+# 	if'[[ "$USER_MODE" == "developer" ]]' \
+# 	nocompile \
+# 	atinit' \
+# 		export ENHANCD_DIR="$XDG_CACHE_HOME/.enhancd"; \
+# 		export ENHANCD_DISABLE_DOT=1; \
+# 	' \
+# 	atclone'rm -f */*.fish' \
+# 	atpull"%atclone" \
+# 	src"init.sh" \
+# 	for @b4b4r07/enhancd
+
+# ======================================================================== #
+# `httpstat` - like `curl -v`, with graphs and colors
+# ---------------------------------------------------
+# https://github.com/b4b4r07/httpstat/blob/master/httpstat.sh
+# -----
+# USES: Shell
+# MANPAGE(s): No
+# COMPLETIONS: No
+# ======================================================================== #
+zinit id-as"httpstat" \
+	if'[[ "$USER_MODE" == "developer" ]]' \
+	mv"httpstat.sh -> httpstat" \
+	atpull"!git reset --hard" \
+	pick"httpstat" \
+	as"program" \
+	wait lucid \
+	for @b4b4r07/httpstat

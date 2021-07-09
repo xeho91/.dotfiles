@@ -224,8 +224,7 @@
   "liveshare.allowGuestTaskControl": true,
   "liveshare.publishWorkspaceInfo": true,
   "liveshare.increasedGuestLimit": false,
-  "liveshare.guestApprovalRequired": true,
-  "liveshare.connectionMode": "direct",
+"liveshare.guestApprovalRequired": true,
   "liveshare.diagnosticLogging": true,
   "liveshare.allowGuestDebugControl": true,
   /* ------------------------------------------------------------------------ */
