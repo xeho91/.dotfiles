@@ -1,0 +1,10 @@
+# vim: filetype=muttrc
+
+source $XDG_CONFIG_HOME/neomutt/config/settings
+source $XDG_CONFIG_HOME/neomutt/config/colors
+source $XDG_CONFIG_HOME/neomutt/config/mappings
+
+# Accounts
+
+source $XDG_CONFIG_HOME/neomutt/accounts/ProtonMail.xeho91
+folder-hook $folder 'source $XDG_CONFIG_HOME/neomutt/accounts/ProtonMail.xeho91'

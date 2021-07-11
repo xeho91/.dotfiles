@@ -20,6 +20,7 @@ alias :q="exit"
 (( $+commands[dust] )) && alias du="dust"
 (( $+commands[btm] )) && alias btm="btm --battery --color=gruvbox"
 (( $+commands[grex] )) && alias grex="grex --colorize --verbose"
+(( $+commands[neomutt] )) && alias mutt="neomutt"
 
 # =========================================================================== #
 # Make these commands always verbose for a feedback of what happened
