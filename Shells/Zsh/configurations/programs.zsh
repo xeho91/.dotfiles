@@ -90,6 +90,6 @@ if (( $+commands[broot] )); then
 fi
 
 # https://github.com/Spotifyd/spotifyd
-if (( $+commands[spt] )); then
-	eval "$(spt --completions zsh)"
-fi
+# if (( $+commands[spt] )); then
+# 	eval "$(spt --completions zsh)"
+# fi

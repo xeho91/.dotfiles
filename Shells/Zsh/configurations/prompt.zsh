@@ -11,10 +11,11 @@ zinit id-as"starship" \
 	if'[[ "$USE_PROMPT" == "starship" ]]' \
 	pick"starship" \
 	as"program" \
-	atload'export STARSHIP_CONFIG="$DOTFILES/Shells/Prompts/.starship.toml"; \
+	atload'export STARSHIP_CONFIG="$DOTFILES/Prompts/.starship.toml"; \
 		eval "$(starship init zsh)"' \
 	lucid \
 	for @starship/starship
+
 # ------------------------------------------------------------------ #
 # Powerlevel10k - prompt theme with lots of features
 # --------------------------------------------------

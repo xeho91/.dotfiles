@@ -1,56 +1,36 @@
 # =========================================================================== #
-# Display OS & distribution information at login
+# SSH - Secure Shell
+# ------------------
+# https://www.openssh.com/manual.html
+# https://help.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh
 # =========================================================================== #
-if (( $+commands[screenfetch] )); then
-	command screenfetch
-fi
+# GPG - GnuPrivacy Guard
+# ----------------------
+# https://www.gnupg.org/documentation/manpage.html
+# https://help.github.com/en/github/authenticating-to-github/generating-a-new-gpg-key
+# =========================================================================== #
 
-# =========================================================================== #
-# Random distraction with hacker laws
-# -----------------------------------
-# https://github.com/dwmkerr/hacker-laws
-# =========================================================================== #
-if (( $+commands[hacker-laws-cli] \
-	&& $+commands[boxes] \
-	&& $+commands[lolcat] \
-	)); then
-	shapes=(\
-		"bear" \
-		"boy" \
-		"capgirl" \
-		"cat" \
-		"columns" \
-		"diamonds" \
-		"dog" \
-		"face" \
-		"fence" \
-		"girl" \
-		"ian_jones" \
-		"mouse" \
-		"nuke" \
-		"parchment" \
-		"peek" \
-		"santa" \
-		"scroll" \
-		"scroll-akn" \
-		"spring" \
-		"sunset" \
-		"twisted" \
-		"unicornsay" \
-		"unicornthink" \
-		"whirly" \
-	)
-	shapes_length=${#shapes[@]}
-	random_index=($((RANDOM % shapes_length))+1)
-	command hacker-laws-cli random | fold -sw 53 \
-		|boxes -d ${shapes[$random_index]} | lolcat -f -r
-fi
+if [[ -d ".ssh" && -d ".gnupg" ]]; then
+	unset SSH_AGENT_PID
 
-# =========================================================================== #
-# Show the uptime of device
-# =========================================================================== #
-if (( $+commands[toilet] )); then
-	print -P "$HOST been %F{blue}$(uptime --pretty)%f (since $(uptime --since))." \
-		| toilet -f term -F border
-fi
+	if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+		export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+	fi
 
+	export GPG_TTY=$(tty)
+
+	# Start the `gpg-agent` on session start
+	# if (( $+commands[keychain] )); then
+	# 	# FIXME: This is not perfect as in this scenario it expects only one existing key
+	# 	gpg_pubkey_id=$(command gpg --list-keys --keyid-format=short \
+	# 		| grep pub \
+	# 		| grep -o -P '(?<=/)[A-Z0-9]{8}'
+	# 	)
+
+	# 	eval "$(keychain --eval --agents gpg "$gpg_pubkey_id")"
+	# else
+		command gpg-connect-agent updatestartuptty /bye >/dev/null
+	# fi
+else
+	print -P "%K{yellow}Warning\!%k %F{yellow}There is no GPG or SSH configured!%f"
+fi

@@ -6,12 +6,11 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 return {
     capabilities = capabilities,
     cmd = { "vscode-css-language-server", "--stdio" },
-    filetypes = { "css", "pcss", "scss", "less" },
+    filetypes = { "css", "scss", "less" },
     settings = {
         css = { validate = false },
-        pcss = { validate = true },
-        less = { validate = true },
-        scss = { validate = true },
+        less = { validate = false },
+        scss = { validate = false },
     },
 }
 

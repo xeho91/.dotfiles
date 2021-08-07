@@ -33,6 +33,7 @@ format = """
 	$git_commit\
 	$git_state\
 	$git_status\
+	$git_metrics\
 	$package\
 	$line_break\
 └\
@@ -203,6 +204,13 @@ format = """
 	bisect           = " BISECTING"
 	am               = "APPLY-MAILBOX"
 	am_or_rebase     = "APPLY-MAILBOX / REBASE"
+
+# https://starship.rs/config/#git-metrics
+[git_metrics]
+	disabled      = false
+	added_style   = "bold green"
+	deleted_style = "bold red"
+	format        = ' [+$added]($added_style) [-$deleted]($deleted_style) '
 
 # https://starship.rs/config/#git-status
 [git_status]

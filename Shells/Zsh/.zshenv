@@ -93,7 +93,7 @@ fi
 # -------------------------------------------------------------------
 # https://vi.stackexchange.com/questions/11879/how-can-put-vimrc-and-viminfo-into-vim-director
 # =========================================================================== #
-# export VIMRC="$DOTFILES/Editors/Neovim/init.vim"
+export VIMRC="$DOTFILES/Editors/Neovim/init.vim"
 # export VIMINIT="source $VIMRC"
 
 # =========================================================================== #

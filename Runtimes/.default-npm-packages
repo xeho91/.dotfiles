@@ -1,3 +1,4 @@
+@types/node
 bash-language-server
 caniuse-cmd
 carbon-now-cli
@@ -31,7 +32,6 @@ rollup
 stylelint_d
 stylelint
 svelte-language-server
-svgexport
 svgo
 terminalizer
 ts-node
@@ -42,4 +42,3 @@ vscode-langservers-extracted
 webpack-cli
 webpack
 yaml-language-server
-

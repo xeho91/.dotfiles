@@ -2,5 +2,5 @@
 return {
     cmd = { "svelteserver", "--stdio" },
     filetypes = { "svelte", "svx" },
-    rootMarkers = { "package.json", ".git" },
+    rootMarkers = { "package.json", "svelte.config.js" },
 }

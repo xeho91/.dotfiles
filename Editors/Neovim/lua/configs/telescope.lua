@@ -6,10 +6,10 @@ local vimp = require("vimp")
 -- Mappings
 local m_opts = { silent = false, noremap = false }
 
-vimp.nmap(
-    "<C-b>",
-    "<cmd>Telescope buffers show_all_buffers=true sort_lastused=true<CR>"
-)
+-- vimp.nmap(
+--     "<C-b>",
+--     "<cmd>Telescope buffers show_all_buffers=true sort_lastused=true<CR>"
+-- )
 vimp.nmap(
     "<C-p>",
     [[<cmd>Telescope find_files theme=get_dropdown previewer=false find_command=rg,--files,--hidden prompt_prefix=🔍<CR>]]

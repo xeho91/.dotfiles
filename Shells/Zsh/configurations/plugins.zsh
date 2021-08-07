@@ -214,37 +214,6 @@ zinit id-as"boxes" \
 	for @ascii-boxes/boxes
 
 # =========================================================================== #
-# `screenfetch` - fetches system/theme information in terminal for Linux
-#                 desktop screenshots
-# ----------------------------------------------------------------------
-# https://github.com/KittyKatt/screenFetch
-# -----
-# USES: Shell
-# MANPAGE(s): Yes
-# COMPLETIONS: No
-# =========================================================================== #
- zinit id-as"screenfetch" \
-	mv"screenfetch-dev -> screenfetch" \
-	cp"screenfetch.1 $ZPFX/share/man/man1" \
-	pick"screenfetch" \
-	as"program" \
-	for @KittyKatt/screenFetch
-
-# =========================================================================== #
-# `neofetch` - A command-line system information tool written in Bash
-# -------------------------------------------------------------------
-# https://github.com/dylanaraps/neofetch
-# -----
-# USES: Shell
-# MANPAGE(s): Yes
-# COMPLETIONS: No
-# =========================================================================== #
- zinit id-as"neofetch" \
-	nocompile \
-	make"PREFIX=$ZPFX install" \
-	for @dylanaraps/neofetch
-
-# =========================================================================== #
 # `hacker-laws-cli` - Laws, Theories, Principles and Patterns that developers
 #                     will find useful #hackerlaws
 # ------------------------------------------------

@@ -36,7 +36,7 @@ local symbols = {
 }
 
 -- https://github.com/onsails/lspkind-nvim
-lsp_kind.init({ with_text = true, symbol_map = symbols })
+lsp_kind.init { with_text = true, symbol_map = symbols }
 
 local sign_define = fn.sign_define
 
@@ -46,38 +46,34 @@ sign_define("LspDiagnosticsSignInformation", { text = "", numhl = "WhiteSign" })
 sign_define("LspDiagnosticsSignHint", { text = "", numhl = "BlueSign" })
 
 -- https://github.com/nvim-lua/lsp-status.nvim
-lsp_status.config(
-    {
-        kind_labels = symbols,
-        diagnostics = true,
-        indicator_separator = "",
-        indicator_errors = get_icon("error"),
-        indicator_warnings = get_icon("warning"),
-        indicator_info = get_icon("info"),
-        indicator_hint = get_icon("hint"),
-        indicator_ok = get_icon("success"),
-        current_function = true,
-        status_symbol = get_icon("diagnostic"),
-        select_symbol = function(cursor_pos, symbol)
-            if symbol.valueRange then
-                local value_range = {
-                    ["start"] = {
-                        character = 0,
-                        line = fn.byte2line(symbol.valueRange[1]),
-                    },
-                    ["end"] = {
-                        character = 0,
-                        line = fn.byte2line(symbol.valueRange[2]),
-                    },
-                }
+lsp_status.config {
+    kind_labels = symbols,
+    diagnostics = true,
+    indicator_separator = "",
+    indicator_errors = get_icon("error"),
+    indicator_warnings = get_icon("warning"),
+    indicator_info = get_icon("info"),
+    indicator_hint = get_icon("hint"),
+    indicator_ok = get_icon("success"),
+    current_function = true,
+    status_symbol = get_icon("diagnostic"),
+    select_symbol = function(cursor_pos, symbol)
+        if symbol.valueRange then
+            local value_range = {
+                ["start"] = {
+                    character = 0,
+                    line = fn.byte2line(symbol.valueRange[1]),
+                },
+                ["end"] = {
+                    character = 0,
+                    line = fn.byte2line(symbol.valueRange[2]),
+                },
+            }
 
-                return require("lsp-status/util").in_range(
-                           cursor_pos, value_range
-                       )
-            end
-        end,
-    }
-)
+            return require("lsp-status/util").in_range(cursor_pos, value_range)
+        end
+    end,
+}
 lsp_status.register_progress()
 
 lsp.handlers["textDocument/publishDiagnostics"] =
@@ -91,71 +87,67 @@ lsp.handlers["textDocument/publishDiagnostics"] =
     )
 
 -- https://github.com/glepnir/lspsaga.nvim
-lsp_saga.init_lsp_saga(
-    {
-        use_saga_diagnostic_sign = true,
-        error_sign = get_icon("error"),
-        warn_sign = get_icon("warning"),
-        hint_sign = get_icon("hint"),
-        infor_sign = get_icon("info"),
-        dianostic_header_icon = get_icon("diagnostic"),
-        code_action_icon = get_icon("bulb"),
-        code_action_prompt = {
-            enable = true,
-            sign = true,
-            sign_priority = 20,
-            virtual_text = true,
-        },
-        finder_definition_icon = get_icon("definition"),
-        finder_reference_icon = get_icon("reference"),
-        max_preview_lines = 10,
-        finder_action_keys = {
-            open = "o",
-            vsplit = "s",
-            split = "i",
-            quit = "q",
-            scroll_down = "<C-u>",
-            scroll_up = "<C-d>",
-        },
-        code_action_keys = { quit = "q", exec = "<CR>" },
-        rename_action_keys = { quit = "<Esc>", exec = "<CR>" },
-        definition_preview_icon = get_icon("preview"),
-        border_style = "round",
-        rename_prompt_prefix = get_icon("rename") .. "Rename:",
-    }
-)
+lsp_saga.init_lsp_saga {
+    use_saga_diagnostic_sign = true,
+    error_sign = get_icon("error"),
+    warn_sign = get_icon("warning"),
+    hint_sign = get_icon("hint"),
+    infor_sign = get_icon("info"),
+    dianostic_header_icon = get_icon("diagnostic"),
+    code_action_icon = get_icon("bulb"),
+    code_action_prompt = {
+        enable = true,
+        sign = true,
+        sign_priority = 20,
+        virtual_text = true,
+    },
+    finder_definition_icon = get_icon("definition"),
+    finder_reference_icon = get_icon("reference"),
+    max_preview_lines = 10,
+    finder_action_keys = {
+        open = "o",
+        vsplit = "s",
+        split = "i",
+        quit = "q",
+        scroll_down = "<C-u>",
+        scroll_up = "<C-d>",
+    },
+    code_action_keys = { quit = "q", exec = "<CR>" },
+    rename_action_keys = { quit = "<Esc>", exec = "<CR>" },
+    definition_preview_icon = get_icon("preview"),
+    border_style = "round",
+    rename_prompt_prefix = get_icon("rename") .. "Rename:",
+}
 
 -- https://github.com/folke/lsp-trouble.nvim
-lsp_trouble.setup(
-    {
-        height = 10, -- height of the trouble list
-        icons = true, -- use dev-icons for filenames
-        mode = "workspace", -- "workspace" or "document"
-        fold_open = "", -- icon used for open folds
-        fold_closed = "", -- icon used for closed folds
-        action_keys = {
-            -- key mappings for actions in the trouble list
-            close = "q", -- close the list
-            cancel = "<Esc>", -- cancel the preview and get back to your last window / buffer / cursor
-            refresh = "r", -- manually refresh
-            jump = { "<CR>", "<Tab>" }, -- jump to the diagnostic or open / close folds
-            toggle_mode = "m", -- toggle between "workspace" and "document" mode
-            toggle_preview = "P", -- toggle auto_preview
-            preview = "p", -- preview the diagnostic location
-            close_folds = { "zM", "zm" }, -- close all folds
-            open_folds = { "zR", "zr" }, -- open all folds
-            toggle_fold = { "zA", "za" }, -- toggle fold of current file
-            previous = "k", -- preview item
-            next = "j", -- next item
-        },
-        indent_lines = true, -- add an indent guide below the fold icons
-        auto_open = false, -- automatically open the list when you have diagnostics
-        auto_close = false, -- automatically close the list when you have no diagnostics
-        auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back
-        auto_fold = true, -- automatically fold a file trouble list at creation
-        use_lsp_diagnostic_signs = true, -- enabling this will use the signs defined in your lsp client
-    }
-)
+lsp_trouble.setup {
+    height = 10, -- height of the trouble list
+    icons = true, -- use dev-icons for filenames
+    mode = "workspace", -- "workspace" or "document"
+    fold_open = "", -- icon used for open folds
+    fold_closed = "", -- icon used for closed folds
+    action_keys = {
+        -- key mappings for actions in the trouble list
+        close = "q", -- close the list
+        cancel = "<Esc>", -- cancel the preview and get back to your last window / buffer / cursor
+        refresh = "r", -- manually refresh
+        jump = { "<CR>", "<Tab>" }, -- jump to the diagnostic or open / close folds
+        toggle_mode = "m", -- toggle between "workspace" and "document" mode
+        toggle_preview = "P", -- toggle auto_preview
+        preview = "p", -- preview the diagnostic location
+        close_folds = { "zM", "zm" }, -- close all folds
+        open_folds = { "zR", "zr" }, -- open all folds
+        toggle_fold = { "zA", "za" }, -- toggle fold of current file
+        previous = "k", -- preview item
+        next = "j", -- next item
+    },
+    indent_lines = true, -- add an indent guide below the fold icons
+    auto_open = false, -- automatically open the list when you have diagnostics
+    auto_close = false, -- automatically close the list when you have no diagnostics
+    auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back
+    auto_fold = true, -- automatically fold a file trouble list at creation
+    use_lsp_diagnostic_signs = true, -- enabling this will use the signs defined in your lsp client
+}
 
 local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
@@ -163,16 +155,14 @@ local on_attach = function(client, bufnr)
     if lsp_status ~= nil then lsp_status.on_attach(client, bufnr) end
 
     -- https://github.com/ray-x/lsp_signature.nvim
-    lsp_signature.on_attach(
-        {
-            bind = true,
-            doc_lines = 100,
-            hint_enable = true,
-            hint_prefix = "🐼 ",
-            hint_scheme = "Markdown",
-            handler_opts = { border = "single" },
-        }
-    )
+    lsp_signature.on_attach {
+        bind = true,
+        doc_lines = 100,
+        hint_enable = true,
+        hint_prefix = "🐼 ",
+        hint_scheme = "Markdown",
+        handler_opts = { border = "single" },
+    }
 
     -- Mappings
 
@@ -204,7 +194,10 @@ local on_attach = function(client, bufnr)
     )
 
     -- Type Definition
-    vimp.nnoremap({ "override" }, "<leader>gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
+    vimp.nnoremap(
+        { "override" }, "<leader>gt",
+        "<cmd>lua vim.lsp.buf.type_definition()<CR>"
+    )
 
     -- Rename
     vimp.nnoremap({ "override" }, "<leader>rn", "<cmd>Lspsaga rename<CR>")
@@ -214,7 +207,9 @@ local on_attach = function(client, bufnr)
 
     -- Code action
     vimp.nnoremap({ "override" }, "<leader>ca", "<cmd>Lspsaga code_action<CR>")
-    vimp.vnoremap({ "override" }, "<leader>ca", "<cmd><C-U>Lspsaga range_code_action<CR>")
+    vimp.vnoremap(
+        { "override" }, "<leader>ca", "<cmd><C-U>Lspsaga range_code_action<CR>"
+    )
 
     -- Hover doc
     vimp.nnoremap({ "override" }, "<leader>H", "<cmd>Lspsaga hover_doc<CR>")
@@ -232,8 +227,7 @@ local on_attach = function(client, bufnr)
     -- Formatting
     local format_key = "<leader>F"
 
-    -- HACK: Exclude servers from formatting, except EFM
-    -- FIXME: Find a better way to disable it
+    -- Exclude servers from formatting, except EFM
     if client.name ~= "efm" then
         client.resolved_capabilities.document_formatting = false
     end
@@ -281,7 +275,6 @@ local on_attach = function(client, bufnr)
             { "CursorHold <buffer> Lspsaga show_cursor_diagnostics" }, false
         )
     end
-
 end
 
 -- Float term
@@ -305,6 +298,12 @@ local servers = {
     cssls = require("servers/cssls"),
     -- Svelte
     svelte = require("servers/svelte"),
+    -- Vue
+    vuels = require("servers/vuels"),
+    -- Primsa
+    prismals = require("servers/prismals"),
+    -- Tailwind CSS
+    tailwindcss = require("servers/tailwindcss"),
     -- YAML
     yamlls = require("servers/yamlls"),
     -- General purpose (Linting & Fixing)
