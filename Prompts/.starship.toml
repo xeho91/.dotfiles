@@ -17,6 +17,7 @@ scan_timeout = 10
 # Overwrite the default format
 format = """
 ┌\
+	$sudo\
 	$username\
 	$hostname\
 	$time\
@@ -25,6 +26,7 @@ format = """
 	$deno\
 	$python\
 	$rustgolang\
+	$docker_context\
 	$memory_usage\
 	$line_break\
 ├\
@@ -50,6 +52,14 @@ format = """
 #                                                                   Line nr 1
 #                                                     Environment information
 # ---------------------------------------------------------------------------- #
+
+# https://starship.rs/config/#sudo
+[sudo]
+	disabled      = false
+	format        = "[as $symbol]($style)"
+	symbol        =	"🧙 "
+	style         = "bold blue"
+	allow_windows = true
 
 # https://starship.rs/config/#username
 [username]
@@ -135,25 +145,36 @@ format = """
 
 # https://starship.rs/config/#rust
 [rust]
-	disabled          = false
-	style             = "bg:bright-black fg:bright-white"
-	format            = " [](fg:bright-black)[$symbol $version]($style)[](fg:bright-black)"
-	symbol            = ""
+	disabled = false
+	style    = "bg:bright-black fg:bright-white"
+	format   = " [](fg:bright-black)[$symbol $version]($style)[](fg:bright-black)"
+	symbol   = ""
 
 # https://starship.rs/config/#golang
 [golang]
+	disabled = false
+	style    = "bg:cyan fg:bright-white"
+	format   = " [](fg:cyan)[$symbol $version]($style)[](fg:cyan)"
+	symbol   = ""
+
+# https://starship.rs/config/#docker_context
+[docker_context]
 	disabled          = false
-	style             = "bg:cyan fg:bright-white"
-	format            = " [](fg:cyan)[$symbol $version]($style)[](fg:cyan)"
-	symbol            = ""
+	style             = "blue bold"
+	format            = " [](fg:blue)[$symbol $context]($style)[](fg:blue)"
+	symbol            = ""
+	only_with_files   = true
+	detect_extensions = []
+	detect_files      = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
+	detect_folders    = ["heroes-api"]
 
 # https://starship.rs/config/#memory-usage
 [memory_usage]
-	disabled        = false
-	style           = "bg:yellow fg:bright-white"
-	format          = "[  ](fg:yellow)[$symbol ${ram_pct}|${swap_pct}]($style)[](fg:yellow)"
-	symbol          = ""
-	threshold       = 50
+	disabled  = false
+	style     = "bg:yellow fg:bright-white"
+	format    = "[  ](fg:yellow)[$symbol ${ram_pct}|${swap_pct}]($style)[](fg:yellow)"
+	symbol    = ""
+	threshold = 50
 
 # ---------------------------------------------------------------------------- #
 #                                                                   Line nr 2
@@ -178,7 +199,7 @@ format = """
 	format             = " ﰲ [](fg:blue)[$symbol $branch]($style)[](fg:blue)"
 	symbol             = ""
 	always_show_remote = false
-	truncation_length  = "2^63 - 1"
+	# truncation_length  = "2^63 - 1"
 	truncation_symbol  = "..."
 	only_attached      = true
 
@@ -194,16 +215,16 @@ format = """
 
 # https://starship.rs/config/#git-state
 [git_state]
-	disabled         = false
-	style            = "red"
-	format           = '\([$state( $progress_current/$progress_total)]($style)\) '
-	rebase           = " REBASING"
-	merge            = " MERGING"
-	revert           = " REVERTING"
-	cherry_pick      = " PICKING"
-	bisect           = " BISECTING"
-	am               = "APPLY-MAILBOX"
-	am_or_rebase     = "APPLY-MAILBOX / REBASE"
+	disabled     = false
+	style        = "red"
+	format       = '\([$state( $progress_current/$progress_total)]($style)\) '
+	rebase       = " REBASING"
+	merge        = " MERGING"
+	revert       = " REVERTING"
+	cherry_pick  = " PICKING"
+	bisect       = " BISECTING"
+	am           = "APPLY-MAILBOX"
+	am_or_rebase = "APPLY-MAILBOX / REBASE"
 
 # https://starship.rs/config/#git-metrics
 [git_metrics]
@@ -219,7 +240,7 @@ format = """
 	format     = "$ahead_behind$all_status"
 	conflicted = "[ Conflicted ${count}](fg:red)"
 	ahead      = "[⇡ﰛ Ahead ${count}](fg:blue)"
-	behind     = "[⇣ﰛ Behind ${count}](fg:yello)"
+	behind     = "[⇣ﰛ Behind ${count}](fg:yellow)"
 	diverged   = "[ Diverged - ⇡ﰛ A ${ahead_count} | ⇣ﰚ B ${count}](fg:red)"
 	untracked  = "[ ${count}](fg:bright-yellow)"
 	stashed    = "[ ${count}](fg:bright-white)"
@@ -264,9 +285,9 @@ format = """
 
 # https://starship.rs/config/#character
 [character]
-	disabled              = false
-	format                = "$symbol "
-	success_symbol        = "[❯](fg:green)"
-	error_symbol          = "[❯](fg:red)"
-	vicmd_symbol          = "[❮](fg:yellow)"
+	disabled       = false
+	format         = "$symbol "
+	success_symbol = "[❯](fg:green)"
+	error_symbol   = "[❯](fg:red)"
+	vicmd_symbol   = "[❮](fg:yellow)"
 
