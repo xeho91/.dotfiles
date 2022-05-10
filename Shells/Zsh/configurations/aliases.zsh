@@ -21,6 +21,7 @@ alias :q="exit"
 (( $+commands[btm] )) && alias btm="btm --battery --color=gruvbox"
 (( $+commands[grex] )) && alias grex="grex --colorize --verbose"
 (( $+commands[neomutt] )) && alias mutt="neomutt"
+(( $+commands[lazygit] )) && alias lz="lazygit"
 
 # =========================================================================== #
 # Make these commands always verbose for a feedback of what happened
@@ -43,6 +44,7 @@ alias reload="exec $SHELL -i -l"
 # Suffix aliases (set default program to open files with specifed extension)
 # =========================================================================== #
 declare -a extensions=("md" "txt")
+
 for extension in $extensions; do
 	if (( $+commands[glow] )); then
 		alias -s "$extension"="glow --pager"
@@ -50,6 +52,7 @@ for extension in $extensions; do
 		alias -s $extension="cat --color=auto | less"
 	fi
 done
+
 unset extensions extension
 
 # =========================================================================== #

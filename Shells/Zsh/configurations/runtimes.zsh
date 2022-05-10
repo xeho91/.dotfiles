@@ -9,11 +9,15 @@ function install_asdf_plugins() {
 		# https://github.com/kennyp/asdf-golang
 		# golang \
 	)
+
 	local installed_plugins=$(asdf plugin list)
+
 	for plugin in $plugins_to_install; do
 		if [[ "$installed_plugins" != *"$plugin"* ]]; then
 			command asdf plugin add $plugin
+
 			print -P "%F{blue}Added plugin for %K{white} $plugin %k and now installing the latest version...%f"
+
 			if [[ "$plugin" == "nodejs" ]]; then
 				bash -c "$ASDF_DATA_DIR/plugins/nodejs/bin/import-release-team-keyring"
 			elif [[ "$plugin" == "rust" ]]; then
@@ -22,9 +26,11 @@ function install_asdf_plugins() {
 					as"completion" \
 					for https://github.com/rust-lang/cargo/blob/master/src/etc/_cargo
 			fi
+
 			command asdf install $plugin latest
 			command asdf global $plugin latest
 			command asdf reshim $plugin
+
 			print -P "%F{green}Finished installing the lastest version with asdf %K{white} $plugin %k%f."
 		fi
 	done

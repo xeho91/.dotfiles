@@ -292,6 +292,24 @@ zinit \
 # ----------------
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins
 # -------------------------------------------------------------------------- #
+#
+# =========================================================================== #
+# dotenv
+# ---------------------------
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/dotenv
+# =========================================================================== #
+zinit \
+	wait lucid \
+	for OMZP::dotenv
+
+# =========================================================================== #
+# Git auto fetching
+# ---------------------------
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git-auto-fetch
+# =========================================================================== #
+zinit \
+	wait lucid \
+	for OMZP::git-auto-fetch
 
 # =========================================================================== #
 # `urlencode` and `urldecode`
@@ -612,12 +630,12 @@ zinit id-as"zsh-completions" \
 # =========================================================================== #
 # Syntax highlighting for commands
 # --------------------------------
-# https://github.com/zdharma/fast-syntax-highlighting
+# https://github.com/zdharma-continuum/fast-syntax-highlighting
 # =========================================================================== #
 zinit id-as"fast-syntax-highlighting" \
 	atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
 	wait lucid \
-	for @zdharma/fast-syntax-highlighting
+	for @zdharma-continuum/fast-syntax-highlighting
 
 # =========================================================================== #
 # Suggestion of commands as you type based on completions and history
@@ -632,11 +650,11 @@ zinit id-as"zsh-autosuggestions" \
 # =========================================================================== #
 # Multi-word, syntax highlighted history searching for Zsh
 # --------------------------------------------------------
-# https://github.com/zdharma/history-search-multi-word
+# https://github.com/zdharma-continuum/history-search-multi-word
 # =========================================================================== #
 zinit id-as"history-search-multi-word" \
 	wait lucid \
-	for @zdharma/history-search-multi-word
+	for @zdharma-continuum/history-search-multi-word
 
 # =========================================================================== #
 # Collection of extension color mappings for LS_COLORS environment variable,

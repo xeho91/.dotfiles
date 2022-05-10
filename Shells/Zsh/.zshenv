@@ -68,6 +68,14 @@ export LANGUAGE="en_US:en"
 # https://help.ubuntu.com/community/EnvironmentVariables#Preferred_application_variables
 # =========================================================================== #
 
+# BROWSER
+# -------
+if [ -n "$DISPLAY" ]; then
+    export BROWSER="firefox"
+else
+    export BROWSER="w3m"
+fi
+
 # EDITOR
 # ------
 if (( $+commands[nvim] )); then
@@ -86,6 +94,12 @@ export LESS='--raw-control-chars --status-column --tab=4 --window=5 --chop-long-
 # Allow `less` to preview compressed files
 if (( $+commands[lesspipe.sh] )); then
 	export LESSOPEN="|lesspipe.sh %s"
+fi
+
+# VISUAL
+# ------
+if (( $+commands[nvim] )); then
+	export VISUAL="nvim"
 fi
 
 # =========================================================================== #

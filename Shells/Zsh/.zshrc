@@ -21,6 +21,9 @@ source "$ZSH_CONFIG_DIR/prompt.zsh"
 # Other
 # =========================================================================== #
 
+# Activate nvm
+source /usr/share/nvm/init-nvm.sh
+
 # Remove duplicates
 typeset -aU path dpath fpath manpath module_path
 
@@ -29,7 +32,9 @@ typeset -aU path dpath fpath manpath module_path
 unset MANPATH # Disables warning when reloading
 export MANPATH=:"$(manpath):$ZPFX/share/man"
 
-# Add binaries installed by deno
-export PATH="$HOME/.deno/bin:$PATH"
-export PATH="$HOME/.cargo/bin:$PATH"
+export VOLTA_HOME="$HOME/.volta"
 
+# Add binaries
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.deno/bin:$PATH"
+export PATH="$VOLTA_HOME/bin:$PATH"

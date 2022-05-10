@@ -156,19 +156,6 @@ function palette() {
 }
 
 # =========================================================================== #
-# NOTE: Honestly I don't remember what I was trying to to do here... make the
-# colored output with `make` command?
-# =========================================================================== #
-# function make() {
-#     pathpat="(/[^/]*)+:[0-9]+"
-#     ccred=$(print -P "%F{red}")
-#     ccyellow=$(print -P "%F{yellow}")
-#     ccend=$(print -P "%f")
-#     command make "$@" 2>&1 | sed -E -e "/[Ee]rror[: ]/ $pathpat $ccred $ccend" -e "/[Ww]arning[: ]/ $pathpat $ccyellow $ccend"
-#     return ${PIPESTATUS[0]}
-# }
-
-# =========================================================================== #
 # Open files with default editor and interactively with `fzf`
 # =========================================================================== #
 function editor-open-file() {

@@ -10,7 +10,6 @@ if (( $+commands[tre] )); then
 	}
 fi
 
-
 # https://github.com/knqyf263/pet
 if (( $+commands[pet] )); then
 	function prev() {

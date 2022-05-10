@@ -126,16 +126,20 @@ external program**.
 function definition, instead of a file in `$PATH`/`$path` containing a script.
 
 In the example:
+
 ```zsh
 autoload -Uz compinit
 ```
+
 Flags:
+
 - `-U` - It marks the function `compinit` for autoloading and suppress alias
   expansion. **It records the name is a function, not an external command and
   it does not calls it.**
 - `-z` - Use the Zsh style.
 
 _Credits:_
+
 - _https://stackoverflow.com/a/30840986/6753652_
 - _https://stackoverflow.com/a/63661686/6753652_
 
