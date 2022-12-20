@@ -1,4 +1,4 @@
-# # https://github.com/denisidoro/navi
+# https://github.com/denisidoro/navi
 if (( $+commands[navi] )); then
 	eval "$(navi widget zsh)";
 fi

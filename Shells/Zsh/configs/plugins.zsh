@@ -752,4 +752,18 @@ zinit id-as"httpstat" \
 	pick"httpstat" \
 	as"program" \
 	wait lucid \
-	for @b4b4r07/httpstat
+	for @b4b4r07/httpstat  
+
+# ======================================================================== #
+# package.json scripts autocomplete
+# ---------------------------------
+# https://github.com/grigorii-zander/zsh-npm-scripts-autocomplete
+# -----
+# USES: Shell
+# MANPAGE(s): No
+# COMPLETIONS: No
+# ======================================================================== #
+zinit id-as"npm-scripts-autocomplete" \
+	if'[[ "$USER_MODE" == "developer" ]]' \
+	wait lucid \
+	for @grigorii-zander/zsh-npm-scripts-autocomplete

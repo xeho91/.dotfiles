@@ -184,3 +184,4 @@ setopt NO_HUP
 # Report the status of background and suspended jobs before exiting a shell
 setopt CHECK_JOBS
 
+

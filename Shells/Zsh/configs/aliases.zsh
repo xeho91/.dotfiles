@@ -2,7 +2,7 @@
 # Aliases for existing Linux commands
 # =========================================================================== #
 alias cls="clear"
-alias open="xdg-open"
+# [[ $IS_MACOS != true ]] && alias open="xdg-open"
 alias :q="exit"
 
 # =========================================================================== #
@@ -22,6 +22,10 @@ alias :q="exit"
 (( $+commands[grex] )) && alias grex="grex --colorize --verbose"
 (( $+commands[neomutt] )) && alias mutt="neomutt"
 (( $+commands[lazygit] )) && alias lz="lazygit"
+
+if [[ $MACOS == true ]]; then
+  alias git="/usr/local/bin/git"
+fi
 
 # =========================================================================== #
 # Make these commands always verbose for a feedback of what happened
@@ -61,4 +65,3 @@ unset extensions extension
 if [[ editor_open_file && ($EDITOR -eq "vim" || $EDITOR -eq "nvim") ]]; then
 	alias vo="editor_open_file"
 fi
-

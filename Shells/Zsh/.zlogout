@@ -24,4 +24,3 @@ if (( $+commands[toilet] )); then
 	print -P "Logged out from %F{magenta}$HOST%f as %F{magenta}$USER%f." \
 		| toilet -f term -F border
 fi
-
