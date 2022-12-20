@@ -39,7 +39,7 @@ unset MANPATH # Disables warning when reloading
 export MANPATH=:"$(manpath):$ZPFX/share/man"
 
 # Volta - https://volta.sh/
-export VOLTA_HOME="$HOME/.volta"
+# export VOLTA_HOME="$HOME/.volta"
 
 # Add binaries
 export PATH="$HOME/.cargo/bin:$PATH"

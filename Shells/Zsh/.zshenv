@@ -138,7 +138,7 @@ export PATH="$PNPM_HOME:$PATH"
 export USE_PROMPT="starship"
 export USER_MODE="developer"
 
-. "$HOME/.cargo/env"
+# . "$HOME/.cargo/env"
 
 # tabtab source for packages
 # uninstall by removing these lines
