@@ -93,7 +93,7 @@ fi
 # -------------------------------------------------------------------
 # https://vi.stackexchange.com/questions/11879/how-can-put-vimrc-and-viminfo-into-vim-director
 # =========================================================================== #
-export VIMRC="$DOTFILES/Editors/Neovim/init.vim"
+# export VIMRC="$DOTFILES/Editors/Neovim/init.vim"
 # export VIMINIT="source $VIMRC"
 
 # =========================================================================== #
@@ -108,9 +108,24 @@ fi
 # =========================================================================== #
 # Other
 # =========================================================================== #
-export INSTALL_RUNTIMES="true"
-export BUILD_FROM_SOURCE="true"
-export INSTALL_FROM_SOURCE="true"
 export USER_MODE="developer"
 export USE_PROMPT="starship"
 
+export GH_BINPATH="$HOME/.local/bin"
+
+# https://sw.kovidgoyal.net/kitty/conf/#kitty-conf
+export KITTY_CONFIG_DIRECTORY="$DOTFILES/terminals/kitty"
+
+# https://pnpm.io/installation
+export PNPM_HOME="$XDG_DATA_HOME/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+
+# Custom
+export USE_PROMPT="starship"
+export USER_MODE="developer"
+
+. "$HOME/.cargo/env"
+
+# tabtab source for packages
+# uninstall by removing these lines
+[[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
