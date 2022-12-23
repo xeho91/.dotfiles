@@ -35,6 +35,9 @@
 	autocrlf = false
 	whitespace = trailing-space, space-before-tab
 
+[push]
+	autoSetupRemote = true
+
 # =========================================================================== #
 # Determine the default value for variables that control the use of color per
 # command family
