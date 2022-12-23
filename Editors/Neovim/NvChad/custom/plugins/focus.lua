@@ -5,8 +5,8 @@ if not present then
 end
 
 -- https://github.com/beauwilliams/focus.nvim
-focus.setup({
+focus.setup {
 	enable = true,
 	hybridnumber = true,
 	excluded_filetypes = { "toggleterm" },
-})
+}

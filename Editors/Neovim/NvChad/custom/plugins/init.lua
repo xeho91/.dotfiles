@@ -1,24 +1,62 @@
 return {
 	-- NOTE: `MAINTAINED` => any development in the past of 6 months
-    
-    ------------
-    -- OVERRIDES
-    ------------
-    ["lukas-reineke/indent-blankline.nvim"] = {
-        override_options = require "custom/plugins/overrides/indent-blankline",
-    },
-    ["kyazdani42/nvim-tree.lua"] = {
-        override_options = require "custom/plugins/overrides/nvim-tree",
-    },
-    -- nvim_cmp = require("custom/plugins/cmp"),
-    ["numToStr/Comment.nvim"] = {
-        override_options = require "custom/plugins/overrides/comment",
-    },
-    -- ["nvim-treesitter/nvim-treesitter"] = require "custom/plugins/overrides/treesitter",
+
+	------------
+	-- OVERRIDES
+	------------
+	["lukas-reineke/indent-blankline.nvim"] = {
+		override_options = require "custom/plugins/overrides/indent-blankline",
+	},
+
+	["kyazdani42/nvim-tree.lua"] = {
+		override_options = require "custom/plugins/overrides/nvim-tree",
+	},
+
+	-- https://github.com/hrsh7th/nvim-cmp
+	["hrsh7th/nvim-cmp"] = {
+		override_options = require "custom/plugins/overrides/cmp",
+		-- override_options = function()
+		-- 	return {
+		-- 		sources = {
+		-- 			{ name = "copilot", group_index = 2, keyword_length = 2 },
+		-- 			{ name = "treesitter" },
+		-- 			{ name = "emoji" },
+		-- 			{ name = "nvim_lsp" },
+		-- 			{ name = "luasnip" },
+		-- 			{ name = "buffer" },
+		-- 			{ name = "nvim_lua" },
+		-- 			{ name = "path" },
+		-- 			{ name = "calc" },
+		-- 			{ name = "npm", keyword_length = 3 },
+		-- 			-- { name = "neorg" },
+		-- 		},
+		-- 	}
+		-- end,
+	},
+	-- nvim_cmp = require("custom/plugins/cmp"),
+	["numToStr/Comment.nvim"] = {
+		override_options = require "custom/plugins/overrides/comment",
+	},
+	-- ["nvim-treesitter/nvim-treesitter"] = require "custom/plugins/overrides/treesitter",
 
 	-------------
 	-- ESSENTIALS
 	-------------
+
+	-- https://github.com/nvim-pack/nvim-spectre
+	["nvim-pack/nvim-spectre"] = {
+		cmd = { "Spectre" },
+		config = function()
+			require("spectre").setup()
+		end,
+	},
+	-- https://github.com/kevinhwang91/nvim-bqf
+	["kevinhwang91/nvim-bqf"] = { ft = "qf" },
+
+	-- https://github.com/nvim-telescope/telescope.nvim
+	-- ["nvim-telescope/telescope.nvim"] = {
+	-- 	module = "telescope.nvim",
+	-- },
 
 	-- https://github.com/gpanders/editorconfig.nvim
 	-- MAINTAINED: Yes
@@ -29,10 +67,10 @@ return {
 	-- MAINTAINED: Yes
 	-- LAST_COMMIT: 22 Apr 2022
 	["nathom/filetype.nvim"] = {
-        config = function()
-            require("custom/plugins/filetype")
-        end,
-    },
+		config = function()
+			require "custom/plugins/filetype"
+		end,
+	},
 
 	-- https://github.com/echasnovski/mini.nvim
 	-- MAINTAINED: Yes
@@ -87,13 +125,13 @@ return {
 	["jose-elias-alvarez/null-ls.nvim"] = {
 		after = "nvim-lspconfig",
 		config = function()
+			require "custom/plugins/typescript"
 			require("custom/plugins/null-ls").setup()
 		end,
 		requires = {
-			-- https://github.com/jose-elias-alvarez/nvim-lsp-ts-utils
+			-- https://github.com/jose-elias-alvarez/typescript.nvim
 			-- MAINTAINED: Yes
 			"jose-elias-alvarez/typescript.nvim",
-
 			-- https://github.com/folke/neodev.nvim
 			-- MAINTAINED: Yes
 			"folke/neodev.nvim",
@@ -154,13 +192,13 @@ return {
 	-- https://github.com/AckslD/nvim-revJ.lua
 	-- MAINTAINED: yes
 	-- LAST_COMMIT: 11 Apr 2022
-	["AckslD/nvim-revJ.lua"] = {
-		config = function()
-			require "custom/plugins/revj"
-		end,
-	},
+	-- ["AckslD/nvim-revJ.lua"] = {
+	-- 	config = function()
+	-- 		require "custom/plugins/revj"
+	-- 	end,
+	-- },
 
-	-- https://github.com/booperlv/nvim-gomove
+	-- -- https://github.com/booperlv/nvim-gomove
 	-- MAINTAINED: yes
 	-- LAST_COMMIT: 2 Apr 2022
 	["booperlv/nvim-gomove"] = {
@@ -274,6 +312,14 @@ return {
 		after = "nvim-cmp",
 	},
 
+	-- https://github.com/zbirenbaum/copilot-cmp
+	["zbirenbaum/copilot-cmp"] = {
+		after = { "copilot.lua", "nvim-cmp" },
+		config = function()
+			require("copilot_cmp").setup()
+		end,
+	},
+
 	------------------------------
 	-- DE (Developer's Experience)
 	------------------------------
@@ -326,28 +372,28 @@ return {
 	-- https://github.com/nvim-neorg/neorg
 	-- MAINTAINED: Yes
 	-- LAST_COMMIT: 1 May 2022
-	["nvim-neorg/neorg"] = {
-		setup = vim.cmd "autocmd BufRead,BufNewFile *.norg setlocal filetype=norg",
-		after = { "nvim-treesitter" },
-		ft = "norg",
-		config = function()
-			require "custom/plugins/neorg"
-		end,
-		requires = {
-			"nvim-lua/plenary.nvim",
-			-- https://github.com/nvim-neorg/neorg-telescope
-			-- "nvim-neorg/neorg-telescope",
-		},
-	},
+	-- ["nvim-neorg/neorg"] = {
+	-- 	setup = vim.cmd "autocmd BufRead,BufNewFile *.norg setlocal filetype=norg",
+	-- 	after = { "nvim-treesitter" },
+	-- 	ft = "norg",
+	-- 	config = function()
+	-- 		require "custom/plugins/neorg"
+	-- 	end,
+	-- 	requires = {
+	-- 		"nvim-lua/plenary.nvim",
+	-- 		-- https://github.com/nvim-neorg/neorg-telescope
+	-- 		-- "nvim-neorg/neorg-telescope",
+	-- 	},
+	-- },
 
-    -- https://github.com/cbochs/grapple.nvim
-    -- MAINTAINED: YES
-    -- LAST_COMMIT: 25 Oct 2022
-    ["cbochs/grapple.nvim"] = {
-        config = function()
-            require("custom/plugins/grapple")
-        end,
-    },
+	-- https://github.com/cbochs/grapple.nvim
+	-- MAINTAINED: YES
+	-- LAST_COMMIT: 25 Oct 2022
+	["cbochs/grapple.nvim"] = {
+		config = function()
+			require "custom/plugins/grapple"
+		end,
+	},
 
 	-----------------
 	-- (T)ree(S)itter
@@ -401,5 +447,32 @@ return {
 	-- LAST_COMMIT: 22 Apr 2022
 	["windwp/nvim-ts-autotag"] = {
 		after = "nvim-treesitter",
+	},
+
+	----------------------------
+	-- (A)rtifical (I)nteligence
+	----------------------------
+
+	-- https://github.com/zbirenbaum/copilot.lua
+	["zbirenbaum/copilot.lua"] = {
+		event = "InsertEnter",
+		config = function()
+			vim.schedule(function()
+				require "custom/plugins/copilot"
+			end)
+		end,
+	},
+
+	["jackMort/ChatGPT.nvim"] = {
+		-- after = "telescope.nvim",
+		cmd = {
+			"ChatGPT",
+			"ChatGPTActAs",
+			"ChatGPTInlineEdit",
+			"ChatGPTEditWithInstructions",
+		},
+		config = function()
+			require "custom/plugins/chatgpt"
+		end,
 	},
 }
