@@ -13,6 +13,7 @@ filetype.setup({
             pn = "potion",
         },
         literal = {
+			[".browserslistrc"] = "browserslist",
             -- Set the filetype of files named "MyBackupFile" to lua
             MyBackupFile = "lua",
         },

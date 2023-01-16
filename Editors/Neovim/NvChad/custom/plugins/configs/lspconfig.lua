@@ -58,15 +58,11 @@ lspconfig.cssls.setup {
 -- }
 
 -- HTML
--- lspconfig.html.setup {
--- 	capabilities = capabilities,
--- 	flags = {
--- 		debounce_text_changes = 150,
--- 	},
--- 	on_attach = function(client, bufnr)
--- 		default_attach(client, bufnr)
--- 	end,
--- }
+lspconfig.html.setup {
+	capabilities = nvchad_capabilities,
+	flags = default_flags,
+	on_attach = default_attach,
+}
 
 -- JSON
 lspconfig.jsonls.setup {
@@ -108,21 +104,22 @@ lspconfig.jsonls.setup {
 -- 	end,
 -- }
 
+lspconfig.eslint.setup {
+	capabilities = nvchad_capabilities,
+	flags = default_flags,
+	on_attach = default_attach,
+}
+
 -- YAML
--- lspconfig.yamlls.setup {
--- 	capabilities = capabilities,
--- 	flags = {
--- 		debounce_text_changes = 150,
--- 	},
---
--- 	settings = {
--- 		yaml = {
--- 			schemas = {
--- 				["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
--- 			},
--- 		},
--- 	},
--- 	on_attach = function(client, bufnr)
--- 		default_attach(client, bufnr)
--- 	end,
--- }
+lspconfig.yamlls.setup {
+	capabilities = nvchad_capabilities,
+	flags = default_flags,
+	settings = {
+		yaml = {
+			schemas = {
+				["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+			},
+		},
+	},
+	on_attach = default_attach,
+}

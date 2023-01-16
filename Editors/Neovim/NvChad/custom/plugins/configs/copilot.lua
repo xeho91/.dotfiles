@@ -5,7 +5,6 @@ if not present then
 	print "No present"
 	return
 end
-print "Present"
 
 vim.g.copilot_assume_mapped = true
 copilot.setup {

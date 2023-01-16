@@ -1,9 +1,12 @@
 return {
-	-- NOTE: `MAINTAINED` => any development in the past of 6 months
-
 	------------
 	-- OVERRIDES
 	------------
+
+	["numToStr/Comment.nvim"] = {
+		override_options = require "custom/plugins/overrides/comment",
+	},
+
 	["lukas-reineke/indent-blankline.nvim"] = {
 		override_options = require "custom/plugins/overrides/indent-blankline",
 	},
@@ -12,36 +15,30 @@ return {
 		override_options = require "custom/plugins/overrides/nvim-tree",
 	},
 
-	-- https://github.com/hrsh7th/nvim-cmp
-	["hrsh7th/nvim-cmp"] = {
-		override_options = require "custom/plugins/overrides/cmp",
-		-- override_options = function()
-		-- 	return {
-		-- 		sources = {
-		-- 			{ name = "copilot", group_index = 2, keyword_length = 2 },
-		-- 			{ name = "treesitter" },
-		-- 			{ name = "emoji" },
-		-- 			{ name = "nvim_lsp" },
-		-- 			{ name = "luasnip" },
-		-- 			{ name = "buffer" },
-		-- 			{ name = "nvim_lua" },
-		-- 			{ name = "path" },
-		-- 			{ name = "calc" },
-		-- 			{ name = "npm", keyword_length = 3 },
-		-- 			-- { name = "neorg" },
-		-- 		},
-		-- 	}
-		-- end,
+	-- https://github.com/nvim-treesitter/nvim-treesitter
+	["nvim-treesitter/nvim-treesitter"] = {
+		override_options = require "custom/plugins/overrides/treesitter",
 	},
-	-- nvim_cmp = require("custom/plugins/cmp"),
-	["numToStr/Comment.nvim"] = {
-		override_options = require "custom/plugins/overrides/comment",
+
+	-- https://github.com/nvim-telescope/telescope.nvim
+	["nvim-telescope/telescope.nvim"] = {
+		override_options = require "custom/plugins/overrides/telescope",
 	},
-	-- ["nvim-treesitter/nvim-treesitter"] = require "custom/plugins/overrides/treesitter",
 
 	-------------
 	-- ESSENTIALS
 	-------------
+
+	-- https://github.com/roobert/search-replace.nvim
+	["roobert/search-replace.nvim"] = {
+		config = function()
+			require("search-replace").setup {
+				-- optionally override defaults
+				default_replace_single_buffer_options = "gcI",
+				default_replace_multi_buffer_options = "egcI",
+			}
+		end,
+	},
 
 	-- https://github.com/nvim-pack/nvim-spectre
 	["nvim-pack/nvim-spectre"] = {
@@ -53,47 +50,34 @@ return {
 	-- https://github.com/kevinhwang91/nvim-bqf
 	["kevinhwang91/nvim-bqf"] = { ft = "qf" },
 
-	-- https://github.com/nvim-telescope/telescope.nvim
-	-- ["nvim-telescope/telescope.nvim"] = {
-	-- 	module = "telescope.nvim",
-	-- },
-
 	-- https://github.com/gpanders/editorconfig.nvim
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 17 Feb 2022
+	-- TODO: REMOVE IN v0.9
 	["gpanders/editorconfig.nvim"] = {},
 
 	-- https://github.com/nathom/filetype.nvim
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 22 Apr 2022
 	["nathom/filetype.nvim"] = {
 		config = function()
-			require "custom/plugins/filetype"
+			require "custom/plugins/configs/filetype"
 		end,
 	},
 
 	-- https://github.com/echasnovski/mini.nvim
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 1 May 2022
 	["echasnovski/mini.nvim"] = {
-		branch = "stable",
+		branch = "main",
 		config = function()
-			require "custom/plugins/mini"
+			require "custom/plugins/configs/mini"
 		end,
 	},
 
-	-- https://github.com/Pocco81/AutoSave.nvim
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 14 Dec 2021
+	-- https://github.com/Pocco81/auto-save.nvim
 	["Pocco81/auto-save.nvim"] = {
 		config = function()
-			require "custom/plugins/auto-save"
+			require "custom/plugins/configs/auto-save"
 		end,
 	},
 
 	-- https://github.com/luukvbaal/stabilize.nvim
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 11 Mar 2022
+	-- TODO: REMOVE IN v0.9
 	["luukvbaal/stabilize.nvim"] = {
 		config = function()
 			require("stabilize").setup()
@@ -101,12 +85,22 @@ return {
 	},
 
 	-- https://github.com/ahmedkhalf/project.nvim
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 25 Apr 2022
+	-- FIXME: Doesn't work with Telescope
 	["ahmedkhalf/project.nvim"] = {
 		config = function()
-			require "custom/plugins/project"
+			require "custom/plugins/configs/project"
 		end,
+		requires = {
+			"nvim-telescope/telescope.nvim",
+		},
+	},
+
+	-- https://github.com/folke/which-key.nvim
+	["folke/which-key.nvim"] = {
+		-- config = function()
+		-- 	require "custom/plugins/configs/which-key"
+		-- end,
+		disable = false,
 	},
 
 	---------------------------------
@@ -114,107 +108,81 @@ return {
 	---------------------------------
 	["neovim/nvim-lspconfig"] = {
 		config = function()
-			require "plugins/configs/lspconfig"
-			require "custom/plugins/lspconfig"
+			require "custom/plugins/configs/lspconfig"
 		end,
 	},
 
 	-- https://github.com/jose-elias-alvarez/null-ls.nvim
-	-- MAINTAINED: yes
-	-- LAST_COMMIT: 1 May 2022
 	["jose-elias-alvarez/null-ls.nvim"] = {
 		after = "nvim-lspconfig",
 		config = function()
-			require "custom/plugins/typescript"
-			require("custom/plugins/null-ls").setup()
+			require "custom/plugins/configs/typescript"
+			require("custom/plugins/configs/null-ls").setup()
 		end,
 		requires = {
-			-- https://github.com/jose-elias-alvarez/typescript.nvim
-			-- MAINTAINED: Yes
-			"jose-elias-alvarez/typescript.nvim",
 			-- https://github.com/folke/neodev.nvim
-			-- MAINTAINED: Yes
 			"folke/neodev.nvim",
+			-- https://github.com/jose-elias-alvarez/typescript.nvim
+			"jose-elias-alvarez/typescript.nvim",
 		},
 	},
 
 	-- https://github.com/folke/lsp-trouble.nvim
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 18 Mar 2022
 	["folke/lsp-trouble.nvim"] = {
 		config = function()
-			require "custom/plugins/lsp-trouble"
+			require "custom/plugins/configs/lsp-trouble"
 		end,
 	},
-
-	-- {
-	-- 	-- https://github.com/ray-x/navigator.lua
-	-- 	-- MAINTAINED: Yes
-	-- 	"ray-x/navigator.lua",
-	-- 	requires = {
-	-- 		"ray-x/guihua.lua",
-	-- 		run = "cd lua/fzy && make",
-	-- 	},
-	-- },
 
 	----------
 	--  MOTION
 	----------
 
 	-- https://github.com/mg979/vim-visual-multi
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 8 Apr 2022
 	["mg979/vim-visual-multi"] = {},
 
 	-- https://github.com/chaoren/vim-wordmotion
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 23 Apr 2022
 	["chaoren/vim-wordmotion"] = {},
 
 	-- https://github.com/ggandor/lightspeed.nvim
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 4 Apr 2022
 	["ggandor/lightspeed.nvim"] = {
 		config = function()
-			require "custom/plugins/lightspeed"
+			require "custom/plugins/configs/lightspeed"
 		end,
 	},
 
 	-- https://github.com/monaqa/dial.nvim
-	-- MAINTAINED: YES
-	-- LAST_COMMIT: 5 Apr 2022
 	["monaqa/dial.nvim"] = {
 		config = function()
-			require "custom/plugins/dial"
+			require "custom/plugins/configs/dial"
 		end,
+	},
+
+	-- https://github.com/cbochs/portal.nvim
+	["cbochs/portal.nvim"] = {
+		config = function()
+			print "Hello"
+			require "custom/plugins/configs/portal"
+		end,
+		requires = {
+			"cbochs/grapple.nvim",
+			-- https://github.com/ThePrimeagen/harpoon
+			"ThePrimeagen/harpoon",
+		},
 	},
 
 	-- https://github.com/AckslD/nvim-revJ.lua
-	-- MAINTAINED: yes
-	-- LAST_COMMIT: 11 Apr 2022
 	-- ["AckslD/nvim-revJ.lua"] = {
 	-- 	config = function()
-	-- 		require "custom/plugins/revj"
+	-- 		require "custom/plugins/configs/revj"
 	-- 	end,
 	-- },
-
-	-- -- https://github.com/booperlv/nvim-gomove
-	-- MAINTAINED: yes
-	-- LAST_COMMIT: 2 Apr 2022
-	["booperlv/nvim-gomove"] = {
-		keys = { "<A-h>", "<A-j>", "<A-k>", "<A-l>" },
-		config = function()
-			require "custom/plugins/gomove"
-		end,
-	},
 
 	----------------------
 	-- UI (User Interface)
 	----------------------
 
 	-- https://github.com/karb94/neoscroll.nvim
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 13 Jan 2022
 	["karb94/neoscroll.nvim"] = {
 		config = function()
 			require("neoscroll").setup()
@@ -222,21 +190,17 @@ return {
 	},
 
 	-- https://github.com/folke/zen-mode.nvim
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 17 Nov 2021
 	["folke/zen-mode.nvim"] = {
 		cmd = { "ZenMode" },
 		config = function()
-			require "custom/plugins/zen-mode"
+			require "custom/plugins/configs/zen-mode"
 		end,
 		requires = {
 			-- https://github.com/folke/twilight.nvim
-			-- MAINTAINED: No
-			-- LAST_COMMIT: 6 Apr 2021
 			"folke/twilight.nvim",
 			cmd = { "Twilight" },
 			config = function()
-				require "custom/plugins/twilight"
+				require "custom/plugins/configs/twilight"
 			end,
 		},
 	},
@@ -246,11 +210,9 @@ return {
 	---------
 
 	-- https://github.com/folke/todo-comments.nvim
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 19 Jan 2022
 	["folke/todo-comments.nvim"] = {
 		config = function()
-			require "custom/plugins/todo-comments"
+			require "custom/plugins/configs/todo-comments"
 		end,
 	},
 
@@ -258,56 +220,48 @@ return {
 	-- OTHER
 	--------
 
-	-- https://github.com/folke/which-key.nvim
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 18 Mar 2022
-	["folke/which-key.nvim"] = {
-		disable = false,
-		-- cmd = { "WhichKey" },
-		-- config = function()
-		-- 	require("custom/plugins/which-key")
-		-- end,
+	-- https://github.com/stevearc/oil.nvim
+	["stevearc/oil.nvim"] = {
+		config = function()
+			require("oil").setup()
+		end,
 	},
 
 	-- https://github.com/ellisonleao/glow.nvim
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 13 Apr 2022
 	["ellisonleao/glow.nvim"] = {
 		config = function()
-			require "custom/plugins/glow"
+			require "custom/plugins/configs/glow"
 		end,
 	},
 
 	-- https://github.com/axieax/urlview.nvim
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 25 Apr 2022
 	["axieax/urlview.nvim"] = {
 		config = function()
-			require "custom/plugins/urlview"
+			require "custom/plugins/configs/urlview"
 		end,
 	},
+
+	-- https://github.com/wakatime/vim-wakatime
+	["wakatime/vim-wakatime"] = {},
+
+	-- https://github.com/browserslist/vim-browserslist
+	["browserslist/vim-browserslist"] = {},
 
 	--------------
 	-- COMPLETIONS
 	--------------
 
 	-- https://github.com/ray-x/cmp-treesitter
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 25 Apr 2022
 	["ray-x/cmp-treesitter"] = {
 		after = "nvim-cmp",
 	},
 
 	-- https://github.com/hrsh7th/cmp-emoji
-	-- MAINTAINED: No
-	-- LAST_COMMIT: 28 Sep 2021
 	["hrsh7th/cmp-emoji"] = {
 		after = "nvim-cmp",
 	},
 
 	-- https://github.com/David-Kunz/cmp-npm
-	-- MAINTAINED: No
-	-- LAST_COMMIT: 27 Oct 2021
 	["David-Kunz/cmp-npm"] = {
 		after = "nvim-cmp",
 	},
@@ -325,22 +279,18 @@ return {
 	------------------------------
 
 	-- https://github.com/beauwilliams/focus.nvim
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 9 Mar 2022
 	["beauwilliams/focus.nvim"] = {
 		cmd = { "FocusSplitNicely", "FocusSplitCycle" },
 		module = "focus",
 		config = function()
-			require "custom/plugins/focus"
+			require "custom/plugins/configs/focus"
 		end,
 	},
 
 	-- https://github.com/vuki656/package-info.nvim
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 18 Feb 2022
 	["vuki656/package-info.nvim"] = {
 		config = function()
-			require "custom/plugins/package-info"
+			require "custom/plugins/configs/package-info"
 		end,
 		requires = {
 			-- https://github.com/MunifTanjim/nui.nvim
@@ -349,23 +299,19 @@ return {
 	},
 
 	-- https://github.com/danymat/neogen
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 27 Apr 2022
 	["danymat/neogen"] = {
 		after = "nvim-treesitter",
 		config = function()
-			require "custom/plugins/neogen"
+			require "custom/plugins/configs/neogen"
 		end,
 	},
 
 	-- https://github.com/RRethy/vim-illuminate
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 10 Apr 2022
 	["RRethy/vim-illuminate"] = {
 		event = "CursorHold",
 		module = "illuminate",
 		config = function()
-			require "custom/plugins/illuminate"
+			require "custom/plugins/configs/illuminate"
 		end,
 	},
 
@@ -377,7 +323,7 @@ return {
 	-- 	after = { "nvim-treesitter" },
 	-- 	ft = "norg",
 	-- 	config = function()
-	-- 		require "custom/plugins/neorg"
+	-- 		require "custom/plugins/configs/neorg"
 	-- 	end,
 	-- 	requires = {
 	-- 		"nvim-lua/plenary.nvim",
@@ -387,11 +333,9 @@ return {
 	-- },
 
 	-- https://github.com/cbochs/grapple.nvim
-	-- MAINTAINED: YES
-	-- LAST_COMMIT: 25 Oct 2022
 	["cbochs/grapple.nvim"] = {
 		config = function()
-			require "custom/plugins/grapple"
+			require "custom/plugins/configs/grapple"
 		end,
 	},
 
@@ -400,53 +344,61 @@ return {
 	-----------------
 
 	-- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 7 Apr 2022
 	["JoosepAlviste/nvim-ts-context-commentstring"] = {
 		after = "nvim-treesitter",
 	},
 
 	-- https://github.com/nvim-treesitter/nvim-treesitter-textobjects
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 21 Apr 2022
 	["nvim-treesitter/nvim-treesitter-textobjects"] = {
 		after = "nvim-treesitter",
 	},
 
 	-- https://github.com/RRethy/nvim-treesitter-textsubjects
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 5 Apr 2022
 	["RRethy/nvim-treesitter-textsubjects"] = {
 		after = "nvim-treesitter",
 	},
 
 	-- https://github.com/haringsrob/nvim_context_vt
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 19 Apr 2022
 	["haringsrob/nvim_context_vt"] = {
 		after = "nvim-treesitter",
 	},
 
 	-- https://github.com/nvim-treesitter/playground
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 1 May 2022
 	["nvim-treesitter/playground"] = {
 		after = "nvim-treesitter",
 		cmd = "TSHighlightCapturesUnderCursor",
 	},
 
 	-- https://github.com/p00f/nvim-ts-rainbow
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 3 May 2022
+	-- TODO: No longer maintained, needs to find replacement
 	["p00f/nvim-ts-rainbow"] = {
 		after = "nvim-treesitter",
 	},
 
 	-- https://github.com/windwp/nvim-ts-autotag
-	-- MAINTAINED: Yes
-	-- LAST_COMMIT: 22 Apr 2022
 	["windwp/nvim-ts-autotag"] = {
 		after = "nvim-treesitter",
+	},
+
+	-- https://github.com/CKolkey/ts-node-action
+	-- TODO: Doesn't work on anything other than Lua
+	["CKolkey/ts-node-action"] = {
+		config = function()
+			require "custom/plugins/configs/ts-node-action"
+		end,
+		requires = { "nvim-treesitter" },
+	},
+
+	-- https://github.com/RaafatTurki/hex.nvim
+	["RaafatTurki/hex.nvim"] = {
+		cmd = {
+			"HexDump",
+			"HexAssemble",
+			"HexToggle",
+		},
+		config = function()
+			require("hex").setup()
+		end,
 	},
 
 	----------------------------
@@ -458,13 +410,12 @@ return {
 		event = "InsertEnter",
 		config = function()
 			vim.schedule(function()
-				require "custom/plugins/copilot"
+				require "custom/plugins/configs/copilot"
 			end)
 		end,
 	},
 
 	["jackMort/ChatGPT.nvim"] = {
-		-- after = "telescope.nvim",
 		cmd = {
 			"ChatGPT",
 			"ChatGPTActAs",
@@ -472,7 +423,7 @@ return {
 			"ChatGPTEditWithInstructions",
 		},
 		config = function()
-			require "custom/plugins/chatgpt"
+			require "custom/plugins/configs/chatgpt"
 		end,
 	},
 }

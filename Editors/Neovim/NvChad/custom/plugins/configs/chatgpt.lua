@@ -1,10 +1,4 @@
 -- https://github.com/jackMort/ChatGPT.nvim
--- local present, chatgpt = pcall(require, "chatgpt")
---
--- if not present then
--- 	return
--- end
-
 require("chatgpt").setup {
 	-- welcome_message = WELCOME_MESSAGE, -- set to "" if you don't like the fancy godot robot
 	-- loading_text = "loading",

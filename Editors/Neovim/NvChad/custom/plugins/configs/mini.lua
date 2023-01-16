@@ -1,30 +1,15 @@
 -- https://github.com/echasnovski/mini.nvim
 
--- https://github.com/echasnovski/mini.nvim#minisurround
-require("mini.surround").setup {
-	-- Number of lines within which surrounding is searched
-	n_lines = 20,
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-align.md
+require("mini.align").setup()
 
-	-- Duration (in ms) of highlight when calling `MiniSurround.highlight()`
-	highlight_duration = 500,
-
-	-- Mappings. Use `''` (empty string) to disable one.
-	mappings = {
-		add = "<leader>ra", -- Add surrounding
-		delete = "<leader>rd", -- Delete surrounding
-		find = "<leader>rf", -- Find surrounding (to the right)
-		find_left = "<leader>rF", -- Find surrounding (to the left)
-		highlight = "<leader>rh", -- Highlight surrounding
-		replace = "<leader>rr", -- Replace surrounding
-		update_n_lines = "<leader>rl", -- Update `n_lines`
-	},
-}
-
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-cursorword.md
 require("mini.cursorword").setup {
 	-- Delay (in ms) between when cursor moved and when highlighting appeared
 	delay = 100,
 }
 
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-indentscope.md
 require("mini.indentscope").setup {
 	draw = {
 		-- Delay (in ms) between event and start of drawing scope indicator
@@ -67,4 +52,27 @@ require("mini.indentscope").setup {
 
 	-- Which character to use for drawing scope indicator
 	symbol = "╎",
+}
+
+-- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-move.md
+require("mini.move").setup()
+
+-- https://github.com/echasnovski/mini.nvim#minisurround
+require("mini.surround").setup {
+	-- Number of lines within which surrounding is searched
+	n_lines = 20,
+
+	-- Duration (in ms) of highlight when calling `MiniSurround.highlight()`
+	highlight_duration = 500,
+
+	-- Mappings. Use `''` (empty string) to disable one.
+	mappings = {
+		add = "<leader>ra", -- Add surrounding
+		delete = "<leader>rd", -- Delete surrounding
+		find = "<leader>rf", -- Find surrounding (to the right)
+		find_left = "<leader>rF", -- Find surrounding (to the left)
+		highlight = "<leader>rh", -- Highlight surrounding
+		replace = "<leader>rr", -- Replace surrounding
+		update_n_lines = "<leader>rl", -- Update `n_lines`
+	},
 }

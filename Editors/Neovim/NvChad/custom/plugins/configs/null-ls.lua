@@ -14,14 +14,13 @@ local sources = {
 			"html",
 			"json",
 			"markdown",
+			"mdx",
 			"css",
 			"scss",
 			"javascript",
 			"typescript",
 			"javascriptreact",
 			"typescriptreact",
-			"mdx",
-			"markdown",
 			"yaml",
 		},
 	},
@@ -69,7 +68,6 @@ local sources = {
 
 	-- Other
 	-- b.formatting.codespell,
-	--
 }
 
 return {
