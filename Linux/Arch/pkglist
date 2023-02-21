@@ -313,7 +313,7 @@ gpg-tui-bin
 # Language environments
 rust
 rustup
-noddejs
+nodejs
 python
 go
 

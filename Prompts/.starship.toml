@@ -92,7 +92,7 @@ format = """
 	format             = "[ 祥$duration]($style)"
 	min_time           = 100
 	show_milliseconds  = true
-	show_notifications = true
+	show_notifications = false
 	min_time_to_notify = 10_000
 
 # https://starship.rs/config/#battery
