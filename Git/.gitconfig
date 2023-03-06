@@ -321,3 +321,5 @@
 	unignore = update-index --no-assume-unchanged
 	# Whatchanged
 	wch      = whatchanged -p --abbrev-commit --pretty=medium
+    # custom
+    wip      = commit --message="\"🚧 WIP\"" --no-verify

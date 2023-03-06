@@ -71,7 +71,7 @@ export LANGUAGE="en_US:en"
 # BROWSER
 # -------
 if [ -n "$DISPLAY" ]; then
-    export BROWSER="firefox"
+    export BROWSER="brave"
 else
     export BROWSER="w3m"
 fi

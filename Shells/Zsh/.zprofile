@@ -1,9 +1,7 @@
 # =========================================================================== #
 # Display OS & distribution information at login
 # =========================================================================== #
-if (( $+commands[onefetch] )); then
-	command onefetch
-elif (( $+commands[fastfetch] )); then
+if (( $+commands[fastfetch] )); then
 	command fastfetch
 elif (( $+commands[neofetch] )); then
     command neofetch

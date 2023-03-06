@@ -7,14 +7,15 @@ git
 github-cli
 # Editors
 neovim
-# Password manager
-bitwarden
-bitwarden-cli
 # Important
 nextcloud-client
 # Browsing
 brave-browser
+# Security
 protonvpn
+bitwarden
+bitwarden-cli
+keychain
 # Communication
 signal-desktop
 telegram-desktop
@@ -28,6 +29,8 @@ zoom
 nvm
 # https://github.com/pnpm/pnpm
 pnpm
+# https://github.com/luarocks/luarocks
+luarocks
 # https://github.com/rust-lang/rustup
 # rustup
 #
@@ -100,9 +103,13 @@ spotify-tui-bin
 the_silver_searcher
 # https://github.com/XAMPPRocky/tokei
 tokei
+# https://github.com/sayanarijit/xplr
+xplr
 # https://github.com/dduan/tre
 # NOTE: Better to install with cargo
 # tre-command
+# https://github.com/wakatime/wakatime-cli
+wakatime
 # https://salsa.debian.org/debian/w3m
 w3m
 # w3m-imgcat

@@ -378,6 +378,12 @@ zinit \
 	wait lucid \
 	for OMZP::npm
 
+# https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/nvm
+zinit \
+	if'[[ "$USER_MODE" == "developer" ]]' \
+	wait lucid \
+	for OMZP::nvm
+
 # =========================================================================== #
 # `node-docs` - Quickly search Node documentation
 # ----------------------------------------------------------------
@@ -767,3 +773,9 @@ zinit id-as"npm-scripts-autocomplete" \
 	if'[[ "$USER_MODE" == "developer" ]]' \
 	wait lucid \
 	for @grigorii-zander/zsh-npm-scripts-autocomplete
+
+# https://github.com/lukechilds/zsh-nvm
+zinit id-as="zsh-nvm" \
+	if'[[ "$USER_MODE" == "developer" ]]' \
+	wait lucid \
+	for @lukechilds/zsh-nvm

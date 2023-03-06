@@ -180,3 +180,35 @@ function rga-fzf() {
 	echo "Opening $file" &&
 	xdg-open "$file"
 }
+
+# =========================================================================== #
+#  Speed up dev with pnpm
+# =========================================================================== #
+function add-dep() {
+    if (( !$+commands[pnpm] )); then
+        echo "Command pnpm not found!"
+    elif (( !$+commands[git] )); then
+        echo "Command git not found!"
+    else
+        local save="$1"
+        local dependency="$2"
+
+        if [[ ! "$save" ]]; then 
+            echo "First argument - where to save dependency was not specified!"
+            return 1;
+        elif [[ ! "$dependency" ]]; then
+            echo "Second argument - package name was not specified!"
+            return 1;
+        elif [[ "$save" == "prod" || "$save" == "peer" || "$save" == "dev" ]]; then
+            command pnpm add --save-prod "$dependency"
+            command git add "./package.json"
+            command git commit --no-verify --message "chore(dependencies): ➕ Add \`$dependency\` to prod"
+            return 0;
+        else
+            echo "$save"
+            echo "First argument must be one of these values: prod, peer, dev"
+            return 1;
+        fi
+    fi
+}
+
