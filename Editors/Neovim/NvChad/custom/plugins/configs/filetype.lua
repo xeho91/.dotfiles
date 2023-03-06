@@ -11,6 +11,7 @@ filetype.setup({
             mts = "typescript",
             -- Set the filetype of *.pn files to potion
             pn = "potion",
+			hbs = "html.handlebars"
         },
         literal = {
 			[".browserslistrc"] = "browserslist",

@@ -161,7 +161,6 @@ return {
 	-- https://github.com/cbochs/portal.nvim
 	["cbochs/portal.nvim"] = {
 		config = function()
-			print "Hello"
 			require "custom/plugins/configs/portal"
 		end,
 		requires = {
@@ -360,6 +359,11 @@ return {
 
 	-- https://github.com/haringsrob/nvim_context_vt
 	["haringsrob/nvim_context_vt"] = {
+		after = "nvim-treesitter",
+	},
+
+	-- https://github.com/nvim-treesitter/nvim-treesitter-context
+	["nvim-treesitter/nvim-treesitter-context"] = {
 		after = "nvim-treesitter",
 	},
 

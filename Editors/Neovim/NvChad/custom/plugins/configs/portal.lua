@@ -1,10 +1,10 @@
 -- https://github.com/cbochs/portal.nvim
 
-local present, portal = pcall(require, "portal")
+-- local present, portal = pcall(require, "portal")
+--
+-- if not present then
+-- 	return
+-- end
 
-if not present then
-	return
-end
-
-vim.keymap.set("n", "<leader>o", portal.jump_backward, {})
-vim.keymap.set("n", "<leader>i", portal.jump_forward, {})
+vim.keymap.set("n", "<leader>o", "<cmd>Portal jumplist backward<cr>")
+vim.keymap.set("n", "<leader>i", "<cmd>Portal jumplist forward<cr>")
