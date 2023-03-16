@@ -54,3 +54,11 @@ fi
 [[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
 
 source /home/xeho91/.config/broot/launcher/bash/br
+
+# pnpm
+export PNPM_HOME="/home/xeho91/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

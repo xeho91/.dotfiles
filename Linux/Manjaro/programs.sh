@@ -40,12 +40,12 @@ luarocks
 bandwhich
 # https://github.com/sharkdp/bat
 bat
+# https://github.com/jarun/ddgr
+ddgr
 # https://github.com/ClementTsang/bottom
 bottom
 # https://github.com/Canop/broot
 broot
-# https://github.com/dandavison/delta
-git-delta
 # https://github.com/bootandy/dust
 dust
 # https://github.com/ogham/exa
@@ -64,6 +64,8 @@ fzf
 fzy
 # https://github.com/svenstaro/genact
 genact
+# https://github.com/dandavison/delta
+git-delta
 # https://github.com/charmbracelet/glow
 glow
 # https://github.com/orhun/gpg-tui
