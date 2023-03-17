@@ -212,3 +212,14 @@ function add-dep() {
     fi
 }
 
+# =========================================================================== #
+#  Speed up updating release notes with Changesets
+# =========================================================================== #
+function git-changelog() {
+    if (( !$+commands[git] )); then
+        echo "Command git not found!"
+    else
+        command git add "./.changeset"
+        command git commit --message "chore(Changesets): 🔖 Add release note(s)"
+    fi
+}
