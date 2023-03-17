@@ -10,24 +10,26 @@ vim.cmd [[highlight IndentBlanklineIndent4 guibg=#102A2D gui=nocombine]]
 vim.cmd [[highlight IndentBlanklineIndent5 guibg=#062138 gui=nocombine]]
 vim.cmd [[highlight IndentBlanklineIndent6 guibg=#280C31 gui=nocombine]]
 
-return {
-	char = "",
-	char_highlight_list = {
-		"IndentBlanklineIndent1",
-		"IndentBlanklineIndent2",
-		"IndentBlanklineIndent3",
-		"IndentBlanklineIndent4",
-		"IndentBlanklineIndent5",
-		"IndentBlanklineIndent6",
-	},
-	space_char_highlight_list = {
-		"IndentBlanklineIndent1",
-		"IndentBlanklineIndent2",
-		"IndentBlanklineIndent3",
-		"IndentBlanklineIndent4",
-		"IndentBlanklineIndent5",
-		"IndentBlanklineIndent6",
-	},
-	show_trailing_blankline_indent = true,
-	show_end_of_line = true,
+local M = {}
+
+M.char = ""
+M.char_highlight_list = {
+	"IndentBlanklineIndent1",
+	"IndentBlanklineIndent2",
+	"IndentBlanklineIndent3",
+	"IndentBlanklineIndent4",
+	"IndentBlanklineIndent5",
+	"IndentBlanklineIndent6",
 }
+M.space_char_highlight_list = {
+	"IndentBlanklineIndent1",
+	"IndentBlanklineIndent2",
+	"IndentBlanklineIndent3",
+	"IndentBlanklineIndent4",
+	"IndentBlanklineIndent5",
+	"IndentBlanklineIndent6",
+}
+M.show_trailing_blankline_indent = true
+M.show_end_of_line = true
+
+return M

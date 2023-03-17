@@ -1,5 +1,7 @@
 -- https://github.com/nvim-telescope/telescope.nvim
 
-return {
-	extensions_list = { "projects" },
-}
+local M = {};
+
+M.extensions_list = { "projects" }
+
+return M

@@ -1,5 +1,8 @@
+
+print("Hello")
+
 -- https://github.com/vuki656/package-info.nvim
-require("package-info").setup({
+require("package-info").setup {
 	colors = {
 		up_to_date = "#3C4048", -- Text color for up to date package virtual text
 		outdated = "#d19a66", -- Text color for outdated package virtual text
@@ -22,20 +25,61 @@ require("package-info").setup({
 	-- `yarn.lock` or `package-lock.json`. If none are found it will use the
 	-- provided one, if nothing is provided it will use `yarn`
 	package_manager = "pnpm",
-})
+}
 
--- Display latest versions as virtual text
-vim.api.nvim_set_keymap(
-	"n",
-	"<leader>ns",
-	"<Cmd>lua require('package-info').show()<CR>",
+-- Show dependency versions
+vim.keymap.set(
+	{ "n" },
+	"<LEADER>ns",
+	require("package-info").show,
 	{ silent = true, noremap = true }
 )
 
--- Clear package info virtual text
-vim.api.nvim_set_keymap(
-	"n",
-	"<leader>nc",
-	"<Cmd>lua require('package-info').hide()<CR>",
+-- Hide dependency versions
+vim.keymap.set(
+	{ "n" },
+	"<LEADER>nc",
+	require("package-info").hide,
+	{ silent = true, noremap = true }
+)
+
+-- Toggle dependency versions
+vim.keymap.set(
+	{ "n" },
+	"<LEADER>nt",
+	require("package-info").toggle,
+	{ silent = true, noremap = true }
+)
+
+-- Update dependency on the line
+vim.keymap.set(
+	{ "n" },
+	"<LEADER>nu",
+	require("package-info").update,
+	{ silent = true, noremap = true }
+)
+
+-- Delete dependency on the line
+vim.keymap.set(
+	{ "n" },
+	"<LEADER>nd",
+	require("package-info").delete,
+	{ silent = true, noremap = true }
+)
+
+-- Install a new dependency
+vim.keymap.set(
+	{ "n" },
+	"<LEADER>ni",
+	require("package-info").install,
+	{ silent = true, noremap = true }
+)
+
+
+-- Install a different dependency version
+vim.keymap.set(
+	{ "n" },
+	"<LEADER>np",
+	require("package-info").change_version,
 	{ silent = true, noremap = true }
 )

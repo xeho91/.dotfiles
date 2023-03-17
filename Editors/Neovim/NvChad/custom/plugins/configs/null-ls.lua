@@ -11,9 +11,10 @@ local sources = {
 	-- Miscelaneous
 	b.formatting.prettierd.with {
 		filetypes = {
+			"md",
+			"markdown",
 			"html",
 			"json",
-			"markdown",
 			"mdx",
 			"css",
 			"scss",
@@ -41,13 +42,17 @@ local sources = {
 			"vue",
 		},
 	},
+
 	require "typescript.extensions.null-ls.code-actions",
 
 	-- JSON
 	b.formatting.fixjson.with { filetypes = { "jsonc" } },
 
 	-- Markdown
-	b.diagnostics.markdownlint,
+	b.diagnostics.markdownlint.with {
+		filetypes = { "markdown", "markdown.mdx", "md", "mdx" },
+	},
+
 	-- nls.builtins.code_actions.gitsigns,
 
 	-- Lua
@@ -67,7 +72,7 @@ local sources = {
 	b.diagnostics.sqlfluff,
 
 	-- Other
-	-- b.formatting.codespell,
+	--[[ b.formatting.codespell, ]]
 }
 
 return {
@@ -81,3 +86,13 @@ return {
 		}
 	end,
 }
+
+-- local sources = {
+--
+--   -- webdev stuff
+--   b.formatting.deno_fmt, -- choosed deno for ts/js files cuz its very fast!
+--   b.formatting.prettier.with { filetypes = { "html", "markdown", "css" } }, -- so prettier works only on these filetypes
+--
+--   -- cpp
+--   b.formatting.clang_format,
+-- }

@@ -19,9 +19,6 @@ return {
 		"vue",
 		"yaml",
 		"json",
-		-- "norg",
-		-- "norg_meta",
-		-- "norg_table",
 	},
 
 	-- https://github.com/windwp/nvim-ts-autotag
