@@ -201,10 +201,7 @@ local plugins = {
 	-- https://github.com/folke/which-key.nvim
 	{
 		"folke/which-key.nvim",
-		-- config = function()
-		-- 	require "custom/plugins/configs/which-key"
-		-- end,
-		disable = false,
+		disable = true,
 	},
 
 	---------------------------------
@@ -326,16 +323,17 @@ local plugins = {
 	{
 		"folke/zen-mode.nvim",
 		cmd = { "ZenMode" },
+		keys = { "<leader>tz" },
 		config = function()
-			require "custom/plugins/configs/zen-mode"
+			require "custom.plugins.configs.zen-mode"
 		end,
 		dependencies = {
-			-- https://github.com/folke/twilight.nvim
+			-- httpss//github.com/folke/twilight.nvim
 			{
 				"folke/twilight.nvim",
 				cmd = { "Twilight" },
 				config = function()
-					require "custom/plugins/configs/twilight"
+					require "custom.plugins.configs.twilight"
 				end,
 			},
 		},
@@ -345,7 +343,7 @@ local plugins = {
 	-- SYNTAX
 	---------
 
-	-- https://github.com/folke/todo-comments.nvim
+	-- httpss//github.com/folke/todo-comments.nvim
 	{
 		"folke/todo-comments.nvim",
 		config = function()

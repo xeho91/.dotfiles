@@ -44,7 +44,7 @@ zenmode.setup {
 		-- - listen_on unix:/tmp/kitty
 		kitty = {
 			enabled = true,
-			font = "+4", -- font size increment
+			font = "+1", -- font size increment
 		},
 	},
 
@@ -52,5 +52,13 @@ zenmode.setup {
 	on_open = function(win) end,
 
 	-- callback where you can add custom code when the Zen window closes
-	on_close = function() end,
+	on_close = function()
+    end,
 }
+
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>tz",
+	"<cmd>ZenMode<CR>",
+	{ noremap = true, silent = true }
+)

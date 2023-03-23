@@ -72,38 +72,27 @@ lspconfig.jsonls.setup {
 }
 
 -- Lua
--- lspconfig.sumneko_lua.setup({
---   settings = {
---     Lua = {
---       completion = {
---         callSnippet = "Replace"
---       }
---     }
---   }
--- })
--- lspconfig.sumneko_lua.setup(require("neodev").setup {
--- 	lspconfig = {
--- 		cmd = { "lua-language-server" },
--- 		flags = {
--- 			debounce_text_changes = 150,
--- 		},
--- 		on_attach = function(client, bufnr)
--- 			default_attach(client, bufnr)
--- 		end,
--- 	},
--- })
+lspconfig.lua_ls.setup {
+	capabilities = nvchad_capabilities,
+	flags = default_flags,
+	on_attach = default_attach,
+	settings = {
+		Lua = {
+			completion = {
+				callSnippet = "Replace",
+			},
+		},
+	},
+}
 
 -- Tailwind CSS
--- lspconfig.tailwindcss.setup {
--- 	capabilities = capabilities,
--- 	flags = {
--- 		debounce_text_changes = 150,
--- 	},
--- 	on_attach = function(client, bufnr)
--- 		default_attach(client, bufnr)
--- 	end,
--- }
+lspconfig.tailwindcss.setup {
+	capabilities = nvchad_capabilities,
+	flags = default_flags,
+	on_attach = default_attach,
+}
 
+-- ESLint
 lspconfig.eslint.setup {
 	capabilities = nvchad_capabilities,
 	flags = default_flags,

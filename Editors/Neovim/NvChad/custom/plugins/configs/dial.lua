@@ -69,6 +69,66 @@ require("dial.config").augends:register_group {
 			word = false,
 			cyclic = true,
 		},
+		augend.constant.new {
+			elements = { "Up", "Down" },
+			word = true,
+			cyclic = true,
+		},
+		augend.constant.new {
+			elements = { "up", "down" },
+			word = true,
+			cyclic = true,
+		},
+		augend.constant.new {
+			elements = { "UP", "DOWN" },
+			word = true,
+			cyclic = true,
+		},
+		augend.constant.new {
+			elements = { "left", "right" },
+			word = true,
+			cyclic = true,
+		},
+		augend.constant.new {
+			elements = { "Left", "Right" },
+			word = true,
+			cyclic = true,
+		},
+		augend.constant.new {
+			elements = { "LEFT", "RIGHT" },
+			word = true,
+			cyclic = true,
+		},
+		augend.constant.new {
+			elements = { "NORTH", "EAST", "SOUTH", "WEST" },
+			word = true,
+			cyclic = true,
+		},
+		augend.constant.new {
+			elements = { "north", "east", "south", "west" },
+			word = true,
+			cyclic = true,
+		},
+		augend.constant.new {
+			elements = { "North", "East", "South", "West" },
+			word = true,
+			cyclic = true,
+		},
+		augend.constant.new {
+			elements = { "min", "max" },
+			word = true,
+			cyclic = true,
+		},
+		augend.constant.new {
+			elements = { "MIN", "MAX" },
+			word = true,
+			cyclic = true,
+		},
+		augend.constant.new {
+			elements = { "Min", "Max" },
+			word = true,
+			cyclic = true,
+		},
 		augend.semver.alias.semver,
 	},
 

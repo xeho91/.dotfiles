@@ -61,4 +61,13 @@ M.trouble = {
 	},
 }
 
+M.zenmode = {
+    n = {
+		["<leader>tz"] = {
+			"<cmd>ZenMode<CR>",
+			"🧘  Zen Mode - toggle",
+	    },
+    }
+}
+
 return M

@@ -17,6 +17,9 @@ filetype.setup({
 			[".browserslistrc"] = "browserslist",
             -- Set the filetype of files named "MyBackupFile" to lua
             MyBackupFile = "lua",
+
+			["tsconfig.json"] = "jsonc",
+			[".markdownlint.json"] = "jsonc",
         },
         complex = {
             -- Set the filetype of any full filename matching the regex to gitconfig
