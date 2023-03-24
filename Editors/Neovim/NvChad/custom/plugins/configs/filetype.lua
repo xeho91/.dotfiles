@@ -8,6 +8,7 @@ end
 filetype.setup({
     overrides = {
         extensions = {
+            cts = "typescript",
             mts = "typescript",
             -- Set the filetype of *.pn files to potion
             pn = "potion",

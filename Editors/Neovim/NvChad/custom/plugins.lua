@@ -1,6 +1,24 @@
 local overrides = require "custom.overrides"
 
 local plugins = {
+	------------------
+	-- Config synncing
+	------------------
+
+	-- https://github.com/folke/neoconf.nvim
+	--[[ { ]]
+	--[[ 	"folke/neoconf.nvim", ]]
+	--[[ 	disable = true, ]]
+	--[[ 	lazy = false, ]]
+	--[[ 	config = function() ]]
+	--[[ 		require "custom.plugins.configs.neoconf" ]]
+	--[[ 	end, ]]
+	--[[ 	dependencies = { ]]
+	--[[ 		{ "neovim/nvim-lspconfig" }, ]]
+	--[[ 		{ "folke/lsp-trouble.nvim" }, ]]
+	--[[ 	}, ]]
+	--[[ }, ]]
+
 	---@type NvPluginSpec[]
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -123,6 +141,14 @@ local plugins = {
 					require "custom/plugins/configs/project"
 				end,
 			},
+			-- https://github.com/nvim-telescope/telescope-dap.nvim
+			{
+				"nvim-telescope/telescope-dap.nvim",
+			},
+			-- https://github.com/jvgrootveld/telescope-zoxide
+			{
+				"jvgrootveld/telescope-zoxide",
+			},
 		},
 		opts = overrides.telescope,
 	},
@@ -155,12 +181,6 @@ local plugins = {
 		ft = "qf",
 	},
 
-	-- https://github.com/gpanders/editorconfig.nvim
-	-- TODO: REMOVE IN v0.9
-	{
-		"gpanders/editorconfig.nvim",
-	},
-
 	-- https://github.com/nathom/filetype.nvim
 	{
 		"nathom/filetype.nvim",
@@ -185,16 +205,7 @@ local plugins = {
 		"Pocco81/auto-save.nvim",
 		lazy = false,
 		config = function()
-			require "custom/plugins/configs/auto-save"
-		end,
-	},
-
-	-- https://github.com/luukvbaal/stabilize.nvim
-	-- TODO: REMOVE IN v0.9
-	{
-		"luukvbaal/stabilize.nvim",
-		config = function()
-			require("stabilize").setup()
+			require "custom.plugins.configs.auto-save"
 		end,
 	},
 
@@ -356,6 +367,15 @@ local plugins = {
 	-- OTHER
 	--------
 
+	-- https://github.com/nanotee/zoxide.vim
+	{
+		"https://github.com/nanotee/zoxide.vim",
+		cmd = { "Z", "Lz", "Tz", "Zi", "Lzi", "Tzi" },
+		dependencies = {
+			"nvim-telescope/telescope.nvim",
+		},
+	},
+
 	-- https://github.com/stevearc/oil.nvim
 	{
 		"stevearc/oil.nvim",
@@ -418,16 +438,16 @@ local plugins = {
 				"David-Kunz/cmp-npm",
 				event = "BufEnter package.json",
 			},
-			-- https://github.com/zbirenbaum/copilot.lua
+			-- httpss//github.com/zbirenbaum/copilot.lua
 			{
 				"zbirenbaum/copilot.lua",
 				config = function()
 					vim.schedule(function()
-						require "custom/plugins/configs/copilot"
+						require "custom.plugins.configs.copilot"
 					end)
 				end,
 				dependencies = {
-					-- https://github.com/zbirenbaum/copilot-cmp
+					-- httpss//github.com/zbirenbaum/copilot-cmp
 					{
 						"zbirenbaum/copilot-cmp",
 						config = function()
@@ -444,6 +464,23 @@ local plugins = {
 	------------------------------
 	-- DE (Developer's Experience)
 	------------------------------
+
+	-- https://github.com/folke/noice.nvim
+	{
+		"folke/noice.nvim",
+		lazy = false,
+		config = function()
+			require "custom.plugins.configs.noice"
+		end,
+		dependencies = {
+			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+			{ "MunifTanjim/nui.nvim" },
+			-- OPTIONAL:
+			--   `nvim-notify` is only needed, if you want to use the notification view.
+			--   If not available, we use `mini` as the fallback
+			{ "rcarriga/nvim-notify" },
+		},
+	},
 
 	-- https://github.com/beauwilliams/focus.nvim
 	{
@@ -521,6 +558,100 @@ local plugins = {
 		},
 		config = function()
 			require "custom/plugins/configs/chatgpt"
+		end,
+	},
+
+	------------
+	-- Debugging
+	------------
+
+	-- https://github.com/mfussenegger/nvim-dap
+	--[[ { ]]
+	--[[ 	"mfussenegger/nvim-dap", ]]
+	--[[ 	keys = { "<leader>du" }, ]]
+	--[[ 	config = function() ]]
+	--[[ 		require "custom.plugins.configs.dap" ]]
+	--[[ 	end, ]]
+	--[[ 	dependencies = { ]]
+	--[[ 		-- https://github.com/rcarriga/nvim-dap-ui ]]
+	--[[ 		{ ]]
+	--[[ 			"rcarriga/nvim-dap-ui", ]]
+	--[[ 			config = function() ]]
+	--[[ 				require "custom.plugins.configs.dap-ui" ]]
+	--[[ 			end, ]]
+	--[[ 		}, ]]
+	--[[ 		-- https://github.com/jbyuki/one-small-step-for-vimkind ]]
+	--[[ 		{ "jbyuki/one-small-step-for-vimkind" }, ]]
+	--[[ 		-- https://github.com/jay-babu/mason-nvim-dap.nvim ]]
+	--[[ 		{ ]]
+	--[[ 			"jay-babu/mason-nvim-dap.nvim", ]]
+	--[[ 			cmd = { "DapInstall" }, ]]
+	--[[ 			config = function() ]]
+	--[[ 				require("mason-nvim-dap").setup { ]]
+	--[[ 					automatic_setup = true, ]]
+	--[[ 				} ]]
+	--[[ 			end, ]]
+	--[[ 		}, ]]
+	--[[ 		-- https://github.com/theHamsta/nvim-dap-virtual-text ]]
+	--[[ 		{ ]]
+	--[[ 			"theHamsta/nvim-dap-virtual-text", ]]
+	--[[ 			config = function() ]]
+	--[[ 				require("nvim-dap-virtual-text").setup() ]]
+	--[[ 			end, ]]
+	--[[ 		}, ]]
+	--[[ 	}, ]]
+	--[[ }, ]]
+
+	----------
+	-- Testing
+	----------
+
+	-- https://github.com/nvim-neotest/neotest
+	{
+		"nvim-neotest/neotest",
+		lazy = false,
+		dependencies = {
+			{ "nvim-lua/plenary.nvim" },
+			{ "nvim-neotest/neotest-plenary" },
+			{ "nvim-treesitter/nvim-treesitter" },
+			{ "antoinemadec/FixCursorHold.nvim" },
+			--[[ { "haydenmeade/neotest-jest" }, ]]
+			{ "marilari88/neotest-vitest" },
+			--[[ { "MarkEmmons/neotest-deno" }, ]]
+		},
+		config = function()
+			require("neotest").setup {
+				adapters = {
+					--[[ require "neotest-deno", ]]
+					--[[ require "neotest-jest" { jestCommand = "jest --watch " }, ]]
+					require "neotest-plenary",
+					require "neotest-vitest",
+				},
+			}
+		end,
+		init = function()
+			vim.cmd [[
+                command! NeotestSummary lua require("neotest").summary.toggle()
+                command! NeotestFile lua require("neotest").run.run(vim.fn.expand("%"))
+                command! Neotest lua require("neotest").run.run(vim.fn.getcwd())
+                command! NeotestNearest lua require("neotest").run.run()
+                command! NeotestDebug lua require("neotest").run.run({ strategy = "dap" })
+                command! NeotestAttach lua require("neotest").run.attach()
+            ]]
+		end,
+	},
+
+	--------------
+	-- Git related
+	--------------
+
+	-- https://github.com/akinsho/git-conflict.nvim
+	{
+		"akinsho/git-conflict.nvim",
+		lazy = false,
+		--[[ tag = "*", ]]
+		config = function()
+			require("git-conflict").setup()
 		end,
 	},
 }

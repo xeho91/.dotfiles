@@ -74,6 +74,8 @@ gpg-tui
 imgcat-bin
 # https://github.com/stedolan/jq
 jq
+# https://github.com/casey/just
+just
 # https://github.com/dandavison/deltaazygit
 lazygit
 # https://github.com/Peltoche/lsd

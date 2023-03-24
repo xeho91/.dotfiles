@@ -6,6 +6,7 @@ if not present then
 end
 
 vim.g.copilot_assume_mapped = true
+
 copilot.setup {
 	panel = {
 		enabled = true,

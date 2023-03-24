@@ -10,6 +10,7 @@ vim.o.foldlevel = 2
 -- vim.o.foldnestmax = 3
 -- vim.o.foldminlines = 50
 
+vim.o.ignorecase = false
 vim.o.ruler = true
 vim.o.tabstop = 4
 vim.o.smartindent = false

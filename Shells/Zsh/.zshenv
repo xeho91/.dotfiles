@@ -128,7 +128,7 @@ export USE_PROMPT="starship"
 export GH_BINPATH="$HOME/.local/bin"
 
 # https://sw.kovidgoyal.net/kitty/conf/#kitty-conf
-export KITTY_CONFIG_DIRECTORY="$DOTFILES/terminals/kitty"
+export KITTY_CONFIG_DIRECTORY="$DOTFILES/Terminals/kitty"
 
 # https://pnpm.io/installation
 export PNPM_HOME="$XDG_DATA_HOME/pnpm"
@@ -151,4 +151,4 @@ if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
   source /usr/share/zsh/manjaro-zsh-config
 fi
 
-export OPENAI_API_KEY="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"
+export OPENAI_API_KEY=""

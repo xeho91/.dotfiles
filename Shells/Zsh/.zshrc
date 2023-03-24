@@ -62,3 +62,7 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
+
+
+# GitHub Copilot CLI
+eval "$(github-copilot-cli alias -- "$0")"
