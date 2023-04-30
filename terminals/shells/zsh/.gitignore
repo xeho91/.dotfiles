@@ -1,0 +1,22 @@
+# Ignore file produced by Zsh's `compinit` (completion system) to speed up
+# completion
+.zcompdump*
+
+# Ignore Oh my Zsh
+ohmyzsh/
+
+# Ignore the history file
+.zsh_history
+
+# Ignore the Zinit's directory
+.zinit
+
+# Ignore the cache directory
+.cache
+
+# Ignore the config directory
+.config
+
+# Ignore the data directory
+.local
+
