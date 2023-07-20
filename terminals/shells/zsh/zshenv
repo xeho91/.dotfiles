@@ -75,11 +75,11 @@ export LANGUAGE="en_US:en"
 
 # BROWSER
 # -------
-if [ -n "$DISPLAY" ]; then
-    export BROWSER="brave"
-else
-    export BROWSER="w3m"
-fi
+# if [ -n "$DISPLAY" ]; then
+#     export BROWSER="brave"
+# else
+#     export BROWSER="w3m"
+# fi
 
 # EDITOR
 # ------

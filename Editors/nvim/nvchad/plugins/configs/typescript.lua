@@ -7,7 +7,7 @@ if not present then
 end
 
 typescript.setup {
-	debug = true,
+	debug = false,
 	disable_commands = false,
 	enable_import_on_completion = false,
 	go_to_source_definition = {
@@ -27,5 +27,18 @@ typescript.setup {
 
 	server = {
 		on_attach = nvchad_on_attach,
-	}
+		filetypes = {
+			"javascript",
+			"javascriptreact",
+			"typescript",
+			"typescriptreact",
+			"svelte",
+		},
+		--[[ cmd = { ]]
+		--[[ 	"bun", ]]
+		--[[ 	"run", ]]
+		--[[ 	"/Users/xeho91/.local/share/nvim/mason/bin/typescript-language-server", ]]
+		--[[ 	"--stdio", ]]
+		--[[ }, ]]
+	},
 }

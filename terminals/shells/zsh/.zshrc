@@ -36,3 +36,6 @@ export ZSH="$ZDOTDIR/ohmyzsh"
 source $ZSH/oh-my-zsh.sh
 
 source /Users/xeho91/Library/Application\ Support/org.dystroy.broot/launcher/bash/br
+
+# bun completions
+[ -s "/Users/xeho91/.bun/_bun" ] && source "/Users/xeho91/.bun/_bun"

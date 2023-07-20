@@ -22,6 +22,7 @@ M.sources = {
         name = "npm",
         keyword_length = 3,
     },
+    { name = "crates" },
     { name = "git" },
     -- { name = "neorg" },
 }

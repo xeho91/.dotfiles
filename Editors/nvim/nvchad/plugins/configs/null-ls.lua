@@ -1,9 +1,5 @@
 -- https://github.com/jose-elias-alvarez/null-ls.nvim
-local ok, null_ls = pcall(require, "null-ls")
-
-if not ok then
-	return
-end
+local null_ls = require "null-ls"
 
 local b = null_ls.builtins
 
@@ -27,7 +23,7 @@ local sources = {
 	},
 
 	-- CSS & Sass & Less
-	b.diagnostics.stylelint,
+	--[[ b.diagnostics.stylelint, ]]
 
 	-- JavaScript & TypeScript
 	b.diagnostics.eslint.with {
@@ -43,10 +39,8 @@ local sources = {
 		},
 	},
 
-	require "typescript.extensions.null-ls.code-actions",
-
 	-- JSON
-	b.formatting.fixjson.with { filetypes = { "jsonc" } },
+	--[[ b.formatting.fixjson.with { filetypes = { "jsonc" } }, ]]
 
 	-- Markdown
 	b.diagnostics.markdownlint.with {
@@ -63,36 +57,27 @@ local sources = {
 	b.formatting.shfmt,
 	b.diagnostics.shellcheck.with { diagnostics_format = "#{m} [#{c}]" },
 
-	-- TOML
-	b.formatting.taplo,
-
-	b.diagnostics.yamllint,
+	-- Rust
+	b.formatting.rustfmt,
+	--[[ b.formatting.rustfmt.with { ]]
+ --[[        extra_args = { "--edition 2021" } ]]
+ --[[    }, ]]
 
 	-- SQL
 	b.diagnostics.sqlfluff,
 
-	-- Other
-	--[[ b.formatting.codespell, ]]
+	-- TOML
+	b.formatting.taplo,
+
+	-- YAML
+	--[[ b.diagnostics.yamllint, ]]
+
+	require "typescript.extensions.null-ls.code-actions",
 }
 
-return {
-	setup = function(on_attach)
-		null_ls.setup {
-			debug = true,
-			sources = sources,
-			debounce = 500,
-			on_attach = on_attach,
-			save_after_format = false,
-		}
-	end,
+null_ls.setup {
+	debug = true,
+	sources = sources,
+	debounce = 500,
+	save_after_format = true,
 }
-
--- local sources = {
---
---   -- webdev stuff
---   b.formatting.deno_fmt, -- choosed deno for ts/js files cuz its very fast!
---   b.formatting.prettier.with { filetypes = { "html", "markdown", "css" } }, -- so prettier works only on these filetypes
---
---   -- cpp
---   b.formatting.clang_format,
--- }

@@ -14,8 +14,8 @@ M.ui = {
 	},
 	hl_override = highlights.override,
 	hl_add = highlights.add,
-	theme = "gruvbox_light",
-	theme_toggle = { "gruvbox_light", "gruvbox_light" },
+	theme = "catppuccin",
+	theme_toggle = { "catppuccin", "catppuccin" },
 }
 
 M.plugins = "custom.plugins"

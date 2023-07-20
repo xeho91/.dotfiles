@@ -20,3 +20,4 @@ ohmyzsh/
 # Ignore the data directory
 .local
 
+.zsh_sessions

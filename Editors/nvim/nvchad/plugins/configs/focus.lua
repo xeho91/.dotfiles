@@ -4,7 +4,7 @@ if not present then
 	return
 end
 
--- https://github.com/beauwilliams/focus.nvim
+-- https://github.com/nvim-focus/focus.nvim
 focus.setup {
 	enable = true,
 	hybridnumber = true,

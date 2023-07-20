@@ -1,10 +1,10 @@
 # https://github.com/nvm-sh/nvm
-export NVM_DIR="$HOME/.nvm"
-if [[ $IS_MACOS == true ]]; then
-	source "$(brew --prefix nvm)/nvm.sh"
-else
-	source /usr/share/nvm/init-nvm.sh
-fi
+# export NVM_DIR="$HOME/.nvm"
+# if [[ $IS_MACOS == true ]]; then
+# 	source "$(brew --prefix nvm)/nvm.sh"
+# else
+# 	source /usr/share/nvm/init-nvm.sh
+# fi
 
 # https://github.com/denisidoro/navi
 if (( $+commands[navi] )); then
@@ -147,4 +147,9 @@ fi
 # https://github.com/mklabs/tabtab
 if (( $+commands[tabtab] )); then
     [[ -f $HOME/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
+fi
+
+# https://github.com/Schniz/fnm
+if (( $+commands[fnm] )); then
+    eval "$(fnm env --use-on-cd)"
 fi
