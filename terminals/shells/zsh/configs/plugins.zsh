@@ -21,18 +21,18 @@
 # https://github.com/petervanderdoes/gitflow-avh
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/git-flow-avh
 # ======================================================================== #
-zinit id-as"git-flow" \
-	has"git" \
-	if'[[ "$USER_MODE" == "developer" ]]' \
-	make"prefix=$ZPFX install" \
-	pick"$ZPFX/bin/git-flow*" \
-	as"program" \
-	wait"0a" lucid \
-	for @petervanderdoes/gitflow-avh
-zinit \
-	has"git-flow" \
-	wait"0b" lucid \
-	for OMZP::git-flow-avh
+# zinit id-as"git-flow" \
+# 	has"git" \
+# 	if'[[ "$USER_MODE" == "developer" ]]' \
+# 	make"prefix=$ZPFX install" \
+# 	pick"$ZPFX/bin/git-flow*" \
+# 	as"program" \
+# 	wait"0a" lucid \
+# 	for @petervanderdoes/gitflow-avh
+# zinit \
+# 	has"git-flow" \
+# 	wait"0b" lucid \
+# 	for OMZP::git-flow-avh
 
 # ======================================================================== #
 # `git-recall` - an interactive way to peruse Git history from the terminal

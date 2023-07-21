@@ -122,14 +122,14 @@ fi
 
 # WezTerm
 if (( $+commands[wezterm] )); then
-	export WEZTERM_CONFIG_FILE="$DOTFILES/Terminals/wezterm.lua"
+	export WEZTERM_CONFIG_FILE="$DOTFILES/terminals/wezterm/wezterm.lua"
 fi
 
 
 # Kitty
 # https://sw.kovidgoyal.net/kitty/conf/#kitty-conf
 if (( $+commands[kitty] )); then
-	export KITTY_CONFIG_DIRECTORY="$DOTFILES/Terminals/kitty"
+	export KITTY_CONFIG_DIRECTORY="$DOTFILES/terminals/kitty"
 fi
 
 # =========================================================================== #
@@ -141,13 +141,10 @@ export USE_PROMPT="starship"
 export USER_MODE="developer"
 
 # Brew
-eval "$(/opt/homebrew/bin/brew shellenv)"
 if type brew &>/dev/null
 then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 	FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-
-	autoload -Uz compinit
-	compinit
 fi
 
 
@@ -171,3 +168,16 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Private
 source "$HOME/.private-env"
+
+fpath+=~/.zfunc
+eval "$(fnm env --use-on-cd)"
+
+# Neovim manager
+path+="$XDG_DATA_HOME/bob/nvim-bin"
+
+function list-path() {
+	echo "$PATH" | tr ":" "\n"
+}
+
+autoload -Uz compinit
+compinit
