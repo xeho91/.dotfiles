@@ -57,7 +57,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 # ================================================== #
 # Make administrator commands/tools available in Zsh
 # ================================================== #
-export PATH="/usr/sbin:$PATH"
+path+="/usr/sbin"
 
 # =============== #
 # Locale settings
@@ -83,53 +83,28 @@ export LANGUAGE="en_US:en"
 
 # EDITOR
 # ------
+# Neovim manager
+if [[ -e "$XDG_DATA_HOME/bob/nvim-bin" ]]; then
+  path+="$XDG_DATA_HOME/bob/nvim-bin"
+fi
+
 export EDITOR="nvim"
-# if (( $+commands[nvim] )); then
-	# export EDITOR="nvim"
-# else
-	# export EDITOR="vim"
-# fi
+if (( $+commands[nvim] )); then
+	export EDITOR="nvim"
+else
+	export EDITOR="vi"
+fi
 
 # PAGER
 # ------
-export PAGER="less"
-#
-# Set passing default options when running `less` command
-export LESS='--raw-control-chars --status-column --tab=4 --window=5 --chop-long-lines'
-#
-# Allow `less` to preview compressed files
-if (( $+commands[lesspipe.sh] )); then
-	export LESSOPEN="|lesspipe.sh %s"
+if (( $+commands[less] )); then
+  export PAGER="less"
 fi
 
 # VISUAL
 # ------
 if (( $+commands[nvim] )); then
 	export VISUAL="nvim"
-fi
-
-# =========================================================================== #
-# Defaulting the location to config files for both editors - (Neo)Vim
-# -------------------------------------------------------------------
-# https://vi.stackexchange.com/questions/11879/how-can-put-vimrc-and-viminfo-into-vim-director
-# =========================================================================== #
-# export VIMRC="$DOTFILES/Editors/Neovim/init.vim"
-# export VIMINIT="source $VIMRC"
-
-# =========================================================================== #
-# Terminals
-# =========================================================================== #
-
-# WezTerm
-if (( $+commands[wezterm] )); then
-	export WEZTERM_CONFIG_FILE="$DOTFILES/terminals/wezterm/wezterm.lua"
-fi
-
-
-# Kitty
-# https://sw.kovidgoyal.net/kitty/conf/#kitty-conf
-if (( $+commands[kitty] )); then
-	export KITTY_CONFIG_DIRECTORY="$DOTFILES/terminals/kitty"
 fi
 
 # =========================================================================== #
@@ -140,44 +115,7 @@ fi
 export USE_PROMPT="starship"
 export USER_MODE="developer"
 
-# Brew
-if type brew &>/dev/null
-then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-	FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
-fi
-
-
-if (( $+commands[rustup] )); then
-	. "$HOME/.cargo/env"
-fi
-
-# tabtab source for packages
-# uninstall by removing these lines
-[[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
-
-# ===============
-# Manjaro related
-# ===============
-if [[ -e /usr/share/zsh/manjaro-zsh-config ]]; then
-	source /usr/share/zsh/manjaro-zsh-config
-fi
-
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
 # Private
-source "$HOME/.private-env"
-
-fpath+=~/.zfunc
-eval "$(fnm env --use-on-cd)"
-
-# Neovim manager
-path+="$XDG_DATA_HOME/bob/nvim-bin"
-
-function list-path() {
-	echo "$PATH" | tr ":" "\n"
-}
-
-autoload -Uz compinit
-compinit
+if [[ -e "$HOME/.private-env" ]]; then
+  source "$HOME/.private-env"
+fi

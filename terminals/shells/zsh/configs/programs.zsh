@@ -111,8 +111,10 @@ if (( $+commands[tere] )); then
 fi
 
 # https://pnpm.io/installation
-	export PNPM_HOME="$XDG_DATA_HOME/pnpm"
-	export PATH="$PNPM_HOME:$PATH"
+if [[ -e "$XDG_DATA_HOME/pnpm" ]]; then
+  export PNPM_HOME="$XDG_DATA_HOME/pnpm"
+  path+="$PNPM_HOME"
+fi
 
 # https://cli.github.com
 if (( $+commands[gh] )); then
@@ -128,15 +130,17 @@ if (( $+commands[luarocks] )); then
   eval $(luarocks path)
 fi
 
-
 # https://github.com/rust-lang/rustup
 if (( $+commands[rustup-init] )); then
-    export PATH="$HOME/.cargo/bin:$PATH"
+    path+="$HOME/.cargo/bin"
+fi
+if (( $+commands[rustup] )); then
+	. "$HOME/.cargo/env"
 fi
 
 # https://github.com/MordechaiHadad/bob
 if (( $+commands[bob] )); then
-	export PATH="$XDG_DATA_HOME/bob/nvim-bin:$PATH"
+	path+="$XDG_DATA_HOME/bob/nvim-bin"
 fi
 
 # bun completions
@@ -152,4 +156,10 @@ fi
 # https://github.com/Schniz/fnm
 if (( $+commands[fnm] )); then
     eval "$(fnm env --use-on-cd)"
+fi
+
+
+if (( $+commands[less] )); then
+  # Set passing default options when running `less` command
+  export LESS='--raw-control-chars --status-column --tab=4 --window=5 --chop-long-lines'
 fi

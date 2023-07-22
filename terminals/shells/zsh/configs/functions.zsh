@@ -223,3 +223,23 @@ function git-changelog() {
         command git commit --message "chore(Changesets): 🔖 Add release note(s)"
     fi
 }
+
+# =========================================================================== #
+#  Speed up updating release notes with Changesets
+# =========================================================================== #
+function git-changelog() {
+    if (( !$+commands[git] )); then
+        echo "Command git not found!"
+    else
+        command git add "./.changeset"
+        command git commit --message "chore(Changesets): 🔖 Add release note(s)"
+    fi
+}
+
+
+# =========================================================================== #
+# Print $PATH content in readable way
+# =========================================================================== #
+function list-path() {
+	echo "$PATH" | tr ":" "\n"
+}

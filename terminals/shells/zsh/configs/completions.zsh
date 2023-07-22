@@ -41,3 +41,9 @@ zstyle ':completion:*:descriptions' format '[%d]'
 if (( $+commands[qrcp] )); then
     eval "$(qrcp completion zsh)"
 fi
+
+# Load completions from the directory
+fpath+="$ZDOTDIR/completions"
+
+autoload -Uz compinit
+compinit
