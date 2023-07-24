@@ -120,8 +120,8 @@ return {
 						word = true,
 						cyclic = true,
 					}),
-					augend.constant.neW({
-						ELEMENTS = { "Top", "Left", "Right", "Bottom" },
+					augend.constant.new({
+						elements = { "Top", "Left", "Right", "Bottom" },
 						word = true,
 						cyclic = true,
 					}),
