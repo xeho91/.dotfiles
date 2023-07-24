@@ -1,22 +1,45 @@
--- https://wezfurlong.org/wezterm/config/files.html
-local wezterm = require("wezterm")
+-- Pull in the wezterm API
+local wezterm = require 'wezterm'
 
-local padding = 7
+-- This table will hold the configuration.
+local config = {}
 
-return {
-    default_prog = { "/usr/sbin/zsh", "--login", "-c", "tmux" },
+-- In newer versions of wezterm, use the config_builder which will
+-- help provide clearer error messages
+if wezterm.config_builder then
+  config = wezterm.config_builder()
+end
 
-    window_padding = {
-        left = padding,
-        right = padding,
-        top = padding,
-        bottom = padding,
-    },
-    font = wezterm.font_with_fallback({ "FiraCode Nerd Font" }),
-    font_size = 14.0,
-    color_scheme = "Ubuntu",
-    hide_tab_bar_if_only_one_tab = true,
+-- This is where you actually apply your config choices
 
-    -- pane settings
-    inactive_pane_hsb = { saturation = 0.9, brightness = 0.8 },
-}
+-- wezterm.gui is not available to the mux server, so take care to
+-- do something reasonable when this config is evaluated by the mux
+function get_appearance()
+  if wezterm.gui then
+    return wezterm.gui.get_appearance()
+  end
+  return 'Dark'
+end
+function scheme_for_appearance(appearance)
+  if appearance:find 'Dark' then
+    return 'Catppuccin Mocha (Gogh)'
+  else
+    return 'Catppuccin Latte (Gogh)'
+  end
+end
+
+
+-- For example, changing the color scheme:
+config.color_scheme = scheme_for_appearance(get_appearance())
+
+-- Tabs bar
+config.enable_tab_bar = true
+config.hide_tab_bar_if_only_one_tab = true
+config.use_fancy_tab_bar = true
+
+-- Font
+config.font = wezterm.font('MonoLisa Nerd Font', { weight = 'Regular' })
+
+
+--f and finally, return the configuration to wezterm
+return config
