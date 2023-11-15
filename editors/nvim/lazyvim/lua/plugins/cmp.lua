@@ -7,13 +7,31 @@ return {
 	},
 	{
 		"hrsh7th/nvim-cmp",
-		dependencies = { "hrsh7th/cmp-emoji" },
+		dependencies = {
+			{ "hrsh7th/cmp-emoji" },
+			{
+				-- https://github.com/David-Kunz/cmp-npm
+				"David-Kunz/cmp-npm",
+				dependencies = { "nvim-lua/plenary.nvim" },
+				ft = "json",
+				config = function()
+					require("cmp-npm").setup({})
+				end,
+			},
+			{
+				-- https://github.com/hrsh7th/cmp-nvim-lsp
+				"hrsh7th/cmp-nvim-lsp",
+				opts = nil,
+			},
+		},
 		---@param opts cmp.ConfigSchema
 		opts = function(_, opts)
 			local cmp = require("cmp")
 
 			opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "emoji" } }))
 			opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "crates" } }))
+			opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "npm", keyword_length = 4 } }))
+			opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "lsp" } }))
 
 			local has_words_before = function()
 				unpack = unpack or table.unpack
@@ -50,10 +68,5 @@ return {
 				end, { "i", "s" }),
 			})
 		end,
-	},
-	{
-		-- https://github.com/hrsh7th/cmp-nvim-lsp
-		"hrsh7th/cmp-nvim-lsp",
-		opts = nil,
 	},
 }

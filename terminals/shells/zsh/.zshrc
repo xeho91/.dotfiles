@@ -1,4 +1,11 @@
 # =========================================================================== #
+# Oh My Zsh
+# =========================================================================== #
+# Path to your oh-my-zsh installation.
+export ZSH="$ZDOTDIR/ohmyzsh"
+source $ZSH/oh-my-zsh.sh
+
+# =========================================================================== #
 # Load Zsh configurations
 # -----------------------
 # NOTE: Order matters.
@@ -30,7 +37,4 @@ typeset -aU path dpath fpath manpath module_path
 # `share` directory
 manpath+="$ZPFX/share/man"
 
-# Oh My Zsh
-# Path to your oh-my-zsh installation.
-export ZSH="$ZDOTDIR/ohmyzsh"
-source $ZSH/oh-my-zsh.sh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

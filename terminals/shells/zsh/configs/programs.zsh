@@ -163,3 +163,29 @@ if (( $+commands[less] )); then
   # Set passing default options when running `less` command
   export LESS='--raw-control-chars --status-column --tab=4 --window=5 --chop-long-lines'
 fi
+
+# https://github.com/MordechaiHadad/bob
+if (( $+commands[bun] )); then
+	path+="$(bun pm bin --global)"
+fi
+
+# bun completions
+# if (( $+commands[bun] )); then
+#     [ -s "$HOME/.bun/_bun" ] && source "/Users/xeho91/.bun/_bun"
+# fi
+
+# https://github.com/mklabs/tabtab
+if (( $+commands[tabtab] )); then
+    [[ -f $HOME/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
+fi
+
+# https://github.com/Schniz/fnm
+if (( $+commands[fnm] )); then
+    eval "$(fnm env --use-on-cd)"
+fi
+
+
+if (( $+commands[less] )); then
+  # Set passing default options when running `less` command
+  export LESS='--raw-control-chars --status-column --tab=4 --window=5 --chop-long-lines'
+fi

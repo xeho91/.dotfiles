@@ -98,6 +98,10 @@
 	colorMoved = default
 	tool = nvimdiff
 
+[diff "lockb"]
+    textconv = bun
+    binary = true
+
 [interactive]
 	diffFilter = delta --color-only
 
