@@ -131,11 +131,13 @@ if (( $+commands[luarocks] )); then
 fi
 
 # https://github.com/rust-lang/rustup
-if (( $+commands[rustup-init] )); then
-    path+="$HOME/.cargo/bin"
-fi
 if (( $+commands[rustup] )); then
-	. "$HOME/.cargo/env"
+	if [ -d "$HOME/.cargo/bin" ]; then
+		path+="$HOME/.cargo/bin"
+	fi
+	if [ -d "$HOME/.cargo/env" ]; then
+		. "$HOME/.cargo/env"
+	fi
 fi
 
 # https://github.com/MordechaiHadad/bob

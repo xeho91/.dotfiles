@@ -19,11 +19,12 @@ alias :q="exit"
 (( $+commands[lazygit] )) && alias lz="lazygit"
 (( $+commands[lsd] )) && alias ls="lsd -a"
 (( $+commands[neomutt] )) && alias mutt="neomutt"
-(( $+commands[nnn] )) && alias n="yazi"
 (( $+commands[nvim] )) && alias vim="nvim"
 (( $+commands[procs] )) && alias ps="procs"
 (( $+commands[trans] )) && alias trman="trans :zh-TW"
 (( $+commands[tre] )) && alias tree="tre"
+(( $+commands[yazi] )) && alias n="yazi"
+# (( $+commands[nnn] )) && alias n="nnn"
 # GitHub CLI related
 (( $+commands[gh] )) && alias mdp="gh markdown-preview --verbose --dark-mode --disable-auto-open"
 
