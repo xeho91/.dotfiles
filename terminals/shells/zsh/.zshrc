@@ -38,3 +38,14 @@ typeset -aU path dpath fpath manpath module_path
 manpath+="$ZPFX/share/man"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# bun completions
+[ -s "/opt/homebrew/Cellar/bun/1.0.17/share/zsh/site-functions/_bun" ] && source "/opt/homebrew/Cellar/bun/1.0.17/share/zsh/site-functions/_bun"
+
+# pnpm
+export PNPM_HOME="/Users/xeho91/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

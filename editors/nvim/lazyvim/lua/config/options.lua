@@ -8,3 +8,4 @@ opt.shiftwidth = 4
 opt.tabstop = 4
 opt.textwidth = 120
 opt.wrap = false
+opt.colorcolumn = "120"

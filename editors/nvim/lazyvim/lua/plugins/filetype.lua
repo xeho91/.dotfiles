@@ -7,12 +7,13 @@ return {
 			require("filetype").setup({
 				overrides = {
 					extensions = {
+						hbs = "html.handlebars",
 						html = "html",
-						cts = "typescript",
-						mts = "typescript",
+						sql = "sql",
 						-- Set the filetype of *.pn files to potion
 						pn = "potion",
-						hbs = "html.handlebars",
+						cts = "typescript",
+						mts = "typescript",
 					},
 					literal = {
 						[".browserslistrc"] = "browserslist",

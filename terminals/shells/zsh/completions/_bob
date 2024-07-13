@@ -82,15 +82,6 @@ _arguments "${_arguments_options[@]}" \
 ':shell -- Shell to generate completion for:(bash elvish fish powershell zsh)' \
 && ret=0
 ;;
-(update)
-_arguments "${_arguments_options[@]}" \
-'-a[Apply the update to all versions]' \
-'--all[Apply the update to all versions]' \
-'-h[Print help]' \
-'--help[Print help]' \
-'::version -- Update specified version |nightly|stable|:' \
-&& ret=0
-;;
 (help)
 _arguments "${_arguments_options[@]}" \
 ":: :_bob__help_commands" \
@@ -135,10 +126,6 @@ _arguments "${_arguments_options[@]}" \
 _arguments "${_arguments_options[@]}" \
 && ret=0
 ;;
-(update)
-_arguments "${_arguments_options[@]}" \
-&& ret=0
-;;
 (help)
 _arguments "${_arguments_options[@]}" \
 && ret=0
@@ -165,7 +152,6 @@ _bob_commands() {
 'list:List all installed and used versions' \
 'ls:List all installed and used versions' \
 'complete:Generate shell completion' \
-'update:Update existing version' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'bob commands' commands "$@"
@@ -201,7 +187,6 @@ _bob__help_commands() {
 'erase:Erase any change bob ever made, including neovim installation, neovim version downloads and registry changes' \
 'list:List all installed and used versions' \
 'complete:Generate shell completion' \
-'update:Update existing version' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'bob help commands' commands "$@"
@@ -260,16 +245,6 @@ _bob__help__uninstall_commands() {
 _bob__uninstall_commands() {
     local commands; commands=()
     _describe -t commands 'bob uninstall commands' commands "$@"
-}
-(( $+functions[_bob__help__update_commands] )) ||
-_bob__help__update_commands() {
-    local commands; commands=()
-    _describe -t commands 'bob help update commands' commands "$@"
-}
-(( $+functions[_bob__update_commands] )) ||
-_bob__update_commands() {
-    local commands; commands=()
-    _describe -t commands 'bob update commands' commands "$@"
 }
 (( $+functions[_bob__help__use_commands] )) ||
 _bob__help__use_commands() {
