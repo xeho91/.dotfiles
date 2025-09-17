@@ -1,7 +1,7 @@
 return {
 	{
 		-- https://github.com/echasnovski/mini.align
-		"echasnovski/mini.align",
+		"nvim-mini/mini.align",
 		version = "*",
 		keys = { "ga", "gA" },
 		opts = function()

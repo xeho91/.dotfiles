@@ -8,8 +8,8 @@
 # =========================================================================== #
 [user]
 	name = Mateusz Kadlubowski
-	email = mateusz.k@fortune.com.tw
-	signingkey = A8921EBC19DDCDC34F98C5BF9E0489264A836AE4
+	email = xeho91@pm.me
+	signingkey = EFE941BB
 
 # =========================================================================== #
 # Options for GPG - GnuPrivacy Guard

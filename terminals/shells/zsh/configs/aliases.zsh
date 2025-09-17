@@ -10,6 +10,8 @@ alias :q="exit"
 # =========================================================================== #
 (( $+commands[bat] )) && alias cat="bat"
 (( $+commands[btm] )) && alias btm="btm --battery --color=gruvbox"
+(( $+commands[claude] )) && alias cc="claude"
+(( $+commands[docker] )) && alias dc="docker compose"
 (( $+commands[dust] )) && alias du="dust"
 (( $+commands[exa] )) && alias exa="exa --git --all --long --icons --header"
 (( $+commands[git] )) && alias sos="git add . && git wip"
@@ -30,6 +32,17 @@ alias :q="exit"
 
 if [[ $MACOS == true ]]; then
 	alias git="/usr/local/bin/git"
+fi
+
+if (( $+commands[docker] )); then
+	dc-sh() {
+	if [[ $# -eq 0 ]]; then
+		echo "Usage: dc-sh <service_name>"
+		return 1
+	fi
+
+	docker compose exec --interactive --tty "$1" /bin/bash
+	}
 fi
 
 # =========================================================================== #
