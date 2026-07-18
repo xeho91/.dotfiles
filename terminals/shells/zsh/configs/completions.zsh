@@ -34,8 +34,6 @@ zstyle ":completion:*:git-checkout:*" sort false
 zstyle ':completion:*:descriptions' format '[%d]'
 
 # Colorize the lists with `$LS_COLORS`
-# ---
-# NOTE: This is handled by Zinit package "ls-colors"
 # zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 if (( $+commands[qrcp] )); then

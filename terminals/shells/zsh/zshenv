@@ -11,7 +11,7 @@ export ZDOTDIR="$DOTFILES/terminals/shells/zsh"
 # ============== #
 # Prompts config
 # ============== #
-export PROMPT_CONFIGS="DOTFILES/terminals/prompts"
+export PROMPT_CONFIGS="$DOTFILES/terminals/prompts"
 
 # ================== #
 # Environment checks
@@ -58,6 +58,7 @@ export XDG_CACHE_HOME="$HOME/.cache"
 # Make administrator commands/tools available in Zsh
 # ================================================== #
 path+="/usr/sbin"
+path+="$HOME/.local/bin"
 
 # =============== #
 # Locale settings
@@ -73,22 +74,15 @@ export LANGUAGE="en_US:en"
 # https://help.ubuntu.com/community/EnvironmentVariables#Preferred_application_variables
 # ====================== #
 
-# BROWSER
-# -------
-# if [ -n "$DISPLAY" ]; then
-#     export BROWSER="brave"
-# else
-#     export BROWSER="w3m"
-# fi
-
-# EDITOR
-# ------
-# Neovim manager
 if [[ -e "$XDG_DATA_HOME/bob/nvim-bin" ]]; then
   path+="$XDG_DATA_HOME/bob/nvim-bin"
 fi
 
-export EDITOR="nvim"
+# Mason (Neovim package manager) - LSP servers, DAP, linters, formatters
+if [[ -d "$XDG_DATA_HOME/nvim/mason/bin" ]]; then
+  path+="$XDG_DATA_HOME/nvim/mason/bin"
+fi
+
 if (( $+commands[nvim] )); then
 	export EDITOR="nvim"
 else
@@ -125,4 +119,4 @@ if [ -n "${GHOSTTY_RESOURCES_DIR}" ]; then
     builtin source "${GHOSTTY_RESOURCES_DIR}/shell-integration/zsh/ghostty-integration"
 fi
 
-export NODE_OPTIONS="--max-old-space-size=4096"
+# eval "$(temporal completion zsh)"

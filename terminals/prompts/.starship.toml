@@ -1,0 +1,4 @@
+[time]
+time_format = '%r'
+disabled = false
+format = '🕙[\[ $time \]]($style) '

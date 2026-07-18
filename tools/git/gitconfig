@@ -253,8 +253,7 @@
 	# Push
 	p        = push
 	pd       = push --dry-run
-	pfwl     = push --force-with-lease
-	pf       = push --force
+	pf       = push --force-with-lease
 	gfo      = push --force origin $(current_branch)
 	gflo     = push --force-with-lease origin $(current_branch)
 	psup     = push --set-upstream origin $(=_current_branch)

@@ -1,1 +1,12 @@
 add_newline = false
+
+# [time]
+# disabled = false
+# format = '[$time]($style) '
+# time_format = "%F %T"       # YYYY-MM-DD HH:MM:SS
+# style = "bright-black"
+
+[time]
+disabled = false
+format = '🕙[\[ $time \]]($style) '
+time_format = '%r'

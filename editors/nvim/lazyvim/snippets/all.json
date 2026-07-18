@@ -1,0 +1,12 @@
+{
+	"uuid": {
+		"prefix": "uuid",
+		"body": ["${UUID}"],
+		"description": "Generate a random UUID"
+	},
+	"fake-uuid": {
+		"prefix": "fake-uuid",
+		"body": ["00000000-0000-0000-0000-000000000000"],
+		"description": "Insert a fake UUID with all zeros"
+	}
+}

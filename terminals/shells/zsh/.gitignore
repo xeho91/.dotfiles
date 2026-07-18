@@ -8,9 +8,6 @@ ohmyzsh/
 # Ignore the history file
 .zsh_history
 
-# Ignore the Zinit's directory
-.zinit
-
 # Ignore the cache directory
 .cache
 
