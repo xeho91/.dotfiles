@@ -1,0 +1,11 @@
+{
+  "$schema": "https://opencode.ai/tui.json",
+  "keybinds": {
+    "command_list": "ctrl+shift+p",
+    "sidebar_toggle": "<leader>b",
+    "session_child_first": "<leader>down",
+    "session_child_cycle": "right",
+    "session_child_cycle_reverse": "left",
+    "session_parent": "up"
+  }
+}

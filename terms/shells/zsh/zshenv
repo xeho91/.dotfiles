@@ -1,0 +1,22 @@
+# ================================ #
+# Define path to user's "dotfiles"
+# ================================ #
+export DOTFILES="$HOME/.dotfiles"
+
+# ====================================== #
+# Set the default location for Zsh files
+# ====================================== #
+export ZDOTDIR="$DOTFILES/terms/shells/zsh"
+
+# ================== #
+# XDG base directory
+# ================== #
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+
+# =============== #
+# Locale settings
+# =============== #
+export LANG="en_US.UTF-8"
+export LANGUAGE="en_US:en"

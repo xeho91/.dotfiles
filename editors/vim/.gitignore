@@ -1,9 +1,0 @@
-# Ignore `vim` directory with all the downloaded configs from (Neo)Vim plugins
-.vim
-
-# Ignore the file which remembers the information like where the user was
-# working on the last time
-.viminfo
-
-# Ignore generated log files
-*.log

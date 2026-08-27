@@ -1,0 +1,38 @@
+desc=Colorized Serena MCP log output
+
+# Timestamp
+regexp=(\b\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2},\d{3}\b)
+colours=cyan
+
+# Scope in brackets
+regexp=(\[.*?\])
+colours=magenta
+
+# Module:method:line (e.g., serena.cli:start_mcp_server:354)
+regexp=(\w+(?:\.\w+)*:\w+:\d+)(?= - )
+colours=yellow
+
+# Log level - ERROR
+regexp=(\b(?:ERROR|CRITICAL|FATAL)\b)
+colours=red
+count=stop
+
+# Log level - WARNING
+regexp=(\b(?:WARNING|WARN)\b)
+colours=yellow
+count=stop
+
+# Log level - INFO
+regexp=(\bINFO\b)
+colours=blue
+count=stop
+
+# Log level - DEBUG
+regexp=(\bDEBUG\b)
+colours=blue
+count=stop
+
+# Log level - TRACE
+regexp=(\bTRACE\b)
+colours=white
+count=stop

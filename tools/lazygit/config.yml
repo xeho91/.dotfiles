@@ -1,0 +1,11 @@
+git:
+  diffRenderers:
+    - type: extDiff
+      externalDiffCommand: difft --color=always
+  overrideGpg: true
+
+os:
+  editPreset: "nvim"
+  edit: "nvim {{filename}}"
+  editAtLine: "nvim +{{line}} {{filename}}"
+  editAtLineAndWait: "nvim +{{line}} {{filename}}"

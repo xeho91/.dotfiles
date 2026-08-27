@@ -1,0 +1,15 @@
+layout {
+    pane stacked=true {
+        pane name="dev:server:opencode" command="mise" {
+            args "run" "dev:server:opencode"
+        }
+
+        pane name="mcp:serena" command="mise" {
+            args "run" "mcp:serena"
+        }
+
+        pane expanded=true name="opencode" command="mise" {
+            args "run" "opencode"
+        }
+    }
+}

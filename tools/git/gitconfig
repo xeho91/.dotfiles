@@ -13,14 +13,9 @@
 
 # =========================================================================== #
 # Options for GPG - GnuPrivacy Guard
-# ----------------------------------
-# https://www.gnupg.org/documentation/manpage.html
-# https://help.github.com/en/github/authenticating-to-github/generating-a-new-gpg-key
-# https://help.github.com/articles/signing-commits-using-gpg/
 # =========================================================================== #
 [gpg]
 	program = gpg
-	# program = C:\\Program Files (x86)\\Gpg4win\\..\\GnuPG\\bin\\gpg.exe
 
 [commit]
 	gpgsign = true
@@ -96,6 +91,7 @@
 
 [diff]
 	colorMoved = default
+	external = difft
 	tool = nvimdiff
 
 [diff "lockb"]
@@ -236,6 +232,7 @@
 	# Merge
 	m        = merge
 	ma       = merge --abort
+	mc       = merge --continue
 	mom      = merge origin/$(=_main_branch)
 	mum      = merge upstream/$(=_main_branch)
 	# Mergetool
@@ -327,3 +324,9 @@
 	wch      = whatchanged -p --abbrev-commit --pretty=medium
     # custom
     wip      = commit --message="\"🚧 WIP\"" --no-verify
+[credential "https://github.com"]
+	helper =
+	helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !gh auth git-credential
