@@ -1,7 +1,14 @@
+customCommands:
+  - key: "<c-s>"
+    context: "global"
+    command: "git"
+    args: ["diff", "--staged", "--stat"]
+    description: "Show staged changes stat"
+
 git:
   diffRenderers:
     - type: extDiff
-      externalDiffCommand: difft --color=always
+      externalDiffCommand: difft --color=always --display=inline --syntax-highlight=on
   overrideGpg: true
 
 os:
