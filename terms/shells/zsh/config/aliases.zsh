@@ -19,7 +19,6 @@ alias rmdir="rmdir -v"
 (( $+commands[nvim] )) && alias vi="nvim"
 (( $+commands[nvim] )) && alias vim="nvim"
 (( $+commands[procs] )) && alias ps="procs"
-(( $+commands[tre] )) && alias tree="tre"
 (( $+commands[yazi] )) && alias n="yazi"
 
 # ============= #
