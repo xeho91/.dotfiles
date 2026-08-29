@@ -3,6 +3,8 @@ experimental = true
 
 [tools]
 "aqua:cargo-bins/cargo-binstall" = "1.22.0"  # dependency of "cargo:cgrc"
+# TODO: Migrate to mise registry when this PR is merged: https://github.com/jdx/mise/pull/12588
+"aqua:dalance/procs" = { version = "v0.14.12" }
 
 "cargo:cgrc" = { version = "2.0.6" }
 
@@ -33,7 +35,7 @@ usage = { version = "6.4.1" }
 yazi = { version = "26.8.15" }
 zellij = { version = "0.45.0" }
 zoxide = { version = "0.10.0" }
-bottom = "0.14.9"
+bottom = { version = "0.14.9" }
 
 [env]
 # OpenCode
