@@ -1,0 +1,8 @@
+[flags]
+battery = true
+
+[processes]
+default_sort = "mem"
+
+[styles]
+theme = "gruvbox"

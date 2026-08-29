@@ -33,6 +33,7 @@ usage = { version = "6.4.1" }
 yazi = { version = "26.8.15" }
 zellij = { version = "0.45.0" }
 zoxide = { version = "0.10.0" }
+bottom = "0.14.9"
 
 [env]
 # OpenCode

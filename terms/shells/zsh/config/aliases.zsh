@@ -10,7 +10,6 @@ alias rmdir="rmdir -v"
 # Aliases for installed programs
 # ============================== #
 (( $+commands[bat] )) && alias cat="bat"
-(( $+commands[btm] )) && alias btm="btm --battery --color=gruvbox"
 (( $+commands[docker] )) && alias dc="docker compose"
 (( $+commands[docker] )) && alias dce="docker compose exec"
 (( $+commands[dust] )) && alias du="dust"
