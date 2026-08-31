@@ -1,6 +1,22 @@
 [settings]
 experimental = true
 
+# Homebrew (macOS)
+[bootstrap.packages]
+# Casks
+"brew-cask:brave-browser" = { version = "latest", os = "macos" }
+"brew-cask:bruno" = { version = "latest", os = "macos" }
+"brew-cask:ghostty" = { version = "latest", os = "macos" }
+"brew-cask:font-jetbrains-mono-nerd-font" = { version = "latest", os = "macos" }
+"brew-cask:orbstack" = { version = "latest", os = "macos" }
+"brew-cask:raycast" = { version = "latest", os = "macos" }
+"brew-cask:signal" = { version = "latest", os = "macos" }
+"brew-cask:zen" = { version = "latest", os = "macos" }
+# Formulae
+"brew:gpg-tui" = { version = "latest", os = "macos" }
+"brew:mole" = { version = "latest", os = "macos" }
+"brew:pinentry-touchid" = { version = "latest", os = "macos" }
+
 [tools]
 node = { version = "26.8.1" }
 rust = { version = "1.98.0" }

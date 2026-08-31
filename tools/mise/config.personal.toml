@@ -1,8 +1,19 @@
 # Personal-tools profile.
 #
+# Loaded when MISE_ENV=personal (in addition to the base config.toml).
+# Kept separate so personal credentials (Proton) never land on a client /
+# work-managed machine, where this env is simply not used.
+#
 # ```sh
 # MISE_ENV=personal mise install
 # ```
+
+# Homebrew (macOS) casks
+[bootstrap.packages]
+"brew-cask:proton-drive" = { version = "latest", os = "macos" }
+"brew-cask:proton-mail" = { version = "latest", os = "macos" }
+"brew-cask:proton-pass" = { version = "latest", os = "macos" }
+"brew-cask:protonvpn" = { version = "latest", os = "macos" }
 
 [tools]
 "proton:pass-cli" = { version = "2.3.3" }
