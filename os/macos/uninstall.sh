@@ -16,12 +16,14 @@ DOTFILES_BRANCH="${DOTFILES_BRANCH:-main}"
 
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 
+# git + mise are installed directly by install.sh; gpg-tui and mole are managed
+# by mise [bootstrap.packages]. pinentry-touchid is an aqua tool (removed with
+# mise's install dir). Anything here not installed is skipped.
 BREW_FORMULAE=(
 	"git"
 	"gpg-tui"
 	"mise"
 	"mole"
-	"pinentry-touchid"
 )
 BREW_CASKS=(
 	"brave-browser"
