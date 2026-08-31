@@ -28,13 +28,18 @@ BREW_CASKS=(
 	"ghostty"
 	"font-jetbrains-mono-nerd-font"
 	"orbstack"
+	"raycast"
+	"signal"
+	"zen"
+)
+
+# Personal-only casks, installed only with MISE_ENV=personal so personal
+# credentials/accounts never land on a client or work-managed machine.
+BREW_CASKS_PERSONAL=(
 	"proton-drive"
 	"proton-mail"
 	"proton-pass"
 	"protonvpn"
-	"raycast"
-	"signal"
-	"zen"
 )
 
 # Pinned oh-my-zsh installer
@@ -125,6 +130,12 @@ run() {
 # 1. Prerequisites
 # =========================================================================== #
 
+# Personal profile: personal credentials (Proton) are opt-in and only enabled
+# via MISE_ENV=personal, so a client/work-managed machine never installs them.
+is_personal() {
+	[[ "${MISE_ENV:-}" == "personal" ]]
+}
+
 bootstrap_xcode_command_line_tools() {
 	step "Checking for Xcode Command Line Tools"
 	if xcode-select --print-path >/dev/null 2>&1; then
@@ -175,8 +186,13 @@ install_brew_prerequisites() {
 	info "Formulae: ${BREW_FORMULAE[*]}"
 	run brew install "${BREW_FORMULAE[@]}"
 
+	local casks=("${BREW_CASKS[@]}")
+	if is_personal; then
+		casks+=("${BREW_CASKS_PERSONAL[@]}")
+	fi
+
 	local missing=()
-	for cask in "${BREW_CASKS[@]}"; do
+	for cask in "${casks[@]}"; do
 		if ! brew list --cask "$cask" >/dev/null 2>&1; then
 			missing+=("$cask")
 		fi
@@ -367,8 +383,12 @@ link_configs() {
 provision_tools() {
 	step "Provisioning tools with mise"
 	if command -v mise >/dev/null 2>&1 || ((DRY_RUN)); then
-		info "Installing version-pinned tools from the mise config"
-		run mise install
+		info "Installing version-pinned tools from the mise config (env: ${MISE_ENV:-base})"
+		if is_personal; then
+			run env MISE_ENV=personal mise install
+		else
+			run mise install
+		fi
 		return
 	fi
 	warn "mise is not on \$PATH; skipping tool provisioning"
