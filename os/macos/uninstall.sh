@@ -2,6 +2,10 @@
 
 set -euo pipefail
 
+# Restrictive umask: created paths during teardown (e.g. backup dirs) should
+# not be world-readable.
+umask 077
+
 # =========================================================================== #
 # Configuration
 # =========================================================================== #
@@ -12,7 +16,6 @@ DOTFILES_BRANCH="${DOTFILES_BRANCH:-main}"
 
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 
-# Everything the installer pins is reversed here
 BREW_FORMULAE=(
 	"git"
 	"gpg-tui"
@@ -50,8 +53,8 @@ CASK_APPS=(
 	"zen|Zen"
 )
 
-# Fuzzy tokens: any directory under `$HOME/Library/{...}` whose name contains
-# one of these (case-insensitive) is a leftover of an app this script installed.
+# Fuzzy tokens: any directory under `$HOME/Library/{...}`
+# whose name contains one of these (case-insensitive) is a leftover of an app this script installed.
 # Keep tokens specific enough to never match unrelated software.
 CLEANUP_TOKENS=(
 	"brave"
@@ -64,8 +67,7 @@ CLEANUP_TOKENS=(
 )
 
 # Explicit leftover paths that the fuzzy sweep cannot express
-# (e.g. names that differ from the cask, or dot-prefixed entries), plus the
-# Zen Browser paths that are too generic to express as a fuzzy token.
+# (e.g. names that differ from the cask, or dot-prefixed entries)
 CLEANUP_PATHS=(
 	"$HOME/Library/Caches/Homebrew"
 	"$HOME/Library/Logs/Homebrew"
@@ -136,13 +138,17 @@ usage() {
 	printf "  %s-h, --help%s      Show this help.\n" "$YELLOW" "$NC"
 }
 
-# Run a command, or echo it when in dry-run mode
 run() {
 	if ((DRY_RUN)); then
 		printf '%s[dry-run]%s %s\n' "$YELLOW" "$NC" "$*"
 		return 0
 	fi
 	"$@"
+}
+
+assert_under_home() {
+	local p="$1"
+	[[ "$p" == "$HOME"/* ]] || die "Refusing to touch path outside \$HOME: $p"
 }
 
 # =========================================================================== #
@@ -214,6 +220,7 @@ remove_app_leavings() {
 	step "Removing app data, caches and preferences"
 
 	for path in "${CLEANUP_PATHS[@]}"; do
+		assert_under_home "$path"
 		if [[ -e "$path" || -L "$path" ]]; then
 			info "Removing: $path"
 			run rm -rf "$path"
@@ -231,6 +238,7 @@ remove_app_leavings() {
 	)
 
 	for root in "${roots[@]}"; do
+		assert_under_home "$root"
 		[[ -d "$root" ]] || continue
 
 		local name
@@ -277,11 +285,11 @@ restore_spotlight() {
 # 5. Configuration links
 # =========================================================================== #
 
-# Remove a link if it points into the dotfiles repo; restore its newest
-# pre-install backup when one exists.
 unlink_if_linked() {
 	local src="$1"
 	local dst="$2"
+
+	assert_under_home "$dst"
 
 	if [[ -L "$dst" ]] && [[ "$(readlink "$dst")" == "$src" ]]; then
 		local backups=("$dst".backup-*)
@@ -333,6 +341,7 @@ remove_dotfiles_repo() {
 	fi
 
 	info "Removing: $DOTFILES (oh-my-zsh + plugins live inside it)"
+	assert_under_home "$DOTFILES"
 	run rm -rf "$DOTFILES"
 }
 
@@ -344,37 +353,12 @@ remove_tool_caches() {
 	step "Removing tool caches and installed tool versions"
 
 	for path in "$ZSH_CACHE_DIR" "$MISE_DATA_DIR" "$MISE_CACHE_DIR"; do
+		assert_under_home "$path"
 		if [[ -e "$path" || -L "$path" ]]; then
 			info "Removing: $path"
 			run rm -rf "$path"
 		fi
 	done
-}
-
-# =========================================================================== #
-# 8. Default shell
-# =========================================================================== #
-
-restore_default_shell() {
-	step "Restoring default login shell to Bash"
-
-	current_shell=$(dscl . -read "/Users/$USER" UserShell 2>/dev/null | awk '{print $NF}') || current_shell=""
-	if [[ "$current_shell" == "/bin/zsh" ]] && ((DRY_RUN)); then
-		run chsh -s /bin/bash
-		return
-	fi
-
-	if [[ "$current_shell" != "/bin/zsh" ]]; then
-		info "Login shell is already Bash."
-		return
-	fi
-
-	info "chsh will ask for your password (via the macOS password prompt)"
-	if chsh -s /bin/bash; then
-		info "Default shell set to: /bin/bash"
-	else
-		warn "Could not set default shell. Run it manually: chsh -s /bin/bash"
-	fi
 }
 
 # =========================================================================== #
@@ -408,7 +392,6 @@ main() {
 	unlink_configs
 	remove_dotfiles_repo
 	remove_tool_caches
-	restore_default_shell
 
 	step "Done!"
 	info "Left in place: Homebrew, Xcode Command Line Tools, gpg keys, pre-install backups."

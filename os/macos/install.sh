@@ -2,6 +2,11 @@
 
 set -euo pipefail
 
+# Restrictive umask:
+# anything this script creates (configs, caches, symlink targets, GPG scaffolding)
+# should not be readable by other users.
+umask 077
+
 # =========================================================================== #
 # Configuration
 # =========================================================================== #
@@ -15,31 +20,10 @@ XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 # Pinned Homebrew installer
 # Bump this SHA occasionally: `git ls-remote https://github.com/Homebrew/install.git HEAD`
 BREW_INSTALL_SHA="150c69df1e54b0b74c9fcca5a201410a2300816a"
+# Prerequisites the installer itself needs and must exist before mise can run
 BREW_FORMULAE=(
 	"git"
-	"gpg-tui"
 	"mise"
-	"mole"
-	"pinentry-touchid"
-)
-BREW_CASKS=(
-	"brave-browser"
-	"bruno"
-	"ghostty"
-	"font-jetbrains-mono-nerd-font"
-	"orbstack"
-	"raycast"
-	"signal"
-	"zen"
-)
-
-# Personal-only casks, installed only with MISE_ENV=personal so personal
-# credentials/accounts never land on a client or work-managed machine.
-BREW_CASKS_PERSONAL=(
-	"proton-drive"
-	"proton-mail"
-	"proton-pass"
-	"protonvpn"
 )
 
 # Pinned oh-my-zsh installer
@@ -93,6 +77,16 @@ CONFIG_DIR_LINKS=(
 # When set to 1, every action is printed instead of executed
 DRY_RUN=0
 
+# Optional mise profile (maps to a mise/config.<name>.toml)
+# Empty = base config
+PROFILE=""
+
+# Valid values for --profile (must match tools/mise/config.<name>.toml)
+KNOWN_PROFILES=(
+	"personal"
+	"work.augustus"
+)
+
 # =========================================================================== #
 # Helpers
 # =========================================================================== #
@@ -114,10 +108,11 @@ usage() {
 	printf "Bootstrap %sxeho91's%s dotfiles on macOS.\n\n" "$CYAN" "$NC"
 	printf "Options:\n"
 	printf "  %s-n, --dry-run%s   Print every action that would be taken, without executing it.\n" "$YELLOW" "$NC"
+	printf "  %s-p, --profile <name>%s  Install the given mise profile (e.g. 'personal');\n" "$YELLOW" "$NC"
+	printf "                       defaults to the base config when omitted.\n"
 	printf "  %s-h, --help%s      Show this help.\n" "$YELLOW" "$NC"
 }
 
-# Run a command, or echo it when in dry-run mode
 run() {
 	if ((DRY_RUN)); then
 		printf '%s[dry-run]%s %s\n' "$YELLOW" "$NC" "$*"
@@ -126,15 +121,14 @@ run() {
 	"$@"
 }
 
+assert_under_home() {
+	local p="$1"
+	[[ "$p" == "$HOME"/* ]] || die "Refusing to touch path outside \$HOME: $p"
+}
+
 # =========================================================================== #
 # 1. Prerequisites
 # =========================================================================== #
-
-# Personal profile: personal credentials (Proton) are opt-in and only enabled
-# via MISE_ENV=personal, so a client/work-managed machine never installs them.
-is_personal() {
-	[[ "${MISE_ENV:-}" == "personal" ]]
-}
 
 bootstrap_xcode_command_line_tools() {
 	step "Checking for Xcode Command Line Tools"
@@ -173,6 +167,7 @@ bootstrap_homebrew() {
 
 	local script_url="https://raw.githubusercontent.com/Homebrew/install/$BREW_INSTALL_SHA/install.sh"
 	info "Homebrew is missing, bootstrapping it"
+
 	if ((DRY_RUN)); then
 		run curl --proto '=https' --fail --silent --show-error --location "$script_url" "| NONINTERACTIVE=1 bash"
 	else
@@ -186,24 +181,6 @@ install_brew_prerequisites() {
 	info "Formulae: ${BREW_FORMULAE[*]}"
 	run brew install "${BREW_FORMULAE[@]}"
 
-	local casks=("${BREW_CASKS[@]}")
-	if is_personal; then
-		casks+=("${BREW_CASKS_PERSONAL[@]}")
-	fi
-
-	local missing=()
-	for cask in "${casks[@]}"; do
-		if ! brew list --cask "$cask" >/dev/null 2>&1; then
-			missing+=("$cask")
-		fi
-	done
-
-	if ((${#missing[@]})); then
-		info "Casks: ${missing[*]}"
-		run brew install --cask "${missing[@]}"
-	fi
-
-	# Make sure these end up on PATH for the rest of the script
 	HOMEBREW_PREFIX="$(brew --prefix)"
 	export PATH="$HOMEBREW_PREFIX/bin:$PATH"
 }
@@ -251,6 +228,7 @@ replace_spotlight_with_raycast() {
 
 clone_dotfiles() {
 	step "Fetching dotfiles repository"
+	assert_under_home "$DOTFILES"
 
 	if [[ -d "$DOTFILES/.git" ]]; then
 		info "Repository already exists, updating it"
@@ -281,12 +259,12 @@ already_has_zsh() {
 	[[ -d "$OH_MY_ZSH/.git" || -f "$OH_MY_ZSH/oh-my-zsh.sh" ]]
 }
 
-# Clone exactly one pinned commit via a depth-1 fetch of that SHA
-clone_pinned() {
+clone_pinned_zsh_plugins() {
 	local repo="$1"
 	local sha="$2"
 	local target="$3"
 
+	assert_under_home "$target"
 	run git init "$target"
 	run git -C "$target" remote add origin "$repo"
 	run git -C "$target" fetch --depth=1 origin "$sha"
@@ -302,7 +280,7 @@ clone_oh_my_zsh() {
 	fi
 
 	info "Cloning Oh My Zsh (pinned) into: $OH_MY_ZSH"
-	clone_pinned "$OH_MY_ZSH_REPO" "$OH_MY_ZSH_SHA" "$OH_MY_ZSH"
+	clone_pinned_zsh_plugins "$OH_MY_ZSH_REPO" "$OH_MY_ZSH_SHA" "$OH_MY_ZSH"
 }
 
 clone_zsh_plugins() {
@@ -328,7 +306,7 @@ clone_zsh_plugins() {
 		fi
 
 		info "Cloning plugin $name (pinned)"
-		clone_pinned "$repo" "$sha" "$target"
+		clone_pinned_zsh_plugins "$repo" "$sha" "$target"
 	done
 }
 
@@ -339,6 +317,8 @@ clone_zsh_plugins() {
 link_file() {
 	local src="$1"
 	local dst="$2"
+
+	assert_under_home "$dst"
 
 	if [[ -L "$dst" && "$(readlink "$dst")" == "$src" ]]; then
 		info "Already linked: $dst"
@@ -359,6 +339,7 @@ link_file() {
 link_configs() {
 	step "Linking configurations"
 
+	assert_under_home "$XDG_CONFIG_HOME"
 	run mkdir -p "$XDG_CONFIG_HOME"
 	run mkdir -p "$HOME/.gnupg"
 	run chmod 700 "$HOME/.gnupg"
@@ -381,16 +362,15 @@ link_configs() {
 # =========================================================================== #
 
 provision_tools() {
-	step "Provisioning tools with mise"
+	step "Provisioning tools and casks with mise"
 	if command -v mise >/dev/null 2>&1 || ((DRY_RUN)); then
-		info "Installing version-pinned tools from the mise config (env: ${MISE_ENV:-base})"
-		if is_personal; then
-			run env MISE_ENV=personal mise install
-		else
-			run mise install
-		fi
+		info "Installing Homebrew casks from [bootstrap.packages] (profile: ${MISE_ENV:-base})"
+		run mise bootstrap packages apply --yes
+		info "Installing version-pinned tools from the mise config (profile: ${MISE_ENV:-base})"
+		run mise install
 		return
 	fi
+
 	warn "mise is not on \$PATH; skipping tool provisioning"
 }
 
@@ -425,20 +405,53 @@ set_default_shell() {
 # =========================================================================== #
 
 main() {
-	local arg="${1:-}"
+	while (($#)); do
+		case "$1" in
+		-n | --dry-run)
+			DRY_RUN=1
+			shift
+			;;
+		-p | --profile)
+			if (($# < 2)); then
+				die "--profile requires a profile name (e.g. --profile personal)"
+			fi
+			PROFILE="$2"
+			shift 2
+			;;
+		-h | --help)
+			usage
+			exit 0
+			;;
+		-*)
+			die "Unknown argument: $1 (see --help)"
+			;;
+		*)
+			die "Unknown argument: $1 (see --help)"
+			;;
+		esac
+	done
 
-	case "$arg" in
-	-n | --dry-run) DRY_RUN=1 ;;
-	-h | --help)
-		usage
-		exit 0
-		;;
-	"") ;;
-	*) die "Unknown argument: $arg (see --help)" ;;
-	esac
+	if [[ -n "$PROFILE" ]]; then
+		local known=0 e
+		for e in "${KNOWN_PROFILES[@]}"; do
+			if [[ "$e" == "$PROFILE" ]]; then
+				known=1
+				break
+			fi
+		done
+
+		if ((!known)); then
+			die "Unknown profile: $PROFILE (known: ${KNOWN_PROFILES[*]})"
+		fi
+
+		export MISE_ENV="$PROFILE"
+	else
+		unset MISE_ENV
+	fi
 
 	info "Installing dotfiles for $(whoami)@$(hostname)"
 	info "Repository: $DOTFILES_REPO ($DOTFILES_BRANCH)"
+	info "Mise profile: ${MISE_ENV:-base}"
 
 	if ((DRY_RUN)); then
 		warn "DRY RUN: actions below are printed but NOT executed"
