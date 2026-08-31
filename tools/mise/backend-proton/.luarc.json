@@ -1,0 +1,8 @@
+{
+	"runtime": {
+		"version": "LuaJIT"
+	},
+	"diagnostics": {
+		"globals": ["PLUGIN", "RUNTIME", "OS_TYPE", "ARCH_TYPE"]
+	}
+}
