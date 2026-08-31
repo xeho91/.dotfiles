@@ -2,6 +2,9 @@
 experimental = true
 
 # Homebrew (macOS)
+[bootstrap.brew.taps]
+"jorgelbg/tap" = "https://github.com/jorgelbg/homebrew-tap.git"  # provides `pinentry-touchid`
+
 [bootstrap.packages]
 # Casks
 "brew-cask:brave-browser" = { version = "latest", os = "macos" }
