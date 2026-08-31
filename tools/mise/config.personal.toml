@@ -1,0 +1,9 @@
+# Personal-tools profile.
+#
+# ```sh
+# MISE_ENV=personal mise install
+# ```
+
+[tools]
+"proton:pass-cli" = { version = "2.3.3" }
+"proton:drive-cli" = { version = "0.8.0" }
