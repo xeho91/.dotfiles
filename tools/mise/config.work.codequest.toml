@@ -1,0 +1,8 @@
+# Augustus client work profile.
+#
+# ```sh
+# MISE_ENV=work.augustus mise install
+# ```
+
+[tools]
+"1password-cli" = { version = "2.39.0" }
