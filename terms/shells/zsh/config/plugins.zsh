@@ -1,6 +1,10 @@
 # =========================================================================== #
 # Oh My Zsh
 # =========================================================================== #
+
+# https://github.com/ohmyzsh/ohmyzsh/blob/master/plugins/git-auto-fetch/README.md
+export GIT_AUTO_FETCH_INTERVAL=3600
+
 plugins=(
   # External
   zsh-autosuggestions
@@ -10,24 +14,26 @@ plugins=(
   zsh-autopair
 
   # OMZ built-in
-  aliases
-  colorize
+  1password
+  alias-finder
+  argocd
+  bgnotify
+  brew
+  colored-man-pages
   copybuffer
   copypath
   dirhistory
-  dotenv
+  docker-compose
+  docker
   extract
-  fancy-ctrl-z
-  frontend-search
   fzf
   git-auto-fetch
-  gulp
-  history-substring-search
-  node
-  pip
-  pipenv
+  gh
+  pass-cli
+  procs
+  rust
+  uv
   vi-mode
-  web-search
 )
 
 # Path to your oh-my-zsh installation.
@@ -35,4 +41,3 @@ if [[ -f "$ZDOTDIR/ohmyzsh/oh-my-zsh.sh" ]]; then
 	export ZSH_CACHE_DIR="$XDG_CACHE_HOME/oh-my-zsh"
 	source $ZDOTDIR/ohmyzsh/oh-my-zsh.sh
 fi
-
