@@ -20,6 +20,7 @@ env_cache_ttl = "1h"
 "brew:pinentry-mac" = { version = "latest", os = "macos" }
 
 [tools]
+go = { version = "1.27.0" }
 node = { version = "26.8.1" }
 rust = { version = "1.98.0" }
 
