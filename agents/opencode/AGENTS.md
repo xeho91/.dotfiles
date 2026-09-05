@@ -1,5 +1,10 @@
 # Rules
 
+## CLI Commands
+
+When calling CLI commands, prefer full flag names over short aliases whenever practical, for readability.
+Avoid using `head` or `tail` unless absolutely necessary; prefer tools that present complete, targeted output so the human in the loop can understand the result.
+
 ## Context7
 
 When the Context7 MCP is connected, always use it where applicable:
