@@ -5,4 +5,6 @@
 # ```
 
 [tools]
-"1password-cli" = { version = "2.39.0" }
+1password-cli = { version = "2.39.0" }
+argocd = { version = "3.5.2" }
+"aqua:slackapi/slack-cli" = { version = "4.7.0" }
