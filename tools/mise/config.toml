@@ -1,5 +1,7 @@
 [settings]
 experimental = true
+env_cache = true
+env_cache_ttl = "1h"
 
 # Homebrew (macOS)
 [bootstrap.packages]
