@@ -3,20 +3,6 @@
 # https://www.git-scm.com/book/en/v2/Customizing-Git-Git-Configuration
 # https://git-scm.com/docs/git-config
 
-# =========================================================================== #
-# User credentials
-# =========================================================================== #
-[user]
-	name = Mateusz Kadlubowski
-	email = xeho91@pm.me
-	signingkey = EFE941BB
-
-# =========================================================================== #
-# Options for GPG - GnuPrivacy Guard
-# =========================================================================== #
-[gpg]
-	program = gpg
-
 [commit]
 	gpgsign = true
 
@@ -330,3 +316,27 @@
 [credential "https://gist.github.com"]
 	helper =
 	helper = !gh auth git-credential
+
+# =========================================================================== #
+# Project-specific settings
+# ----------------------------------
+# https://git-scm.com/docs/git-config#_conditional_includes
+# =========================================================================== #
+[include]
+	path = ~/.dotfiles/tools/git/profiles/personal
+
+[includeIf "hasconfig:remote.*.url:git@github.com:augustus/**"]
+	path = ~/.dotfiles/tools/git/profiles/augustus
+[includeIf "hasconfig:remote.*.url:git@github-augustus:augustus/**"]
+	path = ~/.dotfiles/tools/git/profiles/augustus
+
+[url "git@github-augustus:augustus/"]
+    insteadOf = git@github.com:augustus/
+
+[includeIf "hasconfig:remote.*.url:git@github.com:codequest-eu/**"]
+	path = ~/.dotfiles/tools/git/profiles/codequest
+[includeIf "hasconfig:remote.*.url:git@github-codequest:codequest-eu/**"]
+	path = ~/.dotfiles/tools/git/profiles/codequest
+
+[url "git@github-codequest:codequest-eu/"]
+    insteadOf = git@github.com:codequest-eu/
