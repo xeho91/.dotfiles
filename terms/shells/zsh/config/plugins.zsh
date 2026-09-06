@@ -7,12 +7,11 @@ export GIT_AUTO_FETCH_INTERVAL=3600
 
 plugins=(
   # External
-  zsh-autosuggestions
   fast-syntax-highlighting
-  zsh-completions
   fzf-tab
   zsh-autopair
-
+  zsh-autosuggestions
+  zsh-completions
   # OMZ built-in
   1password
   alias-finder
