@@ -1,0 +1,3 @@
+[submodule "profiles/augustus"]
+	path = profiles/augustus
+	url = git@github.com:xeho91/profile-augustus.git

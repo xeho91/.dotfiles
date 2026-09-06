@@ -324,14 +324,8 @@
 # =========================================================================== #
 [include]
 	path = ~/.dotfiles/tools/git/profiles/personal
-
-[includeIf "hasconfig:remote.*.url:git@github.com:augustus/**"]
-	path = ~/.dotfiles/tools/git/profiles/augustus
-[includeIf "hasconfig:remote.*.url:git@github-augustus:augustus/**"]
-	path = ~/.dotfiles/tools/git/profiles/augustus
-
-[url "git@github-augustus:augustus/"]
-    insteadOf = git@github.com:augustus/
+	# Optional private profile configuration, selected by the active profile.
+	path = ~/.gitconfig.local
 
 [includeIf "hasconfig:remote.*.url:git@github.com:codequest-eu/**"]
 	path = ~/.dotfiles/tools/git/profiles/codequest
