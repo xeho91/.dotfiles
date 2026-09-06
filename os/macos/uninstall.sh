@@ -81,6 +81,7 @@ CLEANUP_PATHS=(
 # `$HOME` directory entries
 HOME_LINKS=(
 	".gitconfig|$DOTFILES/tools/git/gitconfig"
+	".markdownlint-cli2.jsonc|$DOTFILES/tools/markdownlint/markdownlint-cli2.jsonc"
 	".zshenv|$DOTFILES/terms/shells/zsh/zshenv"
 )
 
