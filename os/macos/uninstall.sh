@@ -93,6 +93,12 @@ GNUPG_LINKS=(
 )
 
 # dotname|source
+# File links inside `$HOME/.ssh`
+SSH_LINKS=(
+	"config|$DOTFILES/tools/ssh/config"
+)
+
+# dotname|source
 # Directory links under `$XDG_CONFIG_HOME`
 CONFIG_DIR_LINKS=(
 	"bottom|$DOTFILES/tools/bottom"
@@ -321,6 +327,10 @@ unlink_configs() {
 
 	for entry in "${GNUPG_LINKS[@]}"; do
 		unlink_if_linked "${entry#*|}" "$HOME/.gnupg/${entry%%|*}"
+	done
+
+	for entry in "${SSH_LINKS[@]}"; do
+		unlink_if_linked "${entry#*|}" "$HOME/.ssh/${entry%%|*}"
 	done
 
 	for entry in "${CONFIG_DIR_LINKS[@]}"; do

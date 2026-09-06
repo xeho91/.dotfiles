@@ -57,6 +57,12 @@ GNUPG_LINKS=(
 )
 
 # dotname|source
+# File links inside `$HOME/.ssh`
+SSH_LINKS=(
+	"config|$DOTFILES/tools/ssh/config"
+)
+
+# dotname|source
 # Directory links under `$XDG_CONFIG_HOME`
 CONFIG_DIR_LINKS=(
 	"bottom|$DOTFILES/tools/bottom"
@@ -203,7 +209,7 @@ RAYCAST_HOTKEY="Command-49"
 replace_spotlight_with_raycast() {
 	step "Replacing Spotlight with Raycast"
 
-	if ((!DRY_RUN)) && [[ ! -d "$RAYCAST_APP" ]]; then
+	if ((! DRY_RUN)) && [[ ! -d "$RAYCAST_APP" ]]; then
 		warn "Raycast is not installed yet; skipping Spotlight replacement (re-run after the brew step)"
 		return
 	fi
@@ -232,7 +238,7 @@ clone_dotfiles() {
 
 	if [[ -d "$DOTFILES/.git" ]]; then
 		info "Repository already exists, updating it"
-		if ((!DRY_RUN)) && [[ -n "$(git -C "$DOTFILES" status --porcelain --untracked-files=no)" ]]; then
+		if ((! DRY_RUN)) && [[ -n "$(git -C "$DOTFILES" status --porcelain --untracked-files=no)" ]]; then
 			die "dotfiles repo has uncommitted changes; commit or stash them first"
 		fi
 
@@ -246,7 +252,7 @@ clone_dotfiles() {
 	fi
 
 	run git clone --depth=1 --branch "$DOTFILES_BRANCH" "$DOTFILES_REPO" "$DOTFILES"
-	if ((!DRY_RUN)) && [[ ! -f "$DOTFILES/terms/shells/zsh/zshenv" ]]; then
+	if ((! DRY_RUN)) && [[ ! -f "$DOTFILES/terms/shells/zsh/zshenv" ]]; then
 		die "Clone succeeded but looks wrong: missing terms/shells/zsh/zshenv"
 	fi
 }
@@ -286,7 +292,7 @@ clone_oh_my_zsh() {
 clone_zsh_plugins() {
 	step "Bootstrapping Oh My Zsh plugins"
 
-	if ! already_has_zsh && ((!DRY_RUN)); then
+	if ! already_has_zsh && ((! DRY_RUN)); then
 		# Nothing to attach plugins to; let clone_oh_my_zsh handle it
 		return
 	fi
@@ -350,6 +356,11 @@ link_configs() {
 
 	for entry in "${GNUPG_LINKS[@]}"; do
 		link_file "${entry#*|}" "$HOME/.gnupg/${entry%%|*}"
+	done
+
+	run mkdir -p "$HOME/.ssh"
+	for entry in "${SSH_LINKS[@]}"; do
+		link_file "${entry#*|}" "$HOME/.ssh/${entry%%|*}"
 	done
 
 	for entry in "${CONFIG_DIR_LINKS[@]}"; do
@@ -440,7 +451,7 @@ main() {
 			fi
 		done
 
-		if ((!known)); then
+		if ((! known)); then
 			die "Unknown profile: $PROFILE (known: ${KNOWN_PROFILES[*]})"
 		fi
 
