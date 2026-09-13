@@ -84,16 +84,6 @@ CONFIG_DIR_LINKS=(
 # When set to 1, every action is printed instead of executed
 DRY_RUN=0
 
-# Optional mise profile (maps to a mise/config.<name>.toml)
-# Empty = base config
-PROFILE=""
-
-# Valid values for --profile (must match tools/mise/config.<name>.toml)
-KNOWN_PROFILES=(
-	"personal"
-	"work.augustus"
-)
-
 # =========================================================================== #
 # Helpers
 # =========================================================================== #
@@ -115,8 +105,6 @@ usage() {
 	printf "Bootstrap %sxeho91's%s dotfiles on macOS.\n\n" "$CYAN" "$NC"
 	printf "Options:\n"
 	printf "  %s-n, --dry-run%s   Print every action that would be taken, without executing it.\n" "$YELLOW" "$NC"
-	printf "  %s-p, --profile <name>%s  Install the given mise profile (e.g. 'personal');\n" "$YELLOW" "$NC"
-	printf "                       defaults to the base config when omitted.\n"
 	printf "  %s-h, --help%s      Show this help.\n" "$YELLOW" "$NC"
 }
 
@@ -376,9 +364,9 @@ link_configs() {
 provision_tools() {
 	step "Provisioning tools and casks with mise"
 	if command -v mise >/dev/null 2>&1 || ((DRY_RUN)); then
-		info "Installing Homebrew casks from [bootstrap.packages] (profile: ${MISE_ENV:-base})"
+		info "Installing Homebrew casks from [bootstrap.packages]"
 		run mise bootstrap packages apply --yes
-		info "Installing version-pinned tools from the mise config (profile: ${MISE_ENV:-base})"
+		info "Installing version-pinned tools from the Mise config"
 		run mise install
 		return
 	fi
@@ -423,13 +411,6 @@ main() {
 			DRY_RUN=1
 			shift
 			;;
-		-p | --profile)
-			if (($# < 2)); then
-				die "--profile requires a profile name (e.g. --profile personal)"
-			fi
-			PROFILE="$2"
-			shift 2
-			;;
 		-h | --help)
 			usage
 			exit 0
@@ -443,27 +424,8 @@ main() {
 		esac
 	done
 
-	if [[ -n "$PROFILE" ]]; then
-		local known=0 e
-		for e in "${KNOWN_PROFILES[@]}"; do
-			if [[ "$e" == "$PROFILE" ]]; then
-				known=1
-				break
-			fi
-		done
-
-		if ((! known)); then
-			die "Unknown profile: $PROFILE (known: ${KNOWN_PROFILES[*]})"
-		fi
-
-		export MISE_ENV="$PROFILE"
-	else
-		unset MISE_ENV
-	fi
-
 	info "Installing dotfiles for $(whoami)@$(hostname)"
 	info "Repository: $DOTFILES_REPO ($DOTFILES_BRANCH)"
-	info "Mise profile: ${MISE_ENV:-base}"
 
 	if ((DRY_RUN)); then
 		warn "DRY RUN: actions below are printed but NOT executed"

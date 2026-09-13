@@ -12,7 +12,7 @@ Bring up and tear down my macOS development environment.
 > ```
 
 ```sh
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/xeho91/.dotfiles/main/os/macos/install.sh)" -- --profile <profile_name>
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/xeho91/.dotfiles/main/os/macos/install.sh)"
 ```
 
 ### Options
@@ -21,14 +21,6 @@ Bring up and tear down my macOS development environment.
 | --- | --- |
 | `-h, --help` | Show help |
 | `-n, --dry-run` | Print every action without executing it |
-| `-p, --profile <name>` | Install the given [profile](#profiles); defaults to the base one |
-
-### Profiles
-
-| Name | Description |
-| --- | --- |
-| `personal` | Adds personal tools |
-| `work.augustus` | Augustus client tools |
 
 ---
 
