@@ -1,0 +1,186 @@
+{
+  "version": 3,
+  "skills": {
+    "cavecrew": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/cavecrew/SKILL.md",
+      "skillFolderHash": "58b9a0bdb00d97953bfc840cb4dc3b38faf03759",
+      "installedAt": "2026-09-13T12:54:33.887Z",
+      "updatedAt": "2026-09-13T12:54:33.887Z"
+    },
+    "caveman": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/caveman/SKILL.md",
+      "skillFolderHash": "efae5ae14e1ace5f456e895abb9e5643925a754c",
+      "installedAt": "2026-09-13T12:54:33.895Z",
+      "updatedAt": "2026-09-13T12:54:33.895Z"
+    },
+    "caveman-commit": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/caveman-commit/SKILL.md",
+      "skillFolderHash": "7b600195c1d3cdd277dc608c56384c86afb7ec11",
+      "installedAt": "2026-09-13T12:54:33.896Z",
+      "updatedAt": "2026-09-13T12:54:33.896Z"
+    },
+    "caveman-compress": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/caveman-compress/SKILL.md",
+      "skillFolderHash": "e95dd5911da8896a142d1bf28e3b573c37e5deed",
+      "installedAt": "2026-09-13T12:54:33.897Z",
+      "updatedAt": "2026-09-13T12:54:33.897Z"
+    },
+    "caveman-discover": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/caveman-discover/SKILL.md",
+      "skillFolderHash": "d43d2ff7268e8df5db2198977b79b765b723b9d9",
+      "installedAt": "2026-09-13T12:54:33.897Z",
+      "updatedAt": "2026-09-13T12:54:33.897Z"
+    },
+    "caveman-evidence-review": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/caveman-evidence-review/SKILL.md",
+      "skillFolderHash": "50875bf7d4a1ce7a64d92cc4127b3c63c2e0701a",
+      "installedAt": "2026-09-13T12:54:33.897Z",
+      "updatedAt": "2026-09-13T12:54:33.897Z"
+    },
+    "caveman-explore": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/caveman-explore/SKILL.md",
+      "skillFolderHash": "f26926e617ca8108e7ab77a9f6e100c228888ffe",
+      "installedAt": "2026-09-13T12:54:33.898Z",
+      "updatedAt": "2026-09-13T12:54:33.898Z"
+    },
+    "caveman-help": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/caveman-help/SKILL.md",
+      "skillFolderHash": "6c85e34cfd4166be893224b7f39c6379d38c8b0c",
+      "installedAt": "2026-09-13T12:54:33.898Z",
+      "updatedAt": "2026-09-13T12:54:33.898Z"
+    },
+    "caveman-learn": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/caveman-learn/SKILL.md",
+      "skillFolderHash": "908fae7ced871b3505fecc7c7d294d5f9dd39ca8",
+      "installedAt": "2026-09-13T12:54:33.899Z",
+      "updatedAt": "2026-09-13T12:54:33.899Z"
+    },
+    "caveman-manage": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/caveman-manage/SKILL.md",
+      "skillFolderHash": "0a94a5cc3a4fd218b07d8853e4065e9a513fe51f",
+      "installedAt": "2026-09-13T12:54:33.899Z",
+      "updatedAt": "2026-09-13T12:54:33.899Z"
+    },
+    "caveman-optimize": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/caveman-optimize/SKILL.md",
+      "skillFolderHash": "3311c453a59a8a27ad0555949e24fea81daf77fa",
+      "installedAt": "2026-09-13T12:54:33.899Z",
+      "updatedAt": "2026-09-13T12:54:33.899Z"
+    },
+    "caveman-review": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/caveman-review/SKILL.md",
+      "skillFolderHash": "515d07fbd383fb9a15ad94647d133f681dc56197",
+      "installedAt": "2026-09-13T12:54:33.900Z",
+      "updatedAt": "2026-09-13T12:54:33.900Z"
+    },
+    "caveman-setup": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/caveman-setup/SKILL.md",
+      "skillFolderHash": "be2dfccebf403aa38e16bb39e367a3f045e24b07",
+      "installedAt": "2026-09-13T12:54:33.900Z",
+      "updatedAt": "2026-09-13T12:54:33.900Z"
+    },
+    "caveman-stats": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/caveman-stats/SKILL.md",
+      "skillFolderHash": "c0fb6ec46cd22173f570edfdd20463d0f7aea67c",
+      "installedAt": "2026-09-13T12:54:33.900Z",
+      "updatedAt": "2026-09-13T12:54:33.900Z"
+    },
+    "investigate-first": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/investigate-first/SKILL.md",
+      "skillFolderHash": "c20174862b4748fc26ce55192a8431e9ef662947",
+      "installedAt": "2026-09-13T12:54:33.901Z",
+      "updatedAt": "2026-09-13T12:54:33.901Z"
+    },
+    "lean-build": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/lean-build/SKILL.md",
+      "skillFolderHash": "47bc09c3509d7f58f0f890836ab7f382987fd487",
+      "installedAt": "2026-09-13T12:54:33.901Z",
+      "updatedAt": "2026-09-13T12:54:33.901Z"
+    },
+    "migration": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/migration/SKILL.md",
+      "skillFolderHash": "b1066e51b4e7cb9a943554a98c3810653ccff059",
+      "installedAt": "2026-09-13T12:54:33.901Z",
+      "updatedAt": "2026-09-13T12:54:33.901Z"
+    },
+    "safe-refactor": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/safe-refactor/SKILL.md",
+      "skillFolderHash": "49fd11fcfa4fd63ab175380ed8f80b992090e5e4",
+      "installedAt": "2026-09-13T12:54:33.901Z",
+      "updatedAt": "2026-09-13T12:54:33.901Z"
+    },
+    "surgical-patch": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/surgical-patch/SKILL.md",
+      "skillFolderHash": "f7316a9431eff84811b6fd100af70e6984751c91",
+      "installedAt": "2026-09-13T12:54:33.902Z",
+      "updatedAt": "2026-09-13T12:54:33.902Z"
+    },
+    "verify-and-stop": {
+      "source": "JuliusBrussee/caveman",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/JuliusBrussee/caveman.git",
+      "skillPath": "skills/verify-and-stop/SKILL.md",
+      "skillFolderHash": "daaaceac55b83384dc3685c3b946699b9bc29331",
+      "installedAt": "2026-09-13T12:54:33.902Z",
+      "updatedAt": "2026-09-13T12:54:33.902Z"
+    }
+  },
+  "dismissed": {}
+}

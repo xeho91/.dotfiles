@@ -15,6 +15,10 @@ DOTFILES_REPO="${DOTFILES_REPO:-"https://github.com/xeho91/.dotfiles.git"}"
 DOTFILES_BRANCH="${DOTFILES_BRANCH:-main}"
 
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+AGENT_SKILLS_DIR="$HOME/.agents/skills"
+AGENT_SKILL_LOCK="$HOME/.agents/.skill-lock.json"
+DOTFILES_AGENT_SKILLS_DIR="$DOTFILES/agents/skills"
+DOTFILES_AGENT_SKILL_LOCK="$DOTFILES/agents/.skill-lock.json"
 
 # git + mise are installed directly by install.sh; gpg-tui and mole are managed
 # by mise [bootstrap.packages]. Anything here not installed is skipped.
@@ -336,6 +340,9 @@ unlink_configs() {
 	for entry in "${CONFIG_DIR_LINKS[@]}"; do
 		unlink_if_linked "${entry#*|}" "$XDG_CONFIG_HOME/${entry%%|*}"
 	done
+
+	unlink_if_linked "$DOTFILES_AGENT_SKILLS_DIR" "$AGENT_SKILLS_DIR"
+	unlink_if_linked "$DOTFILES_AGENT_SKILL_LOCK" "$AGENT_SKILL_LOCK"
 
 	info "Keeping ~/.gnupg itself: it holds your gpg keys"
 }

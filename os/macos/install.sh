@@ -16,6 +16,10 @@ DOTFILES_REPO="${DOTFILES_REPO:-"https://github.com/xeho91/.dotfiles.git"}"
 DOTFILES_BRANCH="${DOTFILES_BRANCH:-main}"
 
 XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+AGENT_SKILLS_DIR="$HOME/.agents/skills"
+AGENT_SKILL_LOCK="$HOME/.agents/.skill-lock.json"
+DOTFILES_AGENT_SKILLS_DIR="$DOTFILES/agents/skills"
+DOTFILES_AGENT_SKILL_LOCK="$DOTFILES/agents/.skill-lock.json"
 
 # Pinned Homebrew installer
 # Bump this SHA occasionally: `git ls-remote https://github.com/Homebrew/install.git HEAD`
@@ -331,6 +335,50 @@ link_file() {
 	info "Linked: $dst -> $src"
 }
 
+link_agent_skills() {
+	step "Moving agent skills into dotfiles"
+
+	assert_under_home "$AGENT_SKILLS_DIR"
+	assert_under_home "$DOTFILES_AGENT_SKILLS_DIR"
+	run mkdir -p "$(dirname "$DOTFILES_AGENT_SKILLS_DIR")"
+
+	if [[ -d "$AGENT_SKILLS_DIR" && ! -L "$AGENT_SKILLS_DIR" && ! -e "$DOTFILES_AGENT_SKILLS_DIR" ]]; then
+		info "Moving $AGENT_SKILLS_DIR to $DOTFILES_AGENT_SKILLS_DIR"
+		run mv "$AGENT_SKILLS_DIR" "$DOTFILES_AGENT_SKILLS_DIR"
+	elif [[ -d "$AGENT_SKILLS_DIR" && ! -L "$AGENT_SKILLS_DIR" && -d "$DOTFILES_AGENT_SKILLS_DIR" ]]; then
+		die "Both $AGENT_SKILLS_DIR and $DOTFILES_AGENT_SKILLS_DIR exist; merge them manually"
+	fi
+
+	if [[ ! -e "$DOTFILES_AGENT_SKILLS_DIR" ]]; then
+		run mkdir -p "$DOTFILES_AGENT_SKILLS_DIR"
+	fi
+
+	link_file "$DOTFILES_AGENT_SKILLS_DIR" "$AGENT_SKILLS_DIR"
+}
+
+link_agent_skill_lock() {
+	step "Moving agent skill lock into dotfiles"
+
+	assert_under_home "$AGENT_SKILL_LOCK"
+	assert_under_home "$DOTFILES_AGENT_SKILL_LOCK"
+	run mkdir -p "$(dirname "$DOTFILES_AGENT_SKILL_LOCK")"
+
+	if [[ -f "$AGENT_SKILL_LOCK" && ! -L "$AGENT_SKILL_LOCK" && ! -e "$DOTFILES_AGENT_SKILL_LOCK" ]]; then
+		info "Moving $AGENT_SKILL_LOCK to $DOTFILES_AGENT_SKILL_LOCK"
+		run mv "$AGENT_SKILL_LOCK" "$DOTFILES_AGENT_SKILL_LOCK"
+	fi
+
+	if [[ ! -e "$DOTFILES_AGENT_SKILL_LOCK" ]]; then
+		if ((DRY_RUN)); then
+			info "Would create empty skill lock: $DOTFILES_AGENT_SKILL_LOCK"
+		else
+			printf '%s\n' '{"version":3,"skills":{},"dismissed":{}}' >"$DOTFILES_AGENT_SKILL_LOCK"
+		fi
+	fi
+
+	link_file "$DOTFILES_AGENT_SKILL_LOCK" "$AGENT_SKILL_LOCK"
+}
+
 link_configs() {
 	step "Linking configurations"
 
@@ -355,6 +403,9 @@ link_configs() {
 	for entry in "${CONFIG_DIR_LINKS[@]}"; do
 		link_file "${entry#*|}" "$XDG_CONFIG_HOME/${entry%%|*}"
 	done
+
+	link_agent_skills
+	link_agent_skill_lock
 }
 
 # =========================================================================== #
