@@ -405,7 +405,27 @@
       "skillFolderHash": "81e8196f4dd4bf9fc5f0a1b827f4148af52a4391",
       "installedAt": "2026-09-13T13:24:24.907Z",
       "updatedAt": "2026-09-13T13:24:24.907Z"
+    },
+    "vitest": {
+      "source": "antfu/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/antfu/skills.git",
+      "skillPath": "skills/vitest/SKILL.md",
+      "skillFolderHash": "6e59e3b95305499c21fc401b3dbddedbb8ead8a6",
+      "installedAt": "2026-09-13T15:09:09.406Z",
+      "updatedAt": "2026-09-13T15:09:09.406Z"
+    },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "76a98a285cb0434f3d39e1a873823556330e398b",
+      "installedAt": "2026-09-13T15:09:19.442Z",
+      "updatedAt": "2026-09-13T15:09:19.442Z"
     }
   },
-  "dismissed": {}
+  "dismissed": {
+    "findSkillsPrompt": true
+  }
 }
