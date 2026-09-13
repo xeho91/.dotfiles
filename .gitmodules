@@ -1,3 +1,9 @@
 [submodule "profiles/augustus"]
 	path = profiles/augustus
 	url = git@github.com:xeho91/profile-augustus.git
+[submodule "profiles/codequest"]
+	path = profiles/codequest
+	url = git@github.com:xeho91/profile-codequest.git
+[submodule "profiles/xeho91"]
+	path = profiles/xeho91
+	url = git@github.com:xeho91/profile-xeho91.git
