@@ -1,18 +1,18 @@
 # Definition of Done
 
 Standing, project-wide bar that every change must clear before it counts as done.
-Unlike acceptance criteria, which vary per task and answer "did we build the right thing?",
-the Definition of Done is the same every time and answers "is this finished to our standard?".
+Unlike acceptance criteria, which vary per task and answer _"did we build the right thing?"_,
+the Definition of Done is the same every time and answers _"is this finished to our standard?"_.
 
 Use it as the final gate in `planning-and-task-breakdown`, `incremental-implementation`, and `shipping-and-launch`.
 
 ## Vs. Acceptance Criteria
 
 | | Acceptance Criteria | Definition of Done |
-|---|---|---|
+| --- | --- | --- |
 | Scope | Specific to one task or spec | Applies to every increment |
 | Changes | Different for each item | Fixed and reused |
-| Answers | "Did we build *this thing*?" | "Is it *ready*?" |
+| Answers | "Did we build _this thing_?" | "Is it _ready_?" |
 | Owner | Defined when planning the task | Defined once for the project |
 | Example | "User can reset password via email link" | "Tests pass, no regressions, docs updated" |
 
@@ -37,13 +37,14 @@ Apply this to every change before declaring it done.
 
 ### Quality
 
-- [ ] Code reveals intent through naming and structure; no comments needed to explain *what* it does
+- [ ] Code reveals intent through naming and structure; no comments needed to explain _what_ it does
 - [ ] No duplicated business logic
 - [ ] No dead code, debug output, or commented-out blocks left behind
 - [ ] Changes are scoped to the task; no unrelated refactors snuck in
 - [ ] Linting and formatting pass
 
-The depth behind these items lives in `code-review-and-quality` (the five-axis review) and `code-simplification` (reducing complexity without changing behavior).
+The depth behind these items lives in `code-review-and-quality` _(the five-axis review)_
+and `code-simplification` _(reducing complexity without changing behavior)_.
 
 ### Integration
 
@@ -54,14 +55,14 @@ The depth behind these items lives in `code-review-and-quality` (the five-axis r
 ### Documentation
 
 - [ ] Public interfaces, APIs, and user-facing behavior are documented
-- [ ] Architectural decisions worth preserving are recorded (see `documentation-and-adrs`)
+- [ ] Architectural decisions worth preserving are recorded _(see `documentation-and-adrs`)_
 - [ ] Documentation describes the current state in timeless language, not the change history
 
 ### Ship-Readiness
 
-- [ ] Security implications reviewed for any untrusted input, auth, or data handling (see `security-and-hardening`)
-- [ ] Observability in place for new critical paths (logs, metrics, traces) (see `observability-and-instrumentation`)
-- [ ] Roll back path exists for anything risky (see `shipping-and-launch`)
+- [ ] Security implications reviewed for any untrusted input, auth, or data handling _(see `security-and-hardening`)_
+- [ ] Observability in place for new critical paths - logs, metrics, traces _(see `observability-and-instrumentation`)_
+- [ ] Roll back path exists for anything risky _(see `shipping-and-launch`)_
 - [ ] The human has reviewed and approved before merge or deploy
 
 ---
@@ -72,14 +73,15 @@ The depth behind these items lives in `code-review-and-quality` (the five-axis r
 - **Per feature**: confirm Integration and Documentation before considering the feature complete.
 - **Per release**: the full checklist is the floor; `shipping-and-launch` adds the deploy-specific gates on top.
 
-Tailor the list to the project once, then reuse it unchanged. A Definition of Done that is renegotiated every sprint is not a Definition of Done.
+Tailor the list to the project once, then reuse it unchanged.
+A Definition of Done that is renegotiated every sprint is not a Definition of Done.
 
 ---
 
 ## Red Flags
 
-- "It's done, I just haven't run it yet": unverified work is not done.
-- "Tests pass" used as a synonym for done while docs, regressions, or runtime verification are skipped.
+- _"It's done, I just haven't run it yet"_: unverified work is not done.
+- _"Tests pass"_ used as a synonym for done while docs, regressions, or runtime verification are skipped.
 - A different bar applied depending on deadline pressure.
 - Acceptance criteria treated as the whole bar, with no standing quality floor.
 - "Done" declared before human review on changes that need it.
