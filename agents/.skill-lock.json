@@ -450,6 +450,15 @@
       "skillFolderHash": "3116f3e62dbd02b44a598b1aa690d2a8938e8f89",
       "installedAt": "2026-09-13T15:16:57.800Z",
       "updatedAt": "2026-09-13T15:16:57.800Z"
+    },
+    "clarity": {
+      "source": "addyosmani/clarity",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/addyosmani/clarity.git",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "e27ceeff60368cf6966b4ea00a5b9b36418ee9a0",
+      "installedAt": "2026-09-13T15:18:27.914Z",
+      "updatedAt": "2026-09-13T15:18:27.914Z"
     }
   },
   "dismissed": {
