@@ -3,8 +3,10 @@ experimental = true
 env_cache = true
 env_cache_ttl = "1h"
 
-# Homebrew (macOS)
 [bootstrap.packages]
+# -----
+# macOS
+# -----
 # Casks
 "brew-cask:brave-browser" = { version = "latest", os = "macos" }
 "brew-cask:bruno" = { version = "latest", os = "macos" }
@@ -13,7 +15,6 @@ env_cache_ttl = "1h"
 "brew-cask:ngrok" = { version = "latest", os = "macos" }
 "brew-cask:orbstack" = { version = "latest", os = "macos" }
 "brew-cask:raycast" = { version = "latest", os = "macos" }
-"brew-cask:signal" = { version = "latest", os = "macos" }
 "brew-cask:zen" = { version = "latest", os = "macos" }
 # Formulae
 "brew:bruno-cli" = { version = "latest", os = "macos" }
@@ -55,6 +56,7 @@ zoxide = { version = "0.10.0" }
 bottom = { version = "0.14.9" }
 "aqua:cargo-bins/cargo-binstall" = { version = "1.22.0" }
 "aqua:dalance/procs" = { version = "v0.14.12" }           # TODO: Migrate to mise registry when this PR is merged: https://github.com/jdx/mise/pull/12588
+"cargo:iamb" = { version = "0.0.11" }
 "cargo:cgrc" = { version = "2.0.6" }
 "cargo:purple-ssh" = { version = "3.27.0" }
 
