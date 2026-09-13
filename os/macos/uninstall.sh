@@ -89,7 +89,7 @@ HOME_LINKS=(
 # File links inside `$HOME/.gnupg`
 GNUPG_LINKS=(
 	"gpg.conf|$DOTFILES/tools/gnupg/gpg.conf"
-	"gpg-agent.conf|$DOTFILES/tools/gnupg/gpg-agent.conf"
+	"gpg-agent.conf|$DOTFILES/tools/gnupg/gpg-agent.macos.conf"
 )
 
 # dotname|source
