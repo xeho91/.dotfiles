@@ -15,6 +15,7 @@ env_cache_ttl = "1h"
 "brew-cask:ngrok" = { version = "latest", os = "macos" }
 "brew-cask:orbstack" = { version = "latest", os = "macos" }
 "brew-cask:raycast" = { version = "latest", os = "macos" }
+"brew-cask:ungoogled-chromium" = { version = "latest", os = "macos" }
 "brew-cask:zen" = { version = "latest", os = "macos" }
 # Formulae
 "brew:bruno-cli" = { version = "latest", os = "macos" }
