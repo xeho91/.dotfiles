@@ -3,6 +3,9 @@ experimental = true
 env_cache = true
 env_cache_ttl = "1h"
 
+[settings.npm]
+package_manager = "pnpm"
+
 [bootstrap.packages]
 # -----
 # macOS
@@ -63,6 +66,7 @@ bottom = { version = "0.14.9" }
 
 # MCPs
 "pipx:serena-agent" = { version = "1.7.0" }
+"npm:chrome-devtools-mcp" = { version = "1.9.0" }
 
 [env]
 # OpenCode
