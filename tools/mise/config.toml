@@ -10,7 +10,7 @@ env_cache_ttl = "1h"
 "brew-cask:bruno" = { version = "latest", os = "macos" }
 "brew-cask:ghostty" = { version = "latest", os = "macos" }
 "brew-cask:font-jetbrains-mono-nerd-font" = { version = "latest", os = "macos" }
-# "brew-cask:ngrok" = { version = "latest", os = "macos" } # TODO: Some bug
+"brew-cask:ngrok" = { version = "latest", os = "macos" }
 "brew-cask:orbstack" = { version = "latest", os = "macos" }
 "brew-cask:raycast" = { version = "latest", os = "macos" }
 "brew-cask:signal" = { version = "latest", os = "macos" }
