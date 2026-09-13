@@ -28,45 +28,45 @@ package_manager = "pnpm"
 "brew:terminal-notifier" = { version = "latest", os = "macos" }
 
 [tools]
-go = "1.27.1"
-node = "26.8.2"
-rust = "1.98.1"
+go = { version = "1.27.1", os = ["macos"] }
+node = { version = "26.8.2", os = ["macos"] }
+rust = { version = "1.98.1", os = ["macos"] }
 
 # Managers
-aqua = { version = "2.62.3" }
-pnpm = "12.4.1"
-uv = "0.12.13"
+aqua = { version = "2.62.3", os = ["macos"] }
+pnpm = { version = "12.4.1", os = ["macos"] }
+uv = { version = "0.12.13", os = ["macos"] }
 
 # CLIs
-bat = { version = "0.26.1" }
-bob = { version = "4.1.7" }
-delta = { version = "0.19.2" }
-difftastic = { version = "0.70.0" }
-fastfetch = "2.68.1"
-fd = { version = "10.5.0" }
-fzf = "0.74.4"
-gh = "2.100.0"
-lazygit = "0.65.0"
-lsd = { version = "1.2.0" }
-mkcert = { version = "1.4.4" }
-opencode = "1.18.30"
-ripgrep = { version = "15.2.0" }
-ripgrep-all = { version = "0.10.10" }
-starship = { version = "1.26.0" }
-usage = "6.9.0"
-yazi = "26.9.1"
-zellij = "0.45.1"
-zoxide = { version = "0.10.0" }
-bottom = { version = "0.14.9" }
-"aqua:cargo-bins/cargo-binstall" = "1.23.0"
-"aqua:dalance/procs" = { version = "v0.14.12" }           # TODO: Migrate to mise registry when this PR is merged: https://github.com/jdx/mise/pull/12588
-"cargo:iamb" = { version = "0.0.11" }
-"cargo:cgrc" = { version = "2.0.6" }
-"cargo:purple-ssh" = { version = "3.27.0" }
+bat = { version = "0.26.1", os = ["macos"] }
+bob = { version = "4.1.7", os = ["macos"] }
+delta = { version = "0.19.2", os = ["macos"] }
+difftastic = { version = "0.70.0", os = ["macos"] }
+fastfetch = { version = "2.68.1", os = ["macos"] }
+fd = { version = "10.5.0", os = ["macos"] }
+fzf = { version = "0.74.4", os = ["macos"] }
+gh = { version = "2.100.0", os = ["macos"] }
+lazygit = { version = "0.65.0", os = ["macos"] }
+lsd = { version = "1.2.0", os = ["macos"] }
+mkcert = { version = "1.4.4", os = ["macos"] }
+opencode = { version = "1.18.30", os = ["macos"] }
+ripgrep = { version = "15.2.0", os = ["macos"] }
+ripgrep-all = { version = "0.10.10", os = ["macos"] }
+starship = { version = "1.26.0", os = ["macos"] }
+usage = { version = "6.9.0", os = ["macos"] }
+yazi = { version = "26.9.1", os = ["macos"] }
+zellij = { version = "0.45.1", os = ["macos"] }
+zoxide = { version = "0.10.0", os = ["macos"] }
+bottom = { version = "0.14.9", os = ["macos"] }
+"aqua:cargo-bins/cargo-binstall" = { version = "1.23.0", os = ["macos"] }
+"aqua:dalance/procs" = { version = "v0.14.12", os = ["macos"] }
+"cargo:iamb" = { version = "0.0.11", os = ["macos"] }
+"cargo:cgrc" = { version = "2.0.6", os = ["macos"] }
+"cargo:purple-ssh" = { version = "3.27.0", os = ["macos"] }
 
 # MCPs
-"pipx:serena-agent" = { version = "1.7.0" }
-"npm:chrome-devtools-mcp" = { version = "1.9.0" }
+"pipx:serena-agent" = { version = "1.7.0", os = ["macos"] }
+"npm:chrome-devtools-mcp" = { version = "1.9.0", os = ["macos"] }
 
 [env]
 # OpenCode
