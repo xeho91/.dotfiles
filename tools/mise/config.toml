@@ -46,6 +46,7 @@ fastfetch = { version = "2.68.1", os = ["macos"] }
 fd = { version = "10.5.0", os = ["macos"] }
 fzf = { version = "0.74.4", os = ["macos"] }
 gh = { version = "2.100.0", os = ["macos"] }
+gitleaks = { version = "8.30.1", os = ["macos"] }
 lazygit = { version = "0.65.0", os = ["macos"] }
 lsd = { version = "1.2.0", os = ["macos"] }
 mkcert = { version = "1.4.4", os = ["macos"] }
@@ -89,7 +90,7 @@ run = "zellij --layout ai"
 
 [tasks."dev:server:opencode"]
 description = "Start OpenCode server"
-run = "opencode serve --hostname ${OPENCODE_HOSTNAME} --port ${OPENCODE_PORT}"
+run = "opencode serve --print-logs --log-level DEBUG --hostname ${OPENCODE_HOSTNAME} --port ${OPENCODE_PORT} 2>&1 | cgrc --conf-path ${XDG_CONFIG_HOME}/cgrc/conf.opencode"
 alias = ["dev:server:oc"]
 
 [tasks."mcp:serena"]
