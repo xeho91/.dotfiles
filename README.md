@@ -1,7 +1,11 @@
+
+
 # Dotfiles
 
 This is a repository which contains my configurations
 for the programs in my **core tool belt**.
+
+It also includes agent configurations under `agents/`.
 
 ## What Are the Dotfiles?
 
