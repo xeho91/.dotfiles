@@ -1,0 +1,29 @@
+[[mgr.prepend_keymap]]
+on = ["c", "m"]
+run = "plugin chmod"
+desc = "Chmod on selected files"
+
+[[mgr.prepend_keymap]]
+on = "<C-d>"
+run = "plugin diff"
+desc = "Diff the selected with the hovered file"
+
+[[mgr.prepend_keymap]]
+on = "f"
+run = "plugin jump-to-char"
+desc = "Jump to char"
+
+[[mgr.prepend_keymap]]
+on = "l"
+run = "plugin smart-enter"
+desc = "Enter the child directory, or open the file"
+
+[[mgr.prepend_keymap]]
+on = "F"
+run = "plugin smart-filter"
+desc = "Smart filter"
+
+[[mgr.prepend_keymap]]
+on = "p"
+run = "plugin smart-paste"
+desc = "Paste into the hovered directory or CWD"
