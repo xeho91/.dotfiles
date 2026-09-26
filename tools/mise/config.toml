@@ -90,12 +90,12 @@ run = "zellij --layout ai"
 
 [tasks."dev:server:opencode"]
 description = "Start OpenCode server"
-run = "opencode serve --print-logs --log-level DEBUG --hostname ${OPENCODE_HOSTNAME} --port ${OPENCODE_PORT} 2>&1 | cgrc --conf-path ${XDG_CONFIG_HOME}/cgrc/conf.opencode"
+run = "opencode serve --print-logs --log-level DEBUG --hostname ${OPENCODE_HOSTNAME} --port ${OPENCODE_PORT} 2>&1 | tspin"
 alias = ["dev:server:oc"]
 
 [tasks."mcp:serena"]
 description = "Start Serena MCP server"
-run = "serena start-mcp-server --context ide --transport sse --host ${SERENA_UI_HOSTNAME} --port ${SERENA_MCP_PORT} 2>&1 | cgrc --conf-path ${XDG_CONFIG_HOME}/cgrc/conf.serena"
+run = "serena start-mcp-server --context ide --transport sse --host ${SERENA_UI_HOSTNAME} --port ${SERENA_MCP_PORT} 2>&1 | tspin"
 alias = ["serena:start"]
 
 [tasks.opencode]

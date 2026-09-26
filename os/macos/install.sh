@@ -71,7 +71,6 @@ SSH_LINKS=(
 # Directory links under `$XDG_CONFIG_HOME`
 CONFIG_DIR_LINKS=(
 	"bottom|$DOTFILES/tools/bottom"
-	"cgrc|$DOTFILES/tools/cgrc"
 	"gh|$DOTFILES/tools/gh"
 	"ghostty|$DOTFILES/terms/emulators/ghostty"
 	"lazygit|$DOTFILES/tools/lazygit"
