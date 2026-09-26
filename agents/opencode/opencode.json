@@ -25,13 +25,13 @@
     }
   },
   "permission": {
-	"bash": {
+    "bash": {
       "*": "ask",
       "perl*": "deny",
       "python*": "deny"
-	},
+    },
     "context7_resolve-library-id": "allow",
     "context7_query-docs": "allow",
-    "serena_*": "allow",
+    "serena_*": "allow"
   }
 }

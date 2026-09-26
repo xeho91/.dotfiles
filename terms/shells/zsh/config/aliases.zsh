@@ -19,6 +19,7 @@ alias rmdir="rmdir -v"
 (( $+commands[nvim] )) && alias vi="nvim"
 (( $+commands[nvim] )) && alias vim="nvim"
 (( $+commands[procs] )) && alias ps="procs"
+(( $+commands[sentry-cli] )) && alias sentry="sentry-cli"
 (( $+commands[yazi] )) && alias n="yazi"
 
 # ============= #

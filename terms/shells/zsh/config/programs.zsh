@@ -7,8 +7,9 @@ if (( $+commands[bob] )); then
 	path+="$XDG_DATA_HOME/bob/nvim-bin"
 fi
 
-if (( $+commands[fnm] )); then
-    eval "$(fnm env --use-on-cd)"
+# https://github.com/gitleaks/gitleaks
+if (( $+commands[gitleaks] )); then
+	export GITLEAKS_CONFIG="$XDG_CONFIG_HOME/gitleaks/config.toml"
 fi
 
 # https://github.com/stedolan/jq

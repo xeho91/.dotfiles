@@ -32,12 +32,12 @@ return {
 					},
 				},
 
-				ts_ls = {
+				tsc = {
 					enabled = false,
 				},
 
 				vtsls = {
-					enabled = true,
+					enabled = false,
 
 					filetypes = {
 						"javascript",
@@ -49,12 +49,12 @@ return {
 					},
 
 					settings = {
-						vtsls = {
-							enableMoveToFileCodeAction = true,
-							tsserver = {
-								globalPlugins = {},
-							},
-						},
+						-- vtsls = {
+						-- 	enableMoveToFileCodeAction = true,
+						-- 	tsserver = {
+						-- 		globalPlugins = {},
+						-- 	},
+						-- },
 
 						typescript = {
 							inlayHints = {

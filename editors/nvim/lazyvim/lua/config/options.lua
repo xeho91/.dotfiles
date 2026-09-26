@@ -17,5 +17,7 @@ vim.g.lazyvim_eslint_auto_format = true
 vim.g.lazyvim_explorer = false
 vim.g.lazyvim_picker = false
 
+vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+
 -- Neovim 0.12 rejects fzf-lua's relative RPC socket path on macOS.
 vim.g.fzf_lua_server = vim.fn.serverstart(vim.fn.stdpath("run") .. "/fzf-lua." .. os.time())
