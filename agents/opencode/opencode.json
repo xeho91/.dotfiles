@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "formatter": true,
   "mcp": {
     "chrome-devtools": {
       "type": "local",
