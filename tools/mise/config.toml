@@ -68,9 +68,9 @@ zellij = { version = "0.45.1", os = ["macos"] }
 zoxide = { version = "0.10.0", os = ["macos"] }
 bottom = { version = "0.14.9", os = ["macos"] }
 "aqua:cargo-bins/cargo-binstall" = { version = "1.23.0", os = ["macos"] }
-"github:bensadeh/tailspin" = { version = "7.0.0", os = ["macos"] }
+"aqua:dalance/procs" = { version = "0.14.12", os = ["macos"] }
+"aqua:bensadeh/tailspin" = { version = "7.0.0", os = ["macos"] }
 "github:ulyssa/iamb" = { version = "0.0.12", os = ["macos"] }
-"github:dalance/procs" = { version = "v0.14.12", os = ["macos"] }
 "github:erickochen/purple" = { version = "3.30.0", os = ["macos"] }
 
 # MCPs
