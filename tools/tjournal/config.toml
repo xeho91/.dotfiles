@@ -1,0 +1,24 @@
+backend_type = "Sqlite"
+scroll_per_page = 5
+sync_os_clipboard = false
+history_limit = 10
+colored_tags = true
+datum_visibility = "show"
+app_state_dir = "/Users/mateusz.kadlubowski/Library/Application Support/tui-journal"
+
+[export]
+show_confirmation = true
+
+[external_editor]
+command = "nvim"
+auto_save = true
+temp_file_extension = "md"
+
+[json_backend]
+file_path = "/Users/mateusz.kadlubowski/Documents/tui-journal/entries.json"
+
+[sqlite_backend]
+file_path = "/Users/mateusz.kadlubowski/Documents/tui-journal/entries.db"
+
+[vjournal_backend]
+directory = "/Users/mateusz.kadlubowski/Documents/tui-journal/journal"

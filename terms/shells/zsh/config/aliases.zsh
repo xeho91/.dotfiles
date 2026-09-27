@@ -20,6 +20,7 @@ alias rmdir="rmdir -v"
 (( $+commands[nvim] )) && alias vim="nvim"
 (( $+commands[procs] )) && alias ps="procs"
 (( $+commands[sentry-cli] )) && alias sentry="sentry-cli"
+(( $+commands[tjournal] )) && alias tjournal='command tjournal --config "${XDG_CONFIG_HOME}/journal"'
 (( $+commands[yazi] )) && alias n="yazi"
 
 # ============= #

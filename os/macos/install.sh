@@ -77,6 +77,7 @@ CONFIG_DIR_LINKS=(
 	"mise|$DOTFILES/tools/mise"
 	"nvim|$DOTFILES/editors/nvim/lazyvim"
 	"opencode|$DOTFILES/agents/opencode"
+	"journal|$DOTFILES/tools/tjournal"
 	"zellij|$DOTFILES/tools/zellij"
 )
 
