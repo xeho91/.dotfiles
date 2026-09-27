@@ -73,6 +73,7 @@ bottom = { version = "0.14.9", os = ["macos"] }
 "github:ulyssa/iamb" = { version = "0.0.12", os = ["macos"] }
 "github:erickochen/purple" = { version = "3.30.0", os = ["macos"] }
 "github:dalance/procs" = { version = "v0.14.12", os = ["macos"] }
+"github:acheronfail/repgrep" = { version = "0.17.1", os = ["macos"] }
 
 # MCPs
 "pipx:serena-agent" = { version = "1.7.0", os = ["macos"] }
