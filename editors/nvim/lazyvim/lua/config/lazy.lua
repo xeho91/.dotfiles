@@ -39,5 +39,5 @@ require("lazy").setup({
 	},
 })
 
-vim.g.lazyvim_picker = false
+vim.g.lazyvim_picker = "snacks"
 vim.g.lazyvim_explorer = false

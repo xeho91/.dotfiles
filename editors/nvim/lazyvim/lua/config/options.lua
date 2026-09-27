@@ -15,7 +15,7 @@ vim.g.lazyvim_prettier_needs_config = true
 vim.g.lazyvim_eslint_auto_format = true
 
 vim.g.lazyvim_explorer = false
-vim.g.lazyvim_picker = false
+vim.g.lazyvim_picker = "snacks"
 
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 
