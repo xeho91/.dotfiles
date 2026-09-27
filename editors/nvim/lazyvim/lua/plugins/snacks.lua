@@ -1,6 +1,11 @@
 return {
 	"folke/snacks.nvim",
 	opts = {
+		terminal = {
+			win = {
+				style = "float",
+			},
+		},
 		gitbrowse = {
 			remote_patterns = {
 				{ "^git@github%-[^:]+:(.+)$", "https://github.com/%1" },
