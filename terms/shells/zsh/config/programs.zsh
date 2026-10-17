@@ -41,3 +41,8 @@ if [[ -d "$XDG_DATA_HOME/nvim/mason/bin" ]]; then
   path+="$XDG_DATA_HOME/nvim/mason/bin"
 fi
 
+if (( $+commands[pnpm] )); then
+	export PNPM_HOME="$XDG_DATA_HOME/pnpm"
+	path+="$PNPM_HOME/bin"
+fi
+
