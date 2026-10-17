@@ -39,30 +39,9 @@ return {
 				},
 
 				tsc = {
-					enabled = false,
-				},
-
-				vtsls = {
-					enabled = false,
-
-					filetypes = {
-						"javascript",
-						"javascriptreact",
-						"javascript.jsx",
-						"typescript",
-						"typescriptreact",
-						"typescript.tsx",
-					},
-
+					enabled = true,
 					settings = {
-						-- vtsls = {
-						-- 	enableMoveToFileCodeAction = true,
-						-- 	tsserver = {
-						-- 		globalPlugins = {},
-						-- 	},
-						-- },
-
-						typescript = {
+						["js/ts"] = {
 							inlayHints = {
 								parameterNames = { enabled = "all" },
 								parameterTypes = { enabled = true },
@@ -73,6 +52,10 @@ return {
 							},
 						},
 					},
+				},
+
+				vtsls = {
+					enabled = false,
 				},
 			})
 
