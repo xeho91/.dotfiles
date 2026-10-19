@@ -2,37 +2,42 @@
   "$schema": "https://opencode.ai/config.json",
   "formatter": true,
   "mcp": {
-    "chrome-devtools": {
-      "type": "local",
-      "command": [
-        "mise",
-        "exec",
-        "--",
-        "chrome-devtools-mcp",
-        "--executable-path=/Applications/Chromium.app/Contents/MacOS/Chromium",
-        "--isolated",
-        "--filesystem-root=/tmp"
-      ],
-      "enabled": true
-    },
-    "context7": {
-      "type": "remote",
-      "url": "https://mcp.context7.com/mcp",
-      "enabled": true
-    },
-    "serena": {
-      "type": "remote",
-      "url": "http://127.0.0.1:8000/sse"
+    "servers": {
+      "chrome-devtools": {
+        "type": "local",
+        "command": [
+          "mise",
+          "exec",
+          "--",
+          "chrome-devtools-mcp",
+          "--executable-path=/Applications/Chromium.app/Contents/MacOS/Chromium",
+          "--isolated",
+          "--filesystem-root=/tmp"
+        ]
+      },
+      "context7": {
+        "type": "remote",
+        "url": "https://mcp.context7.com/mcp"
+      },
+      "serena": {
+        "type": "local",
+        "command": [
+          "serena",
+          "start-mcp-server",
+          "--context",
+          "ide",
+          "--project-from-cwd"
+        ]
+      }
     }
   },
-  "permission": {
-    "bash": {
-      "*": "ask",
-      "perl*": "deny",
-      "python*": "deny"
-    },
-    "context7_resolve-library-id": "allow",
-    "context7_query-docs": "allow",
-    "serena_*": "allow"
-  }
+  "permissions": [
+    { "action": "external_directory", "resource": "*", "effect": "ask" },
+    { "action": "shell", "resource": "*", "effect": "ask" },
+    { "action": "shell", "resource": "perl*", "effect": "deny" },
+    { "action": "shell", "resource": "python*", "effect": "deny" },
+    { "action": "context7_resolve_library_id", "resource": "*", "effect": "allow" },
+    { "action": "context7_query_docs", "resource": "*", "effect": "allow" },
+    { "action": "serena_*", "resource": "*", "effect": "allow" }
+  ]
 }

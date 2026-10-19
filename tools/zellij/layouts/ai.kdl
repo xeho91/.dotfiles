@@ -8,8 +8,8 @@ layout {
             args "run" "server:opencode"
         }
 
-        pane expanded=true name="opencode" command="mise" {
-            args "run" "opencode"
+        pane expanded=true name="opencode" command="sh" {
+            args "-c" "echo 'Waiting for OpenCode server…'; until curl -fsS --max-time 1 http://127.0.0.1:4096/global/health >/dev/null 2>&1; do sleep 0.2; done; exec mise run opencode"
         }
     }
 }
