@@ -7,7 +7,11 @@
     "session.parent": "up"
   },
   "diffs": {
-    "wrap": "word"
+    "fullscreen": true,
+    "single": false,
+    "tree": true,
+    "view": "split",
+    "wrap": "none"
   },
   "session": {
     "sidebar": "auto",
