@@ -1,0 +1,336 @@
+#compdef lightpanda
+
+_lightpanda() {
+    local curcontext="$curcontext" state line
+    typeset -A opt_args
+    _arguments -C '1: :->command' '*:: :->args'
+    case $state in
+        command)
+            local -a commands=(
+                'serve:starts a WebSocket CDP server'
+                'fetch:fetches the specified URL'
+                'mcp:starts an MCP (Model Context Protocol) server (stdio or HTTP)'
+                'agent:starts an interactive AI agent that can browse the web'
+                'run:runs a saved script (no LLM), then exits'
+                'version:displays the version of lightpanda'
+                'completion:prints a shell completion script (bash, fish, zsh)'
+                'help:displays this message'
+            )
+            _describe -t commands command commands
+            ;;
+        args)
+            case $words[1] in
+                serve)
+                    _arguments -s \
+                        '*--host[Host of the CDP server]:host: ' \
+                        '*--port[Port of the CDP server]:port: ' \
+                        '*--unix-socket[Listen on this Unix-domain socket (mode 0600) instead of TCP]:unix-socket:_files' \
+                        '*--advertise-host[The host to advertise, e.g. in the /json/version response]:advertise-host: ' \
+                        '*--protocol[Automation protocol to serve]:protocol:((cdp\:"Chrome DevTools Protocol (WebSocket on /)" webdriver\:"WebDriver BiDi (WebSocket on /session) plus the classic WebDriver session endpoints"))' \
+                        '*--cdp-max-connections[Maximum number of simultaneous CDP connections]:cdp-max-connections: ' \
+                        '*--cdp-max-pending-connections[Maximum pending connections in the accept queue]:cdp-max-pending-connections: ' \
+                        '*--cdp-max-message-size[Maximum allowed incoming websocket message size]:cdp-max-message-size: ' \
+                        '*--cdp-max-http-message-size[Maximum allowed HTTP request size]:cdp-max-http-message-size: ' \
+                        '*--http-session-timeout[Seconds before an idle HTTP session times-out]:http-session-timeout: ' \
+                        '*--remote-allow-origins[Origin (e.g. http://localhost:3000) allowed in the Origin header of CDP and BiDi WebSocket upgrades, or * to allow any]:remote-allow-origins: ' \
+                        '*--disable-metrics[Disables the /metrics endpoint (Prometheus text format)]' \
+                        '*--obey-robots[Fetches and obeys robots.txt of the target page]' \
+                        '*--robot-store-entry-limit[Maximum number of entries kept in the RobotStore]:robot-store-entry-limit: ' \
+                        '*--cors-store-entry-limit[Maximum number of entries kept in the CorsStore]:cors-store-entry-limit: ' \
+                        '*--proxy-bearer-token[Token sent for bearer authentication with the proxy: Proxy-Authorization: Bearer <token>]:proxy-bearer-token: ' \
+                        '*--http-proxy[HTTP proxy for all HTTP requests]:http-proxy: ' \
+                        '*--http-max-concurrent[Maximum number of concurrent HTTP requests]:http-max-concurrent: ' \
+                        '*--http-max-host-open[Maximum open connections to a given host:port]:http-max-host-open: ' \
+                        '*--http-nav-delay[Minimum time in ms between two top-level navigations to the same host (see --http-nav-burst)]:http-nav-delay: ' \
+                        '*--http-nav-burst[Number of top-level navigations to an idle host allowed to start without waiting for --http-nav-delay]:http-nav-burst: ' \
+                        '*--http-timeout[Maximum time in ms the transfer is allowed to complete]:http-timeout: ' \
+                        '*--http-version[HTTP version to negotiate]:http-version:((auto\:"" 1.1\:""))' \
+                        '*--http-connect-timeout[Time in ms to establish an HTTP connection before timing out]:http-connect-timeout: ' \
+                        '*--http-header[Extra custom header added to every outgoing HTTP request, including redirections, in "Name: Value" form]:http-header: ' \
+                        '*--http-max-response-size[Limits the acceptable response size for any request]:http-max-response-size: ' \
+                        '*--ws-max-concurrent[Maximum number of concurrent WebSocket connections]:ws-max-concurrent: ' \
+                        '*--insecure-disable-tls-host-verification[Disables host verification on all HTTP requests]' \
+                        '*--log-level[The log level]:log-level:((debug\:"" info\:"" warn\:"" err\:"" fatal\:"" note\:""))' \
+                        '*--log-format[The log format]:log-format:((logfmt\:"" pretty\:""))' \
+                        '*--log-filter[Filter logs per scope, applied first-to-last]:log-filter: ' \
+                        '*--user-agent-suffix[Suffix appended to the Lightpanda/X.Y User-Agent]:user-agent-suffix: ' \
+                        '*--http-cache-dir[Directory used as a filesystem cache for network resources]:http-cache-dir:_files' \
+                        '*--http-cache-entry-limit[Maximum number of entries kept in the HTTP cache]:http-cache-entry-limit: ' \
+                        '*--http-debug[Enables libcurl verbose output]' \
+                        '*--http-curves[Colon-separated key exchange groups offered in the TLS handshake, in preference order, e.g. "X25519:P-256:P-384"]:http-curves: ' \
+                        '*--render-font[Font file (TrueType, OpenType or collection) used by the png and pdf dumps, and by screenshots, for characters the bundled DejaVu fonts lack, e.g. CJK]:render-font:_files' \
+                        '*--web-bot-auth-key-file[Path to the Ed25519 private key PEM file]:web-bot-auth-key-file:_files' \
+                        '*--web-bot-auth-keyid[The JWK thumbprint of your public key]:web-bot-auth-keyid: ' \
+                        '*--web-bot-auth-domain[Your domain, e.g. yourdomain.com]:web-bot-auth-domain: ' \
+                        '*--user-agent[Override the User-Agent header entirely]:user-agent: ' \
+                        '*--locale[BCP 47 language tag driving navigator.language, the Accept-Language header and the default locale of Intl and toLocaleString]:locale: ' \
+                        '*--timezone[Time zone used by Date and Intl, e.g. Europe/Paris or UTC]:timezone: ' \
+                        '*--block-private-networks[Block HTTP requests to private/internal IP addresses after DNS resolution]' \
+                        '*--block-cidrs[Additional CIDR ranges to block]:block-cidrs: ' \
+                        '*--block-urls[URL patterns to block]:block-urls: ' \
+                        '*--adblock-lists[EasyList-syntax filter files to load]:adblock-lists:_files' \
+                        '*--cookie[Path to a file to load cookies from (read-only)]:cookie:_files' \
+                        '*--cookie-jar[Path to a JSON file to save cookies to when a CDP browser context closes (write-only)]:cookie-jar:_files' \
+                        '*--disable-features[Disable a feature that is on by default]:disable-features:_values -s , disable-features "cors[Skip CORS checks on fetch/XHR requests]"' \
+                        '*--experimental-features[Enable an experimental, unstable feature]:experimental-features:_values -s , experimental-features "cors[]" "serviceworker[]"' \
+                        '*--load-resources[Sub-resource to actually request]:load-resources:_values -s , load-resources "image[<img> sources, so that load/error reflects the real HTTP status]" "iframe[When enabled, <iframe> elements are fully loaded]" "worker[Enable loading dedicated and shared workers]" "stylesheet[Fetch external <link rel=stylesheet> resources so their rules contribute to computed styles (and therefore to visibility checks like display, visibility, opacity, pointer-events)]" "none[Request none of them, overriding the default]"' \
+                        '*--v8-flags-unsafe[Flags passed as-is to the V8 JavaScript engine, space-separated]:v8-flags-unsafe: ' \
+                        '*--v8-max-heap-mb[Maximum V8 heap size in megabytes, per browser instance]:v8-max-heap-mb: ' \
+                        '*--watchdog-ms[Terminates JavaScript when the browser stalls — stays busy for this long without returning to its network poll (e.g. a page stuck in an endless script loop)]:watchdog-ms: ' \
+                        '*--ca-cert[Load TLS root certificates from a PEM file]:ca-cert:_files' \
+                        '*--ca-path[Load TLS root certificates from every file in a directory]:ca-path:_files'
+                    ;;
+                fetch)
+                    _arguments -s \
+                        '*--dump[Dumps the document to stdout]:dump:((html\:"Serialized HTML of the DOM" markdown\:"Converts content to Markdown" png\:"Text-only rendering of the page as a PNG image (base64 with --json)" pdf\:"Text-only rendering of the page as a PDF file (base64 with --json)" wpt\:"" semantic_tree\:"JSON-serialized semantic tree" semantic_tree_text\:"Pruned plain-text semantic tree" structured_data\:"JSON-LD, OpenGraph, Twitter card, meta and link tags as JSON"))' \
+                        '*--with-base[Add a <base> tag in dump]' \
+                        '*--with-frames[Includes the contents of iframes]' \
+                        '*--strip-mode[Tag group to remove from dump]:strip-mode:_values -s , strip-mode "js[Script and link\[as=script, rel=preload\]]" "ui[Includes img, picture, video, CSS and SVG]" "css[Includes style and link\[rel=stylesheet\]]" "invisible[Best-effort hidden elements (e.g. display\:none, <template>)]" "shell[Page chrome by markup\: nav, aside, dialog, page-level header and footer]" "clutter[Heuristic to keep only the main content, in the manner of reader modes]"' \
+                        '*--dump-selector[Dump only the first element matching the CSS selector instead of the whole document]:dump-selector: ' \
+                        '*--dump-max-bytes[Soft cap on the dumped html or markdown, in bytes]:dump-max-bytes: ' \
+                        '*--fail-on-http-error[Exit with code 22 when any page'\''s HTTP status is 400 or above]' \
+                        '*--markdown-alternate[With --dump markdown, when a page links a markdown version of itself (<link rel="alternate" type="text/markdown">), dump that file instead of converting the page]' \
+                        '*--wait-ms[Wait time in milliseconds]:wait-ms: ' \
+                        '*--wait-until[Wait until the specified event]:wait-until:((load\:"" domcontentloaded\:"" networkalmostidle\:"" networkidle\:"" done\:""))' \
+                        '*--wait-script[Wait for a JavaScript expression to return truthy]:wait-script: ' \
+                        '*--wait-script-file[Like --wait-script, but reads the script from a file]:wait-script-file:_files' \
+                        '*--wait-selector[Wait for an element matching the CSS selector to appear]:wait-selector: ' \
+                        '*--inject-script[JavaScript to execute as the document'\''s <head> is parsed, before any other scripts in the page run]:inject-script: ' \
+                        '*--inject-script-file[Like --inject-script, but reads the script from a file]:inject-script-file:_files' \
+                        '*--terminate-ms[Hard deadline in milliseconds]:terminate-ms: ' \
+                        '*--json[Capture and print the status of the fetch as JSON]' \
+                        '*--metrics[Write metrics (Prometheus text format) to stdout on exit, after any --dump output]' \
+                        '*--obey-robots[Fetches and obeys robots.txt of the target page]' \
+                        '*--robot-store-entry-limit[Maximum number of entries kept in the RobotStore]:robot-store-entry-limit: ' \
+                        '*--cors-store-entry-limit[Maximum number of entries kept in the CorsStore]:cors-store-entry-limit: ' \
+                        '*--proxy-bearer-token[Token sent for bearer authentication with the proxy: Proxy-Authorization: Bearer <token>]:proxy-bearer-token: ' \
+                        '*--http-proxy[HTTP proxy for all HTTP requests]:http-proxy: ' \
+                        '*--http-max-concurrent[Maximum number of concurrent HTTP requests]:http-max-concurrent: ' \
+                        '*--http-max-host-open[Maximum open connections to a given host:port]:http-max-host-open: ' \
+                        '*--http-nav-delay[Minimum time in ms between two top-level navigations to the same host (see --http-nav-burst)]:http-nav-delay: ' \
+                        '*--http-nav-burst[Number of top-level navigations to an idle host allowed to start without waiting for --http-nav-delay]:http-nav-burst: ' \
+                        '*--http-timeout[Maximum time in ms the transfer is allowed to complete]:http-timeout: ' \
+                        '*--http-version[HTTP version to negotiate]:http-version:((auto\:"" 1.1\:""))' \
+                        '*--http-connect-timeout[Time in ms to establish an HTTP connection before timing out]:http-connect-timeout: ' \
+                        '*--http-header[Extra custom header added to every outgoing HTTP request, including redirections, in "Name: Value" form]:http-header: ' \
+                        '*--http-max-response-size[Limits the acceptable response size for any request]:http-max-response-size: ' \
+                        '*--ws-max-concurrent[Maximum number of concurrent WebSocket connections]:ws-max-concurrent: ' \
+                        '*--insecure-disable-tls-host-verification[Disables host verification on all HTTP requests]' \
+                        '*--log-level[The log level]:log-level:((debug\:"" info\:"" warn\:"" err\:"" fatal\:"" note\:""))' \
+                        '*--log-format[The log format]:log-format:((logfmt\:"" pretty\:""))' \
+                        '*--log-filter[Filter logs per scope, applied first-to-last]:log-filter: ' \
+                        '*--user-agent-suffix[Suffix appended to the Lightpanda/X.Y User-Agent]:user-agent-suffix: ' \
+                        '*--http-cache-dir[Directory used as a filesystem cache for network resources]:http-cache-dir:_files' \
+                        '*--http-cache-entry-limit[Maximum number of entries kept in the HTTP cache]:http-cache-entry-limit: ' \
+                        '*--http-debug[Enables libcurl verbose output]' \
+                        '*--http-curves[Colon-separated key exchange groups offered in the TLS handshake, in preference order, e.g. "X25519:P-256:P-384"]:http-curves: ' \
+                        '*--render-font[Font file (TrueType, OpenType or collection) used by the png and pdf dumps, and by screenshots, for characters the bundled DejaVu fonts lack, e.g. CJK]:render-font:_files' \
+                        '*--web-bot-auth-key-file[Path to the Ed25519 private key PEM file]:web-bot-auth-key-file:_files' \
+                        '*--web-bot-auth-keyid[The JWK thumbprint of your public key]:web-bot-auth-keyid: ' \
+                        '*--web-bot-auth-domain[Your domain, e.g. yourdomain.com]:web-bot-auth-domain: ' \
+                        '*--user-agent[Override the User-Agent header entirely]:user-agent: ' \
+                        '*--locale[BCP 47 language tag driving navigator.language, the Accept-Language header and the default locale of Intl and toLocaleString]:locale: ' \
+                        '*--timezone[Time zone used by Date and Intl, e.g. Europe/Paris or UTC]:timezone: ' \
+                        '*--block-private-networks[Block HTTP requests to private/internal IP addresses after DNS resolution]' \
+                        '*--block-cidrs[Additional CIDR ranges to block]:block-cidrs: ' \
+                        '*--block-urls[URL patterns to block]:block-urls: ' \
+                        '*--adblock-lists[EasyList-syntax filter files to load]:adblock-lists:_files' \
+                        '*--cookie[Path to a file to load cookies from (read-only)]:cookie:_files' \
+                        '*--cookie-jar[Path to a JSON file to save cookies to on exit (write-only)]:cookie-jar:_files' \
+                        '*--disable-features[Disable a feature that is on by default]:disable-features:_values -s , disable-features "cors[Skip CORS checks on fetch/XHR requests]"' \
+                        '*--experimental-features[Enable an experimental, unstable feature]:experimental-features:_values -s , experimental-features "cors[]" "serviceworker[]"' \
+                        '*--load-resources[Sub-resource to actually request]:load-resources:_values -s , load-resources "image[<img> sources, so that load/error reflects the real HTTP status]" "iframe[When enabled, <iframe> elements are fully loaded]" "worker[Enable loading dedicated and shared workers]" "stylesheet[Fetch external <link rel=stylesheet> resources so their rules contribute to computed styles (and therefore to visibility checks like display, visibility, opacity, pointer-events)]" "none[Request none of them, overriding the default]"' \
+                        '*--v8-flags-unsafe[Flags passed as-is to the V8 JavaScript engine, space-separated]:v8-flags-unsafe: ' \
+                        '*--v8-max-heap-mb[Maximum V8 heap size in megabytes, per browser instance]:v8-max-heap-mb: ' \
+                        '*--watchdog-ms[Terminates JavaScript when the browser stalls — stays busy for this long without returning to its network poll (e.g. a page stuck in an endless script loop)]:watchdog-ms: ' \
+                        '*--ca-cert[Load TLS root certificates from a PEM file]:ca-cert:_files' \
+                        '*--ca-path[Load TLS root certificates from every file in a directory]:ca-path:_files' \
+                        '*:url: '
+                    ;;
+                mcp)
+                    _arguments -s \
+                        '*--port[Serve MCP over HTTP on this port instead of stdio]:port: ' \
+                        '*--host[Host to bind when --port is set (e.g. 0.0.0.0 for all interfaces)]:host: ' \
+                        '*--cdp-port[Also run a CDP (WebSocket) server on this port]:cdp-port: ' \
+                        '*--http-session-timeout[Seconds before an idle HTTP session (--port) is closed]:http-session-timeout: ' \
+                        '*--obey-robots[Fetches and obeys robots.txt of the target page]' \
+                        '*--robot-store-entry-limit[Maximum number of entries kept in the RobotStore]:robot-store-entry-limit: ' \
+                        '*--cors-store-entry-limit[Maximum number of entries kept in the CorsStore]:cors-store-entry-limit: ' \
+                        '*--proxy-bearer-token[Token sent for bearer authentication with the proxy: Proxy-Authorization: Bearer <token>]:proxy-bearer-token: ' \
+                        '*--http-proxy[HTTP proxy for all HTTP requests]:http-proxy: ' \
+                        '*--http-max-concurrent[Maximum number of concurrent HTTP requests]:http-max-concurrent: ' \
+                        '*--http-max-host-open[Maximum open connections to a given host:port]:http-max-host-open: ' \
+                        '*--http-nav-delay[Minimum time in ms between two top-level navigations to the same host (see --http-nav-burst)]:http-nav-delay: ' \
+                        '*--http-nav-burst[Number of top-level navigations to an idle host allowed to start without waiting for --http-nav-delay]:http-nav-burst: ' \
+                        '*--http-timeout[Maximum time in ms the transfer is allowed to complete]:http-timeout: ' \
+                        '*--http-version[HTTP version to negotiate]:http-version:((auto\:"" 1.1\:""))' \
+                        '*--http-connect-timeout[Time in ms to establish an HTTP connection before timing out]:http-connect-timeout: ' \
+                        '*--http-header[Extra custom header added to every outgoing HTTP request, including redirections, in "Name: Value" form]:http-header: ' \
+                        '*--http-max-response-size[Limits the acceptable response size for any request]:http-max-response-size: ' \
+                        '*--ws-max-concurrent[Maximum number of concurrent WebSocket connections]:ws-max-concurrent: ' \
+                        '*--insecure-disable-tls-host-verification[Disables host verification on all HTTP requests]' \
+                        '*--log-level[The log level]:log-level:((debug\:"" info\:"" warn\:"" err\:"" fatal\:"" note\:""))' \
+                        '*--log-format[The log format]:log-format:((logfmt\:"" pretty\:""))' \
+                        '*--log-filter[Filter logs per scope, applied first-to-last]:log-filter: ' \
+                        '*--user-agent-suffix[Suffix appended to the Lightpanda/X.Y User-Agent]:user-agent-suffix: ' \
+                        '*--http-cache-dir[Directory used as a filesystem cache for network resources]:http-cache-dir:_files' \
+                        '*--http-cache-entry-limit[Maximum number of entries kept in the HTTP cache]:http-cache-entry-limit: ' \
+                        '*--http-debug[Enables libcurl verbose output]' \
+                        '*--http-curves[Colon-separated key exchange groups offered in the TLS handshake, in preference order, e.g. "X25519:P-256:P-384"]:http-curves: ' \
+                        '*--render-font[Font file (TrueType, OpenType or collection) used by the png and pdf dumps, and by screenshots, for characters the bundled DejaVu fonts lack, e.g. CJK]:render-font:_files' \
+                        '*--web-bot-auth-key-file[Path to the Ed25519 private key PEM file]:web-bot-auth-key-file:_files' \
+                        '*--web-bot-auth-keyid[The JWK thumbprint of your public key]:web-bot-auth-keyid: ' \
+                        '*--web-bot-auth-domain[Your domain, e.g. yourdomain.com]:web-bot-auth-domain: ' \
+                        '*--user-agent[Override the User-Agent header entirely]:user-agent: ' \
+                        '*--locale[BCP 47 language tag driving navigator.language, the Accept-Language header and the default locale of Intl and toLocaleString]:locale: ' \
+                        '*--timezone[Time zone used by Date and Intl, e.g. Europe/Paris or UTC]:timezone: ' \
+                        '*--block-private-networks[Block HTTP requests to private/internal IP addresses after DNS resolution]' \
+                        '*--block-cidrs[Additional CIDR ranges to block]:block-cidrs: ' \
+                        '*--block-urls[URL patterns to block]:block-urls: ' \
+                        '*--adblock-lists[EasyList-syntax filter files to load]:adblock-lists:_files' \
+                        '*--cookie[Path to a file to load cookies from (read-only)]:cookie:_files' \
+                        '*--cookie-jar[Path to a JSON file to save cookies to on exit (write-only)]:cookie-jar:_files' \
+                        '*--disable-features[Disable a feature that is on by default]:disable-features:_values -s , disable-features "cors[Skip CORS checks on fetch/XHR requests]"' \
+                        '*--experimental-features[Enable an experimental, unstable feature]:experimental-features:_values -s , experimental-features "cors[]" "serviceworker[]"' \
+                        '*--load-resources[Sub-resource to actually request]:load-resources:_values -s , load-resources "image[<img> sources, so that load/error reflects the real HTTP status]" "iframe[When enabled, <iframe> elements are fully loaded]" "worker[Enable loading dedicated and shared workers]" "stylesheet[Fetch external <link rel=stylesheet> resources so their rules contribute to computed styles (and therefore to visibility checks like display, visibility, opacity, pointer-events)]" "none[Request none of them, overriding the default]"' \
+                        '*--v8-flags-unsafe[Flags passed as-is to the V8 JavaScript engine, space-separated]:v8-flags-unsafe: ' \
+                        '*--v8-max-heap-mb[Maximum V8 heap size in megabytes, per browser instance]:v8-max-heap-mb: ' \
+                        '*--watchdog-ms[Terminates JavaScript when the browser stalls — stays busy for this long without returning to its network poll (e.g. a page stuck in an endless script loop)]:watchdog-ms: ' \
+                        '*--ca-cert[Load TLS root certificates from a PEM file]:ca-cert:_files' \
+                        '*--ca-path[Load TLS root certificates from every file in a directory]:ca-path:_files'
+                    ;;
+                agent)
+                    _arguments -s \
+                        '*--provider[The AI provider]:provider:((anthropic\:"" gemini\:"" vertex\:"" openai\:"" ollama\:"" huggingface\:"" llama_cpp\:"" openai_compatible\:"" vercel\:"" mistral\:"" openrouter\:"" codex\:""))' \
+                        '*--model[The model name to use]:model: ' \
+                        '*--base-url[Override the API base URL for the provider]:base-url: ' \
+                        '*--system-prompt[Override the default system prompt]:system-prompt: ' \
+                        '*--task[One-shot mode: run a single user turn, print the final answer to stdout, and exit]:task: ' \
+                        '*--trace[Write one JSON line per step to PATH: each model call (latency, input, cached and output tokens) and each tool call (arguments, latency, result size, page URL and HTTP status), then a summary]:trace:_files' \
+                        '*--trace-results[Also write each tool result'\''s text to the --trace file, as the model received it]' \
+                        '*--save[Synthesize a replayable .js script from the --task run and write it to PATH, instead of printing the answer]:save:_files' \
+                        '*'{-a,--attach}'[Feed a local file to the model alongside --task]:attach:_files' \
+                        '*--verbosity[Stderr chatter level]:verbosity:((low\:"silent in --task mode (final answer to stdout only); spinner + summary in REPL" medium\:"+ one \`● \[tool\: ...\]\` line per call" high\:"+ the matching \`\[result\: ...\]\` body (required by the benchmarks harness)"))' \
+                        '*--effort[Per-turn reasoning budget, mapped to each provider'\''s native thinking/reasoning knob]:effort:((null\:"" none\:"" minimal\:"" low\:"" medium\:"" high\:"" xhigh\:""))' \
+                        '*--search-engine[Which web search API the `search` tool uses]:search-engine:((auto\:"" brave\:"" tavily\:"" exa\:"" keenable\:""))' \
+                        '*--url[Open this page before the first turn]:url: ' \
+                        '*--list-models[Print the model IDs usable with `agent` for --provider, one per line, sorted, and exit]' \
+                        '*--no-llm[Force the basic REPL even when an API key is present or --provider is set]' \
+                        '*--obey-robots[Fetches and obeys robots.txt of the target page]' \
+                        '*--robot-store-entry-limit[Maximum number of entries kept in the RobotStore]:robot-store-entry-limit: ' \
+                        '*--cors-store-entry-limit[Maximum number of entries kept in the CorsStore]:cors-store-entry-limit: ' \
+                        '*--proxy-bearer-token[Token sent for bearer authentication with the proxy: Proxy-Authorization: Bearer <token>]:proxy-bearer-token: ' \
+                        '*--http-proxy[HTTP proxy for all HTTP requests]:http-proxy: ' \
+                        '*--http-max-concurrent[Maximum number of concurrent HTTP requests]:http-max-concurrent: ' \
+                        '*--http-max-host-open[Maximum open connections to a given host:port]:http-max-host-open: ' \
+                        '*--http-nav-delay[Minimum time in ms between two top-level navigations to the same host (see --http-nav-burst)]:http-nav-delay: ' \
+                        '*--http-nav-burst[Number of top-level navigations to an idle host allowed to start without waiting for --http-nav-delay]:http-nav-burst: ' \
+                        '*--http-timeout[Maximum time in ms the transfer is allowed to complete]:http-timeout: ' \
+                        '*--http-version[HTTP version to negotiate]:http-version:((auto\:"" 1.1\:""))' \
+                        '*--http-connect-timeout[Time in ms to establish an HTTP connection before timing out]:http-connect-timeout: ' \
+                        '*--http-header[Extra custom header added to every outgoing HTTP request, including redirections, in "Name: Value" form]:http-header: ' \
+                        '*--http-max-response-size[Limits the acceptable response size for any request]:http-max-response-size: ' \
+                        '*--ws-max-concurrent[Maximum number of concurrent WebSocket connections]:ws-max-concurrent: ' \
+                        '*--insecure-disable-tls-host-verification[Disables host verification on all HTTP requests]' \
+                        '*--log-level[The log level]:log-level:((debug\:"" info\:"" warn\:"" err\:"" fatal\:"" note\:""))' \
+                        '*--log-format[The log format]:log-format:((logfmt\:"" pretty\:""))' \
+                        '*--log-filter[Filter logs per scope, applied first-to-last]:log-filter: ' \
+                        '*--user-agent-suffix[Suffix appended to the Lightpanda/X.Y User-Agent]:user-agent-suffix: ' \
+                        '*--http-cache-dir[Directory used as a filesystem cache for network resources]:http-cache-dir:_files' \
+                        '*--http-cache-entry-limit[Maximum number of entries kept in the HTTP cache]:http-cache-entry-limit: ' \
+                        '*--http-debug[Enables libcurl verbose output]' \
+                        '*--http-curves[Colon-separated key exchange groups offered in the TLS handshake, in preference order, e.g. "X25519:P-256:P-384"]:http-curves: ' \
+                        '*--render-font[Font file (TrueType, OpenType or collection) used by the png and pdf dumps, and by screenshots, for characters the bundled DejaVu fonts lack, e.g. CJK]:render-font:_files' \
+                        '*--web-bot-auth-key-file[Path to the Ed25519 private key PEM file]:web-bot-auth-key-file:_files' \
+                        '*--web-bot-auth-keyid[The JWK thumbprint of your public key]:web-bot-auth-keyid: ' \
+                        '*--web-bot-auth-domain[Your domain, e.g. yourdomain.com]:web-bot-auth-domain: ' \
+                        '*--user-agent[Override the User-Agent header entirely]:user-agent: ' \
+                        '*--locale[BCP 47 language tag driving navigator.language, the Accept-Language header and the default locale of Intl and toLocaleString]:locale: ' \
+                        '*--timezone[Time zone used by Date and Intl, e.g. Europe/Paris or UTC]:timezone: ' \
+                        '*--block-private-networks[Block HTTP requests to private/internal IP addresses after DNS resolution]' \
+                        '*--block-cidrs[Additional CIDR ranges to block]:block-cidrs: ' \
+                        '*--block-urls[URL patterns to block]:block-urls: ' \
+                        '*--adblock-lists[EasyList-syntax filter files to load]:adblock-lists:_files' \
+                        '*--cookie[Path to a file to load cookies from (read-only)]:cookie:_files' \
+                        '*--cookie-jar[Path to a JSON file to save cookies to on exit (write-only)]:cookie-jar:_files' \
+                        '*--disable-features[Disable a feature that is on by default]:disable-features:_values -s , disable-features "cors[Skip CORS checks on fetch/XHR requests]"' \
+                        '*--experimental-features[Enable an experimental, unstable feature]:experimental-features:_values -s , experimental-features "cors[]" "serviceworker[]"' \
+                        '*--load-resources[Sub-resource to actually request]:load-resources:_values -s , load-resources "image[<img> sources, so that load/error reflects the real HTTP status]" "iframe[When enabled, <iframe> elements are fully loaded]" "worker[Enable loading dedicated and shared workers]" "stylesheet[Fetch external <link rel=stylesheet> resources so their rules contribute to computed styles (and therefore to visibility checks like display, visibility, opacity, pointer-events)]" "none[Request none of them, overriding the default]"' \
+                        '*--v8-flags-unsafe[Flags passed as-is to the V8 JavaScript engine, space-separated]:v8-flags-unsafe: ' \
+                        '*--v8-max-heap-mb[Maximum V8 heap size in megabytes, per browser instance]:v8-max-heap-mb: ' \
+                        '*--watchdog-ms[Terminates JavaScript when the browser stalls — stays busy for this long without returning to its network poll (e.g. a page stuck in an endless script loop)]:watchdog-ms: ' \
+                        '*--ca-cert[Load TLS root certificates from a PEM file]:ca-cert:_files' \
+                        '*--ca-path[Load TLS root certificates from every file in a directory]:ca-path:_files' \
+                        '1:script_file:_files'
+                    ;;
+                run)
+                    _arguments -s \
+                        '*--obey-robots[Fetches and obeys robots.txt of the target page]' \
+                        '*--robot-store-entry-limit[Maximum number of entries kept in the RobotStore]:robot-store-entry-limit: ' \
+                        '*--cors-store-entry-limit[Maximum number of entries kept in the CorsStore]:cors-store-entry-limit: ' \
+                        '*--proxy-bearer-token[Token sent for bearer authentication with the proxy: Proxy-Authorization: Bearer <token>]:proxy-bearer-token: ' \
+                        '*--http-proxy[HTTP proxy for all HTTP requests]:http-proxy: ' \
+                        '*--http-max-concurrent[Maximum number of concurrent HTTP requests]:http-max-concurrent: ' \
+                        '*--http-max-host-open[Maximum open connections to a given host:port]:http-max-host-open: ' \
+                        '*--http-nav-delay[Minimum time in ms between two top-level navigations to the same host (see --http-nav-burst)]:http-nav-delay: ' \
+                        '*--http-nav-burst[Number of top-level navigations to an idle host allowed to start without waiting for --http-nav-delay]:http-nav-burst: ' \
+                        '*--http-timeout[Maximum time in ms the transfer is allowed to complete]:http-timeout: ' \
+                        '*--http-version[HTTP version to negotiate]:http-version:((auto\:"" 1.1\:""))' \
+                        '*--http-connect-timeout[Time in ms to establish an HTTP connection before timing out]:http-connect-timeout: ' \
+                        '*--http-header[Extra custom header added to every outgoing HTTP request, including redirections, in "Name: Value" form]:http-header: ' \
+                        '*--http-max-response-size[Limits the acceptable response size for any request]:http-max-response-size: ' \
+                        '*--ws-max-concurrent[Maximum number of concurrent WebSocket connections]:ws-max-concurrent: ' \
+                        '*--insecure-disable-tls-host-verification[Disables host verification on all HTTP requests]' \
+                        '*--log-level[The log level]:log-level:((debug\:"" info\:"" warn\:"" err\:"" fatal\:"" note\:""))' \
+                        '*--log-format[The log format]:log-format:((logfmt\:"" pretty\:""))' \
+                        '*--log-filter[Filter logs per scope, applied first-to-last]:log-filter: ' \
+                        '*--user-agent-suffix[Suffix appended to the Lightpanda/X.Y User-Agent]:user-agent-suffix: ' \
+                        '*--http-cache-dir[Directory used as a filesystem cache for network resources]:http-cache-dir:_files' \
+                        '*--http-cache-entry-limit[Maximum number of entries kept in the HTTP cache]:http-cache-entry-limit: ' \
+                        '*--http-debug[Enables libcurl verbose output]' \
+                        '*--http-curves[Colon-separated key exchange groups offered in the TLS handshake, in preference order, e.g. "X25519:P-256:P-384"]:http-curves: ' \
+                        '*--render-font[Font file (TrueType, OpenType or collection) used by the png and pdf dumps, and by screenshots, for characters the bundled DejaVu fonts lack, e.g. CJK]:render-font:_files' \
+                        '*--web-bot-auth-key-file[Path to the Ed25519 private key PEM file]:web-bot-auth-key-file:_files' \
+                        '*--web-bot-auth-keyid[The JWK thumbprint of your public key]:web-bot-auth-keyid: ' \
+                        '*--web-bot-auth-domain[Your domain, e.g. yourdomain.com]:web-bot-auth-domain: ' \
+                        '*--user-agent[Override the User-Agent header entirely]:user-agent: ' \
+                        '*--locale[BCP 47 language tag driving navigator.language, the Accept-Language header and the default locale of Intl and toLocaleString]:locale: ' \
+                        '*--timezone[Time zone used by Date and Intl, e.g. Europe/Paris or UTC]:timezone: ' \
+                        '*--block-private-networks[Block HTTP requests to private/internal IP addresses after DNS resolution]' \
+                        '*--block-cidrs[Additional CIDR ranges to block]:block-cidrs: ' \
+                        '*--block-urls[URL patterns to block]:block-urls: ' \
+                        '*--adblock-lists[EasyList-syntax filter files to load]:adblock-lists:_files' \
+                        '*--cookie[Path to a file to load cookies from (read-only)]:cookie:_files' \
+                        '*--cookie-jar[Path to a JSON file to save cookies to on exit (write-only)]:cookie-jar:_files' \
+                        '*--disable-features[Disable a feature that is on by default]:disable-features:_values -s , disable-features "cors[Skip CORS checks on fetch/XHR requests]"' \
+                        '*--experimental-features[Enable an experimental, unstable feature]:experimental-features:_values -s , experimental-features "cors[]" "serviceworker[]"' \
+                        '*--load-resources[Sub-resource to actually request]:load-resources:_values -s , load-resources "image[<img> sources, so that load/error reflects the real HTTP status]" "iframe[When enabled, <iframe> elements are fully loaded]" "worker[Enable loading dedicated and shared workers]" "stylesheet[Fetch external <link rel=stylesheet> resources so their rules contribute to computed styles (and therefore to visibility checks like display, visibility, opacity, pointer-events)]" "none[Request none of them, overriding the default]"' \
+                        '*--v8-flags-unsafe[Flags passed as-is to the V8 JavaScript engine, space-separated]:v8-flags-unsafe: ' \
+                        '*--v8-max-heap-mb[Maximum V8 heap size in megabytes, per browser instance]:v8-max-heap-mb: ' \
+                        '*--watchdog-ms[Terminates JavaScript when the browser stalls — stays busy for this long without returning to its network poll (e.g. a page stuck in an endless script loop)]:watchdog-ms: ' \
+                        '*--ca-cert[Load TLS root certificates from a PEM file]:ca-cert:_files' \
+                        '*--ca-path[Load TLS root certificates from every file in a directory]:ca-path:_files' \
+                        '1:script_file:_files'
+                    ;;
+                version)
+                    _arguments -s \
+                        '*--check[Checks whether a newer release of lightpanda is available]'
+                    ;;
+                completion)
+                    _arguments -s \
+                        '1:shell:((bash\:"" fish\:"" zsh\:""))'
+                    ;;
+                help)
+                    _arguments -s \
+                        '1:command:((serve\:"" fetch\:"" mcp\:"" agent\:"" run\:"" version\:"" completion\:"" help\:""))'
+                    ;;
+            esac
+            ;;
+    esac
+}
+
+if [ "$funcstack[1]" = "_lightpanda" ]; then
+    _lightpanda "$@"
+else
+    compdef _lightpanda lightpanda
+fi

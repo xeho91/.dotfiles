@@ -1,5 +1,6 @@
+# Activate mise hooks after its environment has put mise on PATH
 if (( $+commands[mise] )); then
-	eval "$(mise env --shell zsh)"
+	eval "$(mise activate zsh)"
 fi
 
 # https://github.com/MordechaiHadad/bob
@@ -31,11 +32,6 @@ if (( $+commands[node] )); then
 	export NODE_OPTIONS="--max-old-space-size=8192"
 fi
 
-# # https://github.com/ajeetdsouza/zoxide
-if (( $+commands[zoxide] )); then
-	eval "$(zoxide init zsh --cmd j)"
-fi
-
 # Mason (Neovim package manager) - LSP servers, DAP, linters, formatters
 if [[ -d "$XDG_DATA_HOME/nvim/mason/bin" ]]; then
   path+="$XDG_DATA_HOME/nvim/mason/bin"
@@ -44,4 +40,9 @@ fi
 if (( $+commands[pnpm] )); then
 	export PNPM_HOME="$XDG_DATA_HOME/pnpm"
 	path+="$PNPM_HOME/bin"
+fi
+
+# Initialize after compinit so zoxide can register completion for `j`.
+if (( $+commands[zoxide] )); then
+	eval "$(zoxide init zsh --cmd j)"
 fi

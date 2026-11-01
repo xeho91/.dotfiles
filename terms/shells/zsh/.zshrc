@@ -13,15 +13,12 @@ source "$ZSH_CONFIG_DIR/os.zsh"
 source "$ZSH_CONFIG_DIR/term.zsh"
 source "$ZSH_CONFIG_DIR/options.zsh"
 source "$ZSH_CONFIG_DIR/keybindings.zsh"
-source "$ZSH_CONFIG_DIR/programs.zsh"
+source "$ZSH_CONFIG_DIR/toolchain.zsh"
 source "$ZSH_CONFIG_DIR/aliases.zsh"
-source "$ZSH_CONFIG_DIR/completions.zsh"
 source "$ZSH_CONFIG_DIR/preferred.zsh"
 source "$ZSH_CONFIG_DIR/plugins.zsh"
+source "$ZSH_CONFIG_DIR/programs.zsh"
 source "$ZSH_CONFIG_DIR/functions.zsh"
-if (( $+commands[mise] )); then
-  eval "$(mise activate zsh)"
-fi
 source "$ZSH_CONFIG_DIR/prompt.zsh"
 
 

@@ -1,0 +1,1356 @@
+#compdef purple
+
+autoload -U is-at-least
+
+_purple() {
+    typeset -A opt_args
+    typeset -a _arguments_options
+    local ret=1
+
+    if is-at-least 5.2; then
+        _arguments_options=(-s -S -C)
+    else
+        _arguments_options=(-s -C)
+    fi
+
+    local context curcontext="$curcontext" state line
+    _arguments "${_arguments_options[@]}" : \
+'-c+[Connect directly to a host by alias (skip the TUI)]:CONNECT:_default' \
+'--connect=[Connect directly to a host by alias (skip the TUI)]:CONNECT:_default' \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'--completions=[Generate shell completions]:SHELL:(bash elvish fish powershell zsh)' \
+'--theme=[Override theme for this session]:THEME:_default' \
+'-l[List all configured hosts]' \
+'--list[List all configured hosts]' \
+'--demo[Launch with demo data (no real config needed)]' \
+'--verbose[Enable verbose logging (debug level)]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'-V[Print version]' \
+'--version[Print version]' \
+'::alias -- Connect to a host by alias, or filter the TUI:_default' \
+":: :_purple_commands" \
+"*::: :->purple" \
+&& ret=0
+    case $state in
+    (purple)
+        words=($line[2] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:purple-command-$line[2]:"
+        case $line[2] in
+            (add)
+_arguments "${_arguments_options[@]}" : \
+'-a+[Alias for the host (default\: derived from hostname)]:ALIAS:_default' \
+'--alias=[Alias for the host (default\: derived from hostname)]:ALIAS:_default' \
+'-k+[Path to identity file (SSH key)]:KEY:_default' \
+'--key=[Path to identity file (SSH key)]:KEY:_default' \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+':target -- Target in user@hostname\:port format:_default' \
+&& ret=0
+;;
+(import)
+_arguments "${_arguments_options[@]}" : \
+'-g+[Group label for imported hosts]:GROUP:_default' \
+'--group=[Group label for imported hosts]:GROUP:_default' \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'--known-hosts[Import from ~/.ssh/known_hosts instead]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'::file -- File with one host per line (user@host\:port format):_default' \
+&& ret=0
+;;
+(sync)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'--dry-run[Preview changes without modifying config]' \
+'--remove[Remove hosts that no longer exist on the provider]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'::provider -- Sync a specific provider (default\: all configured):_default' \
+&& ret=0
+;;
+(provider)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_purple__subcmd__provider_commands" \
+"*::: :->provider" \
+&& ret=0
+
+    case $state in
+    (provider)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:purple-provider-command-$line[1]:"
+        case $line[1] in
+            (add)
+_arguments "${_arguments_options[@]}" : \
+'--token=[API token (or set PURPLE_TOKEN env var, or use --token-stdin)]:TOKEN:_default' \
+'--prefix=[Alias prefix (default\: provider short label)]:PREFIX:_default' \
+'--user=[Default SSH user (default\: root)]:USER:_default' \
+'--key=[Default identity file]:KEY:_default' \
+'--url=[Base URL for self-hosted providers (required for Proxmox and NetBox)]:URL:_default' \
+'--profile=[AWS credential profile from ~/.aws/config or ~/.aws/credentials. A profile with role_arn and source_profile is assumed via STS, so one key pair reaches several accounts]:PROFILE:_default' \
+'--ssm=[Reach AWS instances through Systems Manager Session Manager\: \`off\` (default), \`auto\` to route only the nodes Session Manager reports online or \`always\` to route every instance without asking]:MODE:_default' \
+'--regions=[Comma-separated regions, zones or subscription IDs (e.g. us-east-1,eu-west-1 for AWS, fr-par-1,nl-ams-1 for Scaleway, us-central1-a for GCP zones or subscription UUIDs for Azure)]:REGIONS:_default' \
+'--project=[GCP project ID]:PROJECT:_default' \
+'--compartment=[OCI compartment OCID (Oracle)]:COMPARTMENT:_default' \
+'--filter=[NetBox filter query string (e.g. "status=active&tag=ssh")]:FILTER:_default' \
+'--label=[Optional label when adding a second config for the same provider (e.g. --label work, --label personal). Required once a provider already has a labeled config]:LABEL:_default' \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'--token-stdin[Read token from stdin (e.g. from a password manager)]' \
+'(--verify-tls)--no-verify-tls[Skip TLS certificate verification (for self-signed certs)]' \
+'(--no-verify-tls)--verify-tls[Explicitly enable TLS certificate verification (overrides stored setting)]' \
+'(--no-auto-sync)--auto-sync[Enable automatic sync on startup]' \
+'(--auto-sync)--no-auto-sync[Disable automatic sync on startup]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':provider -- Provider name (digitalocean, vultr, linode, hetzner, upcloud, proxmox, aws, scaleway, gcp, azure, tailscale, oracle, ovh, leaseweb, i3d, transip, teleport, netbox):_default' \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+':provider -- Provider name (`digitalocean`) or `provider\:label` (`digitalocean\:work`):_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_purple__subcmd__provider__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:purple-provider-help-command-$line[1]:"
+        case $line[1] in
+            (add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(tunnel)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_purple__subcmd__tunnel_commands" \
+"*::: :->tunnel" \
+&& ret=0
+
+    case $state in
+    (tunnel)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:purple-tunnel-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+'::alias -- Show tunnels for a specific host:_default' \
+&& ret=0
+;;
+(add)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+':alias -- Host alias:_default' \
+':forward -- Forward spec\: L\:port\:host\:port (local), R\:port\:host\:port (remote) or D\:port (SOCKS):_default' \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+':alias -- Host alias:_default' \
+':forward -- Forward spec\: L\:port\:host\:port (local), R\:port\:host\:port (remote) or D\:port (SOCKS):_default' \
+&& ret=0
+;;
+(start)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+':alias -- Host alias:_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_purple__subcmd__tunnel__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:purple-tunnel-help-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(start)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(password)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_purple__subcmd__password_commands" \
+"*::: :->password" \
+&& ret=0
+
+    case $state in
+    (password)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:purple-password-command-$line[1]:"
+        case $line[1] in
+            (set)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+':alias -- Host alias:_default' \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+':alias -- Host alias:_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_purple__subcmd__password__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:purple-password-help-command-$line[1]:"
+        case $line[1] in
+            (set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(snippet)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_purple__subcmd__snippet_commands" \
+"*::: :->snippet" \
+&& ret=0
+
+    case $state in
+    (snippet)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:purple-snippet-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(add)
+_arguments "${_arguments_options[@]}" : \
+'--description=[Short description]:DESCRIPTION:_default' \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'--interactive[Run in an interactive shell so ~/.bashrc or ~/.zshrc is loaded (e.g. for nvm)]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':name -- Snippet name:_default' \
+':command -- Command to run on the remote host:_default' \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+':name -- Snippet name:_default' \
+&& ret=0
+;;
+(run)
+_arguments "${_arguments_options[@]}" : \
+'--tag=[Run on all hosts matching this tag]:TAG:_default' \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'--all[Run on all hosts]' \
+'--parallel[Run on hosts concurrently]' \
+'-h[Print help]' \
+'--help[Print help]' \
+':name -- Snippet name:_default' \
+'::alias -- Host alias (run on a single host):_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_purple__subcmd__snippet__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:purple-snippet-help-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(run)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(update)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(mcp)
+_arguments "${_arguments_options[@]}" : \
+'--audit-log=[Custom path for the MCP audit log (default\: mcp-audit.log in the state directory, ~/.purple by default). Ignored when --no-audit is set]:PATH:_default' \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'--read-only[Restrict tools to read-only operations. Denies run_command and container_action, and removes them from tools/list. Recommended when exposing purple to autonomous agents]' \
+'--no-audit[Disable the MCP audit log. By default every tool call is appended to mcp-audit.log in the state directory (~/.purple by default) as JSON Lines]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(theme)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_purple__subcmd__theme_commands" \
+"*::: :->theme" \
+&& ret=0
+
+    case $state in
+    (theme)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:purple-theme-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+':name -- Theme name:_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_purple__subcmd__theme__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:purple-theme-help-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(vault)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+":: :_purple__subcmd__vault_commands" \
+"*::: :->vault" \
+&& ret=0
+
+    case $state in
+    (vault)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:purple-vault-command-$line[1]:"
+        case $line[1] in
+            (sign)
+_arguments "${_arguments_options[@]}" : \
+'--vault-addr=[Override VAULT_ADDR for this invocation only. Highest precedence\: flag > per-host comment > provider default > shell env]:URL:_default' \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'--all[Sign all hosts with a Vault SSH role configured]' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'::alias -- Host alias to sign (omit for --all):_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_purple__subcmd__vault__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:purple-vault-help-command-$line[1]:"
+        case $line[1] in
+            (sign)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(logs)
+_arguments "${_arguments_options[@]}" : \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'--tail[Follow log output in real time]' \
+'--clear[Delete the log file]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(whats-new)
+_arguments "${_arguments_options[@]}" : \
+'--since=[Only include entries newer than this version (e.g. 2.40.0)]:SINCE:_default' \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(gen-assets)
+_arguments "${_arguments_options[@]}" : \
+'--font-dir=[Directory holding ui-mono-regular.woff2 and ui-mono-bold.woff2 to embed. Pass an empty value to render with the system monospace]:FONT_DIR:_default' \
+'--hero-out=[Also write the looping animated hero SVG (all five tabs with detail panels, search typing itself) to this path]:HERO_OUT:_default' \
+'--config=[Path to SSH config file \[default\: PURPLE_SSH_CONFIG, then ssh_config in preferences, then ~/.ssh/config\]]:PATH:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+'::out_dir -- Output directory for the generated SVGs:_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_purple__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:purple-help-command-$line[1]:"
+        case $line[1] in
+            (add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(import)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(sync)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(provider)
+_arguments "${_arguments_options[@]}" : \
+":: :_purple__subcmd__help__subcmd__provider_commands" \
+"*::: :->provider" \
+&& ret=0
+
+    case $state in
+    (provider)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:purple-help-provider-command-$line[1]:"
+        case $line[1] in
+            (add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(tunnel)
+_arguments "${_arguments_options[@]}" : \
+":: :_purple__subcmd__help__subcmd__tunnel_commands" \
+"*::: :->tunnel" \
+&& ret=0
+
+    case $state in
+    (tunnel)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:purple-help-tunnel-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(start)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(password)
+_arguments "${_arguments_options[@]}" : \
+":: :_purple__subcmd__help__subcmd__password_commands" \
+"*::: :->password" \
+&& ret=0
+
+    case $state in
+    (password)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:purple-help-password-command-$line[1]:"
+        case $line[1] in
+            (set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(snippet)
+_arguments "${_arguments_options[@]}" : \
+":: :_purple__subcmd__help__subcmd__snippet_commands" \
+"*::: :->snippet" \
+&& ret=0
+
+    case $state in
+    (snippet)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:purple-help-snippet-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(add)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(remove)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(run)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(update)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(mcp)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(theme)
+_arguments "${_arguments_options[@]}" : \
+":: :_purple__subcmd__help__subcmd__theme_commands" \
+"*::: :->theme" \
+&& ret=0
+
+    case $state in
+    (theme)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:purple-help-theme-command-$line[1]:"
+        case $line[1] in
+            (list)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(vault)
+_arguments "${_arguments_options[@]}" : \
+":: :_purple__subcmd__help__subcmd__vault_commands" \
+"*::: :->vault" \
+&& ret=0
+
+    case $state in
+    (vault)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:purple-help-vault-command-$line[1]:"
+        case $line[1] in
+            (sign)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(logs)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(whats-new)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(gen-assets)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+}
+
+(( $+functions[_purple_commands] )) ||
+_purple_commands() {
+    local commands; commands=(
+'add:Quick-add a host\: purple add user@host\:port --alias myserver' \
+'import:Import hosts from a file or known_hosts' \
+'sync:Sync hosts from cloud providers (DigitalOcean, Vultr, Linode, Hetzner, UpCloud, Proxmox VE, AWS EC2, Scaleway, GCP, Azure, Tailscale, Oracle Cloud, OVHcloud, Leaseweb, i3D.net, TransIP, Teleport, NetBox)' \
+'provider:Manage cloud provider configurations' \
+'tunnel:Manage SSH tunnels' \
+'password:Manage passwords in the OS keychain for SSH hosts' \
+'snippet:Manage command snippets for quick execution on hosts' \
+'update:Update purple to the latest version' \
+'mcp:Start MCP server (Model Context Protocol) for AI agent integration' \
+'theme:Manage color themes' \
+'vault:HashiCorp Vault SSH secrets engine operations (signed SSH certificates)' \
+'logs:View or manage log file' \
+'whats-new:Print release notes since a prior version' \
+'gen-assets:Render marketing SVG screenshots from the demo TUI. Internal\: drives the release imagery pipeline so README and landing-page assets never go stale' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'purple commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__add_commands] )) ||
+_purple__subcmd__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple add commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__gen-assets_commands] )) ||
+_purple__subcmd__gen-assets_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple gen-assets commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help_commands] )) ||
+_purple__subcmd__help_commands() {
+    local commands; commands=(
+'add:Quick-add a host\: purple add user@host\:port --alias myserver' \
+'import:Import hosts from a file or known_hosts' \
+'sync:Sync hosts from cloud providers (DigitalOcean, Vultr, Linode, Hetzner, UpCloud, Proxmox VE, AWS EC2, Scaleway, GCP, Azure, Tailscale, Oracle Cloud, OVHcloud, Leaseweb, i3D.net, TransIP, Teleport, NetBox)' \
+'provider:Manage cloud provider configurations' \
+'tunnel:Manage SSH tunnels' \
+'password:Manage passwords in the OS keychain for SSH hosts' \
+'snippet:Manage command snippets for quick execution on hosts' \
+'update:Update purple to the latest version' \
+'mcp:Start MCP server (Model Context Protocol) for AI agent integration' \
+'theme:Manage color themes' \
+'vault:HashiCorp Vault SSH secrets engine operations (signed SSH certificates)' \
+'logs:View or manage log file' \
+'whats-new:Print release notes since a prior version' \
+'gen-assets:Render marketing SVG screenshots from the demo TUI. Internal\: drives the release imagery pipeline so README and landing-page assets never go stale' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'purple help commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__add_commands] )) ||
+_purple__subcmd__help__subcmd__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help add commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__gen-assets_commands] )) ||
+_purple__subcmd__help__subcmd__gen-assets_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help gen-assets commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__help_commands] )) ||
+_purple__subcmd__help__subcmd__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help help commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__import_commands] )) ||
+_purple__subcmd__help__subcmd__import_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help import commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__logs_commands] )) ||
+_purple__subcmd__help__subcmd__logs_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help logs commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__mcp_commands] )) ||
+_purple__subcmd__help__subcmd__mcp_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help mcp commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__password_commands] )) ||
+_purple__subcmd__help__subcmd__password_commands() {
+    local commands; commands=(
+'set:Store a password in the OS keychain for a host' \
+'remove:Remove a password from the OS keychain' \
+    )
+    _describe -t commands 'purple help password commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__password__subcmd__remove_commands] )) ||
+_purple__subcmd__help__subcmd__password__subcmd__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help password remove commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__password__subcmd__set_commands] )) ||
+_purple__subcmd__help__subcmd__password__subcmd__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help password set commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__provider_commands] )) ||
+_purple__subcmd__help__subcmd__provider_commands() {
+    local commands; commands=(
+'add:Add or update a provider configuration' \
+'list:List configured providers' \
+'remove:Remove a provider configuration. Pass \`provider\` for ALL configs of that provider, or \`provider\:label\` for one specific config' \
+    )
+    _describe -t commands 'purple help provider commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__provider__subcmd__add_commands] )) ||
+_purple__subcmd__help__subcmd__provider__subcmd__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help provider add commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__provider__subcmd__list_commands] )) ||
+_purple__subcmd__help__subcmd__provider__subcmd__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help provider list commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__provider__subcmd__remove_commands] )) ||
+_purple__subcmd__help__subcmd__provider__subcmd__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help provider remove commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__snippet_commands] )) ||
+_purple__subcmd__help__subcmd__snippet_commands() {
+    local commands; commands=(
+'list:List all saved snippets' \
+'add:Add a new snippet' \
+'remove:Remove a snippet' \
+'run:Run a snippet on one or more hosts' \
+    )
+    _describe -t commands 'purple help snippet commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__snippet__subcmd__add_commands] )) ||
+_purple__subcmd__help__subcmd__snippet__subcmd__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help snippet add commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__snippet__subcmd__list_commands] )) ||
+_purple__subcmd__help__subcmd__snippet__subcmd__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help snippet list commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__snippet__subcmd__remove_commands] )) ||
+_purple__subcmd__help__subcmd__snippet__subcmd__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help snippet remove commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__snippet__subcmd__run_commands] )) ||
+_purple__subcmd__help__subcmd__snippet__subcmd__run_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help snippet run commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__sync_commands] )) ||
+_purple__subcmd__help__subcmd__sync_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help sync commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__theme_commands] )) ||
+_purple__subcmd__help__subcmd__theme_commands() {
+    local commands; commands=(
+'list:List available themes' \
+'set:Set the active theme' \
+    )
+    _describe -t commands 'purple help theme commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__theme__subcmd__list_commands] )) ||
+_purple__subcmd__help__subcmd__theme__subcmd__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help theme list commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__theme__subcmd__set_commands] )) ||
+_purple__subcmd__help__subcmd__theme__subcmd__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help theme set commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__tunnel_commands] )) ||
+_purple__subcmd__help__subcmd__tunnel_commands() {
+    local commands; commands=(
+'list:List configured tunnels' \
+'add:Add a tunnel to a host' \
+'remove:Remove a tunnel from a host' \
+'start:Start a tunnel (foreground, Ctrl+C to stop)' \
+    )
+    _describe -t commands 'purple help tunnel commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__tunnel__subcmd__add_commands] )) ||
+_purple__subcmd__help__subcmd__tunnel__subcmd__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help tunnel add commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__tunnel__subcmd__list_commands] )) ||
+_purple__subcmd__help__subcmd__tunnel__subcmd__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help tunnel list commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__tunnel__subcmd__remove_commands] )) ||
+_purple__subcmd__help__subcmd__tunnel__subcmd__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help tunnel remove commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__tunnel__subcmd__start_commands] )) ||
+_purple__subcmd__help__subcmd__tunnel__subcmd__start_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help tunnel start commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__update_commands] )) ||
+_purple__subcmd__help__subcmd__update_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help update commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__vault_commands] )) ||
+_purple__subcmd__help__subcmd__vault_commands() {
+    local commands; commands=(
+'sign:Sign an SSH certificate for a host (or --all) via the Vault SSH secrets engine' \
+    )
+    _describe -t commands 'purple help vault commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__vault__subcmd__sign_commands] )) ||
+_purple__subcmd__help__subcmd__vault__subcmd__sign_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help vault sign commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__help__subcmd__whats-new_commands] )) ||
+_purple__subcmd__help__subcmd__whats-new_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple help whats-new commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__import_commands] )) ||
+_purple__subcmd__import_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple import commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__logs_commands] )) ||
+_purple__subcmd__logs_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple logs commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__mcp_commands] )) ||
+_purple__subcmd__mcp_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple mcp commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__password_commands] )) ||
+_purple__subcmd__password_commands() {
+    local commands; commands=(
+'set:Store a password in the OS keychain for a host' \
+'remove:Remove a password from the OS keychain' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'purple password commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__password__subcmd__help_commands] )) ||
+_purple__subcmd__password__subcmd__help_commands() {
+    local commands; commands=(
+'set:Store a password in the OS keychain for a host' \
+'remove:Remove a password from the OS keychain' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'purple password help commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__password__subcmd__help__subcmd__help_commands] )) ||
+_purple__subcmd__password__subcmd__help__subcmd__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple password help help commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__password__subcmd__help__subcmd__remove_commands] )) ||
+_purple__subcmd__password__subcmd__help__subcmd__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple password help remove commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__password__subcmd__help__subcmd__set_commands] )) ||
+_purple__subcmd__password__subcmd__help__subcmd__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple password help set commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__password__subcmd__remove_commands] )) ||
+_purple__subcmd__password__subcmd__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple password remove commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__password__subcmd__set_commands] )) ||
+_purple__subcmd__password__subcmd__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple password set commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__provider_commands] )) ||
+_purple__subcmd__provider_commands() {
+    local commands; commands=(
+'add:Add or update a provider configuration' \
+'list:List configured providers' \
+'remove:Remove a provider configuration. Pass \`provider\` for ALL configs of that provider, or \`provider\:label\` for one specific config' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'purple provider commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__provider__subcmd__add_commands] )) ||
+_purple__subcmd__provider__subcmd__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple provider add commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__provider__subcmd__help_commands] )) ||
+_purple__subcmd__provider__subcmd__help_commands() {
+    local commands; commands=(
+'add:Add or update a provider configuration' \
+'list:List configured providers' \
+'remove:Remove a provider configuration. Pass \`provider\` for ALL configs of that provider, or \`provider\:label\` for one specific config' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'purple provider help commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__provider__subcmd__help__subcmd__add_commands] )) ||
+_purple__subcmd__provider__subcmd__help__subcmd__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple provider help add commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__provider__subcmd__help__subcmd__help_commands] )) ||
+_purple__subcmd__provider__subcmd__help__subcmd__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple provider help help commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__provider__subcmd__help__subcmd__list_commands] )) ||
+_purple__subcmd__provider__subcmd__help__subcmd__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple provider help list commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__provider__subcmd__help__subcmd__remove_commands] )) ||
+_purple__subcmd__provider__subcmd__help__subcmd__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple provider help remove commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__provider__subcmd__list_commands] )) ||
+_purple__subcmd__provider__subcmd__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple provider list commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__provider__subcmd__remove_commands] )) ||
+_purple__subcmd__provider__subcmd__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple provider remove commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__snippet_commands] )) ||
+_purple__subcmd__snippet_commands() {
+    local commands; commands=(
+'list:List all saved snippets' \
+'add:Add a new snippet' \
+'remove:Remove a snippet' \
+'run:Run a snippet on one or more hosts' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'purple snippet commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__snippet__subcmd__add_commands] )) ||
+_purple__subcmd__snippet__subcmd__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple snippet add commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__snippet__subcmd__help_commands] )) ||
+_purple__subcmd__snippet__subcmd__help_commands() {
+    local commands; commands=(
+'list:List all saved snippets' \
+'add:Add a new snippet' \
+'remove:Remove a snippet' \
+'run:Run a snippet on one or more hosts' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'purple snippet help commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__snippet__subcmd__help__subcmd__add_commands] )) ||
+_purple__subcmd__snippet__subcmd__help__subcmd__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple snippet help add commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__snippet__subcmd__help__subcmd__help_commands] )) ||
+_purple__subcmd__snippet__subcmd__help__subcmd__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple snippet help help commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__snippet__subcmd__help__subcmd__list_commands] )) ||
+_purple__subcmd__snippet__subcmd__help__subcmd__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple snippet help list commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__snippet__subcmd__help__subcmd__remove_commands] )) ||
+_purple__subcmd__snippet__subcmd__help__subcmd__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple snippet help remove commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__snippet__subcmd__help__subcmd__run_commands] )) ||
+_purple__subcmd__snippet__subcmd__help__subcmd__run_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple snippet help run commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__snippet__subcmd__list_commands] )) ||
+_purple__subcmd__snippet__subcmd__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple snippet list commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__snippet__subcmd__remove_commands] )) ||
+_purple__subcmd__snippet__subcmd__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple snippet remove commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__snippet__subcmd__run_commands] )) ||
+_purple__subcmd__snippet__subcmd__run_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple snippet run commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__sync_commands] )) ||
+_purple__subcmd__sync_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple sync commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__theme_commands] )) ||
+_purple__subcmd__theme_commands() {
+    local commands; commands=(
+'list:List available themes' \
+'set:Set the active theme' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'purple theme commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__theme__subcmd__help_commands] )) ||
+_purple__subcmd__theme__subcmd__help_commands() {
+    local commands; commands=(
+'list:List available themes' \
+'set:Set the active theme' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'purple theme help commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__theme__subcmd__help__subcmd__help_commands] )) ||
+_purple__subcmd__theme__subcmd__help__subcmd__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple theme help help commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__theme__subcmd__help__subcmd__list_commands] )) ||
+_purple__subcmd__theme__subcmd__help__subcmd__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple theme help list commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__theme__subcmd__help__subcmd__set_commands] )) ||
+_purple__subcmd__theme__subcmd__help__subcmd__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple theme help set commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__theme__subcmd__list_commands] )) ||
+_purple__subcmd__theme__subcmd__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple theme list commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__theme__subcmd__set_commands] )) ||
+_purple__subcmd__theme__subcmd__set_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple theme set commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__tunnel_commands] )) ||
+_purple__subcmd__tunnel_commands() {
+    local commands; commands=(
+'list:List configured tunnels' \
+'add:Add a tunnel to a host' \
+'remove:Remove a tunnel from a host' \
+'start:Start a tunnel (foreground, Ctrl+C to stop)' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'purple tunnel commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__tunnel__subcmd__add_commands] )) ||
+_purple__subcmd__tunnel__subcmd__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple tunnel add commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__tunnel__subcmd__help_commands] )) ||
+_purple__subcmd__tunnel__subcmd__help_commands() {
+    local commands; commands=(
+'list:List configured tunnels' \
+'add:Add a tunnel to a host' \
+'remove:Remove a tunnel from a host' \
+'start:Start a tunnel (foreground, Ctrl+C to stop)' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'purple tunnel help commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__tunnel__subcmd__help__subcmd__add_commands] )) ||
+_purple__subcmd__tunnel__subcmd__help__subcmd__add_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple tunnel help add commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__tunnel__subcmd__help__subcmd__help_commands] )) ||
+_purple__subcmd__tunnel__subcmd__help__subcmd__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple tunnel help help commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__tunnel__subcmd__help__subcmd__list_commands] )) ||
+_purple__subcmd__tunnel__subcmd__help__subcmd__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple tunnel help list commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__tunnel__subcmd__help__subcmd__remove_commands] )) ||
+_purple__subcmd__tunnel__subcmd__help__subcmd__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple tunnel help remove commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__tunnel__subcmd__help__subcmd__start_commands] )) ||
+_purple__subcmd__tunnel__subcmd__help__subcmd__start_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple tunnel help start commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__tunnel__subcmd__list_commands] )) ||
+_purple__subcmd__tunnel__subcmd__list_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple tunnel list commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__tunnel__subcmd__remove_commands] )) ||
+_purple__subcmd__tunnel__subcmd__remove_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple tunnel remove commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__tunnel__subcmd__start_commands] )) ||
+_purple__subcmd__tunnel__subcmd__start_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple tunnel start commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__update_commands] )) ||
+_purple__subcmd__update_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple update commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__vault_commands] )) ||
+_purple__subcmd__vault_commands() {
+    local commands; commands=(
+'sign:Sign an SSH certificate for a host (or --all) via the Vault SSH secrets engine' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'purple vault commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__vault__subcmd__help_commands] )) ||
+_purple__subcmd__vault__subcmd__help_commands() {
+    local commands; commands=(
+'sign:Sign an SSH certificate for a host (or --all) via the Vault SSH secrets engine' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'purple vault help commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__vault__subcmd__help__subcmd__help_commands] )) ||
+_purple__subcmd__vault__subcmd__help__subcmd__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple vault help help commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__vault__subcmd__help__subcmd__sign_commands] )) ||
+_purple__subcmd__vault__subcmd__help__subcmd__sign_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple vault help sign commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__vault__subcmd__sign_commands] )) ||
+_purple__subcmd__vault__subcmd__sign_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple vault sign commands' commands "$@"
+}
+(( $+functions[_purple__subcmd__whats-new_commands] )) ||
+_purple__subcmd__whats-new_commands() {
+    local commands; commands=()
+    _describe -t commands 'purple whats-new commands' commands "$@"
+}
+
+if [ "$funcstack[1]" = "_purple" ]; then
+    _purple "$@"
+else
+    compdef _purple purple
+fi
