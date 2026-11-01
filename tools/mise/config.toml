@@ -80,6 +80,7 @@ bottom = { version = "0.14.9", os = ["macos"] }
 "github:acheronfail/repgrep" = { version = "0.17.1", os = ["macos"] }
 "github:unkn0wn-root/resterm" = { version = "1.17.2", os = ["macos"] }
 "github:AmmarAbouZor/tui-journal" = { version = "0.18.0", os = ["macos"] }
+"github:agavra/tuicr" = { version = "0.28.0", os = ["macos"] }
 
 # MCPs
 "pipx:serena-agent" = { version = "2.1.0", os = ["macos"] }
