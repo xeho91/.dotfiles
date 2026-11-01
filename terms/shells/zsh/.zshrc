@@ -1,3 +1,6 @@
+zmodload zsh/datetime
+typeset -gF ZSHRC_START=$EPOCHREALTIME
+
 # =========================================================================== #
 # Load Zsh configurations
 # -----------------------
@@ -24,3 +27,13 @@ source "$ZSH_CONFIG_DIR/prompt.zsh"
 
 # Remove duplicates
 typeset -aU path dpath fpath manpath module_path
+
+typeset -gF ZSHENV_ELAPSED
+typeset -gF ZSHRC_ELAPSED=$(( EPOCHREALTIME - ZSHRC_START ))
+printf '\033[1m.zshenv\033[0m loaded in \033[36m%.2f secs\033[0m\n' "$ZSHENV_ELAPSED"
+if [[ -n ${ZPROFILE_ELAPSED:-} ]]; then
+	printf '\033[1m.zprofile\033[0m loaded in \033[36m%.2f secs\033[0m\n' "$ZPROFILE_ELAPSED"
+	unset ZPROFILE_ELAPSED
+fi
+printf '\033[1m.zshrc\033[0m loaded in \033[36m%.2f secs\033[0m\n' "$ZSHRC_ELAPSED"
+unset ZSHENV_ELAPSED ZSHRC_START ZSHRC_ELAPSED

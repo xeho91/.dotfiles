@@ -1,3 +1,6 @@
+zmodload zsh/datetime
+typeset -gF ZSHENV_START=$EPOCHREALTIME
+
 # ================================ #
 # Define path to user's "dotfiles"
 # ================================ #
@@ -25,3 +28,6 @@ export LANGUAGE="en_US:en"
 if [[ -r "$HOME/.zshenv.local" ]]; then
 	source "$HOME/.zshenv.local"
 fi
+
+typeset -gF ZSHENV_ELAPSED=$(( EPOCHREALTIME - ZSHENV_START ))
+unset ZSHENV_START

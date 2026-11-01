@@ -1,3 +1,6 @@
+zmodload zsh/datetime
+typeset -gF ZPROFILE_START=$EPOCHREALTIME
+
 # =========================================================================== #
 # Display OS & distribution information at login
 # =========================================================================== #
@@ -28,3 +31,6 @@ fi
 if [[ -f "$HOME/.orbstack/shell/init.zsh" ]]; then
     source "$HOME/.orbstack/shell/init.zsh"
 fi
+
+typeset -gF ZPROFILE_ELAPSED=$(( EPOCHREALTIME - ZPROFILE_START ))
+unset ZPROFILE_START
