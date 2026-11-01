@@ -3,11 +3,6 @@ if (( $+commands[mise] )); then
 	eval "$(mise activate zsh)"
 fi
 
-# https://github.com/MordechaiHadad/bob
-if (( $+commands[bob] )); then
-	path+="$XDG_DATA_HOME/bob/nvim-bin"
-fi
-
 # https://github.com/gitleaks/gitleaks
 if (( $+commands[gitleaks] )); then
 	export GITLEAKS_CONFIG="$XDG_CONFIG_HOME/gitleaks/config.toml"
