@@ -2,3 +2,4 @@ node_modules/
 .serena/
 .DS_Store
 .mise.toml
+/agents/opencode/service.json
