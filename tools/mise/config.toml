@@ -85,6 +85,7 @@ bottom = { version = "0.14.9", os = ["macos"] }
 # MCPs
 "pipx:serena-agent" = { version = "2.1.0", os = ["macos"] }
 "npm:chrome-devtools-mcp" = { version = "1.12.0", os = ["macos"] }
+"github:lightpanda-io/browser" = { version = "1.0.2", os = ["macos"] }
 
 [env]
 # OpenCode
