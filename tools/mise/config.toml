@@ -86,6 +86,7 @@ bottom = { version = "0.14.9", os = ["macos"] }
 # MCPs
 "pipx:serena-agent" = { version = "2.1.0", os = ["macos"] }
 "npm:chrome-devtools-mcp" = { version = "1.12.0", os = ["macos"] }
+"npm:gitnexus" = { version = "1.6.12", os = ["macos"] }
 "github:lightpanda-io/browser" = { version = "1.0.2", os = ["macos"] }
 
 [env]
@@ -94,6 +95,12 @@ OPENCODE_LOG_LEVEL = "debug"
 OPENCODE_SERVER_HOSTNAME = "127.0.0.1"
 OPENCODE_SERVER_PORT = "4096"
 
+# GitNexus
+GITNEXUS_SERVER_HOSTNAME = "127.0.0.1"
+GITNEXUS_SERVER_PORT = "4747"
+GITNEXUS_MCP_READ_ONLY = "1"
+GITNEXUS_MCP_ENABLE_REFRESH = "1"
+
 # Serena
 SERENA_MCP_HOSTNAME = "127.0.0.1"
 SERENA_MCP_PORT = "8000"
@@ -101,6 +108,10 @@ SERENA_UI_HOSTNAME = "127.0.0.1"
 SERENA_UI_PORT = "24282"
 
 [secrets.fnox]
+
+[tasks."dash:gitnexus"]
+description = "Open GitNexus local server endpoint"
+run = "open http://${GITNEXUS_SERVER_HOSTNAME}:${GITNEXUS_SERVER_PORT}"
 
 [tasks."dash:serena"]
 description = "Open Serena dashboard"
@@ -120,6 +131,10 @@ alias = ["oc"]
 description = "Start Serena MCP server"
 run = "serena start-mcp-server --context=ide --transport=sse --host=${SERENA_UI_HOSTNAME} --port=${SERENA_MCP_PORT} 2>&1 | tspin"
 alias = ["serena:start"]
+
+[tasks."server:gitnexus"]
+description = "Start GitNexus local graph server for the web UI"
+run = "gitnexus serve --host=${GITNEXUS_SERVER_HOSTNAME} --port=${GITNEXUS_SERVER_PORT}"
 
 [tasks."server:opencode"]
 description = "Start OpenCode server"

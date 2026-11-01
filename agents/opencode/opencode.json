@@ -43,6 +43,13 @@
           "--project-from-cwd"
         ]
       }
+    },
+    "gitnexus": {
+      "type": "local",
+      "command": [
+        "/Users/mateusz.kadlubowski/.local/share/mise/installs/npm-gitnexus/1.6.12/bin/gitnexus",
+        "mcp"
+      ]
     }
   },
   "permissions": [
