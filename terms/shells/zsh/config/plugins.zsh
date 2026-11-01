@@ -13,25 +13,16 @@ plugins=(
   zsh-autosuggestions
   zsh-completions
   # OMZ built-in
-  1password
-  alias-finder
-  argocd
   bgnotify
-  brew
   colored-man-pages
   copybuffer
+  copyfile
   copypath
   dirhistory
-  docker-compose
-  docker
+  encode64
   extract
   fzf
   git-auto-fetch
-  gh
-  pass-cli
-  procs
-  rust
-  uv
   vi-mode
 )
 
