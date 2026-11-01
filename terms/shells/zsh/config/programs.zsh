@@ -1,5 +1,5 @@
 if (( $+commands[mise] )); then
-	eval "$(mise activate zsh)"
+	eval "$(mise env --shell zsh)"
 fi
 
 # https://github.com/MordechaiHadad/bob
@@ -45,4 +45,3 @@ if (( $+commands[pnpm] )); then
 	export PNPM_HOME="$XDG_DATA_HOME/pnpm"
 	path+="$PNPM_HOME/bin"
 fi
-
