@@ -31,6 +31,7 @@ proton = "~/.dotfiles/tools/mise/backend/proton"
 "brew:bruno-cli" = { version = "latest", os = "macos" }
 "brew:gpg-tui" = { version = "latest", os = "macos" }
 "brew:mole" = { version = "latest", os = "macos" }
+"brew:openssl@3" = { version = "latest", os = "macos" }
 "brew:pinentry-mac" = { version = "latest", os = "macos" }
 "brew:terminal-notifier" = { version = "latest", os = "macos" }
 

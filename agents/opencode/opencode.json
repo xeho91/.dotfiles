@@ -18,17 +18,24 @@
           "--filesystem-root=/tmp"
         ]
       },
-      "lightpanda": {
-        "type": "local",
-        "command": ["mise", "exec", "--", "lightpanda", "mcp"]
-      },
       "context7": {
         "type": "remote",
         "url": "https://mcp.context7.com/mcp"
       },
+      "gitnexus": {
+        "type": "local",
+        "command": ["mise", "exec", "--", "gitnexus", "mcp"]
+      },
+      "lightpanda": {
+        "type": "local",
+        "command": ["mise", "exec", "--", "lightpanda", "mcp"]
+      },
       "serena": {
         "type": "local",
         "command": [
+          "mise",
+          "exec",
+          "--",
           "serena",
           "start-mcp-server",
           "--context",
@@ -39,8 +46,12 @@
     }
   },
   "permissions": [
-    { "action": "external_directory", "resource": "*", "effect": "ask" },
+    { "action": "context7_resolve_library_id", "resource": "*", "effect": "allow" },
+    { "action": "context7_query_docs", "resource": "*", "effect": "allow" },
     { "action": "edit", "resource": "*", "effect": "ask" },
+    { "action": "external_directory", "resource": "*", "effect": "ask" },
+    { "action": "gitnexus_*", "resource": "*", "effect": "allow" },
+    { "action": "serena_*", "resource": "*", "effect": "allow" },
     { "action": "shell", "resource": "*", "effect": "ask" },
     { "action": "shell", "resource": "git status*", "effect": "allow" },
     { "action": "shell", "resource": "git diff*", "effect": "allow" },
@@ -87,9 +98,6 @@
     { "action": "shell", "resource": "gh workflow list*", "effect": "allow" },
     { "action": "shell", "resource": "gh workflow view*", "effect": "allow" },
     { "action": "shell", "resource": "perl*", "effect": "deny" },
-    { "action": "shell", "resource": "python*", "effect": "deny" },
-    { "action": "context7_resolve_library_id", "resource": "*", "effect": "allow" },
-    { "action": "context7_query_docs", "resource": "*", "effect": "allow" },
-    { "action": "serena_*", "resource": "*", "effect": "allow" }
+    { "action": "shell", "resource": "python*", "effect": "deny" }
   ]
 }
