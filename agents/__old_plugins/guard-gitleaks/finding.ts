@@ -8,5 +8,9 @@ const GitleaksFindingSchema = v.object({
 	Description: v.optional(v.string()),
 	Secret: v.optional(v.string()),
 	Match: v.optional(v.string()),
+	StartLine: v.optional(v.number()),
+	EndLine: v.optional(v.number()),
+	StartColumn: v.optional(v.number()),
+	EndColumn: v.optional(v.number()),
 });
 type GitleaksFinding = v.InferOutput<typeof GitleaksFindingSchema>;

@@ -15,10 +15,10 @@ function handle_chat_system_transform(
 	return async (input, output) => {
 		await log({ client: deps.client })({
 			level: "debug",
-			message: "Scanning chat system",
+			message: "chat.system.transform invoked",
 			extra: {
+				session_id: input.sessionID,
 				system_count: output.system.length,
-				input,
 			},
 		});
 		output.system = await scan({
