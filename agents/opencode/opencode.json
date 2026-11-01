@@ -18,6 +18,10 @@
           "--filesystem-root=/tmp"
         ]
       },
+      "lightpanda": {
+        "type": "local",
+        "command": ["mise", "exec", "--", "lightpanda", "mcp"]
+      },
       "context7": {
         "type": "remote",
         "url": "https://mcp.context7.com/mcp"
