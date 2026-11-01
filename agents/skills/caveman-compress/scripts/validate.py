@@ -3,7 +3,7 @@ import re
 from collections import Counter
 from pathlib import Path
 
-URL_REGEX = re.compile(r"https?://[^\s)]+")
+URL_REGEX = re.compile(r"https?://[^\s)`]+")  # a backtick is never part of a URL
 FENCE_OPEN_REGEX = re.compile(r"^(\s{0,3})(`{3,}|~{3,})(.*)$")
 
 # A line that is nothing but a fence marker plus an optional info string, at ANY
@@ -222,12 +222,17 @@ def extract_fenced_spans(lines):
     return spans
 
 
+# Sentence punctuation right after a URL or path ("see docs/a.md.") is matched
+#  by both regexes but is not part of it; compression often moves it.
+TRAILING_PUNCTUATION = ".,;:!?"
+
+
 def extract_urls(text):
-    return set(URL_REGEX.findall(text))
+    return {url.rstrip(TRAILING_PUNCTUATION) for url in URL_REGEX.findall(text)}
 
 
 def extract_paths(text):
-    return set(PATH_REGEX.findall(text))
+    return {path.rstrip(TRAILING_PUNCTUATION) for path in PATH_REGEX.findall(text)}
 
 
 def count_bullets(text):
@@ -263,7 +268,19 @@ def extract_inline_codes(text):
         "" if FENCE_MARKER_LINE_REGEX.match(line) else line
         for line in text_without_fences.split("\n")
     )
-    return re.findall(r"`([^`]+)`", text_without_fences)
+    # Run-aware pairing (CommonMark): a span opens with a backtick run and
+    # closes with an equal-length run. A mid-line ``` in prose ("inside a
+    # ```diff fence") has no equal closer, so it matches nothing — instead of
+    # its trailing backtick shifting the pairing of every following span.
+    # The opener is the WHOLE run (`(?!`)` after it), so a lone ``` can never
+    # shrink to a single backtick and pair with the next span. The content may
+    # hold a run of a different length (``a`b``), so it is "anything, lazily"
+    # up to the first equal run, not "anything but a backtick"; DOTALL keeps
+    # hard-wrapped spans in the comparison set.
+    return [
+        m.group(2)
+        for m in re.finditer(r"(?<!`)(`+)(?!`)(.+?)(?<!`)\1(?!`)", text_without_fences, re.DOTALL)
+    ]
 
 
 # ---------- Validators ----------
