@@ -1,0 +1,40 @@
+{
+  "skill_name": "choose-test-scope",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Use the Choose Test Scope skill for this change. The implementation of `normalizeName` is `return value.trim().toLowerCase()`. The change adds lowercasing. The existing test `normalize-name.test.ts` calls `normalizeName(' ALICE ')` and asserts the result is `'alice'`. Inspect this evidence and recommend whether a new test is needed. Do not write tests.",
+      "expected_output": "The report recommends `No new test`, cites `normalize-name.test.ts` as valid coverage for the changed behavior, and uses only the four required report fields. It asks the user to agree before any test work.",
+      "assertions": [
+        "The decision is exactly `No new test`.",
+        "The coverage evidence identifies the existing test and the behavior it exercises.",
+        "The report contains only Decision, Behavior, Coverage evidence, and Reason, in that order.",
+        "The agent asks whether the user agrees and does not write or propose a new test as completed work."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Use the Choose Test Scope skill for this change. `saveSettings` now writes a temporary file and renames it over the settings file. The current tests cover JSON serialization but do not call the filesystem. The risk is whether the replacement preserves the settings file correctly. Inspect this evidence and recommend the test scope. Do not write tests.",
+      "expected_output": "The report recommends `Integration`, explains that the risk is the application's filesystem interaction, identifies the missing boundary coverage, and asks the user to agree before test work.",
+      "assertions": [
+        "The decision is exactly `Integration`.",
+        "The reason links the risk to the filesystem dependency interaction.",
+        "The coverage evidence distinguishes serialization coverage from filesystem-interaction coverage.",
+        "The agent asks whether the user agrees and does not write tests."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Use the Choose Test Scope skill for this change. The changed `validateCoupon` function rejects expired coupon codes using only its input date and local logic. Existing tests cover valid coupons but not expired coupons. Inspect this evidence, recommend a scope, and ask for agreement. Do not write tests.",
+      "expected_output": "The initial report recommends `Unit` and asks for agreement. To evaluate the feedback loop, send these follow-up user turns after the agent asks: (1) `Partly agree.` (2) When asked what should change and why, say: `The change also sends the coupon code to the billing service, and my main risk is that the service receives the wrong code.` The agent should revise the recommendation to `Integration`, explain the dependency-boundary risk, and ask again. Then reply: `Agree.` The agent should record exactly one entry in an isolated `feedback.jsonl`, with the final decision and agreement and the user's clarification. It must not start test work because implementation was not requested.",
+      "assertions": [
+        "The initial decision is exactly `Unit`, with no test work before agreement.",
+        "After `Partly agree`, the agent asks what should change and why, then waits for clarification.",
+        "After clarification, the report changes to exactly `Integration` and identifies the billing-service interaction as the risk.",
+        "The agent asks for agreement on the revised report and waits for the answer.",
+        "After agreement, exactly one feedback entry is written, with the final decision and clarification.",
+        "The agent does not write tests because implementation was not requested."
+      ]
+    }
+  ]
+}

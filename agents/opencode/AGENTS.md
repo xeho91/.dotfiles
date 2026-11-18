@@ -1,5 +1,15 @@
 # Rules
 
+## Writing Style
+
+Use the `asd-ste100` skill for all responses.
+Apply its rules to keep text clear and unambiguous.
+Preserve meaning, conditions, and uncertainty.
+
+> [!CAUTION]
+> Do not claim strict ASD-STE100 compliance
+> unless checked against the official dictionary.
+
 ## CLI Commands
 
 When calling CLI commands, prefer full flag names over short aliases whenever practical, for readability.

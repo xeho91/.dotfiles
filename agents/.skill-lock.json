@@ -478,6 +478,48 @@
       "pluginName": "lightpanda",
       "installedAt": "2026-11-01T12:50:47.826Z",
       "updatedAt": "2026-11-01T12:50:47.826Z"
+    },
+    "asd-ste100": {
+      "source": "danyuchn/asd-ste100-skill",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/danyuchn/asd-ste100-skill.git",
+      "commit": "707362731928d0d92526c066df15dbbe6a378c07",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "707362731928d0d92526c066df15dbbe6a378c07",
+      "installedAt": "2026-11-17T21:28:43.395Z",
+      "updatedAt": "2026-11-17T21:28:43.395Z"
+    },
+    "Write Skill": {
+      "source": "/Users/mateusz.kadlubowski/Projects/augustus/.opencode/skills/write-skill",
+      "sourceType": "local",
+      "sourceUrl": "/Users/mateusz.kadlubowski/Projects/augustus/.opencode/skills/write-skill",
+      "skillFolderHash": "ed9d5b9c4eafba06e61b341e9b9eac14724fb6599b7852bb97c236c23b17cb04",
+      "installedAt": "2026-11-18T16:09:15.057Z",
+      "updatedAt": "2026-11-18T16:09:15.057Z"
+    },
+    "Choose Test Scope": {
+      "source": "/Users/mateusz.kadlubowski/Projects/augustus/.opencode/skills",
+      "sourceType": "local",
+      "sourceUrl": "/Users/mateusz.kadlubowski/Projects/augustus/.opencode/skills",
+      "skillFolderHash": "ee6d90a9c2b20f2e7b012d09cc4bec0be9bb18fe42f5cdd0fe4cc21fd88d06d8",
+      "installedAt": "2026-11-18T16:10:15.882Z",
+      "updatedAt": "2026-11-18T16:10:15.882Z"
+    },
+    "Write Integration Tests": {
+      "source": "/Users/mateusz.kadlubowski/Projects/augustus/.opencode/skills",
+      "sourceType": "local",
+      "sourceUrl": "/Users/mateusz.kadlubowski/Projects/augustus/.opencode/skills",
+      "skillFolderHash": "45434b391b0b5922e12b7d08dd898e95191abe0ee766232ca5f031cb4372ed88",
+      "installedAt": "2026-11-18T16:10:15.883Z",
+      "updatedAt": "2026-11-18T16:10:15.883Z"
+    },
+    "Write Unit Tests": {
+      "source": "/Users/mateusz.kadlubowski/Projects/augustus/.opencode/skills",
+      "sourceType": "local",
+      "sourceUrl": "/Users/mateusz.kadlubowski/Projects/augustus/.opencode/skills",
+      "skillFolderHash": "cd59eab809a16c9fec0e1d5ec89dcf34f284ae68743ba4d7260f817caea124ee",
+      "installedAt": "2026-11-18T16:10:15.883Z",
+      "updatedAt": "2026-11-18T16:10:15.883Z"
     }
   },
   "dismissed": {

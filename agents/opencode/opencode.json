@@ -20,7 +20,11 @@
       },
       "context7": {
         "type": "remote",
-        "url": "https://mcp.context7.com/mcp"
+        "url": "https://mcp.context7.com/mcp",
+        "oauth": false,
+        "headers": {
+          "Authorization": "Bearer {env:CONTEXT7_API_KEY}"
+        }
       },
       "gitnexus": {
         "type": "local",
