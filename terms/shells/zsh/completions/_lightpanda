@@ -39,7 +39,7 @@ _lightpanda() {
                         '*--cors-store-entry-limit[Maximum number of entries kept in the CorsStore]:cors-store-entry-limit: ' \
                         '*--proxy-bearer-token[Token sent for bearer authentication with the proxy: Proxy-Authorization: Bearer <token>]:proxy-bearer-token: ' \
                         '*--http-proxy[HTTP proxy for all HTTP requests]:http-proxy: ' \
-                        '*--http-max-concurrent[Maximum number of concurrent HTTP requests]:http-max-concurrent: ' \
+                        '*--http-max-concurrent[Maximum number of concurrent HTTP requests, shared by every session]:http-max-concurrent: ' \
                         '*--http-max-host-open[Maximum open connections to a given host:port]:http-max-host-open: ' \
                         '*--http-nav-delay[Minimum time in ms between two top-level navigations to the same host (see --http-nav-burst)]:http-nav-delay: ' \
                         '*--http-nav-burst[Number of top-level navigations to an idle host allowed to start without waiting for --http-nav-delay]:http-nav-burst: ' \
@@ -72,9 +72,10 @@ _lightpanda() {
                         '*--cookie[Path to a file to load cookies from (read-only)]:cookie:_files' \
                         '*--cookie-jar[Path to a JSON file to save cookies to when a CDP browser context closes (write-only)]:cookie-jar:_files' \
                         '*--disable-features[Disable a feature that is on by default]:disable-features:_values -s , disable-features "cors[Skip CORS checks on fetch/XHR requests]"' \
-                        '*--experimental-features[Enable an experimental, unstable feature]:experimental-features:_values -s , experimental-features "cors[]" "serviceworker[]"' \
-                        '*--load-resources[Sub-resource to actually request]:load-resources:_values -s , load-resources "image[<img> sources, so that load/error reflects the real HTTP status]" "iframe[When enabled, <iframe> elements are fully loaded]" "worker[Enable loading dedicated and shared workers]" "stylesheet[Fetch external <link rel=stylesheet> resources so their rules contribute to computed styles (and therefore to visibility checks like display, visibility, opacity, pointer-events)]" "none[Request none of them, overriding the default]"' \
+                        '*--experimental-features[Enable an experimental, unstable feature]:experimental-features:_values -s , experimental-features "cors[]" "serviceworker[]" "privatecache[]" "animation[]"' \
+                        '*--load-resources[Sub-resource to actually request]:load-resources:_values -s , load-resources "image[<img> sources, so that load/error reflects the real HTTP status]" "iframe[When enabled, <iframe> elements are fully loaded]" "worker[Enable loading dedicated and shared workers]" "stylesheet[Fetch external <link rel=stylesheet> resources so their rules contribute to computed styles (and therefore to visibility checks like display, visibility, opacity, pointer-events)]" "beacon[Send navigator.sendBeacon requests]" "none[Request none of them, overriding the default]"' \
                         '*--v8-flags-unsafe[Flags passed as-is to the V8 JavaScript engine, space-separated]:v8-flags-unsafe: ' \
+                        '*--v8-gc-hint-floor-mb[Floor under which cleanup events (e.g. page teardown) does not notify V8 of memory pressure]:v8-gc-hint-floor-mb: ' \
                         '*--v8-max-heap-mb[Maximum V8 heap size in megabytes, per browser instance]:v8-max-heap-mb: ' \
                         '*--watchdog-ms[Terminates JavaScript when the browser stalls — stays busy for this long without returning to its network poll (e.g. a page stuck in an endless script loop)]:watchdog-ms: ' \
                         '*--ca-cert[Load TLS root certificates from a PEM file]:ca-cert:_files' \
@@ -91,7 +92,7 @@ _lightpanda() {
                         '*--fail-on-http-error[Exit with code 22 when any page'\''s HTTP status is 400 or above]' \
                         '*--markdown-alternate[With --dump markdown, when a page links a markdown version of itself (<link rel="alternate" type="text/markdown">), dump that file instead of converting the page]' \
                         '*--wait-ms[Wait time in milliseconds]:wait-ms: ' \
-                        '*--wait-until[Wait until the specified event]:wait-until:((load\:"" domcontentloaded\:"" networkalmostidle\:"" networkidle\:"" done\:""))' \
+                        '*--wait-until[Wait until the specified event]:wait-until:((load\:"The '\''load'\'' event" domcontentloaded\:"The '\''DOMContentLoaded'\'' event" networkalmostidle\:"At most 2 requests in flight for the last 500ms" networkidle\:"No network activity for the last 500ms" settled\:"Experimental" done\:"Full quiescence, no pending scripts/network"))' \
                         '*--wait-script[Wait for a JavaScript expression to return truthy]:wait-script: ' \
                         '*--wait-script-file[Like --wait-script, but reads the script from a file]:wait-script-file:_files' \
                         '*--wait-selector[Wait for an element matching the CSS selector to appear]:wait-selector: ' \
@@ -105,7 +106,7 @@ _lightpanda() {
                         '*--cors-store-entry-limit[Maximum number of entries kept in the CorsStore]:cors-store-entry-limit: ' \
                         '*--proxy-bearer-token[Token sent for bearer authentication with the proxy: Proxy-Authorization: Bearer <token>]:proxy-bearer-token: ' \
                         '*--http-proxy[HTTP proxy for all HTTP requests]:http-proxy: ' \
-                        '*--http-max-concurrent[Maximum number of concurrent HTTP requests]:http-max-concurrent: ' \
+                        '*--http-max-concurrent[Maximum number of concurrent HTTP requests, shared by every session]:http-max-concurrent: ' \
                         '*--http-max-host-open[Maximum open connections to a given host:port]:http-max-host-open: ' \
                         '*--http-nav-delay[Minimum time in ms between two top-level navigations to the same host (see --http-nav-burst)]:http-nav-delay: ' \
                         '*--http-nav-burst[Number of top-level navigations to an idle host allowed to start without waiting for --http-nav-delay]:http-nav-burst: ' \
@@ -138,9 +139,10 @@ _lightpanda() {
                         '*--cookie[Path to a file to load cookies from (read-only)]:cookie:_files' \
                         '*--cookie-jar[Path to a JSON file to save cookies to on exit (write-only)]:cookie-jar:_files' \
                         '*--disable-features[Disable a feature that is on by default]:disable-features:_values -s , disable-features "cors[Skip CORS checks on fetch/XHR requests]"' \
-                        '*--experimental-features[Enable an experimental, unstable feature]:experimental-features:_values -s , experimental-features "cors[]" "serviceworker[]"' \
-                        '*--load-resources[Sub-resource to actually request]:load-resources:_values -s , load-resources "image[<img> sources, so that load/error reflects the real HTTP status]" "iframe[When enabled, <iframe> elements are fully loaded]" "worker[Enable loading dedicated and shared workers]" "stylesheet[Fetch external <link rel=stylesheet> resources so their rules contribute to computed styles (and therefore to visibility checks like display, visibility, opacity, pointer-events)]" "none[Request none of them, overriding the default]"' \
+                        '*--experimental-features[Enable an experimental, unstable feature]:experimental-features:_values -s , experimental-features "cors[]" "serviceworker[]" "privatecache[]" "animation[]"' \
+                        '*--load-resources[Sub-resource to actually request]:load-resources:_values -s , load-resources "image[<img> sources, so that load/error reflects the real HTTP status]" "iframe[When enabled, <iframe> elements are fully loaded]" "worker[Enable loading dedicated and shared workers]" "stylesheet[Fetch external <link rel=stylesheet> resources so their rules contribute to computed styles (and therefore to visibility checks like display, visibility, opacity, pointer-events)]" "beacon[Send navigator.sendBeacon requests]" "none[Request none of them, overriding the default]"' \
                         '*--v8-flags-unsafe[Flags passed as-is to the V8 JavaScript engine, space-separated]:v8-flags-unsafe: ' \
+                        '*--v8-gc-hint-floor-mb[Floor under which cleanup events (e.g. page teardown) does not notify V8 of memory pressure]:v8-gc-hint-floor-mb: ' \
                         '*--v8-max-heap-mb[Maximum V8 heap size in megabytes, per browser instance]:v8-max-heap-mb: ' \
                         '*--watchdog-ms[Terminates JavaScript when the browser stalls — stays busy for this long without returning to its network poll (e.g. a page stuck in an endless script loop)]:watchdog-ms: ' \
                         '*--ca-cert[Load TLS root certificates from a PEM file]:ca-cert:_files' \
@@ -158,7 +160,7 @@ _lightpanda() {
                         '*--cors-store-entry-limit[Maximum number of entries kept in the CorsStore]:cors-store-entry-limit: ' \
                         '*--proxy-bearer-token[Token sent for bearer authentication with the proxy: Proxy-Authorization: Bearer <token>]:proxy-bearer-token: ' \
                         '*--http-proxy[HTTP proxy for all HTTP requests]:http-proxy: ' \
-                        '*--http-max-concurrent[Maximum number of concurrent HTTP requests]:http-max-concurrent: ' \
+                        '*--http-max-concurrent[Maximum number of concurrent HTTP requests, shared by every session]:http-max-concurrent: ' \
                         '*--http-max-host-open[Maximum open connections to a given host:port]:http-max-host-open: ' \
                         '*--http-nav-delay[Minimum time in ms between two top-level navigations to the same host (see --http-nav-burst)]:http-nav-delay: ' \
                         '*--http-nav-burst[Number of top-level navigations to an idle host allowed to start without waiting for --http-nav-delay]:http-nav-burst: ' \
@@ -191,9 +193,10 @@ _lightpanda() {
                         '*--cookie[Path to a file to load cookies from (read-only)]:cookie:_files' \
                         '*--cookie-jar[Path to a JSON file to save cookies to on exit (write-only)]:cookie-jar:_files' \
                         '*--disable-features[Disable a feature that is on by default]:disable-features:_values -s , disable-features "cors[Skip CORS checks on fetch/XHR requests]"' \
-                        '*--experimental-features[Enable an experimental, unstable feature]:experimental-features:_values -s , experimental-features "cors[]" "serviceworker[]"' \
-                        '*--load-resources[Sub-resource to actually request]:load-resources:_values -s , load-resources "image[<img> sources, so that load/error reflects the real HTTP status]" "iframe[When enabled, <iframe> elements are fully loaded]" "worker[Enable loading dedicated and shared workers]" "stylesheet[Fetch external <link rel=stylesheet> resources so their rules contribute to computed styles (and therefore to visibility checks like display, visibility, opacity, pointer-events)]" "none[Request none of them, overriding the default]"' \
+                        '*--experimental-features[Enable an experimental, unstable feature]:experimental-features:_values -s , experimental-features "cors[]" "serviceworker[]" "privatecache[]" "animation[]"' \
+                        '*--load-resources[Sub-resource to actually request]:load-resources:_values -s , load-resources "image[<img> sources, so that load/error reflects the real HTTP status]" "iframe[When enabled, <iframe> elements are fully loaded]" "worker[Enable loading dedicated and shared workers]" "stylesheet[Fetch external <link rel=stylesheet> resources so their rules contribute to computed styles (and therefore to visibility checks like display, visibility, opacity, pointer-events)]" "beacon[Send navigator.sendBeacon requests]" "none[Request none of them, overriding the default]"' \
                         '*--v8-flags-unsafe[Flags passed as-is to the V8 JavaScript engine, space-separated]:v8-flags-unsafe: ' \
+                        '*--v8-gc-hint-floor-mb[Floor under which cleanup events (e.g. page teardown) does not notify V8 of memory pressure]:v8-gc-hint-floor-mb: ' \
                         '*--v8-max-heap-mb[Maximum V8 heap size in megabytes, per browser instance]:v8-max-heap-mb: ' \
                         '*--watchdog-ms[Terminates JavaScript when the browser stalls — stays busy for this long without returning to its network poll (e.g. a page stuck in an endless script loop)]:watchdog-ms: ' \
                         '*--ca-cert[Load TLS root certificates from a PEM file]:ca-cert:_files' \
@@ -201,7 +204,7 @@ _lightpanda() {
                     ;;
                 agent)
                     _arguments -s \
-                        '*--provider[The AI provider]:provider:((anthropic\:"" gemini\:"" vertex\:"" openai\:"" ollama\:"" huggingface\:"" llama_cpp\:"" openai_compatible\:"" vercel\:"" mistral\:"" openrouter\:"" codex\:""))' \
+                        '*--provider[The AI provider]:provider:((anthropic\:"" gemini\:"" vertex\:"" openai\:"" ollama\:"" huggingface\:"" llama_cpp\:"" llmd\:"" openai_compatible\:"" vercel\:"" mistral\:"" openrouter\:"" xai\:"" codex\:""))' \
                         '*--model[The model name to use]:model: ' \
                         '*--base-url[Override the API base URL for the provider]:base-url: ' \
                         '*--system-prompt[Override the default system prompt]:system-prompt: ' \
@@ -212,7 +215,7 @@ _lightpanda() {
                         '*'{-a,--attach}'[Feed a local file to the model alongside --task]:attach:_files' \
                         '*--verbosity[Stderr chatter level]:verbosity:((low\:"silent in --task mode (final answer to stdout only); spinner + summary in REPL" medium\:"+ one \`● \[tool\: ...\]\` line per call" high\:"+ the matching \`\[result\: ...\]\` body (required by the benchmarks harness)"))' \
                         '*--effort[Per-turn reasoning budget, mapped to each provider'\''s native thinking/reasoning knob]:effort:((null\:"" none\:"" minimal\:"" low\:"" medium\:"" high\:"" xhigh\:""))' \
-                        '*--search-engine[Which web search API the `search` tool uses]:search-engine:((auto\:"" brave\:"" tavily\:"" exa\:"" keenable\:""))' \
+                        '*--search-engine[Which web search API the `search` tool uses]:search-engine:((auto\:"" brave\:"" tavily\:"" exa\:"" parallel\:"" keenable\:""))' \
                         '*--url[Open this page before the first turn]:url: ' \
                         '*--list-models[Print the model IDs usable with `agent` for --provider, one per line, sorted, and exit]' \
                         '*--no-llm[Force the basic REPL even when an API key is present or --provider is set]' \
@@ -221,7 +224,7 @@ _lightpanda() {
                         '*--cors-store-entry-limit[Maximum number of entries kept in the CorsStore]:cors-store-entry-limit: ' \
                         '*--proxy-bearer-token[Token sent for bearer authentication with the proxy: Proxy-Authorization: Bearer <token>]:proxy-bearer-token: ' \
                         '*--http-proxy[HTTP proxy for all HTTP requests]:http-proxy: ' \
-                        '*--http-max-concurrent[Maximum number of concurrent HTTP requests]:http-max-concurrent: ' \
+                        '*--http-max-concurrent[Maximum number of concurrent HTTP requests, shared by every session]:http-max-concurrent: ' \
                         '*--http-max-host-open[Maximum open connections to a given host:port]:http-max-host-open: ' \
                         '*--http-nav-delay[Minimum time in ms between two top-level navigations to the same host (see --http-nav-burst)]:http-nav-delay: ' \
                         '*--http-nav-burst[Number of top-level navigations to an idle host allowed to start without waiting for --http-nav-delay]:http-nav-burst: ' \
@@ -254,9 +257,10 @@ _lightpanda() {
                         '*--cookie[Path to a file to load cookies from (read-only)]:cookie:_files' \
                         '*--cookie-jar[Path to a JSON file to save cookies to on exit (write-only)]:cookie-jar:_files' \
                         '*--disable-features[Disable a feature that is on by default]:disable-features:_values -s , disable-features "cors[Skip CORS checks on fetch/XHR requests]"' \
-                        '*--experimental-features[Enable an experimental, unstable feature]:experimental-features:_values -s , experimental-features "cors[]" "serviceworker[]"' \
-                        '*--load-resources[Sub-resource to actually request]:load-resources:_values -s , load-resources "image[<img> sources, so that load/error reflects the real HTTP status]" "iframe[When enabled, <iframe> elements are fully loaded]" "worker[Enable loading dedicated and shared workers]" "stylesheet[Fetch external <link rel=stylesheet> resources so their rules contribute to computed styles (and therefore to visibility checks like display, visibility, opacity, pointer-events)]" "none[Request none of them, overriding the default]"' \
+                        '*--experimental-features[Enable an experimental, unstable feature]:experimental-features:_values -s , experimental-features "cors[]" "serviceworker[]" "privatecache[]" "animation[]"' \
+                        '*--load-resources[Sub-resource to actually request]:load-resources:_values -s , load-resources "image[<img> sources, so that load/error reflects the real HTTP status]" "iframe[When enabled, <iframe> elements are fully loaded]" "worker[Enable loading dedicated and shared workers]" "stylesheet[Fetch external <link rel=stylesheet> resources so their rules contribute to computed styles (and therefore to visibility checks like display, visibility, opacity, pointer-events)]" "beacon[Send navigator.sendBeacon requests]" "none[Request none of them, overriding the default]"' \
                         '*--v8-flags-unsafe[Flags passed as-is to the V8 JavaScript engine, space-separated]:v8-flags-unsafe: ' \
+                        '*--v8-gc-hint-floor-mb[Floor under which cleanup events (e.g. page teardown) does not notify V8 of memory pressure]:v8-gc-hint-floor-mb: ' \
                         '*--v8-max-heap-mb[Maximum V8 heap size in megabytes, per browser instance]:v8-max-heap-mb: ' \
                         '*--watchdog-ms[Terminates JavaScript when the browser stalls — stays busy for this long without returning to its network poll (e.g. a page stuck in an endless script loop)]:watchdog-ms: ' \
                         '*--ca-cert[Load TLS root certificates from a PEM file]:ca-cert:_files' \
@@ -270,7 +274,7 @@ _lightpanda() {
                         '*--cors-store-entry-limit[Maximum number of entries kept in the CorsStore]:cors-store-entry-limit: ' \
                         '*--proxy-bearer-token[Token sent for bearer authentication with the proxy: Proxy-Authorization: Bearer <token>]:proxy-bearer-token: ' \
                         '*--http-proxy[HTTP proxy for all HTTP requests]:http-proxy: ' \
-                        '*--http-max-concurrent[Maximum number of concurrent HTTP requests]:http-max-concurrent: ' \
+                        '*--http-max-concurrent[Maximum number of concurrent HTTP requests, shared by every session]:http-max-concurrent: ' \
                         '*--http-max-host-open[Maximum open connections to a given host:port]:http-max-host-open: ' \
                         '*--http-nav-delay[Minimum time in ms between two top-level navigations to the same host (see --http-nav-burst)]:http-nav-delay: ' \
                         '*--http-nav-burst[Number of top-level navigations to an idle host allowed to start without waiting for --http-nav-delay]:http-nav-burst: ' \
@@ -303,9 +307,10 @@ _lightpanda() {
                         '*--cookie[Path to a file to load cookies from (read-only)]:cookie:_files' \
                         '*--cookie-jar[Path to a JSON file to save cookies to on exit (write-only)]:cookie-jar:_files' \
                         '*--disable-features[Disable a feature that is on by default]:disable-features:_values -s , disable-features "cors[Skip CORS checks on fetch/XHR requests]"' \
-                        '*--experimental-features[Enable an experimental, unstable feature]:experimental-features:_values -s , experimental-features "cors[]" "serviceworker[]"' \
-                        '*--load-resources[Sub-resource to actually request]:load-resources:_values -s , load-resources "image[<img> sources, so that load/error reflects the real HTTP status]" "iframe[When enabled, <iframe> elements are fully loaded]" "worker[Enable loading dedicated and shared workers]" "stylesheet[Fetch external <link rel=stylesheet> resources so their rules contribute to computed styles (and therefore to visibility checks like display, visibility, opacity, pointer-events)]" "none[Request none of them, overriding the default]"' \
+                        '*--experimental-features[Enable an experimental, unstable feature]:experimental-features:_values -s , experimental-features "cors[]" "serviceworker[]" "privatecache[]" "animation[]"' \
+                        '*--load-resources[Sub-resource to actually request]:load-resources:_values -s , load-resources "image[<img> sources, so that load/error reflects the real HTTP status]" "iframe[When enabled, <iframe> elements are fully loaded]" "worker[Enable loading dedicated and shared workers]" "stylesheet[Fetch external <link rel=stylesheet> resources so their rules contribute to computed styles (and therefore to visibility checks like display, visibility, opacity, pointer-events)]" "beacon[Send navigator.sendBeacon requests]" "none[Request none of them, overriding the default]"' \
                         '*--v8-flags-unsafe[Flags passed as-is to the V8 JavaScript engine, space-separated]:v8-flags-unsafe: ' \
+                        '*--v8-gc-hint-floor-mb[Floor under which cleanup events (e.g. page teardown) does not notify V8 of memory pressure]:v8-gc-hint-floor-mb: ' \
                         '*--v8-max-heap-mb[Maximum V8 heap size in megabytes, per browser instance]:v8-max-heap-mb: ' \
                         '*--watchdog-ms[Terminates JavaScript when the browser stalls — stays busy for this long without returning to its network poll (e.g. a page stuck in an endless script loop)]:watchdog-ms: ' \
                         '*--ca-cert[Load TLS root certificates from a PEM file]:ca-cert:_files' \

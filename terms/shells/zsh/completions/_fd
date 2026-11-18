@@ -65,8 +65,8 @@ never\:"do not use colorized output"))' \
 always\:"Always use hyperlinks when printing file paths"
 never\:"Never use hyperlinks"))' \
 '*--ignore-contain=[Ignore directories containing the named entry]:name:_default' \
-'-j+[Set number of threads to use for searching & executing (default\: number of available CPU cores)]:num:_default' \
-'--threads=[Set number of threads to use for searching & executing (default\: number of available CPU cores)]:num:_default' \
+'-j+[Set number of threads to use for searching & executing (default\: number of available CPU cores, up to a maximum of 64)]:num:_default' \
+'--threads=[Set number of threads to use for searching & executing (default\: number of available CPU cores, up to a maximum of 64)]:num:_default' \
 '--max-buffer-time=[Milliseconds to buffer before streaming search results to console]:MAX_BUFFER_TIME:_default' \
 '--max-results=[Limit the number of search results]:count:_default' \
 '-C+[Change current working directory]:path:_files' \
@@ -90,8 +90,8 @@ never\:"Never strip the ./"))' \
 '--no-ignore-parent[Do not respect .(git|fd)ignore files in parent directories]' \
 '--ignore-parent[Overrides --no-ignore-parent]' \
 '--no-global-ignore-file[Do not respect the global ignore file]' \
-'*-u[Unrestricted search, alias for '\''--no-ignore --hidden'\'']' \
-'*--unrestricted[Unrestricted search, alias for '\''--no-ignore --hidden'\'']' \
+'-u[Unrestricted search, alias for '\''--no-ignore --hidden'\'']' \
+'--unrestricted[Unrestricted search, alias for '\''--no-ignore --hidden'\'']' \
 '-s[Case-sensitive search (default\: smart case)]' \
 '--case-sensitive[Case-sensitive search (default\: smart case)]' \
 '-i[Case-insensitive search (default\: smart case)]' \
@@ -125,7 +125,7 @@ never\:"Never strip the ./"))' \
 '-V[Print version]' \
 '--version[Print version]' \
 '::pattern -- the search pattern (a regular expression, unless '\''--glob'\'' is used; optional):_default' \
-'*::path -- the root directories for the filesystem search (optional):_files' \
+'*::path -- the root directories for the filesystem search (optional, requires pattern first):_files' \
 && ret=0
 }
 

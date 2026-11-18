@@ -63,12 +63,18 @@ rename-pane\:"\`RenamePane\` mode allows assigning a new name to a pane"
 session\:"\`Session\` mode allows detaching sessions"
 move\:"\`Move\` mode allows moving the different existing panes within a tab"
 prompt\:"\`Prompt\` mode allows interacting with active prompts"
-tmux\:"\`Tmux\` mode allows for basic tmux keybindings functionality"))' \
+tmux\:"\`Tmux\` mode allows for basic tmux keybindings functionality"
+rename-session\:""))' \
 '--default-shell=[Set the default shell]:DEFAULT_SHELL:_files' \
 '--default-cwd=[Set the default cwd]:DEFAULT_CWD:_files' \
 '--default-layout=[Set the default layout]:DEFAULT_LAYOUT:_files' \
 '--layout-dir=[Set the layout_dir, defaults to subdirectory of config dir]:LAYOUT_DIR:_files' \
 '--theme-dir=[Set the theme_dir, defaults to subdirectory of config dir]:THEME_DIR:_files' \
+'--keybinds-dir=[Set the keybinds_dir, defaults to subdirectory of config dir]:KEYBINDS_DIR:_files' \
+'--keybinds-preset=[Use this keybinding preset for this session\: a name from the keybinds folder, a built-in preset, or a path to a preset file]:KEYBINDS_PRESET:_default' \
+'--keybinds-primary=[The primary leader key for the keybinding preset (for example "Ctrl")]:KEYBINDS_PRIMARY:_default' \
+'--keybinds-secondary=[The secondary leader key for the keybinding preset (for example "Alt")]:KEYBINDS_SECONDARY:_default' \
+'--keybinds-unlock=[The unlock key for the keybinding preset (for example "Ctrl g")]:KEYBINDS_UNLOCK:_default' \
 '--mouse-mode=[Set the handling of mouse events (true or false) Can be temporarily bypassed by the \[SHIFT\] key]:MOUSE_MODE:(true false)' \
 '--pane-frames=[Set display of the pane frames (true or false)]:PANE_FRAMES:(true false)' \
 '--pane-frame-style=[]:PANE_FRAME_STYLE:(full titles none)' \
@@ -91,10 +97,14 @@ tmux\:"\`Tmux\` mode allows for basic tmux keybindings functionality"))' \
 '--disable-session-metadata=[If true, will disable writing session metadata to disk]:DISABLE_SESSION_METADATA:(true false)' \
 '--support-kitty-keyboard-protocol=[Whether to enable support for the Kitty keyboard protocol (must also be supported by the host terminal), defaults to true if the terminal supports it]:SUPPORT_KITTY_KEYBOARD_PROTOCOL:(true false)' \
 '--support-kitty-graphics-protocol=[Whether to enable support for the Kitty graphics (image) protocol (must also be supported by the host terminal), defaults to true if the terminal supports it]:SUPPORT_KITTY_GRAPHICS_PROTOCOL:(true false)' \
+'--grapheme-clusters=[Count each grapheme cluster (an emoji sequence, a letter with its accents) as one unit of width, as the Unicode standard does (true or false, default true). When false, widths are counted per code point and programs may still ask for clusters with mode 2027]:GRAPHEME_CLUSTERS:(true false)' \
+'--mirror-resizes-source-pane=[Whether a focused mirror of a pane may resize that pane'\''s program to the mirror'\''s size, and whether new mirrors resize their source pane by default (true or false, default true)]:MIRROR_RESIZES_SOURCE_PANE:(true false)' \
+'--live-view-release-key=[An extra key that gives typing back to a plugin while a live pane view inside it is taking the keyboard (default\: none, Alt Enter, the inbox key or a click outside always do it; a key written twice means pressing it twice)]:LIVE_VIEW_RELEASE_KEY:_default' \
 '--web-server=[Whether to make sure a local web server is running when a new Zellij session starts. This web server will allow creating new sessions and attaching to existing ones that have opted in to being shared in the browser]:WEB_SERVER:(true false)' \
 '--web-sharing=[Whether to allow new sessions to be shared through a local web server, assuming one is running (see the \`web_server\` option for more details)]:WEB_SHARING:(on off disabled)' \
 '--stacked-resize=[Whether to stack panes when resizing beyond a certain size default is true]:STACKED_RESIZE:(true false)' \
 '--stacked-pane-list=[]:STACKED_PANE_LIST:(true false)' \
+'--stacked-pane-list-orientation=[Whether new stacks show their titles in a column (vertical) or in a row (horizontal) default is vertical]:STACKED_PANE_LIST_ORIENTATION:(vertical horizontal)' \
 '--show-startup-tips=[Whether to show startup tips when starting a new session default is true]:SHOW_STARTUP_TIPS:(true false)' \
 '--show-release-notes=[Whether to show release notes on first run of a new version default is true]:SHOW_RELEASE_NOTES:(true false)' \
 '--advanced-mouse-actions=[Whether to enable mouse hover effects and pane grouping functionality default is true]:ADVANCED_MOUSE_ACTIONS:(true false)' \
@@ -105,13 +115,20 @@ tmux\:"\`Tmux\` mode allows for basic tmux keybindings functionality"))' \
 '--visual-bell=[Whether to show visual bell indicators (pane/tab frame flash and \[!\] suffix) default is true]:VISUAL_BELL:(true false)' \
 '--focus-follows-mouse=[Whether to focus panes on mouse hover (true or false) default is false]:FOCUS_FOLLOWS_MOUSE:(true false)' \
 '--mouse-click-through=[Whether clicking a pane to focus it also sends the click into the pane (true or false) default is false]:MOUSE_CLICK_THROUGH:(true false)' \
+'--context-menu-enabled=[Whether a right click opens the right-click menu (true or false), default is true]:CONTEXT_MENU_ENABLED:(true false)' \
 '--osc133-command-selection=[Whether triple-clicking inside shell-marked (OSC 133) command output selects the command and its output rather than the logical line default is true]:OSC133_COMMAND_SELECTION:(true false)' \
 '--word-separators=[Characters that terminate a word when double-clicking to select it, in addition to whitespace (which is always a separator) default is "\[\]{}<>()"]:WORD_SEPARATORS:_default' \
 '--host-notification-protocol=[]:HOST_NOTIFICATION_PROTOCOL:(auto osc9 osc99 bell off)' \
 '--post-command-discovery-hook=[A command to run after the discovery of running commands when serializing, for the purpose of manipulating the command (eg. with a regex) before it gets serialized]:POST_COMMAND_DISCOVERY_HOOK:_default' \
-'--client-async-worker-tasks=[Number of async worker tasks to spawn per active client]:CLIENT_ASYNC_WORKER_TASKS:_default' \
+'--client-async-worker-tasks=[Number of background threads used by \`zellij attach <url>\` when it connects to a session on another machine. One set is made for that program, not one per client; the web server, browser clients and local sessions are not affected]:CLIENT_ASYNC_WORKER_TASKS:_default' \
 '--nested-session-handling=[How to handle a nested Zellij session detected inside a pane (ask, fullscreen, descend, never)]:NESTED_SESSION_HANDLING:(ask fullscreen descend never)' \
 '--dangerously-enable-paste-buffer-read=[]:DANGEROUSLY_ENABLE_PASTE_BUFFER_READ:(true false)' \
+'--session-indicator=[Whether to show the other sessions indicator in the tab bar and compact bar (true or false), default is true]:SESSION_INDICATOR:(true false)' \
+'--swap-layout-notification=[Whether to briefly show the new swap layout name when it is changed (true or false), default is true]:SWAP_LAYOUT_NOTIFICATION:(true false)' \
+'--on-quit=[What the quit action does\: ask_quit (ask, Quit preselected), ask_detach (ask, Detach preselected), quit or detach. Default is ask_quit]:ON_QUIT:(ask_quit ask_detach quit detach)' \
+'--bars-hidden-on-start=[Which bars a new session starts with hidden\: bar names separated by commas (eg. tab-bar,status-bar), all or none. Default is none]:BARS_HIDDEN_ON_START:_default' \
+'--hidden-bars-notification=[Whether to briefly show what was hidden and how to show it again when bars are hidden (true or false), default is true]:HIDDEN_BARS_NOTIFICATION:(true false)' \
+'--mode-hints-when-bars-hidden=[Whether to show the current mode'\''s keys in a corner while a bar that would show them is hidden (true or false), default is true]:MODE_HINTS_WHEN_BARS_HIDDEN:(true false)' \
 '-h[Print help (see more with '\''--help'\'')]' \
 '--help[Print help (see more with '\''--help'\'')]' \
 '::web_server_ip:_default' \
@@ -119,18 +136,26 @@ tmux\:"\`Tmux\` mode allows for basic tmux keybindings functionality"))' \
 '::web_server_cert:_files' \
 '::web_server_key:_files' \
 '::enforce_https_for_localhost:(true false)' \
+'::dangerously_allow_web_serving_without_a_certificate:(true false)' \
 && ret=0
 ;;
 (setup)
 _arguments "${_arguments_options[@]}" : \
 '--dump-layout=[Dump specified layout to stdout]:DUMP_LAYOUT:_default' \
 '--dump-swap-layout=[Dump the specified swap layout file to stdout]:DUMP_SWAP_LAYOUT:_default' \
+'--dump-keybinds=[Dump the specified keybinding preset to stdout]:PRESET:_default' \
 '--dump-plugins=[Dump the builtin plugins to DIR or "DATA DIR" if unspecified]::DIR:_files' \
 '--generate-completion=[Generates completion for the specified shell]:SHELL:_default' \
 '--generate-auto-start=[Generates auto-start script for the specified shell]:SHELL:_default' \
+'(--dump-config --clean --check --dump-layout --dump-swap-layout --dump-keybinds --dump-plugins --generate-completion --generate-auto-start)--keybinding-preset=[Choose the keybinding preset (for example "unlock-first") and save it to the config file]:PRESET:_default' \
 '--dump-config[Dump the default configuration file to stdout]' \
 '--clean[Disables loading of configuration file at default location, loads the defaults that zellij ships with]' \
 '--check[Checks the configuration of zellij and displays currently used directories]' \
+'(--dump-config --clean --check --dump-layout --dump-swap-layout --dump-keybinds --dump-plugins --generate-completion --generate-auto-start)--install-desktop-entry[Install the desktop entry, as the setup screen does\: a launcher and icons on Linux, a Start menu shortcut and an "Open Zellij here" Explorer item on Windows]' \
+'(--dump-config --clean --check --dump-layout --dump-swap-layout --dump-keybinds --dump-plugins --generate-completion --generate-auto-start)--uninstall-desktop-entry[Remove the desktop entry Zellij installed, as the setup screen'\''s Uninstall button does]' \
+'(--dump-config --clean --check --dump-layout --dump-swap-layout --dump-keybinds --dump-plugins --generate-completion --generate-auto-start)--copy-to-permanent-folder[Copy this Zellij to a permanent folder, or update an older Zellij that is already installed, as the setup screen does]' \
+'--replace-existing[Replace a different file that is in the way of --copy-to-permanent-folder]' \
+'(--dump-config --clean --check --dump-layout --dump-swap-layout --dump-keybinds --dump-plugins --generate-completion --generate-auto-start)--make-default-terminal[Make Zellij the default terminal, installing the desktop entry if it is missing, as the setup screen does]' \
 '-h[Print help]' \
 '--help[Print help]' \
 && ret=0
@@ -403,11 +428,39 @@ _arguments "${_arguments_options[@]}" : \
 '--help[Print help]' \
 && ret=0
 ;;
+(toggle-stack-list-orientation)
+_arguments "${_arguments_options[@]}" : \
+'-p+[Target the stack holding a specific pane by ID (eg. terminal_1, plugin_2, or 3)]:PANE_ID:_default' \
+'--pane-id=[Target the stack holding a specific pane by ID (eg. terminal_1, plugin_2, or 3)]:PANE_ID:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
 (set-pane-frame-style)
 _arguments "${_arguments_options[@]}" : \
 '-h[Print help]' \
 '--help[Print help]' \
 ':style:(full titles none)' \
+&& ret=0
+;;
+(toggle-bars)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+'*::bars -- Bars to hide, eg. tab-bar, status-bar, compact-bar, a plugin alias or location, or all:_default' \
+&& ret=0
+;;
+(hide-bars)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+'*::bars -- Bars to hide, eg. tab-bar, status-bar, compact-bar, a plugin alias or location, or all:_default' \
+&& ret=0
+;;
+(show-bars)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
 && ret=0
 ;;
 (toggle-active-sync-tab)
@@ -438,6 +491,7 @@ _arguments "${_arguments_options[@]}" : \
 '--pinned=[Whether to pin a floating pane so that it is always on top]:PINNED:(true false)' \
 '--borderless=[start this pane without a border (warning\: will make it impossible to move with the mouse)]:BORDERLESS:(true false)' \
 '(--near-current-pane -i --in-place)--tab-id=[Target a specific tab by ID]:TAB_ID:_default' \
+'--border-style=[Border line style, eg. "double" or "top\:double,left\:single,rounded"]:BORDER_STYLE:_default' \
 '-f[Open the new pane in floating mode]' \
 '--floating[Open the new pane in floating mode]' \
 '(-f --floating -d --direction)-i[Open the new pane in place of the current pane, temporarily suspending it]' \
@@ -447,6 +501,7 @@ _arguments "${_arguments_options[@]}" : \
 '--close-on-exit[Close the pane immediately when its command exits]' \
 '-s[Start the command suspended, only running it after the you first press ENTER]' \
 '--start-suspended[Start the command suspended, only running it after the you first press ENTER]' \
+'--notify[Watch the pane\: notify each time its command finishes or its output goes quiet, until the watch is turned off]' \
 '--skip-plugin-cache[]' \
 '(-f --floating -d --direction)--stacked[]' \
 '-b[Block until the command has finished and its pane has been closed]' \
@@ -478,6 +533,7 @@ _arguments "${_arguments_options[@]}" : \
 '-b+[start this pane without a border (warning\: will make it impossible to move with the mouse)]:BORDERLESS:(true false)' \
 '--borderless=[start this pane without a border (warning\: will make it impossible to move with the mouse)]:BORDERLESS:(true false)' \
 '(--near-current-pane -i --in-place)--tab-id=[Target a specific tab by ID]:TAB_ID:_default' \
+'--border-style=[Border line style, eg. "double" or "top\:double,left\:single,rounded"]:BORDER_STYLE:_default' \
 '-f[Open the new pane in floating mode]' \
 '--floating[Open the new pane in floating mode]' \
 '(-f --floating -d --direction)-i[Open the new pane in place of the current pane, temporarily suspending it]' \
@@ -507,7 +563,8 @@ rename-pane\:"\`RenamePane\` mode allows assigning a new name to a pane"
 session\:"\`Session\` mode allows detaching sessions"
 move\:"\`Move\` mode allows moving the different existing panes within a tab"
 prompt\:"\`Prompt\` mode allows interacting with active prompts"
-tmux\:"\`Tmux\` mode allows for basic tmux keybindings functionality"))' \
+tmux\:"\`Tmux\` mode allows for basic tmux keybindings functionality"
+rename-session\:""))' \
 && ret=0
 ;;
 (toggle-pane-embed-or-floating)
@@ -697,12 +754,30 @@ _arguments "${_arguments_options[@]}" : \
 '--help[Print help]' \
 && ret=0
 ;;
+(apply-tiled-swap-layout)
+_arguments "${_arguments_options[@]}" : \
+'-t+[Target a specific tab by ID]:TAB_ID:_default' \
+'--tab-id=[Target a specific tab by ID]:TAB_ID:_default' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':name -- The name of the tiled swap layout, as declared in the layout file:_default' \
+&& ret=0
+;;
+(apply-floating-swap-layout)
+_arguments "${_arguments_options[@]}" : \
+'-t+[Target a specific tab by ID]:TAB_ID:_default' \
+'--tab-id=[Target a specific tab by ID]:TAB_ID:_default' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':name -- The name of the floating swap layout, as declared in the layout file:_default' \
+&& ret=0
+;;
 (override-layout)
 _arguments "${_arguments_options[@]}" : \
 '()--layout-string=[Raw KDL layout string to use directly (instead of a layout file path)]:LAYOUT_STRING:_default' \
 '--layout-dir=[Default folder to look for layouts]:LAYOUT_DIR:_files' \
 '--retain-existing-terminal-panes[Retain existing terminal panes that do not fit in the layout (default\: false)]' \
-'--retain-existing-plugin-panes[Retain existing plugin panes that do not fit with the layout default\: false)]' \
+'--retain-existing-plugin-panes[Retain existing plugin panes that do not fit with the layout (default\: false)]' \
 '--apply-only-to-active-tab[Only apply the layout to the active tab (uses just the first layout tab if it has multiple)]' \
 '-h[Print help]' \
 '--help[Print help]' \
@@ -786,10 +861,14 @@ _arguments "${_arguments_options[@]}" : \
 '--plugin-cwd=[If launching a plugin, specify its working directory]:PLUGIN_CWD:_files' \
 '-t+[If launching a plugin, specify its pane title]:PLUGIN_TITLE:_default' \
 '--plugin-title=[If launching a plugin, specify its pane title]:PLUGIN_TITLE:_default' \
+'(-f --floating-plugin -i --in-place-plugin)--popup=[If launching a plugin, open it as a popup for the user looking at the calling pane (pane, center, mouse, cursor, top-left, top-right, bottom-left or bottom-right)]:POPUP:_default' \
+'(--popup-no-focus)--popup-outside-click=[What a click outside the --popup does\: block (ignore it) or close (close the popup) (e.g. --popup mouse --popup-outside-click close)]:POPUP_OUTSIDE_CLICK:_default' \
 '-l[Launch a new plugin even if one is already running]' \
 '--force-launch-plugin[Launch a new plugin even if one is already running]' \
 '-s[If launching a new plugin, skip cache and force-compile the plugin]' \
 '--skip-plugin-cache[If launching a new plugin, skip cache and force-compile the plugin]' \
+'--popup-no-focus[Open the --popup as an information popup that does not take key focus (e.g. --popup top-right --popup-no-focus)]' \
+'(--popup-no-focus)--popup-capture-all-keys[Send every key to the --popup, including the ones bound to Zellij actions (e.g. --popup center --popup-capture-all-keys)]' \
 '-h[Print help]' \
 '--help[Print help]' \
 '::payload -- The data to send down this pipe (if blank, will listen to STDIN):_default' \
@@ -853,6 +932,95 @@ _arguments "${_arguments_options[@]}" : \
 '--help[Print help]' \
 && ret=0
 ;;
+(toggle-mirror-resize)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(mute-pane)
+_arguments "${_arguments_options[@]}" : \
+'-p+[Target a specific pane by ID (eg. terminal_1 or 3)]:PANE_ID:_default' \
+'--pane-id=[Target a specific pane by ID (eg. terminal_1 or 3)]:PANE_ID:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(ignore-pane-output)
+_arguments "${_arguments_options[@]}" : \
+'-p+[Target a specific pane by ID (eg. terminal_1 or 3)]:PANE_ID:_default' \
+'--pane-id=[Target a specific pane by ID (eg. terminal_1 or 3)]:PANE_ID:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(watch-pane)
+_arguments "${_arguments_options[@]}" : \
+'-p+[Target a specific pane by ID (eg. terminal_1 or 3)]:PANE_ID:_default' \
+'--pane-id=[Target a specific pane by ID (eg. terminal_1 or 3)]:PANE_ID:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(mute-tab)
+_arguments "${_arguments_options[@]}" : \
+'-t+[Target a specific tab by its ID]:TAB_ID:_default' \
+'--tab-id=[Target a specific tab by its ID]:TAB_ID:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(mute-session)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(toggle-session)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(go-to-previous-session)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(go-to-next-session)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(go-to-next-attention)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(toggle-tray-icon)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(mark-pane-seen)
+_arguments "${_arguments_options[@]}" : \
+'-p+[Target a specific pane by ID (eg. terminal_1 or 3)]:PANE_ID:_default' \
+'--pane-id=[Target a specific pane by ID (eg. terminal_1 or 3)]:PANE_ID:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(mark-all-seen)
+_arguments "${_arguments_options[@]}" : \
+'--this-session[Only mark the panes of the current session]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
 (stack-panes)
 _arguments "${_arguments_options[@]}" : \
 '-h[Print help (see more with '\''--help'\'')]' \
@@ -873,6 +1041,7 @@ _arguments "${_arguments_options[@]}" : \
 '--pinned=[Whether to pin a floating pane so that it is always on top]:PINNED:(true false)' \
 '-b+[change this pane to be with/without a border (warning\: will make it impossible to move with the mouse if without a border)]:BORDERLESS:(true false)' \
 '--borderless=[change this pane to be with/without a border (warning\: will make it impossible to move with the mouse if without a border)]:BORDERLESS:(true false)' \
+'--border-style=[Border line style, eg. "double" or "top\:double,left\:single,rounded"]:BORDER_STYLE:_default' \
 '-h[Print help]' \
 '--help[Print help]' \
 && ret=0
@@ -891,6 +1060,15 @@ _arguments "${_arguments_options[@]}" : \
 '--pane-id=[The pane_id of the pane, eg. terminal_1, plugin_2 or 3 (equivalent to terminal_3)]:PANE_ID:_default' \
 '-b[Whether the pane should be borderless (flag present) or bordered (flag absent)]' \
 '--borderless[Whether the pane should be borderless (flag present) or bordered (flag absent)]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(set-pane-border-style)
+_arguments "${_arguments_options[@]}" : \
+'-p+[The pane_id of the pane, eg. terminal_1, plugin_2 or 3 (equivalent to terminal_3)]:PANE_ID:_default' \
+'--pane-id=[The pane_id of the pane, eg. terminal_1, plugin_2 or 3 (equivalent to terminal_3)]:PANE_ID:_default' \
+'--border-style=[Border line style, eg. "double" or "top\:double,left\:single,rounded"]:BORDER_STYLE:_default' \
 '-h[Print help]' \
 '--help[Print help]' \
 && ret=0
@@ -919,6 +1097,18 @@ _arguments "${_arguments_options[@]}" : \
 '--help[Print help]' \
 && ret=0
 ;;
+(dismiss-info-popups)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(open-context-menu)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
 (switch-session)
 _arguments "${_arguments_options[@]}" : \
 '--tab-position=[Optional tab position to focus]:TAB_POSITION:_default' \
@@ -929,6 +1119,7 @@ _arguments "${_arguments_options[@]}" : \
 '--layout-dir=[Default folder to look for layouts]:LAYOUT_DIR:_files' \
 '-c+[Change the working directory when switching]:CWD:_files' \
 '--cwd=[Change the working directory when switching]:CWD:_files' \
+'--close-current[Close the current session after switching, if no command has been run in it and no other client is attached]' \
 '-h[Print help]' \
 '--help[Print help]' \
 ':name -- Name of the session to switch to:_default' \
@@ -943,6 +1134,17 @@ _arguments "${_arguments_options[@]}" : \
 '(--fg --bg)--reset[Reset pane colors to terminal defaults]' \
 '-h[Print help]' \
 '--help[Print help]' \
+&& ret=0
+;;
+(set-resurrect-command)
+_arguments "${_arguments_options[@]}" : \
+'-p+[The pane_id of the terminal pane, eg. terminal_1 or 3 (equivalent to terminal_3). Defaults to \$ZELLIJ_PANE_ID if not provided]:PANE_ID:_default' \
+'--pane-id=[The pane_id of the terminal pane, eg. terminal_1 or 3 (equivalent to terminal_3). Defaults to \$ZELLIJ_PANE_ID if not provided]:PANE_ID:_default' \
+'(--clear)--cwd=[Working directory to resurrect the pane in]:CWD:_files' \
+'()--clear[Remove a previously set resurrect command]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'*::command -- The command and its arguments:_default' \
 && ret=0
 ;;
 (help)
@@ -1073,7 +1275,23 @@ _arguments "${_arguments_options[@]}" : \
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
+(toggle-stack-list-orientation)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
 (set-pane-frame-style)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(toggle-bars)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(hide-bars)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(show-bars)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -1181,6 +1399,14 @@ _arguments "${_arguments_options[@]}" : \
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
+(apply-tiled-swap-layout)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(apply-floating-swap-layout)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
 (override-layout)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
@@ -1229,6 +1455,58 @@ _arguments "${_arguments_options[@]}" : \
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
+(toggle-mirror-resize)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(mute-pane)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(ignore-pane-output)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(watch-pane)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(mute-tab)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(mute-session)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(toggle-session)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(go-to-previous-session)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(go-to-next-session)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(go-to-next-attention)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(toggle-tray-icon)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(mark-pane-seen)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(mark-all-seen)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
 (stack-panes)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
@@ -1242,6 +1520,10 @@ _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
 (set-pane-borderless)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set-pane-border-style)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -1261,11 +1543,23 @@ _arguments "${_arguments_options[@]}" : \
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
+(dismiss-info-popups)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(open-context-menu)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
 (switch-session)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
 (set-pane-color)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set-resurrect-command)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -1526,11 +1820,39 @@ _arguments "${_arguments_options[@]}" : \
 '--help[Print help]' \
 && ret=0
 ;;
+(toggle-stack-list-orientation)
+_arguments "${_arguments_options[@]}" : \
+'-p+[Target the stack holding a specific pane by ID (eg. terminal_1, plugin_2, or 3)]:PANE_ID:_default' \
+'--pane-id=[Target the stack holding a specific pane by ID (eg. terminal_1, plugin_2, or 3)]:PANE_ID:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
 (set-pane-frame-style)
 _arguments "${_arguments_options[@]}" : \
 '-h[Print help]' \
 '--help[Print help]' \
 ':style:(full titles none)' \
+&& ret=0
+;;
+(toggle-bars)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+'*::bars -- Bars to hide, eg. tab-bar, status-bar, compact-bar, a plugin alias or location, or all:_default' \
+&& ret=0
+;;
+(hide-bars)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+'*::bars -- Bars to hide, eg. tab-bar, status-bar, compact-bar, a plugin alias or location, or all:_default' \
+&& ret=0
+;;
+(show-bars)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
 && ret=0
 ;;
 (toggle-active-sync-tab)
@@ -1561,6 +1883,7 @@ _arguments "${_arguments_options[@]}" : \
 '--pinned=[Whether to pin a floating pane so that it is always on top]:PINNED:(true false)' \
 '--borderless=[start this pane without a border (warning\: will make it impossible to move with the mouse)]:BORDERLESS:(true false)' \
 '(--near-current-pane -i --in-place)--tab-id=[Target a specific tab by ID]:TAB_ID:_default' \
+'--border-style=[Border line style, eg. "double" or "top\:double,left\:single,rounded"]:BORDER_STYLE:_default' \
 '-f[Open the new pane in floating mode]' \
 '--floating[Open the new pane in floating mode]' \
 '(-f --floating -d --direction)-i[Open the new pane in place of the current pane, temporarily suspending it]' \
@@ -1570,6 +1893,7 @@ _arguments "${_arguments_options[@]}" : \
 '--close-on-exit[Close the pane immediately when its command exits]' \
 '-s[Start the command suspended, only running it after the you first press ENTER]' \
 '--start-suspended[Start the command suspended, only running it after the you first press ENTER]' \
+'--notify[Watch the pane\: notify each time its command finishes or its output goes quiet, until the watch is turned off]' \
 '--skip-plugin-cache[]' \
 '(-f --floating -d --direction)--stacked[]' \
 '-b[Block until the command has finished and its pane has been closed]' \
@@ -1601,6 +1925,7 @@ _arguments "${_arguments_options[@]}" : \
 '-b+[start this pane without a border (warning\: will make it impossible to move with the mouse)]:BORDERLESS:(true false)' \
 '--borderless=[start this pane without a border (warning\: will make it impossible to move with the mouse)]:BORDERLESS:(true false)' \
 '(--near-current-pane -i --in-place)--tab-id=[Target a specific tab by ID]:TAB_ID:_default' \
+'--border-style=[Border line style, eg. "double" or "top\:double,left\:single,rounded"]:BORDER_STYLE:_default' \
 '-f[Open the new pane in floating mode]' \
 '--floating[Open the new pane in floating mode]' \
 '(-f --floating -d --direction)-i[Open the new pane in place of the current pane, temporarily suspending it]' \
@@ -1630,7 +1955,8 @@ rename-pane\:"\`RenamePane\` mode allows assigning a new name to a pane"
 session\:"\`Session\` mode allows detaching sessions"
 move\:"\`Move\` mode allows moving the different existing panes within a tab"
 prompt\:"\`Prompt\` mode allows interacting with active prompts"
-tmux\:"\`Tmux\` mode allows for basic tmux keybindings functionality"))' \
+tmux\:"\`Tmux\` mode allows for basic tmux keybindings functionality"
+rename-session\:""))' \
 && ret=0
 ;;
 (toggle-pane-embed-or-floating)
@@ -1820,12 +2146,30 @@ _arguments "${_arguments_options[@]}" : \
 '--help[Print help]' \
 && ret=0
 ;;
+(apply-tiled-swap-layout)
+_arguments "${_arguments_options[@]}" : \
+'-t+[Target a specific tab by ID]:TAB_ID:_default' \
+'--tab-id=[Target a specific tab by ID]:TAB_ID:_default' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':name -- The name of the tiled swap layout, as declared in the layout file:_default' \
+&& ret=0
+;;
+(apply-floating-swap-layout)
+_arguments "${_arguments_options[@]}" : \
+'-t+[Target a specific tab by ID]:TAB_ID:_default' \
+'--tab-id=[Target a specific tab by ID]:TAB_ID:_default' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+':name -- The name of the floating swap layout, as declared in the layout file:_default' \
+&& ret=0
+;;
 (override-layout)
 _arguments "${_arguments_options[@]}" : \
 '()--layout-string=[Raw KDL layout string to use directly (instead of a layout file path)]:LAYOUT_STRING:_default' \
 '--layout-dir=[Default folder to look for layouts]:LAYOUT_DIR:_files' \
 '--retain-existing-terminal-panes[Retain existing terminal panes that do not fit in the layout (default\: false)]' \
-'--retain-existing-plugin-panes[Retain existing plugin panes that do not fit with the layout default\: false)]' \
+'--retain-existing-plugin-panes[Retain existing plugin panes that do not fit with the layout (default\: false)]' \
 '--apply-only-to-active-tab[Only apply the layout to the active tab (uses just the first layout tab if it has multiple)]' \
 '-h[Print help]' \
 '--help[Print help]' \
@@ -1909,10 +2253,14 @@ _arguments "${_arguments_options[@]}" : \
 '--plugin-cwd=[If launching a plugin, specify its working directory]:PLUGIN_CWD:_files' \
 '-t+[If launching a plugin, specify its pane title]:PLUGIN_TITLE:_default' \
 '--plugin-title=[If launching a plugin, specify its pane title]:PLUGIN_TITLE:_default' \
+'(-f --floating-plugin -i --in-place-plugin)--popup=[If launching a plugin, open it as a popup for the user looking at the calling pane (pane, center, mouse, cursor, top-left, top-right, bottom-left or bottom-right)]:POPUP:_default' \
+'(--popup-no-focus)--popup-outside-click=[What a click outside the --popup does\: block (ignore it) or close (close the popup) (e.g. --popup mouse --popup-outside-click close)]:POPUP_OUTSIDE_CLICK:_default' \
 '-l[Launch a new plugin even if one is already running]' \
 '--force-launch-plugin[Launch a new plugin even if one is already running]' \
 '-s[If launching a new plugin, skip cache and force-compile the plugin]' \
 '--skip-plugin-cache[If launching a new plugin, skip cache and force-compile the plugin]' \
+'--popup-no-focus[Open the --popup as an information popup that does not take key focus (e.g. --popup top-right --popup-no-focus)]' \
+'(--popup-no-focus)--popup-capture-all-keys[Send every key to the --popup, including the ones bound to Zellij actions (e.g. --popup center --popup-capture-all-keys)]' \
 '-h[Print help]' \
 '--help[Print help]' \
 '::payload -- The data to send down this pipe (if blank, will listen to STDIN):_default' \
@@ -1976,6 +2324,95 @@ _arguments "${_arguments_options[@]}" : \
 '--help[Print help]' \
 && ret=0
 ;;
+(toggle-mirror-resize)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(mute-pane)
+_arguments "${_arguments_options[@]}" : \
+'-p+[Target a specific pane by ID (eg. terminal_1 or 3)]:PANE_ID:_default' \
+'--pane-id=[Target a specific pane by ID (eg. terminal_1 or 3)]:PANE_ID:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(ignore-pane-output)
+_arguments "${_arguments_options[@]}" : \
+'-p+[Target a specific pane by ID (eg. terminal_1 or 3)]:PANE_ID:_default' \
+'--pane-id=[Target a specific pane by ID (eg. terminal_1 or 3)]:PANE_ID:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(watch-pane)
+_arguments "${_arguments_options[@]}" : \
+'-p+[Target a specific pane by ID (eg. terminal_1 or 3)]:PANE_ID:_default' \
+'--pane-id=[Target a specific pane by ID (eg. terminal_1 or 3)]:PANE_ID:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(mute-tab)
+_arguments "${_arguments_options[@]}" : \
+'-t+[Target a specific tab by its ID]:TAB_ID:_default' \
+'--tab-id=[Target a specific tab by its ID]:TAB_ID:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(mute-session)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(toggle-session)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(go-to-previous-session)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(go-to-next-session)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(go-to-next-attention)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(toggle-tray-icon)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(mark-pane-seen)
+_arguments "${_arguments_options[@]}" : \
+'-p+[Target a specific pane by ID (eg. terminal_1 or 3)]:PANE_ID:_default' \
+'--pane-id=[Target a specific pane by ID (eg. terminal_1 or 3)]:PANE_ID:_default' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(mark-all-seen)
+_arguments "${_arguments_options[@]}" : \
+'--this-session[Only mark the panes of the current session]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
 (stack-panes)
 _arguments "${_arguments_options[@]}" : \
 '-h[Print help (see more with '\''--help'\'')]' \
@@ -1996,6 +2433,7 @@ _arguments "${_arguments_options[@]}" : \
 '--pinned=[Whether to pin a floating pane so that it is always on top]:PINNED:(true false)' \
 '-b+[change this pane to be with/without a border (warning\: will make it impossible to move with the mouse if without a border)]:BORDERLESS:(true false)' \
 '--borderless=[change this pane to be with/without a border (warning\: will make it impossible to move with the mouse if without a border)]:BORDERLESS:(true false)' \
+'--border-style=[Border line style, eg. "double" or "top\:double,left\:single,rounded"]:BORDER_STYLE:_default' \
 '-h[Print help]' \
 '--help[Print help]' \
 && ret=0
@@ -2014,6 +2452,15 @@ _arguments "${_arguments_options[@]}" : \
 '--pane-id=[The pane_id of the pane, eg. terminal_1, plugin_2 or 3 (equivalent to terminal_3)]:PANE_ID:_default' \
 '-b[Whether the pane should be borderless (flag present) or bordered (flag absent)]' \
 '--borderless[Whether the pane should be borderless (flag present) or bordered (flag absent)]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(set-pane-border-style)
+_arguments "${_arguments_options[@]}" : \
+'-p+[The pane_id of the pane, eg. terminal_1, plugin_2 or 3 (equivalent to terminal_3)]:PANE_ID:_default' \
+'--pane-id=[The pane_id of the pane, eg. terminal_1, plugin_2 or 3 (equivalent to terminal_3)]:PANE_ID:_default' \
+'--border-style=[Border line style, eg. "double" or "top\:double,left\:single,rounded"]:BORDER_STYLE:_default' \
 '-h[Print help]' \
 '--help[Print help]' \
 && ret=0
@@ -2042,6 +2489,18 @@ _arguments "${_arguments_options[@]}" : \
 '--help[Print help]' \
 && ret=0
 ;;
+(dismiss-info-popups)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(open-context-menu)
+_arguments "${_arguments_options[@]}" : \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
 (switch-session)
 _arguments "${_arguments_options[@]}" : \
 '--tab-position=[Optional tab position to focus]:TAB_POSITION:_default' \
@@ -2052,6 +2511,7 @@ _arguments "${_arguments_options[@]}" : \
 '--layout-dir=[Default folder to look for layouts]:LAYOUT_DIR:_files' \
 '-c+[Change the working directory when switching]:CWD:_files' \
 '--cwd=[Change the working directory when switching]:CWD:_files' \
+'--close-current[Close the current session after switching, if no command has been run in it and no other client is attached]' \
 '-h[Print help]' \
 '--help[Print help]' \
 ':name -- Name of the session to switch to:_default' \
@@ -2066,6 +2526,17 @@ _arguments "${_arguments_options[@]}" : \
 '(--fg --bg)--reset[Reset pane colors to terminal defaults]' \
 '-h[Print help]' \
 '--help[Print help]' \
+&& ret=0
+;;
+(set-resurrect-command)
+_arguments "${_arguments_options[@]}" : \
+'-p+[The pane_id of the terminal pane, eg. terminal_1 or 3 (equivalent to terminal_3). Defaults to \$ZELLIJ_PANE_ID if not provided]:PANE_ID:_default' \
+'--pane-id=[The pane_id of the terminal pane, eg. terminal_1 or 3 (equivalent to terminal_3). Defaults to \$ZELLIJ_PANE_ID if not provided]:PANE_ID:_default' \
+'(--clear)--cwd=[Working directory to resurrect the pane in]:CWD:_files' \
+'()--clear[Remove a previously set resurrect command]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'*::command -- The command and its arguments:_default' \
 && ret=0
 ;;
 (help)
@@ -2196,7 +2667,23 @@ _arguments "${_arguments_options[@]}" : \
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
+(toggle-stack-list-orientation)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
 (set-pane-frame-style)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(toggle-bars)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(hide-bars)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(show-bars)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -2304,6 +2791,14 @@ _arguments "${_arguments_options[@]}" : \
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
+(apply-tiled-swap-layout)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(apply-floating-swap-layout)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
 (override-layout)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
@@ -2352,6 +2847,58 @@ _arguments "${_arguments_options[@]}" : \
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
+(toggle-mirror-resize)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(mute-pane)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(ignore-pane-output)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(watch-pane)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(mute-tab)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(mute-session)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(toggle-session)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(go-to-previous-session)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(go-to-next-session)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(go-to-next-attention)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(toggle-tray-icon)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(mark-pane-seen)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(mark-all-seen)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
 (stack-panes)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
@@ -2365,6 +2912,10 @@ _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
 (set-pane-borderless)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set-pane-border-style)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -2384,11 +2935,23 @@ _arguments "${_arguments_options[@]}" : \
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
+(dismiss-info-popups)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(open-context-menu)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
 (switch-session)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
 (set-pane-color)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set-resurrect-command)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -2448,8 +3011,6 @@ _arguments "${_arguments_options[@]}" : \
 '--ca-cert=[Path to a custom CA certificate (PEM format) for verifying the remote server]:FILE:_files' \
 '-c[Create a session if one does not exist]' \
 '--create[Create a session if one does not exist]' \
-'-b[Create a detached session in the background if one does not exist]' \
-'--create-background[Create a detached session in the background if one does not exist]' \
 '-f[If resurrecting a dead session, immediately run all its commands on startup]' \
 '--force-run-commands[If resurrecting a dead session, immediately run all its commands on startup]' \
 '-r[Save session for automatic re-authentication (4 weeks)]' \
@@ -2458,6 +3019,8 @@ _arguments "${_arguments_options[@]}" : \
 '--insecure[Skip TLS certificate validation (DANGEROUS — development only)]' \
 '--close-on-exit[Close the initial command'\''s pane immediately when it exits]' \
 '--start-suspended[Start the initial command suspended, only running it after you first press ENTER]' \
+'-b[Create a detached session in the background if one does not exist]' \
+'--create-background[Create a detached session in the background if one does not exist]' \
 '-h[Print help]' \
 '--help[Print help]' \
 '::session_name -- Name of the session to attach to:_default' \
@@ -2492,12 +3055,18 @@ rename-pane\:"\`RenamePane\` mode allows assigning a new name to a pane"
 session\:"\`Session\` mode allows detaching sessions"
 move\:"\`Move\` mode allows moving the different existing panes within a tab"
 prompt\:"\`Prompt\` mode allows interacting with active prompts"
-tmux\:"\`Tmux\` mode allows for basic tmux keybindings functionality"))' \
+tmux\:"\`Tmux\` mode allows for basic tmux keybindings functionality"
+rename-session\:""))' \
 '--default-shell=[Set the default shell]:DEFAULT_SHELL:_files' \
 '--default-cwd=[Set the default cwd]:DEFAULT_CWD:_files' \
 '--default-layout=[Set the default layout]:DEFAULT_LAYOUT:_files' \
 '--layout-dir=[Set the layout_dir, defaults to subdirectory of config dir]:LAYOUT_DIR:_files' \
 '--theme-dir=[Set the theme_dir, defaults to subdirectory of config dir]:THEME_DIR:_files' \
+'--keybinds-dir=[Set the keybinds_dir, defaults to subdirectory of config dir]:KEYBINDS_DIR:_files' \
+'--keybinds-preset=[Use this keybinding preset for this session\: a name from the keybinds folder, a built-in preset, or a path to a preset file]:KEYBINDS_PRESET:_default' \
+'--keybinds-primary=[The primary leader key for the keybinding preset (for example "Ctrl")]:KEYBINDS_PRIMARY:_default' \
+'--keybinds-secondary=[The secondary leader key for the keybinding preset (for example "Alt")]:KEYBINDS_SECONDARY:_default' \
+'--keybinds-unlock=[The unlock key for the keybinding preset (for example "Ctrl g")]:KEYBINDS_UNLOCK:_default' \
 '--mouse-mode=[Set the handling of mouse events (true or false) Can be temporarily bypassed by the \[SHIFT\] key]:MOUSE_MODE:(true false)' \
 '--pane-frames=[Set display of the pane frames (true or false)]:PANE_FRAMES:(true false)' \
 '--pane-frame-style=[]:PANE_FRAME_STYLE:(full titles none)' \
@@ -2520,10 +3089,14 @@ tmux\:"\`Tmux\` mode allows for basic tmux keybindings functionality"))' \
 '--disable-session-metadata=[If true, will disable writing session metadata to disk]:DISABLE_SESSION_METADATA:(true false)' \
 '--support-kitty-keyboard-protocol=[Whether to enable support for the Kitty keyboard protocol (must also be supported by the host terminal), defaults to true if the terminal supports it]:SUPPORT_KITTY_KEYBOARD_PROTOCOL:(true false)' \
 '--support-kitty-graphics-protocol=[Whether to enable support for the Kitty graphics (image) protocol (must also be supported by the host terminal), defaults to true if the terminal supports it]:SUPPORT_KITTY_GRAPHICS_PROTOCOL:(true false)' \
+'--grapheme-clusters=[Count each grapheme cluster (an emoji sequence, a letter with its accents) as one unit of width, as the Unicode standard does (true or false, default true). When false, widths are counted per code point and programs may still ask for clusters with mode 2027]:GRAPHEME_CLUSTERS:(true false)' \
+'--mirror-resizes-source-pane=[Whether a focused mirror of a pane may resize that pane'\''s program to the mirror'\''s size, and whether new mirrors resize their source pane by default (true or false, default true)]:MIRROR_RESIZES_SOURCE_PANE:(true false)' \
+'--live-view-release-key=[An extra key that gives typing back to a plugin while a live pane view inside it is taking the keyboard (default\: none, Alt Enter, the inbox key or a click outside always do it; a key written twice means pressing it twice)]:LIVE_VIEW_RELEASE_KEY:_default' \
 '--web-server=[Whether to make sure a local web server is running when a new Zellij session starts. This web server will allow creating new sessions and attaching to existing ones that have opted in to being shared in the browser]:WEB_SERVER:(true false)' \
 '--web-sharing=[Whether to allow new sessions to be shared through a local web server, assuming one is running (see the \`web_server\` option for more details)]:WEB_SHARING:(on off disabled)' \
 '--stacked-resize=[Whether to stack panes when resizing beyond a certain size default is true]:STACKED_RESIZE:(true false)' \
 '--stacked-pane-list=[]:STACKED_PANE_LIST:(true false)' \
+'--stacked-pane-list-orientation=[Whether new stacks show their titles in a column (vertical) or in a row (horizontal) default is vertical]:STACKED_PANE_LIST_ORIENTATION:(vertical horizontal)' \
 '--show-startup-tips=[Whether to show startup tips when starting a new session default is true]:SHOW_STARTUP_TIPS:(true false)' \
 '--show-release-notes=[Whether to show release notes on first run of a new version default is true]:SHOW_RELEASE_NOTES:(true false)' \
 '--advanced-mouse-actions=[Whether to enable mouse hover effects and pane grouping functionality default is true]:ADVANCED_MOUSE_ACTIONS:(true false)' \
@@ -2534,13 +3107,20 @@ tmux\:"\`Tmux\` mode allows for basic tmux keybindings functionality"))' \
 '--visual-bell=[Whether to show visual bell indicators (pane/tab frame flash and \[!\] suffix) default is true]:VISUAL_BELL:(true false)' \
 '--focus-follows-mouse=[Whether to focus panes on mouse hover (true or false) default is false]:FOCUS_FOLLOWS_MOUSE:(true false)' \
 '--mouse-click-through=[Whether clicking a pane to focus it also sends the click into the pane (true or false) default is false]:MOUSE_CLICK_THROUGH:(true false)' \
+'--context-menu-enabled=[Whether a right click opens the right-click menu (true or false), default is true]:CONTEXT_MENU_ENABLED:(true false)' \
 '--osc133-command-selection=[Whether triple-clicking inside shell-marked (OSC 133) command output selects the command and its output rather than the logical line default is true]:OSC133_COMMAND_SELECTION:(true false)' \
 '--word-separators=[Characters that terminate a word when double-clicking to select it, in addition to whitespace (which is always a separator) default is "\[\]{}<>()"]:WORD_SEPARATORS:_default' \
 '--host-notification-protocol=[]:HOST_NOTIFICATION_PROTOCOL:(auto osc9 osc99 bell off)' \
 '--post-command-discovery-hook=[A command to run after the discovery of running commands when serializing, for the purpose of manipulating the command (eg. with a regex) before it gets serialized]:POST_COMMAND_DISCOVERY_HOOK:_default' \
-'--client-async-worker-tasks=[Number of async worker tasks to spawn per active client]:CLIENT_ASYNC_WORKER_TASKS:_default' \
+'--client-async-worker-tasks=[Number of background threads used by \`zellij attach <url>\` when it connects to a session on another machine. One set is made for that program, not one per client; the web server, browser clients and local sessions are not affected]:CLIENT_ASYNC_WORKER_TASKS:_default' \
 '--nested-session-handling=[How to handle a nested Zellij session detected inside a pane (ask, fullscreen, descend, never)]:NESTED_SESSION_HANDLING:(ask fullscreen descend never)' \
 '--dangerously-enable-paste-buffer-read=[]:DANGEROUSLY_ENABLE_PASTE_BUFFER_READ:(true false)' \
+'--session-indicator=[Whether to show the other sessions indicator in the tab bar and compact bar (true or false), default is true]:SESSION_INDICATOR:(true false)' \
+'--swap-layout-notification=[Whether to briefly show the new swap layout name when it is changed (true or false), default is true]:SWAP_LAYOUT_NOTIFICATION:(true false)' \
+'--on-quit=[What the quit action does\: ask_quit (ask, Quit preselected), ask_detach (ask, Detach preselected), quit or detach. Default is ask_quit]:ON_QUIT:(ask_quit ask_detach quit detach)' \
+'--bars-hidden-on-start=[Which bars a new session starts with hidden\: bar names separated by commas (eg. tab-bar,status-bar), all or none. Default is none]:BARS_HIDDEN_ON_START:_default' \
+'--hidden-bars-notification=[Whether to briefly show what was hidden and how to show it again when bars are hidden (true or false), default is true]:HIDDEN_BARS_NOTIFICATION:(true false)' \
+'--mode-hints-when-bars-hidden=[Whether to show the current mode'\''s keys in a corner while a bar that would show them is hidden (true or false), default is true]:MODE_HINTS_WHEN_BARS_HIDDEN:(true false)' \
 '-h[Print help (see more with '\''--help'\'')]' \
 '--help[Print help (see more with '\''--help'\'')]' \
 '::web_server_ip:_default' \
@@ -2548,6 +3128,7 @@ tmux\:"\`Tmux\` mode allows for basic tmux keybindings functionality"))' \
 '::web_server_cert:_files' \
 '::web_server_key:_files' \
 '::enforce_https_for_localhost:(true false)' \
+'::dangerously_allow_web_serving_without_a_certificate:(true false)' \
 && ret=0
 ;;
 (help)
@@ -2586,8 +3167,6 @@ _arguments "${_arguments_options[@]}" : \
 '--ca-cert=[Path to a custom CA certificate (PEM format) for verifying the remote server]:FILE:_files' \
 '-c[Create a session if one does not exist]' \
 '--create[Create a session if one does not exist]' \
-'-b[Create a detached session in the background if one does not exist]' \
-'--create-background[Create a detached session in the background if one does not exist]' \
 '-f[If resurrecting a dead session, immediately run all its commands on startup]' \
 '--force-run-commands[If resurrecting a dead session, immediately run all its commands on startup]' \
 '-r[Save session for automatic re-authentication (4 weeks)]' \
@@ -2596,6 +3175,8 @@ _arguments "${_arguments_options[@]}" : \
 '--insecure[Skip TLS certificate validation (DANGEROUS — development only)]' \
 '--close-on-exit[Close the initial command'\''s pane immediately when it exits]' \
 '--start-suspended[Start the initial command suspended, only running it after you first press ENTER]' \
+'-b[Create a detached session in the background if one does not exist]' \
+'--create-background[Create a detached session in the background if one does not exist]' \
 '-h[Print help]' \
 '--help[Print help]' \
 '::session_name -- Name of the session to attach to:_default' \
@@ -2630,12 +3211,18 @@ rename-pane\:"\`RenamePane\` mode allows assigning a new name to a pane"
 session\:"\`Session\` mode allows detaching sessions"
 move\:"\`Move\` mode allows moving the different existing panes within a tab"
 prompt\:"\`Prompt\` mode allows interacting with active prompts"
-tmux\:"\`Tmux\` mode allows for basic tmux keybindings functionality"))' \
+tmux\:"\`Tmux\` mode allows for basic tmux keybindings functionality"
+rename-session\:""))' \
 '--default-shell=[Set the default shell]:DEFAULT_SHELL:_files' \
 '--default-cwd=[Set the default cwd]:DEFAULT_CWD:_files' \
 '--default-layout=[Set the default layout]:DEFAULT_LAYOUT:_files' \
 '--layout-dir=[Set the layout_dir, defaults to subdirectory of config dir]:LAYOUT_DIR:_files' \
 '--theme-dir=[Set the theme_dir, defaults to subdirectory of config dir]:THEME_DIR:_files' \
+'--keybinds-dir=[Set the keybinds_dir, defaults to subdirectory of config dir]:KEYBINDS_DIR:_files' \
+'--keybinds-preset=[Use this keybinding preset for this session\: a name from the keybinds folder, a built-in preset, or a path to a preset file]:KEYBINDS_PRESET:_default' \
+'--keybinds-primary=[The primary leader key for the keybinding preset (for example "Ctrl")]:KEYBINDS_PRIMARY:_default' \
+'--keybinds-secondary=[The secondary leader key for the keybinding preset (for example "Alt")]:KEYBINDS_SECONDARY:_default' \
+'--keybinds-unlock=[The unlock key for the keybinding preset (for example "Ctrl g")]:KEYBINDS_UNLOCK:_default' \
 '--mouse-mode=[Set the handling of mouse events (true or false) Can be temporarily bypassed by the \[SHIFT\] key]:MOUSE_MODE:(true false)' \
 '--pane-frames=[Set display of the pane frames (true or false)]:PANE_FRAMES:(true false)' \
 '--pane-frame-style=[]:PANE_FRAME_STYLE:(full titles none)' \
@@ -2658,10 +3245,14 @@ tmux\:"\`Tmux\` mode allows for basic tmux keybindings functionality"))' \
 '--disable-session-metadata=[If true, will disable writing session metadata to disk]:DISABLE_SESSION_METADATA:(true false)' \
 '--support-kitty-keyboard-protocol=[Whether to enable support for the Kitty keyboard protocol (must also be supported by the host terminal), defaults to true if the terminal supports it]:SUPPORT_KITTY_KEYBOARD_PROTOCOL:(true false)' \
 '--support-kitty-graphics-protocol=[Whether to enable support for the Kitty graphics (image) protocol (must also be supported by the host terminal), defaults to true if the terminal supports it]:SUPPORT_KITTY_GRAPHICS_PROTOCOL:(true false)' \
+'--grapheme-clusters=[Count each grapheme cluster (an emoji sequence, a letter with its accents) as one unit of width, as the Unicode standard does (true or false, default true). When false, widths are counted per code point and programs may still ask for clusters with mode 2027]:GRAPHEME_CLUSTERS:(true false)' \
+'--mirror-resizes-source-pane=[Whether a focused mirror of a pane may resize that pane'\''s program to the mirror'\''s size, and whether new mirrors resize their source pane by default (true or false, default true)]:MIRROR_RESIZES_SOURCE_PANE:(true false)' \
+'--live-view-release-key=[An extra key that gives typing back to a plugin while a live pane view inside it is taking the keyboard (default\: none, Alt Enter, the inbox key or a click outside always do it; a key written twice means pressing it twice)]:LIVE_VIEW_RELEASE_KEY:_default' \
 '--web-server=[Whether to make sure a local web server is running when a new Zellij session starts. This web server will allow creating new sessions and attaching to existing ones that have opted in to being shared in the browser]:WEB_SERVER:(true false)' \
 '--web-sharing=[Whether to allow new sessions to be shared through a local web server, assuming one is running (see the \`web_server\` option for more details)]:WEB_SHARING:(on off disabled)' \
 '--stacked-resize=[Whether to stack panes when resizing beyond a certain size default is true]:STACKED_RESIZE:(true false)' \
 '--stacked-pane-list=[]:STACKED_PANE_LIST:(true false)' \
+'--stacked-pane-list-orientation=[Whether new stacks show their titles in a column (vertical) or in a row (horizontal) default is vertical]:STACKED_PANE_LIST_ORIENTATION:(vertical horizontal)' \
 '--show-startup-tips=[Whether to show startup tips when starting a new session default is true]:SHOW_STARTUP_TIPS:(true false)' \
 '--show-release-notes=[Whether to show release notes on first run of a new version default is true]:SHOW_RELEASE_NOTES:(true false)' \
 '--advanced-mouse-actions=[Whether to enable mouse hover effects and pane grouping functionality default is true]:ADVANCED_MOUSE_ACTIONS:(true false)' \
@@ -2672,13 +3263,20 @@ tmux\:"\`Tmux\` mode allows for basic tmux keybindings functionality"))' \
 '--visual-bell=[Whether to show visual bell indicators (pane/tab frame flash and \[!\] suffix) default is true]:VISUAL_BELL:(true false)' \
 '--focus-follows-mouse=[Whether to focus panes on mouse hover (true or false) default is false]:FOCUS_FOLLOWS_MOUSE:(true false)' \
 '--mouse-click-through=[Whether clicking a pane to focus it also sends the click into the pane (true or false) default is false]:MOUSE_CLICK_THROUGH:(true false)' \
+'--context-menu-enabled=[Whether a right click opens the right-click menu (true or false), default is true]:CONTEXT_MENU_ENABLED:(true false)' \
 '--osc133-command-selection=[Whether triple-clicking inside shell-marked (OSC 133) command output selects the command and its output rather than the logical line default is true]:OSC133_COMMAND_SELECTION:(true false)' \
 '--word-separators=[Characters that terminate a word when double-clicking to select it, in addition to whitespace (which is always a separator) default is "\[\]{}<>()"]:WORD_SEPARATORS:_default' \
 '--host-notification-protocol=[]:HOST_NOTIFICATION_PROTOCOL:(auto osc9 osc99 bell off)' \
 '--post-command-discovery-hook=[A command to run after the discovery of running commands when serializing, for the purpose of manipulating the command (eg. with a regex) before it gets serialized]:POST_COMMAND_DISCOVERY_HOOK:_default' \
-'--client-async-worker-tasks=[Number of async worker tasks to spawn per active client]:CLIENT_ASYNC_WORKER_TASKS:_default' \
+'--client-async-worker-tasks=[Number of background threads used by \`zellij attach <url>\` when it connects to a session on another machine. One set is made for that program, not one per client; the web server, browser clients and local sessions are not affected]:CLIENT_ASYNC_WORKER_TASKS:_default' \
 '--nested-session-handling=[How to handle a nested Zellij session detected inside a pane (ask, fullscreen, descend, never)]:NESTED_SESSION_HANDLING:(ask fullscreen descend never)' \
 '--dangerously-enable-paste-buffer-read=[]:DANGEROUSLY_ENABLE_PASTE_BUFFER_READ:(true false)' \
+'--session-indicator=[Whether to show the other sessions indicator in the tab bar and compact bar (true or false), default is true]:SESSION_INDICATOR:(true false)' \
+'--swap-layout-notification=[Whether to briefly show the new swap layout name when it is changed (true or false), default is true]:SWAP_LAYOUT_NOTIFICATION:(true false)' \
+'--on-quit=[What the quit action does\: ask_quit (ask, Quit preselected), ask_detach (ask, Detach preselected), quit or detach. Default is ask_quit]:ON_QUIT:(ask_quit ask_detach quit detach)' \
+'--bars-hidden-on-start=[Which bars a new session starts with hidden\: bar names separated by commas (eg. tab-bar,status-bar), all or none. Default is none]:BARS_HIDDEN_ON_START:_default' \
+'--hidden-bars-notification=[Whether to briefly show what was hidden and how to show it again when bars are hidden (true or false), default is true]:HIDDEN_BARS_NOTIFICATION:(true false)' \
+'--mode-hints-when-bars-hidden=[Whether to show the current mode'\''s keys in a corner while a bar that would show them is hidden (true or false), default is true]:MODE_HINTS_WHEN_BARS_HIDDEN:(true false)' \
 '-h[Print help (see more with '\''--help'\'')]' \
 '--help[Print help (see more with '\''--help'\'')]' \
 '::web_server_ip:_default' \
@@ -2686,6 +3284,7 @@ tmux\:"\`Tmux\` mode allows for basic tmux keybindings functionality"))' \
 '::web_server_cert:_files' \
 '::web_server_key:_files' \
 '::enforce_https_for_localhost:(true false)' \
+'::dangerously_allow_web_serving_without_a_certificate:(true false)' \
 && ret=0
 ;;
 (help)
@@ -2815,6 +3414,7 @@ _arguments "${_arguments_options[@]}" : \
 '-b+[start this pane without a border (warning\: will make it impossible to move with the mouse)]:BORDERLESS:(true false)' \
 '--borderless=[start this pane without a border (warning\: will make it impossible to move with the mouse)]:BORDERLESS:(true false)' \
 '(--near-current-pane -i --in-place)--tab-id=[Target a specific tab by ID]:TAB_ID:_default' \
+'--border-style=[Border line style, eg. "double" or "top\:double,left\:single,rounded"]:BORDER_STYLE:_default' \
 '-f[Open the new pane in floating mode]' \
 '--floating[Open the new pane in floating mode]' \
 '(-f --floating -d --direction)-i[Open the new pane in place of the current pane, temporarily suspending it]' \
@@ -2824,6 +3424,7 @@ _arguments "${_arguments_options[@]}" : \
 '--close-on-exit[Close the pane immediately when its command exits]' \
 '-s[Start the command suspended, only running after you first presses ENTER]' \
 '--start-suspended[Start the command suspended, only running after you first presses ENTER]' \
+'--notify[Watch the pane\: notify each time its command finishes or its output goes quiet, until the watch is turned off]' \
 '(-f --floating -d --direction)--stacked[]' \
 '--blocking[Block until the command has finished and its pane has been closed]' \
 '(--blocking --block-until-exit-failure --block-until-exit)--block-until-exit-success[Block until the command exits successfully (exit status 0) OR its pane has been closed]' \
@@ -2853,6 +3454,7 @@ _arguments "${_arguments_options[@]}" : \
 '-b+[start this pane without a border (warning\: will make it impossible to move with the mouse)]:BORDERLESS:(true false)' \
 '--borderless=[start this pane without a border (warning\: will make it impossible to move with the mouse)]:BORDERLESS:(true false)' \
 '(--near-current-pane -i --in-place)--tab-id=[Target a specific tab by ID]:TAB_ID:_default' \
+'--border-style=[Border line style, eg. "double" or "top\:double,left\:single,rounded"]:BORDER_STYLE:_default' \
 '-f[Open the new pane in floating mode]' \
 '--floating[Open the new pane in floating mode]' \
 '(-f --floating -d --direction)-i[Open the new pane in place of the current pane, temporarily suspending it]' \
@@ -2862,6 +3464,7 @@ _arguments "${_arguments_options[@]}" : \
 '--close-on-exit[Close the pane immediately when its command exits]' \
 '-s[Start the command suspended, only running after you first presses ENTER]' \
 '--start-suspended[Start the command suspended, only running after you first presses ENTER]' \
+'--notify[Watch the pane\: notify each time its command finishes or its output goes quiet, until the watch is turned off]' \
 '(-f --floating -d --direction)--stacked[]' \
 '--blocking[Block until the command has finished and its pane has been closed]' \
 '(--blocking --block-until-exit-failure --block-until-exit)--block-until-exit-success[Block until the command exits successfully (exit status 0) OR its pane has been closed]' \
@@ -2888,6 +3491,7 @@ _arguments "${_arguments_options[@]}" : \
 '-b+[start this pane without a border (warning\: will make it impossible to move with the mouse)]:BORDERLESS:(true false)' \
 '--borderless=[start this pane without a border (warning\: will make it impossible to move with the mouse)]:BORDERLESS:(true false)' \
 '(-i --in-place)--tab-id=[Target a specific tab by ID]:TAB_ID:_default' \
+'--border-style=[Border line style, eg. "double" or "top\:double,left\:single,rounded"]:BORDER_STYLE:_default' \
 '-f[Open the new pane in floating mode]' \
 '--floating[Open the new pane in floating mode]' \
 '(-f --floating)-i[Open the new pane in place of the current pane, temporarily suspending it]' \
@@ -2915,6 +3519,7 @@ _arguments "${_arguments_options[@]}" : \
 '-b+[start this pane without a border (warning\: will make it impossible to move with the mouse)]:BORDERLESS:(true false)' \
 '--borderless=[start this pane without a border (warning\: will make it impossible to move with the mouse)]:BORDERLESS:(true false)' \
 '(-i --in-place)--tab-id=[Target a specific tab by ID]:TAB_ID:_default' \
+'--border-style=[Border line style, eg. "double" or "top\:double,left\:single,rounded"]:BORDER_STYLE:_default' \
 '-f[Open the new pane in floating mode]' \
 '--floating[Open the new pane in floating mode]' \
 '(-f --floating)-i[Open the new pane in place of the current pane, temporarily suspending it]' \
@@ -2945,6 +3550,7 @@ _arguments "${_arguments_options[@]}" : \
 '-b+[start this pane without a border (warning\: will make it impossible to move with the mouse)]:BORDERLESS:(true false)' \
 '--borderless=[start this pane without a border (warning\: will make it impossible to move with the mouse)]:BORDERLESS:(true false)' \
 '(--near-current-pane -i --in-place)--tab-id=[Target a specific tab by ID]:TAB_ID:_default' \
+'--border-style=[Border line style, eg. "double" or "top\:double,left\:single,rounded"]:BORDER_STYLE:_default' \
 '(-f --floating -d --direction)-i[Open the new pane in place of the current pane, temporarily suspending it]' \
 '(-f --floating -d --direction)--in-place[Open the new pane in place of the current pane, temporarily suspending it]' \
 '--close-replaced-pane[Close the replaced pane instead of suspending it (only effective with --in-place)]' \
@@ -2974,6 +3580,7 @@ _arguments "${_arguments_options[@]}" : \
 '-b+[start this pane without a border (warning\: will make it impossible to move with the mouse)]:BORDERLESS:(true false)' \
 '--borderless=[start this pane without a border (warning\: will make it impossible to move with the mouse)]:BORDERLESS:(true false)' \
 '(--near-current-pane -i --in-place)--tab-id=[Target a specific tab by ID]:TAB_ID:_default' \
+'--border-style=[Border line style, eg. "double" or "top\:double,left\:single,rounded"]:BORDER_STYLE:_default' \
 '(-f --floating -d --direction)-i[Open the new pane in place of the current pane, temporarily suspending it]' \
 '(-f --floating -d --direction)--in-place[Open the new pane in place of the current pane, temporarily suspending it]' \
 '--close-replaced-pane[Close the replaced pane instead of suspending it (only effective with --in-place)]' \
@@ -3013,6 +3620,409 @@ _arguments "${_arguments_options[@]}" : \
 '-h[Print help]' \
 '--help[Print help]' \
 && ret=0
+;;
+(prompt)
+_arguments "${_arguments_options[@]}" : \
+'--title=[Title shown at the top of the popup (e.g. --title "Git")]:TITLE:_default' \
+'--timeout=[How long the popup stays open; an unanswered prompt then exits 124 and a notice just closes (e.g. --timeout 30s)]:TIMEOUT:_default' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+":: :_zellij__subcmd__prompt_commands" \
+"*::: :->prompt" \
+&& ret=0
+
+    case $state in
+    (prompt)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:zellij-prompt-command-$line[1]:"
+        case $line[1] in
+            (confirm)
+_arguments "${_arguments_options[@]}" : \
+'--yes=[Label of the confirming button (e.g. --yes Push)]:YES:_default' \
+'--no=[Label of the refusing button (e.g. --no Cancel)]:NO:_default' \
+'--default=[Initial value, and the answer used when --timeout runs out (e.g. --default 8080)]:DEFAULT:_default' \
+'--outside-click=[What a click outside the popup does\: block (ignore it) or close (cancel the prompt) (e.g. --outside-click close)]:OUTSIDE_CLICK:_default' \
+'--title=[Title shown at the top of the popup (e.g. --title "Git")]:TITLE:_default' \
+'--timeout=[How long the popup stays open; an unanswered prompt then exits 124 and a notice just closes (e.g. --timeout 30s)]:TIMEOUT:_default' \
+'--json[Print JSON with the result and why the prompt ended (e.g. {"result"\:"cancelled"})]' \
+'(--at-cursor --at-center)--at-mouse[Open the popup where the mouse pointer last was, or at your cursor if the mouse has not moved yet (e.g. --at-mouse)]' \
+'(--at-mouse --at-center)--at-cursor[Open the popup just below your cursor, in the pane you are focused on (e.g. --at-cursor)]' \
+'(--at-mouse --at-cursor)--at-center[Open the popup in the middle of the screen instead of over the calling pane (e.g. --at-center)]' \
+'--capture-all-keys[Send every key to the prompt, including the ones bound to Zellij actions (e.g. --capture-all-keys)]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'::message -- The question (e.g. "Force push?"):_default' \
+&& ret=0
+;;
+(choose)
+_arguments "${_arguments_options[@]}" : \
+'*--item=[An item written as value=Label (e.g. --item "rm=Delete file")]:ITEM:_default' \
+'*--selected=[An item ticked in advance (e.g. --selected b)]:SELECTED:_default' \
+'--default=[Initial value, and the answer used when --timeout runs out (e.g. --default 8080)]:DEFAULT:_default' \
+'--outside-click=[What a click outside the popup does\: block (ignore it) or close (cancel the prompt) (e.g. --outside-click close)]:OUTSIDE_CLICK:_default' \
+'--title=[Title shown at the top of the popup (e.g. --title "Git")]:TITLE:_default' \
+'--timeout=[How long the popup stays open; an unanswered prompt then exits 124 and a notice just closes (e.g. --timeout 30s)]:TIMEOUT:_default' \
+'--multi[Allow ticking several items (e.g. zellij prompt choose --multi a b c)]' \
+'--labels[Each stdin line is value<TAB>label (e.g. printf '\''main\\tMain branch\\n'\'' | zellij prompt choose --labels)]' \
+'-0[Input and output are NUL-separated (e.g. find . -print0 | zellij prompt choose -0)]' \
+'--null[Input and output are NUL-separated (e.g. find . -print0 | zellij prompt choose -0)]' \
+'--json[Print JSON with the result and why the prompt ended (e.g. {"result"\:"cancelled"})]' \
+'(--at-cursor --at-center)--at-mouse[Open the popup where the mouse pointer last was, or at your cursor if the mouse has not moved yet (e.g. --at-mouse)]' \
+'(--at-mouse --at-center)--at-cursor[Open the popup just below your cursor, in the pane you are focused on (e.g. --at-cursor)]' \
+'(--at-mouse --at-cursor)--at-center[Open the popup in the middle of the screen instead of over the calling pane (e.g. --at-center)]' \
+'--capture-all-keys[Send every key to the prompt, including the ones bound to Zellij actions (e.g. --capture-all-keys)]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'*::items -- The items; read from stdin when none are given (e.g. main dev):_default' \
+&& ret=0
+;;
+(input)
+_arguments "${_arguments_options[@]}" : \
+'--placeholder=[Text shown while the field is empty (e.g. --placeholder "what changed")]:PLACEHOLDER:_default' \
+'--validate=[A regular expression the answer must match (e.g. --validate '\''^\[a-z-\]+\$'\'')]:VALIDATE:_default' \
+'--default=[Initial value, and the answer used when --timeout runs out (e.g. --default 8080)]:DEFAULT:_default' \
+'--outside-click=[What a click outside the popup does\: block (ignore it) or close (cancel the prompt) (e.g. --outside-click close)]:OUTSIDE_CLICK:_default' \
+'--title=[Title shown at the top of the popup (e.g. --title "Git")]:TITLE:_default' \
+'--timeout=[How long the popup stays open; an unanswered prompt then exits 124 and a notice just closes (e.g. --timeout 30s)]:TIMEOUT:_default' \
+'--required[Refuse an empty answer (e.g. --required)]' \
+'--json[Print JSON with the result and why the prompt ended (e.g. {"result"\:"cancelled"})]' \
+'(--at-cursor --at-center)--at-mouse[Open the popup where the mouse pointer last was, or at your cursor if the mouse has not moved yet (e.g. --at-mouse)]' \
+'(--at-mouse --at-center)--at-cursor[Open the popup just below your cursor, in the pane you are focused on (e.g. --at-cursor)]' \
+'(--at-mouse --at-cursor)--at-center[Open the popup in the middle of the screen instead of over the calling pane (e.g. --at-center)]' \
+'--capture-all-keys[Send every key to the prompt, including the ones bound to Zellij actions (e.g. --capture-all-keys)]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'::message -- The label (e.g. "Commit message"):_default' \
+&& ret=0
+;;
+(number)
+_arguments "${_arguments_options[@]}" : \
+'--min=[Smallest allowed value (e.g. --min 1)]:MIN:_default' \
+'--max=[Largest allowed value (e.g. --max 65535)]:MAX:_default' \
+'--step=[Step used by the arrow keys (e.g. --step 10)]:STEP:_default' \
+'--default=[Initial value, and the answer used when --timeout runs out (e.g. --default 8080)]:DEFAULT:_default' \
+'--outside-click=[What a click outside the popup does\: block (ignore it) or close (cancel the prompt) (e.g. --outside-click close)]:OUTSIDE_CLICK:_default' \
+'--title=[Title shown at the top of the popup (e.g. --title "Git")]:TITLE:_default' \
+'--timeout=[How long the popup stays open; an unanswered prompt then exits 124 and a notice just closes (e.g. --timeout 30s)]:TIMEOUT:_default' \
+'--json[Print JSON with the result and why the prompt ended (e.g. {"result"\:"cancelled"})]' \
+'(--at-cursor --at-center)--at-mouse[Open the popup where the mouse pointer last was, or at your cursor if the mouse has not moved yet (e.g. --at-mouse)]' \
+'(--at-mouse --at-center)--at-cursor[Open the popup just below your cursor, in the pane you are focused on (e.g. --at-cursor)]' \
+'(--at-mouse --at-cursor)--at-center[Open the popup in the middle of the screen instead of over the calling pane (e.g. --at-center)]' \
+'--capture-all-keys[Send every key to the prompt, including the ones bound to Zellij actions (e.g. --capture-all-keys)]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'::message -- The label (e.g. Port):_default' \
+&& ret=0
+;;
+(toggle)
+_arguments "${_arguments_options[@]}" : \
+'--default=[Initial value, and the answer used when --timeout runs out (e.g. --default 8080)]:DEFAULT:_default' \
+'--outside-click=[What a click outside the popup does\: block (ignore it) or close (cancel the prompt) (e.g. --outside-click close)]:OUTSIDE_CLICK:_default' \
+'--title=[Title shown at the top of the popup (e.g. --title "Git")]:TITLE:_default' \
+'--timeout=[How long the popup stays open; an unanswered prompt then exits 124 and a notice just closes (e.g. --timeout 30s)]:TIMEOUT:_default' \
+'--json[Print JSON with the result and why the prompt ended (e.g. {"result"\:"cancelled"})]' \
+'(--at-cursor --at-center)--at-mouse[Open the popup where the mouse pointer last was, or at your cursor if the mouse has not moved yet (e.g. --at-mouse)]' \
+'(--at-mouse --at-center)--at-cursor[Open the popup just below your cursor, in the pane you are focused on (e.g. --at-cursor)]' \
+'(--at-mouse --at-cursor)--at-center[Open the popup in the middle of the screen instead of over the calling pane (e.g. --at-center)]' \
+'--capture-all-keys[Send every key to the prompt, including the ones bound to Zellij actions (e.g. --capture-all-keys)]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'::message -- The label (e.g. "Enable CI"):_default' \
+&& ret=0
+;;
+(select)
+_arguments "${_arguments_options[@]}" : \
+'--default=[Initial value, and the answer used when --timeout runs out (e.g. --default 8080)]:DEFAULT:_default' \
+'--outside-click=[What a click outside the popup does\: block (ignore it) or close (cancel the prompt) (e.g. --outside-click close)]:OUTSIDE_CLICK:_default' \
+'--title=[Title shown at the top of the popup (e.g. --title "Git")]:TITLE:_default' \
+'--timeout=[How long the popup stays open; an unanswered prompt then exits 124 and a notice just closes (e.g. --timeout 30s)]:TIMEOUT:_default' \
+'--json[Print JSON with the result and why the prompt ended (e.g. {"result"\:"cancelled"})]' \
+'(--at-cursor --at-center)--at-mouse[Open the popup where the mouse pointer last was, or at your cursor if the mouse has not moved yet (e.g. --at-mouse)]' \
+'(--at-mouse --at-center)--at-cursor[Open the popup just below your cursor, in the pane you are focused on (e.g. --at-cursor)]' \
+'(--at-mouse --at-cursor)--at-center[Open the popup in the middle of the screen instead of over the calling pane (e.g. --at-center)]' \
+'--capture-all-keys[Send every key to the prompt, including the ones bound to Zellij actions (e.g. --capture-all-keys)]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'::message -- The label (e.g. License):_default' \
+'*::options -- The options (e.g. MIT Apache-2.0):_default' \
+&& ret=0
+;;
+(menu)
+_arguments "${_arguments_options[@]}" : \
+'*--item=[An item written as value=Label (e.g. --item "rm=Delete")]:ITEM:_default' \
+'--default=[Initial value, and the answer used when --timeout runs out (e.g. --default 8080)]:DEFAULT:_default' \
+'--outside-click=[What a click outside the popup does\: block (ignore it) or close (cancel the prompt) (e.g. --outside-click close)]:OUTSIDE_CLICK:_default' \
+'--title=[Title shown at the top of the popup (e.g. --title "Git")]:TITLE:_default' \
+'--timeout=[How long the popup stays open; an unanswered prompt then exits 124 and a notice just closes (e.g. --timeout 30s)]:TIMEOUT:_default' \
+'--json[Print JSON with the result and why the prompt ended (e.g. {"result"\:"cancelled"})]' \
+'(--at-cursor --at-center)--at-mouse[Open the popup where the mouse pointer last was, or at your cursor if the mouse has not moved yet (e.g. --at-mouse)]' \
+'(--at-mouse --at-center)--at-cursor[Open the popup just below your cursor, in the pane you are focused on (e.g. --at-cursor)]' \
+'(--at-mouse --at-cursor)--at-center[Open the popup in the middle of the screen instead of over the calling pane (e.g. --at-center)]' \
+'--capture-all-keys[Send every key to the prompt, including the ones bound to Zellij actions (e.g. --capture-all-keys)]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'*::items -- The menu items (e.g. Open Rename Delete):_default' \
+&& ret=0
+;;
+(form)
+_arguments "${_arguments_options[@]}" : \
+'--spec=[File with the form description; read from stdin when not given (e.g. --spec form.json)]:SPEC:_files' \
+'--default=[Initial value, and the answer used when --timeout runs out (e.g. --default 8080)]:DEFAULT:_default' \
+'--outside-click=[What a click outside the popup does\: block (ignore it) or close (cancel the prompt) (e.g. --outside-click close)]:OUTSIDE_CLICK:_default' \
+'--title=[Title shown at the top of the popup (e.g. --title "Git")]:TITLE:_default' \
+'--timeout=[How long the popup stays open; an unanswered prompt then exits 124 and a notice just closes (e.g. --timeout 30s)]:TIMEOUT:_default' \
+'--json[Print JSON with the result and why the prompt ended (e.g. {"result"\:"cancelled"})]' \
+'(--at-cursor --at-center)--at-mouse[Open the popup where the mouse pointer last was, or at your cursor if the mouse has not moved yet (e.g. --at-mouse)]' \
+'(--at-mouse --at-center)--at-cursor[Open the popup just below your cursor, in the pane you are focused on (e.g. --at-cursor)]' \
+'(--at-mouse --at-cursor)--at-center[Open the popup in the middle of the screen instead of over the calling pane (e.g. --at-center)]' \
+'--capture-all-keys[Send every key to the prompt, including the ones bound to Zellij actions (e.g. --capture-all-keys)]' \
+'-h[Print help]' \
+'--help[Print help]' \
+&& ret=0
+;;
+(notify)
+_arguments "${_arguments_options[@]}" : \
+'--at=[Where to show it\: top-right, top-left, bottom-right, bottom-left, pane, center, mouse or cursor (e.g. --at bottom-right)]:AT:_default' \
+'--title=[Title shown at the top of the popup (e.g. --title "Git")]:TITLE:_default' \
+'--timeout=[How long the popup stays open; an unanswered prompt then exits 124 and a notice just closes (e.g. --timeout 30s)]:TIMEOUT:_default' \
+'--no-pane-name[Leave out the line with the name of the pane that sent the notice (e.g. --no-pane-name)]' \
+'--no-tab-name[Leave out the line with the tab name, shown when the pane that sent the notice is in another tab (e.g. --no-tab-name)]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'::message -- The text to show; long text is wrapped (e.g. "Build finished"):_default' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_zellij__subcmd__prompt__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:zellij-prompt-help-command-$line[1]:"
+        case $line[1] in
+            (confirm)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(choose)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(input)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(number)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(toggle)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(select)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(menu)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(form)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(notify)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
+;;
+(terminal)
+_arguments "${_arguments_options[@]}" : \
+'--index=[Number of the session index in the active sessions ordered creation date]:INDEX:_default' \
+'-t+[Authentication token for remote sessions]:TOKEN:_default' \
+'--token=[Authentication token for remote sessions]:TOKEN:_default' \
+'--ca-cert=[Path to a custom CA certificate (PEM format) for verifying the remote server]:FILE:_files' \
+'--record=[Record the received message stream to a fixture file]:PATH:_files' \
+'--rows=[Rows to advertise while headless]:ROWS:_default' \
+'--cols=[Columns to advertise while headless]:COLS:_default' \
+'--cell-width=[Character cell width in pixels to advertise while headless]:CELL_WIDTH:_default' \
+'--cell-height=[Character cell height in pixels to advertise while headless]:CELL_HEIGHT:_default' \
+'--duration-secs=[Detach after this many seconds]:SECONDS:_default' \
+'--startup-mode=[Open the window windowed, maximized, fullscreen, or the way the last one was closed (remember), overriding startup_mode in the terminal section of the configuration]:MODE:(windowed maximized fullscreen remember)' \
+'--socket-dir=[Use this folder for session sockets instead of the default, so this window, its desktop app and its sessions are separate from every other Zellij (same as setting ZELLIJ_SOCKET_DIR)]:PATH:_files' \
+'(--watch --inbox --sessions --headless --background)*-e+[Run this command (and every argument after it) as the first pane, close the pane when it exits, and wait for it, exiting with its exit code (as terminal emulators do)]:COMMAND:_default' \
+'--working-directory=[Start in this folder instead of the current one]:DIR:_files' \
+'-c[Create a session if one does not exist]' \
+'--create[Create a session if one does not exist]' \
+'-f[If resurrecting a dead session, immediately run all its commands on startup]' \
+'--force-run-commands[If resurrecting a dead session, immediately run all its commands on startup]' \
+'-r[Save session for automatic re-authentication (4 weeks)]' \
+'--remember[Save session for automatic re-authentication (4 weeks)]' \
+'--forget[Delete saved session before connecting]' \
+'--insecure[Skip TLS certificate validation (DANGEROUS — development only)]' \
+'--close-on-exit[Close the initial command'\''s pane immediately when it exits]' \
+'--start-suspended[Start the initial command suspended, only running it after you first press ENTER]' \
+'(-c --create -f --force-run-commands --index)--watch[Follow the screen of the session'\''s first client, read-only]' \
+'--headless[Render nothing and open no window; for fixture capture and debugging]' \
+'--standalone[Open this window on its own instead of handing it to the running desktop app (no tray, no notifications from this process)]' \
+'(--sessions --standalone --watch --headless)--inbox[Show or hide the inbox panel of the running desktop app (starting it if needed), for a desktop keyboard shortcut]' \
+'(--standalone --watch --headless)--sessions[Show or hide the sessions panel of the running desktop app (starting it if needed), for a desktop keyboard shortcut]' \
+'--hold[Keep the command'\''s pane open after the command exits, showing its output (requires a command)]' \
+'(--inbox --sessions --standalone --watch --headless)--background[Start the desktop app without opening a window]' \
+'-h[Print help]' \
+'--help[Print help]' \
+'::session_name -- Name of the session to attach to:_default' \
+'::initial_command -- Command to run in the first pane of the session, if it is created:_default' \
+":: :_zellij__subcmd__terminal_commands" \
+"*::: :->terminal" \
+&& ret=0
+
+    case $state in
+    (terminal)
+        words=($line[3] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:zellij-terminal-command-$line[3]:"
+        case $line[3] in
+            (options)
+_arguments "${_arguments_options[@]}" : \
+'--simplified-ui=[Allow plugins to use a more simplified layout that is compatible with more fonts (true or false)]:SIMPLIFIED_UI:(true false)' \
+'--theme=[Set the default theme]:THEME:_default' \
+'--theme-dark=[Theme name to apply when the host terminal reports a dark color palette (CSI 2031 / DSR 997). Requires \`theme_light\` to also be set; if either is missing the static \`theme\` remains authoritative]:THEME_DARK:_default' \
+'--theme-light=[Theme name to apply when the host terminal reports a light color palette (CSI 2031 / DSR 997). Requires \`theme_dark\` to also be set; if either is missing the static \`theme\` remains authoritative]:THEME_LIGHT:_default' \
+'--explicit-theme-hue=[Pin the session to a dark or light appearance ("dark" or "light"), resolved before the first render and kept authoritative over ambient host terminal reports (CSI 2031 / DSR 997). When unset, the session follows the host terminal]:EXPLICIT_THEME_HUE:(light dark)' \
+'--default-mode=[Set the default mode]:DEFAULT_MODE:((normal\:"In \`Normal\` mode, input is always written to the terminal, except for the shortcuts leading to other modes"
+locked\:"In \`Locked\` mode, input is always written to the terminal and all shortcuts are disabled except the one leading back to normal mode"
+resize\:"\`Resize\` mode allows resizing the different existing panes"
+pane\:"\`Pane\` mode allows creating and closing panes, as well as moving between them"
+tab\:"\`Tab\` mode allows creating and closing tabs, as well as moving between them"
+scroll\:"\`Scroll\` mode allows scrolling up and down within a pane"
+enter-search\:"\`EnterSearch\` mode allows for typing in the needle for a search in the scroll buffer of a pane"
+search\:"\`Search\` mode allows for searching a term in a pane (superset of \`Scroll\`)"
+rename-tab\:"\`RenameTab\` mode allows assigning a new name to a tab"
+rename-pane\:"\`RenamePane\` mode allows assigning a new name to a pane"
+session\:"\`Session\` mode allows detaching sessions"
+move\:"\`Move\` mode allows moving the different existing panes within a tab"
+prompt\:"\`Prompt\` mode allows interacting with active prompts"
+tmux\:"\`Tmux\` mode allows for basic tmux keybindings functionality"
+rename-session\:""))' \
+'--default-shell=[Set the default shell]:DEFAULT_SHELL:_files' \
+'--default-cwd=[Set the default cwd]:DEFAULT_CWD:_files' \
+'--default-layout=[Set the default layout]:DEFAULT_LAYOUT:_files' \
+'--layout-dir=[Set the layout_dir, defaults to subdirectory of config dir]:LAYOUT_DIR:_files' \
+'--theme-dir=[Set the theme_dir, defaults to subdirectory of config dir]:THEME_DIR:_files' \
+'--keybinds-dir=[Set the keybinds_dir, defaults to subdirectory of config dir]:KEYBINDS_DIR:_files' \
+'--keybinds-preset=[Use this keybinding preset for this session\: a name from the keybinds folder, a built-in preset, or a path to a preset file]:KEYBINDS_PRESET:_default' \
+'--keybinds-primary=[The primary leader key for the keybinding preset (for example "Ctrl")]:KEYBINDS_PRIMARY:_default' \
+'--keybinds-secondary=[The secondary leader key for the keybinding preset (for example "Alt")]:KEYBINDS_SECONDARY:_default' \
+'--keybinds-unlock=[The unlock key for the keybinding preset (for example "Ctrl g")]:KEYBINDS_UNLOCK:_default' \
+'--mouse-mode=[Set the handling of mouse events (true or false) Can be temporarily bypassed by the \[SHIFT\] key]:MOUSE_MODE:(true false)' \
+'--pane-frames=[Set display of the pane frames (true or false)]:PANE_FRAMES:(true false)' \
+'--pane-frame-style=[]:PANE_FRAME_STYLE:(full titles none)' \
+'--mirror-session=[Mirror session when multiple users are connected (true or false)]:MIRROR_SESSION:(true false)' \
+'--on-force-close=[Set behaviour on force close (quit or detach)]:ON_FORCE_CLOSE:(quit detach)' \
+'--scroll-buffer-size=[]:SCROLL_BUFFER_SIZE:_default' \
+'--copy-command=[Switch to using a user supplied command for clipboard instead of OSC52]:COPY_COMMAND:_default' \
+'(--copy-command)--copy-clipboard=[OSC52 destination clipboard]:COPY_CLIPBOARD:(system primary)' \
+'--copy-on-select=[Automatically copy when selecting text (true or false)]:COPY_ON_SELECT:(true false)' \
+'--osc8-hyperlinks=[Enable OSC8 hyperlink output (true or false)]:OSC8_HYPERLINKS:(true false)' \
+'--scrollback-editor=[Explicit full path to open the scrollback editor (default is \$EDITOR or \$VISUAL)]:SCROLLBACK_EDITOR:_files' \
+'--session-name=[The name of the session to create when starting Zellij]:SESSION_NAME:_default' \
+'--attach-to-session=[Whether to attach to a session specified in "session-name" if it exists]:ATTACH_TO_SESSION:(true false)' \
+'--auto-layout=[Whether to lay out panes in a predefined set of layouts whenever possible]:AUTO_LAYOUT:(true false)' \
+'--session-serialization=[Whether sessions should be serialized to the HD so that they can be later resurrected, default is true]:SESSION_SERIALIZATION:(true false)' \
+'--serialize-pane-viewport=[Whether pane viewports are serialized along with the session, default is false]:SERIALIZE_PANE_VIEWPORT:(true false)' \
+'--scrollback-lines-to-serialize=[Scrollback lines to serialize along with the pane viewport when serializing sessions, 0 defaults to the scrollback size. If this number is higher than the scrollback size, it will also default to the scrollback size]:SCROLLBACK_LINES_TO_SERIALIZE:_default' \
+'--styled-underlines=[Whether to use ANSI styled underlines]:STYLED_UNDERLINES:(true false)' \
+'--serialization-interval=[The interval at which to serialize sessions for resurrection (in seconds)]:SERIALIZATION_INTERVAL:_default' \
+'--disable-session-metadata=[If true, will disable writing session metadata to disk]:DISABLE_SESSION_METADATA:(true false)' \
+'--support-kitty-keyboard-protocol=[Whether to enable support for the Kitty keyboard protocol (must also be supported by the host terminal), defaults to true if the terminal supports it]:SUPPORT_KITTY_KEYBOARD_PROTOCOL:(true false)' \
+'--support-kitty-graphics-protocol=[Whether to enable support for the Kitty graphics (image) protocol (must also be supported by the host terminal), defaults to true if the terminal supports it]:SUPPORT_KITTY_GRAPHICS_PROTOCOL:(true false)' \
+'--grapheme-clusters=[Count each grapheme cluster (an emoji sequence, a letter with its accents) as one unit of width, as the Unicode standard does (true or false, default true). When false, widths are counted per code point and programs may still ask for clusters with mode 2027]:GRAPHEME_CLUSTERS:(true false)' \
+'--mirror-resizes-source-pane=[Whether a focused mirror of a pane may resize that pane'\''s program to the mirror'\''s size, and whether new mirrors resize their source pane by default (true or false, default true)]:MIRROR_RESIZES_SOURCE_PANE:(true false)' \
+'--live-view-release-key=[An extra key that gives typing back to a plugin while a live pane view inside it is taking the keyboard (default\: none, Alt Enter, the inbox key or a click outside always do it; a key written twice means pressing it twice)]:LIVE_VIEW_RELEASE_KEY:_default' \
+'--web-server=[Whether to make sure a local web server is running when a new Zellij session starts. This web server will allow creating new sessions and attaching to existing ones that have opted in to being shared in the browser]:WEB_SERVER:(true false)' \
+'--web-sharing=[Whether to allow new sessions to be shared through a local web server, assuming one is running (see the \`web_server\` option for more details)]:WEB_SHARING:(on off disabled)' \
+'--stacked-resize=[Whether to stack panes when resizing beyond a certain size default is true]:STACKED_RESIZE:(true false)' \
+'--stacked-pane-list=[]:STACKED_PANE_LIST:(true false)' \
+'--stacked-pane-list-orientation=[Whether new stacks show their titles in a column (vertical) or in a row (horizontal) default is vertical]:STACKED_PANE_LIST_ORIENTATION:(vertical horizontal)' \
+'--show-startup-tips=[Whether to show startup tips when starting a new session default is true]:SHOW_STARTUP_TIPS:(true false)' \
+'--show-release-notes=[Whether to show release notes on first run of a new version default is true]:SHOW_RELEASE_NOTES:(true false)' \
+'--advanced-mouse-actions=[Whether to enable mouse hover effects and pane grouping functionality default is true]:ADVANCED_MOUSE_ACTIONS:(true false)' \
+'--mouse-scroll-resize=[Whether Ctrl+ScrollWheel resizes panes default is true]:MOUSE_SCROLL_RESIZE:(true false)' \
+'--scroll-mode-sync=[Whether scrolling a pane implicitly enters (and leaving the scroll implicitly exits) Scroll mode default is true]:SCROLL_MODE_SYNC:(true false)' \
+'--mouse-hover-effects=[Whether to enable mouse hover visual effects (frame highlight and help text) default is true]:MOUSE_HOVER_EFFECTS:(true false)' \
+'--mouse-hover-tips=[Whether to show mouse hover help-text tips (resize help and group shortcuts) default is true]:MOUSE_HOVER_TIPS:(true false)' \
+'--visual-bell=[Whether to show visual bell indicators (pane/tab frame flash and \[!\] suffix) default is true]:VISUAL_BELL:(true false)' \
+'--focus-follows-mouse=[Whether to focus panes on mouse hover (true or false) default is false]:FOCUS_FOLLOWS_MOUSE:(true false)' \
+'--mouse-click-through=[Whether clicking a pane to focus it also sends the click into the pane (true or false) default is false]:MOUSE_CLICK_THROUGH:(true false)' \
+'--context-menu-enabled=[Whether a right click opens the right-click menu (true or false), default is true]:CONTEXT_MENU_ENABLED:(true false)' \
+'--osc133-command-selection=[Whether triple-clicking inside shell-marked (OSC 133) command output selects the command and its output rather than the logical line default is true]:OSC133_COMMAND_SELECTION:(true false)' \
+'--word-separators=[Characters that terminate a word when double-clicking to select it, in addition to whitespace (which is always a separator) default is "\[\]{}<>()"]:WORD_SEPARATORS:_default' \
+'--host-notification-protocol=[]:HOST_NOTIFICATION_PROTOCOL:(auto osc9 osc99 bell off)' \
+'--post-command-discovery-hook=[A command to run after the discovery of running commands when serializing, for the purpose of manipulating the command (eg. with a regex) before it gets serialized]:POST_COMMAND_DISCOVERY_HOOK:_default' \
+'--client-async-worker-tasks=[Number of background threads used by \`zellij attach <url>\` when it connects to a session on another machine. One set is made for that program, not one per client; the web server, browser clients and local sessions are not affected]:CLIENT_ASYNC_WORKER_TASKS:_default' \
+'--nested-session-handling=[How to handle a nested Zellij session detected inside a pane (ask, fullscreen, descend, never)]:NESTED_SESSION_HANDLING:(ask fullscreen descend never)' \
+'--dangerously-enable-paste-buffer-read=[]:DANGEROUSLY_ENABLE_PASTE_BUFFER_READ:(true false)' \
+'--session-indicator=[Whether to show the other sessions indicator in the tab bar and compact bar (true or false), default is true]:SESSION_INDICATOR:(true false)' \
+'--swap-layout-notification=[Whether to briefly show the new swap layout name when it is changed (true or false), default is true]:SWAP_LAYOUT_NOTIFICATION:(true false)' \
+'--on-quit=[What the quit action does\: ask_quit (ask, Quit preselected), ask_detach (ask, Detach preselected), quit or detach. Default is ask_quit]:ON_QUIT:(ask_quit ask_detach quit detach)' \
+'--bars-hidden-on-start=[Which bars a new session starts with hidden\: bar names separated by commas (eg. tab-bar,status-bar), all or none. Default is none]:BARS_HIDDEN_ON_START:_default' \
+'--hidden-bars-notification=[Whether to briefly show what was hidden and how to show it again when bars are hidden (true or false), default is true]:HIDDEN_BARS_NOTIFICATION:(true false)' \
+'--mode-hints-when-bars-hidden=[Whether to show the current mode'\''s keys in a corner while a bar that would show them is hidden (true or false), default is true]:MODE_HINTS_WHEN_BARS_HIDDEN:(true false)' \
+'-h[Print help (see more with '\''--help'\'')]' \
+'--help[Print help (see more with '\''--help'\'')]' \
+'::web_server_ip:_default' \
+'::web_server_port:_default' \
+'::web_server_cert:_files' \
+'::web_server_key:_files' \
+'::enforce_https_for_localhost:(true false)' \
+'::dangerously_allow_web_serving_without_a_certificate:(true false)' \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+":: :_zellij__subcmd__terminal__subcmd__help_commands" \
+"*::: :->help" \
+&& ret=0
+
+    case $state in
+    (help)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:zellij-terminal-help-command-$line[1]:"
+        case $line[1] in
+            (options)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(help)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+        esac
+    ;;
+esac
 ;;
 (help)
 _arguments "${_arguments_options[@]}" : \
@@ -3166,7 +4176,23 @@ _arguments "${_arguments_options[@]}" : \
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
+(toggle-stack-list-orientation)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
 (set-pane-frame-style)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(toggle-bars)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(hide-bars)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(show-bars)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -3274,6 +4300,14 @@ _arguments "${_arguments_options[@]}" : \
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
+(apply-tiled-swap-layout)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(apply-floating-swap-layout)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
 (override-layout)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
@@ -3322,6 +4356,58 @@ _arguments "${_arguments_options[@]}" : \
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
+(toggle-mirror-resize)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(mute-pane)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(ignore-pane-output)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(watch-pane)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(mute-tab)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(mute-session)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(toggle-session)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(go-to-previous-session)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(go-to-next-session)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(go-to-next-attention)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(toggle-tray-icon)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(mark-pane-seen)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(mark-all-seen)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
 (stack-panes)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
@@ -3335,6 +4421,10 @@ _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
 (set-pane-borderless)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set-pane-border-style)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -3354,11 +4444,23 @@ _arguments "${_arguments_options[@]}" : \
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
+(dismiss-info-popups)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(open-context-menu)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
 (switch-session)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
 (set-pane-color)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(set-resurrect-command)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
@@ -3434,6 +4536,78 @@ _arguments "${_arguments_options[@]}" : \
 _arguments "${_arguments_options[@]}" : \
 && ret=0
 ;;
+(prompt)
+_arguments "${_arguments_options[@]}" : \
+":: :_zellij__subcmd__help__subcmd__prompt_commands" \
+"*::: :->prompt" \
+&& ret=0
+
+    case $state in
+    (prompt)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:zellij-help-prompt-command-$line[1]:"
+        case $line[1] in
+            (confirm)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(choose)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(input)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(number)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(toggle)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(select)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(menu)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(form)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+(notify)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
+(terminal)
+_arguments "${_arguments_options[@]}" : \
+":: :_zellij__subcmd__help__subcmd__terminal_commands" \
+"*::: :->terminal" \
+&& ret=0
+
+    case $state in
+    (terminal)
+        words=($line[1] "${words[@]}")
+        (( CURRENT += 1 ))
+        curcontext="${curcontext%:*:*}:zellij-help-terminal-command-$line[1]:"
+        case $line[1] in
+            (options)
+_arguments "${_arguments_options[@]}" : \
+&& ret=0
+;;
+        esac
+    ;;
+esac
+;;
 (help)
 _arguments "${_arguments_options[@]}" : \
 && ret=0
@@ -3479,6 +4653,8 @@ _zellij_commands() {
 'e:Edit file with default \$EDITOR / \$VISUAL Returns\: Created pane ID (format\: terminal_<id>)' \
 'pipe:Send data to one or more plugins, launch them if they are not running' \
 'subscribe:Subscribe to pane render updates (viewport and scrollback)' \
+'prompt:Show a UI element to the person at the terminal and print their answer (e.g. zellij prompt confirm "Deploy?")' \
+'terminal:Open a session in the Zellij terminal, without another terminal emulator' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'zellij commands' commands "$@"
@@ -3515,7 +4691,11 @@ _zellij__subcmd__action_commands() {
 'toggle-fullscreen:Toggle between fullscreen focus pane and normal layout' \
 'toggle-no-ui-fullscreen:Toggle between fullscreen over the entire display (including the UI bars) and normal layout' \
 'toggle-pane-frames:Toggle frames around panes in the UI' \
+'toggle-stack-list-orientation:Switch the focused stack between showing its titles in a column (vertical) and in a row (horizontal)' \
 'set-pane-frame-style:' \
+'toggle-bars:Show all bars if any are hidden, otherwise hide the named bars (all bars if none are named)' \
+'hide-bars:Hide the named bars (all bars if none are named) in every tab' \
+'show-bars:Show all hidden bars' \
 'toggle-active-sync-tab:Toggle between sending text commands to all panes on the current tab and normal mode' \
 'new-pane:Open a new pane in the specified direction \[right|down\] If no direction is specified, will try to use the biggest available space. Returns\: Created pane ID (format\: terminal_<id> or plugin_<id>)' \
 'edit:Open the specified file in a new zellij pane with your default EDITOR Returns\: Created pane ID (format\: terminal_<id>)' \
@@ -3542,6 +4722,8 @@ _zellij__subcmd__action_commands() {
 'move-tab:Move the focused tab in the specified direction. \[right|left\]' \
 'previous-swap-layout:' \
 'next-swap-layout:' \
+'apply-tiled-swap-layout:Apply the tiled swap layout with the given name, leaving floating pane visibility and focus untouched' \
+'apply-floating-swap-layout:Apply the floating swap layout with the given name, leaving floating pane visibility and focus untouched' \
 'override-layout:Override the layout of the active tab' \
 'query-tab-names:Query all tab names' \
 'start-or-reload-plugin:' \
@@ -3554,19 +4736,46 @@ _zellij__subcmd__action_commands() {
 'list-tabs:List all tabs with their information' \
 'current-tab-info:Get information about the currently active tab' \
 'toggle-pane-pinned:' \
+'toggle-mirror-resize:Toggle whether the live view in the focused plugin pane resizes the program of the pane it shows' \
+'mute-pane:Mute or unmute the attention status of a pane (the focused pane by default)' \
+'ignore-pane-output:Stop or start reporting new output of a pane (the focused pane by default)' \
+'watch-pane:Watch a pane\: notify each time its command finishes or its output goes quiet, until turned off again (toggles; the focused pane by default)' \
+'mute-tab:Mute or unmute the attention status of all panes in a tab (the active tab by default)' \
+'mute-session:Mute or unmute the attention status of the whole session' \
+'toggle-session:Switch to the session this client was in before (run again to return), or to the next running session if there is none' \
+'go-to-previous-session:Go back to the previous session in this client'\''s history' \
+'go-to-next-session:Go forward in this client'\''s session history' \
+'go-to-next-attention:Jump to the next pane that needs attention in any session, switching session if needed' \
+'toggle-tray-icon:Show or hide the desktop app'\''s tray / menu-bar icon until the app restarts (sessions and notifications continue)' \
+'mark-pane-seen:Mark a pane as seen, clearing past events (the focused pane by default)' \
+'mark-all-seen:Mark every pane of every running session as seen' \
 'stack-panes:Stack pane ids Ids are a space separated list of pane ids. They should either be in the form of \`terminal_<int>\` (eg. terminal_1), \`plugin_<int>\` (eg. plugin_1) or bare integers in which case they'\''ll be considered terminals (eg. 1 is the equivalent of terminal_1)' \
 'change-floating-pane-coordinates:' \
 'toggle-pane-borderless:' \
 'set-pane-borderless:' \
+'set-pane-border-style:Change the border line style of an existing pane' \
 'detach:Detach from the current session' \
 'set-dark-theme:Switch the theme to dark (uses configured \`theme_dark\`)' \
 'set-light-theme:Switch the theme to light (uses configured \`theme_light\`)' \
 'toggle-theme:Toggle between dark and light themes (used configured \`theme_dark\` and \`theme_light\`)' \
+'dismiss-info-popups:Close the information popups (such as \`zellij prompt notify\`) shown to you' \
+'open-context-menu:Open the right-click menu for the focused pane, at that pane'\''s position' \
 'switch-session:Switch to a different session' \
 'set-pane-color:Set the default foreground/background color of a pane' \
+'set-resurrect-command:Set the command a terminal pane will be resurrected with, instead of the detected one. The command stays in effect until cleared with --clear or until the pane is closed' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'zellij action commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__apply-floating-swap-layout_commands] )) ||
+_zellij__subcmd__action__subcmd__apply-floating-swap-layout_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action apply-floating-swap-layout commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__apply-tiled-swap-layout_commands] )) ||
+_zellij__subcmd__action__subcmd__apply-tiled-swap-layout_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action apply-tiled-swap-layout commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__action__subcmd__are-floating-panes-visible_commands] )) ||
 _zellij__subcmd__action__subcmd__are-floating-panes-visible_commands() {
@@ -3608,6 +4817,11 @@ _zellij__subcmd__action__subcmd__detach_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action detach commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__action__subcmd__dismiss-info-popups_commands] )) ||
+_zellij__subcmd__action__subcmd__dismiss-info-popups_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action dismiss-info-popups commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__action__subcmd__dump-layout_commands] )) ||
 _zellij__subcmd__action__subcmd__dump-layout_commands() {
     local commands; commands=()
@@ -3648,10 +4862,25 @@ _zellij__subcmd__action__subcmd__focus-previous-pane_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action focus-previous-pane commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__action__subcmd__go-to-next-attention_commands] )) ||
+_zellij__subcmd__action__subcmd__go-to-next-attention_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action go-to-next-attention commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__go-to-next-session_commands] )) ||
+_zellij__subcmd__action__subcmd__go-to-next-session_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action go-to-next-session commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__action__subcmd__go-to-next-tab_commands] )) ||
 _zellij__subcmd__action__subcmd__go-to-next-tab_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action go-to-next-tab commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__go-to-previous-session_commands] )) ||
+_zellij__subcmd__action__subcmd__go-to-previous-session_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action go-to-previous-session commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__action__subcmd__go-to-previous-tab_commands] )) ||
 _zellij__subcmd__action__subcmd__go-to-previous-tab_commands() {
@@ -3715,7 +4944,11 @@ _zellij__subcmd__action__subcmd__help_commands() {
 'toggle-fullscreen:Toggle between fullscreen focus pane and normal layout' \
 'toggle-no-ui-fullscreen:Toggle between fullscreen over the entire display (including the UI bars) and normal layout' \
 'toggle-pane-frames:Toggle frames around panes in the UI' \
+'toggle-stack-list-orientation:Switch the focused stack between showing its titles in a column (vertical) and in a row (horizontal)' \
 'set-pane-frame-style:' \
+'toggle-bars:Show all bars if any are hidden, otherwise hide the named bars (all bars if none are named)' \
+'hide-bars:Hide the named bars (all bars if none are named) in every tab' \
+'show-bars:Show all hidden bars' \
 'toggle-active-sync-tab:Toggle between sending text commands to all panes on the current tab and normal mode' \
 'new-pane:Open a new pane in the specified direction \[right|down\] If no direction is specified, will try to use the biggest available space. Returns\: Created pane ID (format\: terminal_<id> or plugin_<id>)' \
 'edit:Open the specified file in a new zellij pane with your default EDITOR Returns\: Created pane ID (format\: terminal_<id>)' \
@@ -3742,6 +4975,8 @@ _zellij__subcmd__action__subcmd__help_commands() {
 'move-tab:Move the focused tab in the specified direction. \[right|left\]' \
 'previous-swap-layout:' \
 'next-swap-layout:' \
+'apply-tiled-swap-layout:Apply the tiled swap layout with the given name, leaving floating pane visibility and focus untouched' \
+'apply-floating-swap-layout:Apply the floating swap layout with the given name, leaving floating pane visibility and focus untouched' \
 'override-layout:Override the layout of the active tab' \
 'query-tab-names:Query all tab names' \
 'start-or-reload-plugin:' \
@@ -3754,19 +4989,46 @@ _zellij__subcmd__action__subcmd__help_commands() {
 'list-tabs:List all tabs with their information' \
 'current-tab-info:Get information about the currently active tab' \
 'toggle-pane-pinned:' \
+'toggle-mirror-resize:Toggle whether the live view in the focused plugin pane resizes the program of the pane it shows' \
+'mute-pane:Mute or unmute the attention status of a pane (the focused pane by default)' \
+'ignore-pane-output:Stop or start reporting new output of a pane (the focused pane by default)' \
+'watch-pane:Watch a pane\: notify each time its command finishes or its output goes quiet, until turned off again (toggles; the focused pane by default)' \
+'mute-tab:Mute or unmute the attention status of all panes in a tab (the active tab by default)' \
+'mute-session:Mute or unmute the attention status of the whole session' \
+'toggle-session:Switch to the session this client was in before (run again to return), or to the next running session if there is none' \
+'go-to-previous-session:Go back to the previous session in this client'\''s history' \
+'go-to-next-session:Go forward in this client'\''s session history' \
+'go-to-next-attention:Jump to the next pane that needs attention in any session, switching session if needed' \
+'toggle-tray-icon:Show or hide the desktop app'\''s tray / menu-bar icon until the app restarts (sessions and notifications continue)' \
+'mark-pane-seen:Mark a pane as seen, clearing past events (the focused pane by default)' \
+'mark-all-seen:Mark every pane of every running session as seen' \
 'stack-panes:Stack pane ids Ids are a space separated list of pane ids. They should either be in the form of \`terminal_<int>\` (eg. terminal_1), \`plugin_<int>\` (eg. plugin_1) or bare integers in which case they'\''ll be considered terminals (eg. 1 is the equivalent of terminal_1)' \
 'change-floating-pane-coordinates:' \
 'toggle-pane-borderless:' \
 'set-pane-borderless:' \
+'set-pane-border-style:Change the border line style of an existing pane' \
 'detach:Detach from the current session' \
 'set-dark-theme:Switch the theme to dark (uses configured \`theme_dark\`)' \
 'set-light-theme:Switch the theme to light (uses configured \`theme_light\`)' \
 'toggle-theme:Toggle between dark and light themes (used configured \`theme_dark\` and \`theme_light\`)' \
+'dismiss-info-popups:Close the information popups (such as \`zellij prompt notify\`) shown to you' \
+'open-context-menu:Open the right-click menu for the focused pane, at that pane'\''s position' \
 'switch-session:Switch to a different session' \
 'set-pane-color:Set the default foreground/background color of a pane' \
+'set-resurrect-command:Set the command a terminal pane will be resurrected with, instead of the detected one. The command stays in effect until cleared with --clear or until the pane is closed' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'zellij action help commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__apply-floating-swap-layout_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__apply-floating-swap-layout_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help apply-floating-swap-layout commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__apply-tiled-swap-layout_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__apply-tiled-swap-layout_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help apply-tiled-swap-layout commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__are-floating-panes-visible_commands] )) ||
 _zellij__subcmd__action__subcmd__help__subcmd__are-floating-panes-visible_commands() {
@@ -3808,6 +5070,11 @@ _zellij__subcmd__action__subcmd__help__subcmd__detach_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action help detach commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__dismiss-info-popups_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__dismiss-info-popups_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help dismiss-info-popups commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__dump-layout_commands] )) ||
 _zellij__subcmd__action__subcmd__help__subcmd__dump-layout_commands() {
     local commands; commands=()
@@ -3848,10 +5115,25 @@ _zellij__subcmd__action__subcmd__help__subcmd__focus-previous-pane_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action help focus-previous-pane commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__go-to-next-attention_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__go-to-next-attention_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help go-to-next-attention commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__go-to-next-session_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__go-to-next-session_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help go-to-next-session commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__go-to-next-tab_commands] )) ||
 _zellij__subcmd__action__subcmd__help__subcmd__go-to-next-tab_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action help go-to-next-tab commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__go-to-previous-session_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__go-to-previous-session_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help go-to-previous-session commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__go-to-previous-tab_commands] )) ||
 _zellij__subcmd__action__subcmd__help__subcmd__go-to-previous-tab_commands() {
@@ -3888,10 +5170,20 @@ _zellij__subcmd__action__subcmd__help__subcmd__help_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action help help commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__hide-bars_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__hide-bars_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help hide-bars commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__hide-floating-panes_commands] )) ||
 _zellij__subcmd__action__subcmd__help__subcmd__hide-floating-panes_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action help hide-floating-panes commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__ignore-pane-output_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__ignore-pane-output_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help ignore-pane-output commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__launch-or-focus-plugin_commands] )) ||
 _zellij__subcmd__action__subcmd__help__subcmd__launch-or-focus-plugin_commands() {
@@ -3918,6 +5210,16 @@ _zellij__subcmd__action__subcmd__help__subcmd__list-tabs_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action help list-tabs commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__mark-all-seen_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__mark-all-seen_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help mark-all-seen commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__mark-pane-seen_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__mark-pane-seen_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help mark-pane-seen commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__move-focus_commands] )) ||
 _zellij__subcmd__action__subcmd__help__subcmd__move-focus_commands() {
     local commands; commands=()
@@ -3943,6 +5245,21 @@ _zellij__subcmd__action__subcmd__help__subcmd__move-tab_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action help move-tab commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__mute-pane_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__mute-pane_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help mute-pane commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__mute-session_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__mute-session_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help mute-session commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__mute-tab_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__mute-tab_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help mute-tab commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__new-pane_commands] )) ||
 _zellij__subcmd__action__subcmd__help__subcmd__new-pane_commands() {
     local commands; commands=()
@@ -3957,6 +5274,11 @@ _zellij__subcmd__action__subcmd__help__subcmd__new-tab_commands() {
 _zellij__subcmd__action__subcmd__help__subcmd__next-swap-layout_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action help next-swap-layout commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__open-context-menu_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__open-context-menu_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help open-context-menu commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__override-layout_commands] )) ||
 _zellij__subcmd__action__subcmd__help__subcmd__override-layout_commands() {
@@ -4058,6 +5380,11 @@ _zellij__subcmd__action__subcmd__help__subcmd__set-light-theme_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action help set-light-theme commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__set-pane-border-style_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__set-pane-border-style_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help set-pane-border-style commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__set-pane-borderless_commands] )) ||
 _zellij__subcmd__action__subcmd__help__subcmd__set-pane-borderless_commands() {
     local commands; commands=()
@@ -4072,6 +5399,16 @@ _zellij__subcmd__action__subcmd__help__subcmd__set-pane-color_commands() {
 _zellij__subcmd__action__subcmd__help__subcmd__set-pane-frame-style_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action help set-pane-frame-style commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__set-resurrect-command_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__set-resurrect-command_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help set-resurrect-command commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__show-bars_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__show-bars_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help show-bars commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__show-floating-panes_commands] )) ||
 _zellij__subcmd__action__subcmd__help__subcmd__show-floating-panes_commands() {
@@ -4103,6 +5440,11 @@ _zellij__subcmd__action__subcmd__help__subcmd__toggle-active-sync-tab_commands()
     local commands; commands=()
     _describe -t commands 'zellij action help toggle-active-sync-tab commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__toggle-bars_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__toggle-bars_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help toggle-bars commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__toggle-floating-panes_commands] )) ||
 _zellij__subcmd__action__subcmd__help__subcmd__toggle-floating-panes_commands() {
     local commands; commands=()
@@ -4112,6 +5454,11 @@ _zellij__subcmd__action__subcmd__help__subcmd__toggle-floating-panes_commands() 
 _zellij__subcmd__action__subcmd__help__subcmd__toggle-fullscreen_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action help toggle-fullscreen commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__toggle-mirror-resize_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__toggle-mirror-resize_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help toggle-mirror-resize commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__toggle-no-ui-fullscreen_commands] )) ||
 _zellij__subcmd__action__subcmd__help__subcmd__toggle-no-ui-fullscreen_commands() {
@@ -4138,10 +5485,25 @@ _zellij__subcmd__action__subcmd__help__subcmd__toggle-pane-pinned_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action help toggle-pane-pinned commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__toggle-session_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__toggle-session_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help toggle-session commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__toggle-stack-list-orientation_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__toggle-stack-list-orientation_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help toggle-stack-list-orientation commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__toggle-theme_commands] )) ||
 _zellij__subcmd__action__subcmd__help__subcmd__toggle-theme_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action help toggle-theme commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__toggle-tray-icon_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__toggle-tray-icon_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help toggle-tray-icon commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__undo-rename-pane_commands] )) ||
 _zellij__subcmd__action__subcmd__help__subcmd__undo-rename-pane_commands() {
@@ -4153,6 +5515,11 @@ _zellij__subcmd__action__subcmd__help__subcmd__undo-rename-tab_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action help undo-rename-tab commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__watch-pane_commands] )) ||
+_zellij__subcmd__action__subcmd__help__subcmd__watch-pane_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action help watch-pane commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__action__subcmd__help__subcmd__write_commands] )) ||
 _zellij__subcmd__action__subcmd__help__subcmd__write_commands() {
     local commands; commands=()
@@ -4163,10 +5530,20 @@ _zellij__subcmd__action__subcmd__help__subcmd__write-chars_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action help write-chars commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__action__subcmd__hide-bars_commands] )) ||
+_zellij__subcmd__action__subcmd__hide-bars_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action hide-bars commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__action__subcmd__hide-floating-panes_commands] )) ||
 _zellij__subcmd__action__subcmd__hide-floating-panes_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action hide-floating-panes commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__ignore-pane-output_commands] )) ||
+_zellij__subcmd__action__subcmd__ignore-pane-output_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action ignore-pane-output commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__action__subcmd__launch-or-focus-plugin_commands] )) ||
 _zellij__subcmd__action__subcmd__launch-or-focus-plugin_commands() {
@@ -4193,6 +5570,16 @@ _zellij__subcmd__action__subcmd__list-tabs_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action list-tabs commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__action__subcmd__mark-all-seen_commands] )) ||
+_zellij__subcmd__action__subcmd__mark-all-seen_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action mark-all-seen commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__mark-pane-seen_commands] )) ||
+_zellij__subcmd__action__subcmd__mark-pane-seen_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action mark-pane-seen commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__action__subcmd__move-focus_commands] )) ||
 _zellij__subcmd__action__subcmd__move-focus_commands() {
     local commands; commands=()
@@ -4218,6 +5605,21 @@ _zellij__subcmd__action__subcmd__move-tab_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action move-tab commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__action__subcmd__mute-pane_commands] )) ||
+_zellij__subcmd__action__subcmd__mute-pane_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action mute-pane commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__mute-session_commands] )) ||
+_zellij__subcmd__action__subcmd__mute-session_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action mute-session commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__mute-tab_commands] )) ||
+_zellij__subcmd__action__subcmd__mute-tab_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action mute-tab commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__action__subcmd__new-pane_commands] )) ||
 _zellij__subcmd__action__subcmd__new-pane_commands() {
     local commands; commands=()
@@ -4232,6 +5634,11 @@ _zellij__subcmd__action__subcmd__new-tab_commands() {
 _zellij__subcmd__action__subcmd__next-swap-layout_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action next-swap-layout commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__open-context-menu_commands] )) ||
+_zellij__subcmd__action__subcmd__open-context-menu_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action open-context-menu commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__action__subcmd__override-layout_commands] )) ||
 _zellij__subcmd__action__subcmd__override-layout_commands() {
@@ -4333,6 +5740,11 @@ _zellij__subcmd__action__subcmd__set-light-theme_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action set-light-theme commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__action__subcmd__set-pane-border-style_commands] )) ||
+_zellij__subcmd__action__subcmd__set-pane-border-style_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action set-pane-border-style commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__action__subcmd__set-pane-borderless_commands] )) ||
 _zellij__subcmd__action__subcmd__set-pane-borderless_commands() {
     local commands; commands=()
@@ -4347,6 +5759,16 @@ _zellij__subcmd__action__subcmd__set-pane-color_commands() {
 _zellij__subcmd__action__subcmd__set-pane-frame-style_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action set-pane-frame-style commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__set-resurrect-command_commands] )) ||
+_zellij__subcmd__action__subcmd__set-resurrect-command_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action set-resurrect-command commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__show-bars_commands] )) ||
+_zellij__subcmd__action__subcmd__show-bars_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action show-bars commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__action__subcmd__show-floating-panes_commands] )) ||
 _zellij__subcmd__action__subcmd__show-floating-panes_commands() {
@@ -4378,6 +5800,11 @@ _zellij__subcmd__action__subcmd__toggle-active-sync-tab_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action toggle-active-sync-tab commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__action__subcmd__toggle-bars_commands] )) ||
+_zellij__subcmd__action__subcmd__toggle-bars_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action toggle-bars commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__action__subcmd__toggle-floating-panes_commands] )) ||
 _zellij__subcmd__action__subcmd__toggle-floating-panes_commands() {
     local commands; commands=()
@@ -4387,6 +5814,11 @@ _zellij__subcmd__action__subcmd__toggle-floating-panes_commands() {
 _zellij__subcmd__action__subcmd__toggle-fullscreen_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action toggle-fullscreen commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__toggle-mirror-resize_commands] )) ||
+_zellij__subcmd__action__subcmd__toggle-mirror-resize_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action toggle-mirror-resize commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__action__subcmd__toggle-no-ui-fullscreen_commands] )) ||
 _zellij__subcmd__action__subcmd__toggle-no-ui-fullscreen_commands() {
@@ -4413,10 +5845,25 @@ _zellij__subcmd__action__subcmd__toggle-pane-pinned_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action toggle-pane-pinned commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__action__subcmd__toggle-session_commands] )) ||
+_zellij__subcmd__action__subcmd__toggle-session_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action toggle-session commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__toggle-stack-list-orientation_commands] )) ||
+_zellij__subcmd__action__subcmd__toggle-stack-list-orientation_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action toggle-stack-list-orientation commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__action__subcmd__toggle-theme_commands] )) ||
 _zellij__subcmd__action__subcmd__toggle-theme_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action toggle-theme commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__toggle-tray-icon_commands] )) ||
+_zellij__subcmd__action__subcmd__toggle-tray-icon_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action toggle-tray-icon commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__action__subcmd__undo-rename-pane_commands] )) ||
 _zellij__subcmd__action__subcmd__undo-rename-pane_commands() {
@@ -4427,6 +5874,11 @@ _zellij__subcmd__action__subcmd__undo-rename-pane_commands() {
 _zellij__subcmd__action__subcmd__undo-rename-tab_commands() {
     local commands; commands=()
     _describe -t commands 'zellij action undo-rename-tab commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__action__subcmd__watch-pane_commands] )) ||
+_zellij__subcmd__action__subcmd__watch-pane_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij action watch-pane commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__action__subcmd__write_commands] )) ||
 _zellij__subcmd__action__subcmd__write_commands() {
@@ -4504,6 +5956,8 @@ _zellij__subcmd__help_commands() {
 'edit:Edit file with default \$EDITOR / \$VISUAL Returns\: Created pane ID (format\: terminal_<id>)' \
 'pipe:Send data to one or more plugins, launch them if they are not running' \
 'subscribe:Subscribe to pane render updates (viewport and scrollback)' \
+'prompt:Show a UI element to the person at the terminal and print their answer (e.g. zellij prompt confirm "Deploy?")' \
+'terminal:Open a session in the Zellij terminal, without another terminal emulator' \
 'help:Print this message or the help of the given subcommand(s)' \
     )
     _describe -t commands 'zellij help commands' commands "$@"
@@ -4540,7 +5994,11 @@ _zellij__subcmd__help__subcmd__action_commands() {
 'toggle-fullscreen:Toggle between fullscreen focus pane and normal layout' \
 'toggle-no-ui-fullscreen:Toggle between fullscreen over the entire display (including the UI bars) and normal layout' \
 'toggle-pane-frames:Toggle frames around panes in the UI' \
+'toggle-stack-list-orientation:Switch the focused stack between showing its titles in a column (vertical) and in a row (horizontal)' \
 'set-pane-frame-style:' \
+'toggle-bars:Show all bars if any are hidden, otherwise hide the named bars (all bars if none are named)' \
+'hide-bars:Hide the named bars (all bars if none are named) in every tab' \
+'show-bars:Show all hidden bars' \
 'toggle-active-sync-tab:Toggle between sending text commands to all panes on the current tab and normal mode' \
 'new-pane:Open a new pane in the specified direction \[right|down\] If no direction is specified, will try to use the biggest available space. Returns\: Created pane ID (format\: terminal_<id> or plugin_<id>)' \
 'edit:Open the specified file in a new zellij pane with your default EDITOR Returns\: Created pane ID (format\: terminal_<id>)' \
@@ -4567,6 +6025,8 @@ _zellij__subcmd__help__subcmd__action_commands() {
 'move-tab:Move the focused tab in the specified direction. \[right|left\]' \
 'previous-swap-layout:' \
 'next-swap-layout:' \
+'apply-tiled-swap-layout:Apply the tiled swap layout with the given name, leaving floating pane visibility and focus untouched' \
+'apply-floating-swap-layout:Apply the floating swap layout with the given name, leaving floating pane visibility and focus untouched' \
 'override-layout:Override the layout of the active tab' \
 'query-tab-names:Query all tab names' \
 'start-or-reload-plugin:' \
@@ -4579,18 +6039,45 @@ _zellij__subcmd__help__subcmd__action_commands() {
 'list-tabs:List all tabs with their information' \
 'current-tab-info:Get information about the currently active tab' \
 'toggle-pane-pinned:' \
+'toggle-mirror-resize:Toggle whether the live view in the focused plugin pane resizes the program of the pane it shows' \
+'mute-pane:Mute or unmute the attention status of a pane (the focused pane by default)' \
+'ignore-pane-output:Stop or start reporting new output of a pane (the focused pane by default)' \
+'watch-pane:Watch a pane\: notify each time its command finishes or its output goes quiet, until turned off again (toggles; the focused pane by default)' \
+'mute-tab:Mute or unmute the attention status of all panes in a tab (the active tab by default)' \
+'mute-session:Mute or unmute the attention status of the whole session' \
+'toggle-session:Switch to the session this client was in before (run again to return), or to the next running session if there is none' \
+'go-to-previous-session:Go back to the previous session in this client'\''s history' \
+'go-to-next-session:Go forward in this client'\''s session history' \
+'go-to-next-attention:Jump to the next pane that needs attention in any session, switching session if needed' \
+'toggle-tray-icon:Show or hide the desktop app'\''s tray / menu-bar icon until the app restarts (sessions and notifications continue)' \
+'mark-pane-seen:Mark a pane as seen, clearing past events (the focused pane by default)' \
+'mark-all-seen:Mark every pane of every running session as seen' \
 'stack-panes:Stack pane ids Ids are a space separated list of pane ids. They should either be in the form of \`terminal_<int>\` (eg. terminal_1), \`plugin_<int>\` (eg. plugin_1) or bare integers in which case they'\''ll be considered terminals (eg. 1 is the equivalent of terminal_1)' \
 'change-floating-pane-coordinates:' \
 'toggle-pane-borderless:' \
 'set-pane-borderless:' \
+'set-pane-border-style:Change the border line style of an existing pane' \
 'detach:Detach from the current session' \
 'set-dark-theme:Switch the theme to dark (uses configured \`theme_dark\`)' \
 'set-light-theme:Switch the theme to light (uses configured \`theme_light\`)' \
 'toggle-theme:Toggle between dark and light themes (used configured \`theme_dark\` and \`theme_light\`)' \
+'dismiss-info-popups:Close the information popups (such as \`zellij prompt notify\`) shown to you' \
+'open-context-menu:Open the right-click menu for the focused pane, at that pane'\''s position' \
 'switch-session:Switch to a different session' \
 'set-pane-color:Set the default foreground/background color of a pane' \
+'set-resurrect-command:Set the command a terminal pane will be resurrected with, instead of the detected one. The command stays in effect until cleared with --clear or until the pane is closed' \
     )
     _describe -t commands 'zellij help action commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__apply-floating-swap-layout_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__apply-floating-swap-layout_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action apply-floating-swap-layout commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__apply-tiled-swap-layout_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__apply-tiled-swap-layout_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action apply-tiled-swap-layout commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__are-floating-panes-visible_commands] )) ||
 _zellij__subcmd__help__subcmd__action__subcmd__are-floating-panes-visible_commands() {
@@ -4632,6 +6119,11 @@ _zellij__subcmd__help__subcmd__action__subcmd__detach_commands() {
     local commands; commands=()
     _describe -t commands 'zellij help action detach commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__dismiss-info-popups_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__dismiss-info-popups_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action dismiss-info-popups commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__dump-layout_commands] )) ||
 _zellij__subcmd__help__subcmd__action__subcmd__dump-layout_commands() {
     local commands; commands=()
@@ -4672,10 +6164,25 @@ _zellij__subcmd__help__subcmd__action__subcmd__focus-previous-pane_commands() {
     local commands; commands=()
     _describe -t commands 'zellij help action focus-previous-pane commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__go-to-next-attention_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__go-to-next-attention_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action go-to-next-attention commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__go-to-next-session_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__go-to-next-session_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action go-to-next-session commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__go-to-next-tab_commands] )) ||
 _zellij__subcmd__help__subcmd__action__subcmd__go-to-next-tab_commands() {
     local commands; commands=()
     _describe -t commands 'zellij help action go-to-next-tab commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__go-to-previous-session_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__go-to-previous-session_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action go-to-previous-session commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__go-to-previous-tab_commands] )) ||
 _zellij__subcmd__help__subcmd__action__subcmd__go-to-previous-tab_commands() {
@@ -4707,10 +6214,20 @@ _zellij__subcmd__help__subcmd__action__subcmd__half-page-scroll-up_commands() {
     local commands; commands=()
     _describe -t commands 'zellij help action half-page-scroll-up commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__hide-bars_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__hide-bars_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action hide-bars commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__hide-floating-panes_commands] )) ||
 _zellij__subcmd__help__subcmd__action__subcmd__hide-floating-panes_commands() {
     local commands; commands=()
     _describe -t commands 'zellij help action hide-floating-panes commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__ignore-pane-output_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__ignore-pane-output_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action ignore-pane-output commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__launch-or-focus-plugin_commands] )) ||
 _zellij__subcmd__help__subcmd__action__subcmd__launch-or-focus-plugin_commands() {
@@ -4737,6 +6254,16 @@ _zellij__subcmd__help__subcmd__action__subcmd__list-tabs_commands() {
     local commands; commands=()
     _describe -t commands 'zellij help action list-tabs commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__mark-all-seen_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__mark-all-seen_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action mark-all-seen commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__mark-pane-seen_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__mark-pane-seen_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action mark-pane-seen commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__move-focus_commands] )) ||
 _zellij__subcmd__help__subcmd__action__subcmd__move-focus_commands() {
     local commands; commands=()
@@ -4762,6 +6289,21 @@ _zellij__subcmd__help__subcmd__action__subcmd__move-tab_commands() {
     local commands; commands=()
     _describe -t commands 'zellij help action move-tab commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__mute-pane_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__mute-pane_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action mute-pane commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__mute-session_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__mute-session_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action mute-session commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__mute-tab_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__mute-tab_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action mute-tab commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__new-pane_commands] )) ||
 _zellij__subcmd__help__subcmd__action__subcmd__new-pane_commands() {
     local commands; commands=()
@@ -4776,6 +6318,11 @@ _zellij__subcmd__help__subcmd__action__subcmd__new-tab_commands() {
 _zellij__subcmd__help__subcmd__action__subcmd__next-swap-layout_commands() {
     local commands; commands=()
     _describe -t commands 'zellij help action next-swap-layout commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__open-context-menu_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__open-context-menu_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action open-context-menu commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__override-layout_commands] )) ||
 _zellij__subcmd__help__subcmd__action__subcmd__override-layout_commands() {
@@ -4877,6 +6424,11 @@ _zellij__subcmd__help__subcmd__action__subcmd__set-light-theme_commands() {
     local commands; commands=()
     _describe -t commands 'zellij help action set-light-theme commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__set-pane-border-style_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__set-pane-border-style_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action set-pane-border-style commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__set-pane-borderless_commands] )) ||
 _zellij__subcmd__help__subcmd__action__subcmd__set-pane-borderless_commands() {
     local commands; commands=()
@@ -4891,6 +6443,16 @@ _zellij__subcmd__help__subcmd__action__subcmd__set-pane-color_commands() {
 _zellij__subcmd__help__subcmd__action__subcmd__set-pane-frame-style_commands() {
     local commands; commands=()
     _describe -t commands 'zellij help action set-pane-frame-style commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__set-resurrect-command_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__set-resurrect-command_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action set-resurrect-command commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__show-bars_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__show-bars_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action show-bars commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__show-floating-panes_commands] )) ||
 _zellij__subcmd__help__subcmd__action__subcmd__show-floating-panes_commands() {
@@ -4922,6 +6484,11 @@ _zellij__subcmd__help__subcmd__action__subcmd__toggle-active-sync-tab_commands()
     local commands; commands=()
     _describe -t commands 'zellij help action toggle-active-sync-tab commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__toggle-bars_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__toggle-bars_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action toggle-bars commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__toggle-floating-panes_commands] )) ||
 _zellij__subcmd__help__subcmd__action__subcmd__toggle-floating-panes_commands() {
     local commands; commands=()
@@ -4931,6 +6498,11 @@ _zellij__subcmd__help__subcmd__action__subcmd__toggle-floating-panes_commands() 
 _zellij__subcmd__help__subcmd__action__subcmd__toggle-fullscreen_commands() {
     local commands; commands=()
     _describe -t commands 'zellij help action toggle-fullscreen commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__toggle-mirror-resize_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__toggle-mirror-resize_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action toggle-mirror-resize commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__toggle-no-ui-fullscreen_commands] )) ||
 _zellij__subcmd__help__subcmd__action__subcmd__toggle-no-ui-fullscreen_commands() {
@@ -4957,10 +6529,25 @@ _zellij__subcmd__help__subcmd__action__subcmd__toggle-pane-pinned_commands() {
     local commands; commands=()
     _describe -t commands 'zellij help action toggle-pane-pinned commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__toggle-session_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__toggle-session_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action toggle-session commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__toggle-stack-list-orientation_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__toggle-stack-list-orientation_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action toggle-stack-list-orientation commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__toggle-theme_commands] )) ||
 _zellij__subcmd__help__subcmd__action__subcmd__toggle-theme_commands() {
     local commands; commands=()
     _describe -t commands 'zellij help action toggle-theme commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__toggle-tray-icon_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__toggle-tray-icon_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action toggle-tray-icon commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__undo-rename-pane_commands] )) ||
 _zellij__subcmd__help__subcmd__action__subcmd__undo-rename-pane_commands() {
@@ -4971,6 +6558,11 @@ _zellij__subcmd__help__subcmd__action__subcmd__undo-rename-pane_commands() {
 _zellij__subcmd__help__subcmd__action__subcmd__undo-rename-tab_commands() {
     local commands; commands=()
     _describe -t commands 'zellij help action undo-rename-tab commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__watch-pane_commands] )) ||
+_zellij__subcmd__help__subcmd__action__subcmd__watch-pane_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help action watch-pane commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__help__subcmd__action__subcmd__write_commands] )) ||
 _zellij__subcmd__help__subcmd__action__subcmd__write_commands() {
@@ -5049,6 +6641,66 @@ _zellij__subcmd__help__subcmd__plugin_commands() {
     local commands; commands=()
     _describe -t commands 'zellij help plugin commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__help__subcmd__prompt_commands] )) ||
+_zellij__subcmd__help__subcmd__prompt_commands() {
+    local commands; commands=(
+'confirm:Ask a yes/no question; the exit code is the answer (e.g. zellij prompt confirm "Force push?" --yes Push --no Cancel)' \
+'choose:Choose one or more items from the arguments or from stdin, one per line (e.g. git branch | zellij prompt choose)' \
+'input:Ask for a line of text (e.g. zellij prompt input "Commit message" --required)' \
+'number:Ask for a whole number (e.g. zellij prompt number Port --min 1 --max 65535 --default 8080)' \
+'toggle:Ask for on or off; prints true or false (e.g. zellij prompt toggle "Enable CI" --default on)' \
+'select:Choose one value from a dropdown (e.g. zellij prompt select License MIT Apache-2.0)' \
+'menu:Show a menu and print the chosen item (e.g. zellij prompt menu Open Rename Delete)' \
+'form:Show several fields described in JSON and print one JSON object (e.g. zellij prompt form --spec form.json)' \
+'notify:Show a notice that does not take the keyboard and return at once with exit 0 (e.g. zellij prompt notify "Build finished" --timeout 5s)' \
+    )
+    _describe -t commands 'zellij help prompt commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__prompt__subcmd__choose_commands] )) ||
+_zellij__subcmd__help__subcmd__prompt__subcmd__choose_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help prompt choose commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__prompt__subcmd__confirm_commands] )) ||
+_zellij__subcmd__help__subcmd__prompt__subcmd__confirm_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help prompt confirm commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__prompt__subcmd__form_commands] )) ||
+_zellij__subcmd__help__subcmd__prompt__subcmd__form_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help prompt form commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__prompt__subcmd__input_commands] )) ||
+_zellij__subcmd__help__subcmd__prompt__subcmd__input_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help prompt input commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__prompt__subcmd__menu_commands] )) ||
+_zellij__subcmd__help__subcmd__prompt__subcmd__menu_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help prompt menu commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__prompt__subcmd__notify_commands] )) ||
+_zellij__subcmd__help__subcmd__prompt__subcmd__notify_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help prompt notify commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__prompt__subcmd__number_commands] )) ||
+_zellij__subcmd__help__subcmd__prompt__subcmd__number_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help prompt number commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__prompt__subcmd__select_commands] )) ||
+_zellij__subcmd__help__subcmd__prompt__subcmd__select_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help prompt select commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__prompt__subcmd__toggle_commands] )) ||
+_zellij__subcmd__help__subcmd__prompt__subcmd__toggle_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help prompt toggle commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__help__subcmd__run_commands] )) ||
 _zellij__subcmd__help__subcmd__run_commands() {
     local commands; commands=()
@@ -5063,6 +6715,18 @@ _zellij__subcmd__help__subcmd__setup_commands() {
 _zellij__subcmd__help__subcmd__subscribe_commands() {
     local commands; commands=()
     _describe -t commands 'zellij help subscribe commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__terminal_commands] )) ||
+_zellij__subcmd__help__subcmd__terminal_commands() {
+    local commands; commands=(
+'options:Change the behaviour of zellij' \
+    )
+    _describe -t commands 'zellij help terminal commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__help__subcmd__terminal__subcmd__options_commands] )) ||
+_zellij__subcmd__help__subcmd__terminal__subcmd__options_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij help terminal options commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__help__subcmd__watch_commands] )) ||
 _zellij__subcmd__help__subcmd__watch_commands() {
@@ -5109,6 +6773,133 @@ _zellij__subcmd__plugin_commands() {
     local commands; commands=()
     _describe -t commands 'zellij plugin commands' commands "$@"
 }
+(( $+functions[_zellij__subcmd__prompt_commands] )) ||
+_zellij__subcmd__prompt_commands() {
+    local commands; commands=(
+'confirm:Ask a yes/no question; the exit code is the answer (e.g. zellij prompt confirm "Force push?" --yes Push --no Cancel)' \
+'choose:Choose one or more items from the arguments or from stdin, one per line (e.g. git branch | zellij prompt choose)' \
+'input:Ask for a line of text (e.g. zellij prompt input "Commit message" --required)' \
+'number:Ask for a whole number (e.g. zellij prompt number Port --min 1 --max 65535 --default 8080)' \
+'toggle:Ask for on or off; prints true or false (e.g. zellij prompt toggle "Enable CI" --default on)' \
+'select:Choose one value from a dropdown (e.g. zellij prompt select License MIT Apache-2.0)' \
+'menu:Show a menu and print the chosen item (e.g. zellij prompt menu Open Rename Delete)' \
+'form:Show several fields described in JSON and print one JSON object (e.g. zellij prompt form --spec form.json)' \
+'notify:Show a notice that does not take the keyboard and return at once with exit 0 (e.g. zellij prompt notify "Build finished" --timeout 5s)' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'zellij prompt commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__prompt__subcmd__choose_commands] )) ||
+_zellij__subcmd__prompt__subcmd__choose_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij prompt choose commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__prompt__subcmd__confirm_commands] )) ||
+_zellij__subcmd__prompt__subcmd__confirm_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij prompt confirm commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__prompt__subcmd__form_commands] )) ||
+_zellij__subcmd__prompt__subcmd__form_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij prompt form commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__prompt__subcmd__help_commands] )) ||
+_zellij__subcmd__prompt__subcmd__help_commands() {
+    local commands; commands=(
+'confirm:Ask a yes/no question; the exit code is the answer (e.g. zellij prompt confirm "Force push?" --yes Push --no Cancel)' \
+'choose:Choose one or more items from the arguments or from stdin, one per line (e.g. git branch | zellij prompt choose)' \
+'input:Ask for a line of text (e.g. zellij prompt input "Commit message" --required)' \
+'number:Ask for a whole number (e.g. zellij prompt number Port --min 1 --max 65535 --default 8080)' \
+'toggle:Ask for on or off; prints true or false (e.g. zellij prompt toggle "Enable CI" --default on)' \
+'select:Choose one value from a dropdown (e.g. zellij prompt select License MIT Apache-2.0)' \
+'menu:Show a menu and print the chosen item (e.g. zellij prompt menu Open Rename Delete)' \
+'form:Show several fields described in JSON and print one JSON object (e.g. zellij prompt form --spec form.json)' \
+'notify:Show a notice that does not take the keyboard and return at once with exit 0 (e.g. zellij prompt notify "Build finished" --timeout 5s)' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'zellij prompt help commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__prompt__subcmd__help__subcmd__choose_commands] )) ||
+_zellij__subcmd__prompt__subcmd__help__subcmd__choose_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij prompt help choose commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__prompt__subcmd__help__subcmd__confirm_commands] )) ||
+_zellij__subcmd__prompt__subcmd__help__subcmd__confirm_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij prompt help confirm commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__prompt__subcmd__help__subcmd__form_commands] )) ||
+_zellij__subcmd__prompt__subcmd__help__subcmd__form_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij prompt help form commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__prompt__subcmd__help__subcmd__help_commands] )) ||
+_zellij__subcmd__prompt__subcmd__help__subcmd__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij prompt help help commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__prompt__subcmd__help__subcmd__input_commands] )) ||
+_zellij__subcmd__prompt__subcmd__help__subcmd__input_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij prompt help input commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__prompt__subcmd__help__subcmd__menu_commands] )) ||
+_zellij__subcmd__prompt__subcmd__help__subcmd__menu_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij prompt help menu commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__prompt__subcmd__help__subcmd__notify_commands] )) ||
+_zellij__subcmd__prompt__subcmd__help__subcmd__notify_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij prompt help notify commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__prompt__subcmd__help__subcmd__number_commands] )) ||
+_zellij__subcmd__prompt__subcmd__help__subcmd__number_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij prompt help number commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__prompt__subcmd__help__subcmd__select_commands] )) ||
+_zellij__subcmd__prompt__subcmd__help__subcmd__select_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij prompt help select commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__prompt__subcmd__help__subcmd__toggle_commands] )) ||
+_zellij__subcmd__prompt__subcmd__help__subcmd__toggle_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij prompt help toggle commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__prompt__subcmd__input_commands] )) ||
+_zellij__subcmd__prompt__subcmd__input_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij prompt input commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__prompt__subcmd__menu_commands] )) ||
+_zellij__subcmd__prompt__subcmd__menu_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij prompt menu commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__prompt__subcmd__notify_commands] )) ||
+_zellij__subcmd__prompt__subcmd__notify_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij prompt notify commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__prompt__subcmd__number_commands] )) ||
+_zellij__subcmd__prompt__subcmd__number_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij prompt number commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__prompt__subcmd__select_commands] )) ||
+_zellij__subcmd__prompt__subcmd__select_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij prompt select commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__prompt__subcmd__toggle_commands] )) ||
+_zellij__subcmd__prompt__subcmd__toggle_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij prompt toggle commands' commands "$@"
+}
 (( $+functions[_zellij__subcmd__run_commands] )) ||
 _zellij__subcmd__run_commands() {
     local commands; commands=()
@@ -5123,6 +6914,37 @@ _zellij__subcmd__setup_commands() {
 _zellij__subcmd__subscribe_commands() {
     local commands; commands=()
     _describe -t commands 'zellij subscribe commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__terminal_commands] )) ||
+_zellij__subcmd__terminal_commands() {
+    local commands; commands=(
+'options:Change the behaviour of zellij' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'zellij terminal commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__terminal__subcmd__help_commands] )) ||
+_zellij__subcmd__terminal__subcmd__help_commands() {
+    local commands; commands=(
+'options:Change the behaviour of zellij' \
+'help:Print this message or the help of the given subcommand(s)' \
+    )
+    _describe -t commands 'zellij terminal help commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__terminal__subcmd__help__subcmd__help_commands] )) ||
+_zellij__subcmd__terminal__subcmd__help__subcmd__help_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij terminal help help commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__terminal__subcmd__help__subcmd__options_commands] )) ||
+_zellij__subcmd__terminal__subcmd__help__subcmd__options_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij terminal help options commands' commands "$@"
+}
+(( $+functions[_zellij__subcmd__terminal__subcmd__options_commands] )) ||
+_zellij__subcmd__terminal__subcmd__options_commands() {
+    local commands; commands=()
+    _describe -t commands 'zellij terminal options commands' commands "$@"
 }
 (( $+functions[_zellij__subcmd__watch_commands] )) ||
 _zellij__subcmd__watch_commands() {
