@@ -45,10 +45,10 @@ or asks you to write an integration test. Test boundaries with:
 
 2. **Inspect the test setup.**
 
-    - Identify the test framework, command, test location, and required services.
-    - Read nearby tests to learn setup, fixture, and cleanup requirements.
-    - Use the applicable framework skill for syntax and framework-specific conventions.
-    - Do not treat existing tests as proof that their style is good.
+   - Identify the test framework, command, test location, and required services.
+   - Read nearby tests to learn setup, fixture, and cleanup requirements.
+   - Use the applicable framework skill for syntax and framework-specific conventions.
+   - Do not treat existing tests as proof that their style is good.
    - Do not copy weak patterns. Follow this skill if local tests conflict with it.
 
 3. **Choose behavior to protect.**
@@ -62,15 +62,16 @@ or asks you to write an integration test. Test boundaries with:
 4. **Write a focused test.**
 
    > [!IMPORTANT]
-   > - For a reported bug:
-   >   1. Add a test that reproduces it
-    >   2. Run the test and check that it fails before you fix the implementation
+   > For a reported bug:
+   > 1. Add a test that reproduces it
+   > 2. Run the test and check that it fails before you fix the implementation
 
    - Give each test one behavior
    - Name it after the behavior or outcome
    - Structure it as arrange, act, assert
    - Use a real local or dedicated test dependency when it is safe and deterministic.
-   - For a separate service, a controlled test double can check request construction and response handling. It does not prove compatibility with the real service.
+   - For a separate service, a controlled test double can check request construction and response handling.
+     It does not prove compatibility with the real service.
    - Organize related cases using [Test Organization](#test-organization)
    - For other behavior changes, prefer test-first when practical
 
@@ -112,8 +113,9 @@ or asks you to write an integration test. Test boundaries with:
 - Use shallow groups
   only when they improve navigation
 
-- Use the framework's table-driven feature when several cases exercise the same
-  behavior. Keep each case's input and expected result together.
+- Use the framework's table-driven feature when several cases exercise the same behavior.
+  > [!IMPORTANT]
+  > Keep each case's input and the expected result together.
 
 - **Prioritize clarity over "Don't Repeat Yourself" (DRY).**
   Keep setup, action, and expected assertion result visible in each test.
@@ -131,9 +133,8 @@ or asks you to write an integration test. Test boundaries with:
   Use shared setup only when it stays obvious what inputs and expected outcome each test has.
 
 > [!IMPORTANT]
->
-> - Clean up mocks, spies, timers, modified global state, and any test-owned external resources.
->   They cannot leak into other tests!
+> Clean up mocks, spies, timers, modified global state, and any test-owned external resources.
+> They cannot leak into other tests!
 
 - **Keep tests deterministic.**
   Replace time, randomness,
@@ -141,9 +142,12 @@ or asks you to write an integration test. Test boundaries with:
 
 - **Exercise the intended integration point.**
   Prefer a real dependency, such as a local database or filesystem, when it is practical and deterministic.
-  For a separately deployed service, configure a controlled test double through the same boundary as production. Keep the test focused on your application's request and response handling.
+  For a separately deployed service,
+  configure a controlled test double through the same boundary as production.
+  Keep the test focused on your application's request and response handling.
   > [!CAUTION]
-  > A test double does not prove compatibility with the real service. Use contract tests or a dedicated test instance when that compatibility must be verified.
+  > A test double does not prove compatibility with the real service.
+  > Use contract tests or a dedicated test instance when that compatibility must be verified.
 
 ---
 
@@ -156,7 +160,7 @@ or asks you to write an integration test. Test boundaries with:
 
 - **Parameterized cases:**
   - Use the framework's table-driven feature when several cases exercise the same behavior.
-  - Keep each case's inputs and expected value together in the table.
+  - Keep each case's inputs and the expected value together in the table.
   - Use other referenced expectations only when necessary,
     and explain why in the test
 
@@ -238,11 +242,11 @@ offer an optional, structured way to improve this skill:
   append one JSON object on one line to `evals/feedback.jsonl`
   with `date`, `usefulness`, `feedback`, and `suggested_change` fields.
   Use an empty string for fields the user did not answer.
+  > [!CAUTION]
+  > Do NOT record task code, sensitive details, or feedback the user did not provide.
 
 > [!CAUTION]
->
-> - Do NOT record task code, sensitive details, or feedback the user did not provide.
-> - Do NOT create an entry for skipped or empty feedback.
+> Do NOT create an entry for skipped or empty feedback.
 
 ---
 
