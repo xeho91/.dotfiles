@@ -1,0 +1,102 @@
+[
+  {
+    "split": "train",
+    "should_trigger": true,
+    "query": "Add unit tests for the discount rules in checkout."
+  },
+  {
+    "split": "train",
+    "should_trigger": true,
+    "query": "This bug lets expired invites through. Fix it and make sure we have a regression test."
+  },
+  {
+    "split": "train",
+    "should_trigger": true,
+    "query": "Can you check whether this parser needs tests for malformed input?"
+  },
+  {
+    "split": "train",
+    "should_trigger": true,
+    "query": "I changed the public options for `formatDate`; update its unit tests."
+  },
+  {
+    "split": "train",
+    "should_trigger": true,
+    "query": "The tests only cover the happy path for refunds. Add coverage for the important failure cases."
+  },
+  {
+    "split": "train",
+    "should_trigger": true,
+    "query": "We should probably test that a user can't cancel an already-shipped order. Can you add that?"
+  },
+  {
+    "split": "train",
+    "should_trigger": false,
+    "query": "Write an end-to-end test for signing in and completing checkout in the browser."
+  },
+  {
+    "split": "train",
+    "should_trigger": false,
+    "query": "Set up a CI job that runs our existing test suite on every pull request."
+  },
+  {
+    "split": "train",
+    "should_trigger": false,
+    "query": "Review these tests for flaky selectors and improve the browser setup."
+  },
+  {
+    "split": "train",
+    "should_trigger": false,
+    "query": "Add an integration test that verifies our service writes records to Postgres."
+  },
+  {
+    "split": "train",
+    "should_trigger": false,
+    "query": "The test command is slow. Help me profile it and speed up the runner."
+  },
+  {
+    "split": "train",
+    "should_trigger": false,
+    "query": "Refactor this function for readability; keep its behavior unchanged."
+  },
+  {
+    "split": "validation",
+    "should_trigger": true,
+    "query": "When we add support for partial refunds, what unit-test cases should protect the behavior?"
+  },
+  {
+    "split": "validation",
+    "should_trigger": true,
+    "query": "Please change the retry limit and update the focused tests to match the new contract."
+  },
+  {
+    "split": "validation",
+    "should_trigger": true,
+    "query": "A customer with a suspended account can still redeem credits. Reproduce this in a test, then fix it."
+  },
+  {
+    "split": "validation",
+    "should_trigger": true,
+    "query": "I'm not sure this tiny getter needs a unit test. Look at its behavior and existing coverage before deciding."
+  },
+  {
+    "split": "validation",
+    "should_trigger": false,
+    "query": "Create a test plan for the full mobile app release, including devices and exploratory testing."
+  },
+  {
+    "split": "validation",
+    "should_trigger": false,
+    "query": "Our API contract test is failing against staging. Diagnose the environment mismatch."
+  },
+  {
+    "split": "validation",
+    "should_trigger": false,
+    "query": "Audit the test suite's coverage report and identify untested modules; don't write tests."
+  },
+  {
+    "split": "validation",
+    "should_trigger": false,
+    "query": "Explain how Vitest's fake timers work."
+  }
+]

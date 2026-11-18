@@ -15,8 +15,33 @@
   },
   "session": {
     "sidebar": "auto",
-    "scrollbar": false,
-    "thinking": "show"
+    "scrollbar": true,
+    "thinking": "show",
+    "image_preview": true,
+    "new_location": "launch"
   },
-  "animations": true
+  "animations": true,
+  "scroll": {
+    "acceleration": true
+  },
+  "prompt": {
+    "image_preview": true
+  },
+  "attention": {
+    "notifications": true,
+    "sound": true
+  },
+  "debug": {
+    "devtools": true
+  },
+  "tabs": {
+    "indicators": "status"
+  },
+  "theme": {
+    "mode": "dark"
+  },
+  "experimental": {
+    "new-designs": true,
+    "client-mcp": true
+  }
 }

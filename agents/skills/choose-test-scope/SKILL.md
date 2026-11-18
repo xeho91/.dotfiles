@@ -171,7 +171,7 @@ without agreement.
    append one JSON object on one line to `feedback.jsonl` next to this file.
 2. Record one entry for the exchange,
    not one entry for each answer during a revision loop.
-3. Set `date` to the current date in `YYYY-MM-DD` format.
+3. Set `date` to the current date and time in UTC, using ISO 8601 format (`YYYY-MM-DDThh:mm:ssZ`).
 4. Set `decision` to the decision in the final report.
 5. Set `agreement` to `agree` if the user agrees,
    or `ended_without_agreement` if the user ends the discussion without agreement.
@@ -191,7 +191,7 @@ Include their concern, requested change, and clarification in the same entry.
 Example:
 
 ```json
-{"date":"2026-11-18","decision":"Unit","agreement":"agree","feedback":"","suggested_change":"","clarification":""}
+{"date":"2026-11-18T00:00:00Z","decision":"Unit","agreement":"agree","feedback":"","suggested_change":"","clarification":""}
 ```
 
 > [!CAUTION]

@@ -1,0 +1,39 @@
+{
+  "skill_name": "write-unit-tests",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Add a unit test for the new `normalizeDiscount` behavior. No `choose-test-scope` recommendation exists, and I have not agreed to a test scope. Use the Write Unit Tests skill.",
+      "expected_output": "The agent does not write or change tests. It states that the required Unit recommendation and user agreement are missing, then routes the decision to `choose-test-scope`.",
+      "assertions": [
+        "No test file or implementation file is changed.",
+        "The agent identifies the missing Unit recommendation and agreement.",
+        "The agent directs scope selection to `choose-test-scope` instead of selecting Unit itself."
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Context: `choose-test-scope` recommended Unit, and I agreed. I now request implementation. `canAcceptInvite(invite, now)` returns `invite.status === 'active' && new Date(invite.expiresAt) >= now`. Invites that expire exactly at `now` must be rejected. Existing tests only cover future expiry. Add a regression test and fix the bug. The project uses Vitest. Run the focused test before the fix, then run the relevant broader test command.",
+      "expected_output": "The agent adds a regression test through the public `canAcceptInvite` function. The test asserts that an invite expiring exactly at `now` is rejected. The focused test fails before the implementation change. The agent then fixes the comparison, reruns the focused test and a relevant broader test command, and reports the commands and results.",
+      "assertions": [
+        "The agent tests `canAcceptInvite`, not a private helper or internal state.",
+        "The test covers the exact-expiry boundary and has an explicit expected value.",
+        "The focused regression test fails before the implementation fix.",
+        "The focused test and relevant broader test command pass after the fix, or the agent reports why a command could not run.",
+        "The final report names the commands and their results."
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Context: `choose-test-scope` recommended Unit, and I agreed. I request implementation. The public method `canApplyDiscount` calls a private helper named `isEligible`. It also uses an internal `DiscountPolicy` collaborator. Add tests for eligible and ineligible discounts. There are no external side effects.",
+      "expected_output": "The agent tests the observable results of `canApplyDiscount` through its public interface. It does not call `isEligible` directly. It keeps the internal `DiscountPolicy` real, uses clear expected values, and avoids unnecessary mocks.",
+      "assertions": [
+        "Tests call the public `canApplyDiscount` interface and do not call `isEligible` directly.",
+        "Tests cover both eligible and ineligible outcomes with explicit expected results.",
+        "The internal `DiscountPolicy` collaborator remains real.",
+        "The agent adds no external mocks because the task has no external side effects.",
+        "The agent runs the focused test and a relevant broader test command, then reports the results."
+      ]
+    }
+  ]
+}

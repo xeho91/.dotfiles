@@ -1,0 +1,14 @@
+{
+  "name": "write-skill",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "count": "node count-tokens.ts"
+  },
+  "dependencies": {
+    "js-tiktoken": "1.0.21"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.6"
+  }
+}

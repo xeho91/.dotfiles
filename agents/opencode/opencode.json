@@ -109,6 +109,11 @@
     { "action": "shell", "resource": "gh workflow list*", "effect": "allow" },
     { "action": "shell", "resource": "gh workflow view*", "effect": "allow" },
     { "action": "shell", "resource": "perl*", "effect": "deny" },
-    { "action": "shell", "resource": "python*", "effect": "deny" }
+    { "action": "shell", "resource": "python*", "effect": "deny" },
+    {
+      "action": "shell",
+      "resource": "*/agents/skills/asd-ste100/scripts/ste-lint.py *",
+      "effect": "allow"
+    }
   ]
 }
